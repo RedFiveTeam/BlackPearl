@@ -5,7 +5,7 @@ build_master:
   stage: build
   artifacts:
     paths:
-    - target/*.jar
+    - artifacts/*.jar
   script:
   - mvn package sonar:sonar -Dsonar.host.url=192.168.1.11:32775
   only:
