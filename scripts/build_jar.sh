@@ -9,4 +9,6 @@ popd
 
 pushd $basedir
 mvn package
+rm $basedir/artifacts/crewwebpage-*.jar
+cp $basedir/target/crewwebpage-*.jar $basedir/artifacts/
 popd
