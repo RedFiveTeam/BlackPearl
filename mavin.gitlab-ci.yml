@@ -1,0 +1,12 @@
+stages: 
+- build 
+build_master:
+  image: maven
+  stage: build
+  artifacts:
+    paths:
+    - target/*.jar
+  script:
+  - mvn package sonar:sonar -Dsonar.host.url=192.168.1.11:32775
+  only:
+  - master
