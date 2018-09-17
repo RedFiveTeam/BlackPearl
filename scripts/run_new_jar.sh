@@ -1,7 +1,9 @@
 #! /bin/bash
 
-basedir="$(dirname $( cd "$(dirname "$0")" ; pwd -P ))"
+set -e
 
-$basedir/scripts/build_jar.sh
+BASE_DIR="$(dirname $( cd "$(dirname "$0")" ; pwd -P ))"
 
-java -jar $basedir/target/crewwebpage*.jar
+${BASE_DIR}/scripts/build_jar.sh
+
+java -jar ${BASE_DIR}/target/crewwebpage*.jar

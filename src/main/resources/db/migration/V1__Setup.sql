@@ -5,6 +5,13 @@ CREATE TABLE person (
   PRIMARY KEY (id)
 );
 
+CREATE TABLE resources (
+  id INT (11) NOT NULL AUTO_INCREMENT,
+  url VARCHAR (128) NOT NULL,
+  name VARCHAR (64) NOT NULL,
+  PRIMARY KEY (id)
+);
+
 INSERT INTO person (last_name, first_name) VALUES
 ("Arnold", "Aaron"),
 ("Bass", "Kenyetta"),
@@ -15,3 +22,6 @@ INSERT INTO person (last_name, first_name) VALUES
 ("Rimer", "Jason"),
 ("Schroeder", "Bradford"),
 ("Wilson", "Dylan");
+
+INSERT INTO resources (url, name) VALUES
+("https://www.google.com", "Google");

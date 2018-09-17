@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Route, Switch } from 'react-router';
-import { PersonPage } from './pages/PersonPage';
-import { HomePage } from './pages/HomePage';
+import { PersonPage } from './page/PersonPage';
+import { HomePage } from './page/HomePage';
 import { observer } from 'mobx-react';
 
 @observer

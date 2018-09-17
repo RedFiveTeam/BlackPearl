@@ -1,7 +1,9 @@
 /target/
 !.mvn/wrapper/maven-wrapper.jar
 .DS_Store
-node_modules
+/node_modules/
+/acceptance/output/
+/tmp/
 
 ### STS ###
 .apt_generated
