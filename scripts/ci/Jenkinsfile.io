@@ -5,7 +5,7 @@ node ('') {
 
     stage ('Test and Build') {
         sh """
-        echo 'Test and Build Complete'
+        ./scripts/tests.sh
         """
     }
 }
