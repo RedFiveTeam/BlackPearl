@@ -4,8 +4,16 @@ node ('') {
     }
 
     stage ('Test and Build') {
-        sh """
-        ./scripts/tests.sh
-        """
-    }
+            sh """
+            if [[ \"\$(docker images -q dgs1sdt/blackpearl 2> /dev/null)\" == \"\" ]]; then
+                docker pull dgs1sdt/blackpearl
+            fi
+
+            docker stop blackpearl || true && docker rm blackpearl || true
+
+            docker run --name BlackPearl --rm -v `pwd`:/app -v $HOME/.gradle:/root/.gradle -itd  dgs1sdt/blackpearl
+
+            docker exec BlackPearl /bin/bash -c "/app/scripts/tests.sh"
+            """
+        }
 }
