@@ -9,11 +9,11 @@ node ('') {
                 docker pull dgs1sdt/blackpearl
             fi
 
-            docker stop blackpearl || true && docker rm blackpearl || true
+            docker stop BlackPearl || true && docker rm BlackPearl || true
 
-            docker run --name BlackPearl --rm -v `pwd`:/app -v $HOME/.gradle:/root/.gradle -itd  dgs1sdt/blackpearl
+            docker run --name BlackPearl --rm -v `pwd`:/app -itd dgs1sdt/blackpearl
 
-            docker exec BlackPearl /bin/bash -c "/app/scripts/tests.sh"
+            docker exec BlackPearl /bin/bash -c "cd /app && ./scripts/tests.sh"
             """
         }
 }

@@ -27,7 +27,7 @@ function main {
 function acceptanceTests {
     showBanner "Acceptance Tests"
 
-    java -jar ${BASE_DIR}/artifacts/crewwebpage*.jar --server.port=9090 &> ${BASE_DIR}/tmp/acceptance.log &
+    java -jar ${BASE_DIR}/artifacts/crewwebpage*.jar --server.port=9090 &
     echo $! > ${BASE_DIR}/tmp/crewWebpage.pid
 
     testConnection "http://localhost:9090" $(cat ${BASE_DIR}/tmp/crewWebpage.pid)

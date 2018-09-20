@@ -1,28 +1,28 @@
 FROM cloudfoundry/cflinuxfs2
 
 # install mysql
-RUN apt-get update &&\
-    apt-get -y install mysql-server-5.6
+RUN apt-get -qqy update &&\
+    apt-get -qqy install mysql-server-5.6
 
 # install java
-RUN apt-get -y update &&\
-    apt-get -y install software-properties-common
+RUN apt-get -qqy update &&\
+    apt-get -qqy install software-properties-common maven
 RUN echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true | debconf-set-selections
 RUN add-apt-repository -y ppa:webupd8team/java &&\
-    apt-get -y update &&\
-    apt-get install -y oracle-java8-installer
+    apt-get -qqy update &&\
+    apt-get install -qqy oracle-java8-installer
 RUN rm -rf /var/lib/apt/lists/*
 RUN rm -rf /var/cache/oracle-jdk8-installer
 
 # install node
 RUN curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash - &&\
-    apt-get -y install nodejs
+    apt-get -qqy install nodejs
 
 # install yarn
 RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - &&\
     echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list &&\
-    apt-get -y update &&\
-    apt-get -y install yarn
+    apt-get -qqy update &&\
+    apt-get -qqy install yarn
 
 # install gems
 RUN gem install selenium-webdriver chromedriver-helper
