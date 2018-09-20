@@ -11,7 +11,7 @@ node ('') {
 
             docker stop BlackPearl || true && docker rm BlackPearl || true
 
-            docker run --name BlackPearl --rm -v `pwd`:/app -itd dgs1sdt/blackpearl
+            docker run --name BlackPearl -v `pwd`:/app -itd dgs1sdt/blackpearl
 
             docker exec BlackPearl /bin/bash -c "cd /app && ./scripts/tests.sh"
             """
