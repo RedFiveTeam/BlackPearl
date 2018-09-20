@@ -8,5 +8,4 @@ Scenario('test something', (I) => {
     I.click('person');
     I.wait(2);
     I.see('Tyler');
-    I.seeElement('#Bacon');
 });

@@ -1,6 +1,5 @@
 package mil.af.theblackpearl.crewwebpage.person;
 
-import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.Entity;
@@ -8,7 +7,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-@AllArgsConstructor
 @NoArgsConstructor
 @Entity
 public class Person {
@@ -39,6 +37,11 @@ public class Person {
     }
 
     public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public Person(String lastName, String firstName) {
+        this.lastName = lastName;
         this.firstName = firstName;
     }
 }

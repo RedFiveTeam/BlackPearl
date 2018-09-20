@@ -8,8 +8,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
-@RequestMapping(path="/api/person")
+@RequestMapping(PersonController.URI)
 public class PersonController {
+    public static final String URI = "/api/person";
+
     @Autowired
     private PersonRepository personRepository;
 
@@ -26,6 +28,4 @@ public class PersonController {
     public @ResponseBody Iterable<Person> getAllPeople() {
         return personRepository.findAll();
     }
-
-
 }
