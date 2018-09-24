@@ -5,11 +5,7 @@ node ('') {
 
     stage ('Test and Build') {
             sh """
-            if [[ \"\$(docker images -q dgs1sdt/blackpearl 2> /dev/null)\" == \"\" ]]; then
-                docker pull dgs1sdt/blackpearl
-            else
-                docker update dgs1sdt/blackpearl
-            fi
+            docker pull dgs1sdt/blackpearl
 
             docker stop BlackPearl || true && docker rm BlackPearl || true
 
