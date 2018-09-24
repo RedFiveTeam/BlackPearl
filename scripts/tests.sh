@@ -82,10 +82,10 @@ function cleanup {
         cat ${BASE_DIR}/tmp/crewWebpage.pid | xargs kill -9
         rm ${BASE_DIR}/tmp/crewWebpage.pid
     fi
-#    if [ -f ${BASE_DIR}/tmp/selenium.pid ]; then
-#        cat ${BASE_DIR}/tmp/selenium.pid | xargs kill -9
-#        rm ${BASE_DIR}/tmp/selenium.pid
-#    fi
+    if [ -f ${BASE_DIR}/tmp/selenium.pid ]; then
+        cat ${BASE_DIR}/tmp/selenium.pid | xargs kill -9
+        rm ${BASE_DIR}/tmp/selenium.pid
+    fi
 }
 trap cleanup EXIT
 
