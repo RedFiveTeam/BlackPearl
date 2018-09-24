@@ -27,16 +27,18 @@ function main {
 function acceptanceTests {
     showBanner "Acceptance Tests"
 
-    java -jar ${BASE_DIR}/artifacts/crewwebpage*.jar --server.port=9090 &
+    java -jar ${BASE_DIR}/artifacts/crewwebpage*.jar --server.port=9090 &> ${BASE_DIR}/tmp/acceptance.log &
     echo $! > ${BASE_DIR}/tmp/crewWebpage.pid
 
     testConnection "http://localhost:9090" $(cat ${BASE_DIR}/tmp/crewWebpage.pid)
 
-    if [ $(ps -ef | grep -i selenium-standalone | wc -l) -eq 1 ]; then
+    if [ $(ps -ef | grep -i selenium-standalone | wc -l) -le 1 ]; then
+        echo "Starting selenium..."
         selenium-standalone start &> ${BASE_DIR}/tmp/selenium.log &
         sleep 1 # Allow time for selenium to fully start
-        ps -ef | grep -i selenium | grep -i java | tr -s " " | cut -d " " -f3 > ${BASE_DIR}/tmp/selenium.pid
     fi
+
+    ps -ef | grep -i selenium | grep -i java | tr -s " " | cut -d " " -f3 > ${BASE_DIR}/tmp/selenium.pid
 
     testConnection "http://localhost:4444" $(cat ${BASE_DIR}/tmp/selenium.pid)
 
@@ -55,15 +57,36 @@ function unitTests {
 
 
 # Utilities
+
+function checkDependencies {
+    showBanner "Checking Dependencies"
+    if [ "$(which selenium-standalone)" == "" ] && [ "$(which npm)" != "" ] ; then
+        echo "selenium-standalone is not installed. Installing..."
+        npm -g install selenium-standalone@latest
+        selenium-standalone install
+        ps -ef | grep -i selenium | grep -i java | tr -s " " | cut -d " " -f2 | kill -9
+    fi
+
+    if [ "$(which codeceptjs)" == "" ] && [ "$(which npm)" != "" ] ; then
+        echo "codeceptjs is not installed. Installing..."
+        npm -g install codeceptjs@latest
+    fi
+
+    if [ "$(which wdio)" == "" ] && [ "$(which npm)" != "" ] ; then
+        echo "webdriverio is not installed. Installing..."
+        npm -g install webdriverio@latest
+    fi
+}
+
 function cleanup {
     if [ -f ${BASE_DIR}/tmp/crewWebpage.pid ]; then
         cat ${BASE_DIR}/tmp/crewWebpage.pid | xargs kill -9
         rm ${BASE_DIR}/tmp/crewWebpage.pid
     fi
-    if [ -f ${BASE_DIR}/tmp/selenium.pid ]; then
-        cat ${BASE_DIR}/tmp/selenium.pid | xargs kill -9
-        rm ${BASE_DIR}/tmp/selenium.pid
-    fi
+#    if [ -f ${BASE_DIR}/tmp/selenium.pid ]; then
+#        cat ${BASE_DIR}/tmp/selenium.pid | xargs kill -9
+#        rm ${BASE_DIR}/tmp/selenium.pid
+#    fi
 }
 trap cleanup EXIT
 
@@ -78,6 +101,8 @@ function setup {
     REACT_APP_HOST=http://localhost:9090
 
     mkdir -p ${BASE_DIR}/tmp
+
+    checkDependencies
 }
 
 function showBanner {

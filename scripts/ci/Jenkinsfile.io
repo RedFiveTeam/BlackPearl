@@ -7,13 +7,15 @@ node ('') {
             sh """
             if [[ \"\$(docker images -q dgs1sdt/blackpearl 2> /dev/null)\" == \"\" ]]; then
                 docker pull dgs1sdt/blackpearl
+            else
+                docker update dgs1sdt/blackpearl
             fi
 
             docker stop BlackPearl || true && docker rm BlackPearl || true
 
             docker run --name BlackPearl -v `pwd`:/app -itd dgs1sdt/blackpearl
 
-            docker exec BlackPearl /bin/bash -c "cd /app && ./scripts/tests.sh"
+            docker exec BlackPearl /bin/bash -c "/app/scripts/tests.sh"
             """
         }
 }
