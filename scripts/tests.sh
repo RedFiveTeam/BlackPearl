@@ -64,7 +64,6 @@ function checkDependencies {
         echo "selenium-standalone is not installed. Installing..."
         npm -g install selenium-standalone@latest
         selenium-standalone install
-        ps -ef | grep -i selenium | grep -i java | tr -s " " | cut -d " " -f2 | kill -9
     fi
 
     if [ "$(which codeceptjs)" == "" ] && [ "$(which npm)" != "" ] ; then
