@@ -24,7 +24,7 @@ node ('') {
                      def jobname = JOB_NAME.replaceAll(/[^a-zA-Z0-9\_]/, "_")
                      def jobshortname = JOB_NAME.replaceAll(/^.*\//, "")
                    withCredentials([[$class: 'StringBinding', credentialsId: 'sonarQube', variable: 'SONAR_LOGIN']]) {
-                     sh "JOB_NAME=${jobname} && JOB_SHORT_NAME=${jobshortname} && set && ${scannerHome}/bin/sonar-scanner -Dsonar.host.url=${sonarHost} -Dsonar.login=${SONAR_LOGIN} -Dsonar.projectName=blackpearl -Dsonar.projectKey=narwhal:BlackPearl"
+                     sh "JOB_NAME=${jobname} && JOB_SHORT_NAME=${jobshortname} && set && ${scannerHome}/bin/sonar-scanner -Dsonar.host.url=${sonarHost} -Dsonar.login=${SONAR_LOGIN} -Dsonar.projectName=narwhal -Dsonar.projectKey=narwhal:BlackPearl"
            }
         }
     }
