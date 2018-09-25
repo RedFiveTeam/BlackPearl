@@ -16,7 +16,7 @@ node ('') {
         }
 
         stage ('SonarQube') {
-    sh echo "Jobs done"
+    sh "echo 'Jobs done' "
         }
 
 }
