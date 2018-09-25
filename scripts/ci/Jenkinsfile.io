@@ -15,8 +15,11 @@ node ('') {
             """
         }
 
-        stage ('SonarQube') {
-    sh "echo 'Jobs done' "
+     stage ('SonarQube') {
+        def sonarHost = 'https://sonar.geointservices.io'
+        withSonarQubeEnv('sonarHost') {
+          // requires SonarQube Scanner for Maven 3.2+
+          sh 'mvn org.sonarsource.scanner.maven:sonar-maven-plugin:3.2:sonar'
         }
-
+    }
 }
