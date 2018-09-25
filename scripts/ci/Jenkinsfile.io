@@ -16,10 +16,15 @@ node ('') {
         }
 
      stage ('SonarQube') {
+        def sonarXmx = '512m'
         def sonarHost = 'https://sonar.geointservices.io'
-        withSonarQubeEnv('https://sonar.geointservices.io') {
-          // requires SonarQube Scanner for Maven 3.2+
-          sh 'mvn org.sonarsource.scanner.maven:sonar-maven-plugin:3.2:sonar'
+        def scannerHome = tool 'SonarQube Runner 2.8';
+                 withSonarQubeEnv('DevOps Sonar') {
+                     // update env var JOB_NAME to replace all non word chars to underscores
+                     def jobname = JOB_NAME.replaceAll(/[^a-zA-Z0-9\_]/, "_")
+                     def jobshortname = JOB_NAME.replaceAll(/^.*\//, "")
+                   withCredentials([[$class: 'StringBinding', credentialsId: 'sonarQube', variable: 'SONAR_LOGIN']]) {
+                     sh "JOB_NAME=${jobname} && JOB_SHORT_NAME=${jobshortname} && set && ${scannerHome}/bin/sonar-scanner -Dsonar.host.url=${sonarHost} -Dsonar.login=${SONAR_LOGIN} -Dsonar.projectName=blackpearl -Dsonar.projectKey=blackpearl:blackpearl"
         }
     }
 }
