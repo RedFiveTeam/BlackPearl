@@ -28,8 +28,8 @@ node ('') {
           //          set && ${scannerHome}/bin/sonar-scanner -Dsonar.host.url=${sonarHost} -Dsonar.login=${SONAR_LOGIN} -Dsonar.projectName=BlackPearl
      // -Dsonar.projectKey=narwhal:narwhal"
      sh echo "Jobs done"
-                  }
-                }
+                //  }
+              //  }
         }
      }
 }
