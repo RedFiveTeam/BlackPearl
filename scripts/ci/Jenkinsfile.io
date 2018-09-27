@@ -36,7 +36,7 @@ node ('') {
             stage ('PostFortifyResultsToThreadFix') {
                 withCredentials([string(credentialsId: 'fc10b28d-d9df-44c7-b282-251816ca5602', variable: 'THREADFIX_VARIABLE')]) {
                 sh "/bin/curl -v --insecure -H 'Accept: application/json' -X POST --form file=@fortifyResults-${BUILD_NUMBER}.fpr\
-                    https://threadfix.devops.geointservices.io/rest/applications/175/upload?apiKey=${THREADFIX_VARIABLE}"
+                    https://threadfix.devops.geointservices.io/rest/applications/222/upload?apiKey=${THREADFIX_VARIABLE}"
                 }
             }
 }
