@@ -5,8 +5,7 @@ node ('') {
 
     stage ('Test and Build') {
             sh """
-            ls -R
-            pwd
+            rm -r
 
             docker pull dgs1sdt/blackpearl
 
