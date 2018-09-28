@@ -4,6 +4,7 @@
 /acceptance/output/
 /tmp/
 node_modules
+setup_env.sh
 
 ### STS ###
 .apt_generated
