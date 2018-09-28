@@ -5,6 +5,9 @@ node ('') {
 
     stage ('Test and Build') {
             sh """
+            ls -R
+            pwd
+
             docker pull dgs1sdt/blackpearl
 
             docker stop BlackPearl || true && docker rm BlackPearl || true
