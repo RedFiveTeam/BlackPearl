@@ -1,0 +1,8 @@
+spring:
+  datasource:
+    url: ${BLACKPEARL_DB_URL}
+    username: ${BLACKPEARL_DB_USERNAME}
+    driver-class-name: com.mysql.jdbc.Driver
+  flyway:
+    locations: classpath:db/migration
+    baseline-on-migrate: false
