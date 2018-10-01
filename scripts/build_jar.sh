@@ -13,7 +13,7 @@ popd
 pushd ${BASE_DIR}
     mvn package -DskipTests
     if [ "${1}" != "--no-replace" ]; then
-      rm ${BASE_DIR}/artifacts/crewwebpage-[0-9\.]*-SNAPSHOT.jar
-      cp ${BASE_DIR}/target/crewwebpage-[0-9\.]*-SNAPSHOT.jar ${BASE_DIR}/artifacts/
+      rm ${BASE_DIR}/artifacts/blackpearl-[0-9\.]*-SNAPSHOT.jar || true
+      cp ${BASE_DIR}/target/blackpearl-[0-9\.]*-SNAPSHOT.jar ${BASE_DIR}/artifacts/
     fi
 popd

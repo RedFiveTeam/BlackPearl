@@ -27,10 +27,10 @@ function main {
 function acceptanceTests {
     showBanner "Acceptance Tests"
 
-    java -jar ${BASE_DIR}/target/crewwebpage-[0-9\.]*-SNAPSHOT.jar --server.port=9090 &> ${BASE_DIR}/tmp/acceptance.log &
-    echo $! > ${BASE_DIR}/tmp/crewWebpage.pid
+    java -jar ${BASE_DIR}/target/blackpearl-[0-9\.]*-SNAPSHOT.jar --server.port=9090 &> ${BASE_DIR}/tmp/acceptance.log &
+    echo $! > ${BASE_DIR}/tmp/blackPearl.pid
 
-    testConnection "http://localhost:9090" $(cat ${BASE_DIR}/tmp/crewWebpage.pid)
+    testConnection "http://localhost:9090" $(cat ${BASE_DIR}/tmp/blackPearl.pid)
 
     if [ $(ps -ef | grep -i selenium-standalone | wc -l) -le 1 ]; then
         echo "Starting selenium..."
@@ -78,9 +78,9 @@ function checkDependencies {
 }
 
 function cleanup {
-    if [ -f ${BASE_DIR}/tmp/crewWebpage.pid ]; then
-        cat ${BASE_DIR}/tmp/crewWebpage.pid | xargs kill -9
-        rm ${BASE_DIR}/tmp/crewWebpage.pid
+    if [ -f ${BASE_DIR}/tmp/blackPearl.pid ]; then
+        cat ${BASE_DIR}/tmp/blackPearl.pid | xargs kill -9
+        rm ${BASE_DIR}/tmp/blackPearl.pid
     fi
     if [ -f ${BASE_DIR}/tmp/selenium.pid ]; then
         cat ${BASE_DIR}/tmp/selenium.pid | xargs kill -9
