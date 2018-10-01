@@ -12,6 +12,8 @@ popd
 
 pushd ${BASE_DIR}
     mvn package -DskipTests
-    rm ${BASE_DIR}/artifacts/crewwebpage-*.jar
-    cp ${BASE_DIR}/target/crewwebpage-*.jar ${BASE_DIR}/artifacts/
+    if [ "${1}" != "--no-replace" ]; then
+      rm ${BASE_DIR}/artifacts/crewwebpage-[0-9\.]*-SNAPSHOT.jar
+      cp ${BASE_DIR}/target/crewwebpage-[0-9\.]*-SNAPSHOT.jar ${BASE_DIR}/artifacts/
+    fi
 popd
