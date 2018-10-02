@@ -6,3 +6,8 @@ spring:
   flyway:
     locations: classpath:db/migration
     baseline-on-migrate: false
+  jpa:
+    hibernate:
+      dialect: org.hibernate.dialect.MySQL5Dialect
+      hbm2ddl:
+        auto: create-drop

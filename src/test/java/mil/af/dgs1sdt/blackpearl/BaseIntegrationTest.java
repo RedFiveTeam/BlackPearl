@@ -1,7 +1,6 @@
 package mil.af.dgs1sdt.blackpearl;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import mil.af.dgs1sdt.blackpearl.person.PersonRepository;
+import mil.af.dgs1sdt.blackpearl.resource.ResourceRepository;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -13,7 +12,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public abstract class BaseIntegrationTest {
-    protected final static ObjectMapper objectMapper = new ObjectMapper();
-    @Autowired protected PersonRepository personRepository;
+    @Autowired protected ResourceRepository resourceRepository;
     @LocalServerPort protected int port;
 }

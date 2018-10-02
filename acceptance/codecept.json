@@ -1,5 +1,5 @@
 {
-  "tests": "./tests/**/*_test.ts",
+  "tests": "./tests/**/*.test.ts",
   "timeout": 10000,
   "output": "./output",
   "helpers": {
