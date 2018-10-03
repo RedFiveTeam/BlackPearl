@@ -48,7 +48,7 @@ VOLUME /var/lib/mysql
 
 # lets do this!
 ENTRYPOINT service mysql start &&\
-    mysql -u root -e "create database blackpearldev;" &&\
-    mysql -u root -e "create user 'blackpearl'@'localhost';" &&\
-    mysql -u root -e "GRANT ALL PRIVILEGES ON blackpearldev.* TO 'blackpearl'@'localhost';" &&\
+    mysql -u root -e "create database blackpearldev;" || true &&\
+    mysql -u root -e "create user 'blackpearl'@'localhost';" || true &&\
+    mysql -u root -e "GRANT ALL PRIVILEGES ON blackpearldev.* TO 'blackpearl'@'localhost';" || true &&\
     /bin/bash
