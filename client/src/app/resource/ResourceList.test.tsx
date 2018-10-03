@@ -3,13 +3,18 @@ import { shallow, ShallowWrapper } from 'enzyme';
 import { ResourceStore } from './stores/ResourceStore';
 import { ResourceModel } from './ResourceModel';
 import { ResourceList } from './ResourceList';
+import { ResourceActions } from './actions/ResourceActions';
+import { StubRepositories } from '../utils/Repositories';
+import { stores } from '../utils/Stores';
 
 describe('ResourceList', () => {
   let subject: ShallowWrapper;
   let resourceStore: ResourceStore;
+  let resourceActions: ResourceActions;
 
   beforeEach(() => {
     resourceStore = new ResourceStore();
+    resourceActions = new ResourceActions(stores, StubRepositories);
 
     const resources = [
       new ResourceModel(1, 'https://www.google.com', 'Google'),
@@ -19,12 +24,15 @@ describe('ResourceList', () => {
 
     resourceStore.setResources(resources);
 
-    subject = shallow(<ResourceList resourceStore={resourceStore}/>);
+    subject = shallow(<ResourceList resourceStore={resourceStore} resourceActions={resourceActions}/>);
 
   });
 
   it('should render a list of links', () => {
-
     expect(subject.find('.resource').length).toBe(3);
+  });
+
+  it('should render a add resource button', () => {
+    expect(subject.find('.add-resource-button').length).toBe(1);
   });
 });

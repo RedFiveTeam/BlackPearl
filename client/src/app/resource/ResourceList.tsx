@@ -29,6 +29,7 @@ export class ResourceList extends React.Component<Props> {
             />
           );
         })}
+        <button className="add-resource-button">Add Resource</button>
       </div>
     );
   }
