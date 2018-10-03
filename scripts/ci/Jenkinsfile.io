@@ -11,7 +11,7 @@ node ('') {
 
         docker run --name BlackPearl -v `pwd`:/app -itd dgs1sdt/blackpearl
 
-        docker exec BlackPearl /bin/bash -c "/app/scripts/seed_db/seed_db.sh && /app/scripts/tests.sh"
+        docker exec BlackPearl /bin/bash -c "/app/scripts/tests.sh"
         """
     }
 
