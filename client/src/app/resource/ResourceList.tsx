@@ -4,6 +4,7 @@ import { ResourceStore } from './stores/ResourceStore';
 import styled from 'styled-components';
 import { ResourceActions } from './actions/ResourceActions';
 import { Resource } from './Resource';
+import { StyledAddResourceButton } from '../component/button/AddResourceButton';
 
 interface Props {
   resourceStore?: ResourceStore;
@@ -19,17 +20,21 @@ export class ResourceList extends React.Component<Props> {
   render() {
     return (
       <div>
-        {this.props.resourceStore!.resources.map((resource) => {
-          return (
-            <Resource
-              key={resource.id}
-              name={resource.name}
-              url={resource.url}
-              className="resource"
-            />
-          );
-        })}
-        <button className="add-resource-button">Add Resource</button>
+        {
+          this.props.resourceStore!.resources.map((resource) => {
+            return (
+              <Resource
+                key={resource.id!}
+                name={resource.name}
+                url={resource.url}
+                className="resource"
+              />
+            );
+          })
+        }
+        <StyledAddResourceButton
+          className="addResourceButton"
+        />
       </div>
     );
   }

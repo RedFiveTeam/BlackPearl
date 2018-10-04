@@ -33,6 +33,6 @@ describe('ResourceList', () => {
   });
 
   it('should render a add resource button', () => {
-    expect(subject.find('.add-resource-button').length).toBe(1);
+    expect(subject.find('.addResourceButton').length).toBe(1);
   });
 });

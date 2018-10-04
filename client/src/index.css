@@ -1,0 +1,5 @@
+@font-face {
+    font-family: 'Acme';
+    src: local('Acme'), url(./app/fonts/Acme/Acme-Regular.ttf);
+    font-weight: 400;
+}

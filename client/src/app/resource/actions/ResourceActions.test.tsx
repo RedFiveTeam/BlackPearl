@@ -10,7 +10,8 @@ describe('ResourceActions', () => {
 
   beforeEach(() => {
     resourceStore = {
-      setResources: jest.fn()
+      setResources: jest.fn(),
+      setPendingResource: jest.fn()
     };
 
     resourceRepository = {
@@ -35,5 +36,15 @@ describe('ResourceActions', () => {
   it('should store every resource in store', async () => {
     await subject.setAllResources();
     expect(resourceStore.setResources).toHaveBeenCalledWith(await resourceRepository.findAll());
+  });
+
+  it('should clear pending resource', () => {
+    subject.clearPendingResource();
+    expect(resourceStore.setPendingResource).toHaveBeenCalledWith(null);
+  });
+
+  it('should create a pending resource', () => {
+    subject.createPendingResource();
+    expect(resourceStore.setPendingResource).toHaveBeenCalled();
   });
 });
