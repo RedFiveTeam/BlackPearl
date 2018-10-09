@@ -3,7 +3,11 @@ import { ResourceModel } from '../ResourceModel';
 
 export class ResourceSerializer implements Serializer<ResourceModel> {
   serialize(item: ResourceModel): {} {
-    throw new Error('Not Implemented');
+    return {
+      id: item.id,
+      name: item.name,
+      url: item.url
+    };
   }
 
   deserialize(item: any): ResourceModel {

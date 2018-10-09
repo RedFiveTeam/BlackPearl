@@ -9,4 +9,10 @@ export class StubResourceRepository implements ResourceRepository {
       new ResourceModel(3, 'https://www.ebay.com', 'eBay')
     ]);
   }
+
+  saveResource(resource: ResourceModel): Promise<ResourceModel> {
+    resource.setName('New Test Resource');
+    resource.setUrl('https://www.newtestresource.com');
+    return Promise.resolve(resource);
+  }
 }

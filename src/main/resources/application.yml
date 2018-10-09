@@ -11,3 +11,4 @@ spring:
       dialect: org.hibernate.dialect.MySQL5Dialect
       hbm2ddl:
         auto: create-drop
+      use-new-id-generator-mappings: false

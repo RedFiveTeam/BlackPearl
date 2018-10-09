@@ -5,3 +5,6 @@ spring:
     password:
     driver-class-name: org.h2.Driver
     platform: h2
+  flyway:
+    enabled: false
+

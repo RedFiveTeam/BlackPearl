@@ -1,9 +1,14 @@
 import { ResourceModel } from '../ResourceModel';
 import { action, computed, observable } from 'mobx';
+import { NotificationStore } from '../../component/stores/NotificationStore';
 
-export class ResourceStore {
+export class ResourceStore extends NotificationStore {
   @observable private _resources: ResourceModel[] = [];
   @observable private _pendingResource: ResourceModel | null = null;
+
+  constructor() {
+    super();
+  }
 
   @action.bound
   setResources(resources: ResourceModel[]) {
@@ -23,5 +28,10 @@ export class ResourceStore {
   @computed
   get resources() {
     return this._resources;
+  }
+
+  @computed
+  get pendingResource() {
+    return this._pendingResource;
   }
 }

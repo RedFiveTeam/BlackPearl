@@ -33,4 +33,22 @@ export class ResourceActions {
   createPendingResource() {
     this.resourceStore.setPendingResource(new ResourceModel());
   }
+
+  @action.bound
+  async saveResource() {
+    if (this.resourceStore.pendingResource != null) {
+      await this.resourceRepository.saveResource(this.resourceStore.pendingResource!);
+      this.clearPendingResource();
+      await this.setAllResources();
+    }
+  }
+
+  @action.bound
+  updatePendingResource(title: string, url: string) {
+    let resource = new ResourceModel();
+    resource.setName(title);
+    resource.setUrl(url);
+
+    this.resourceStore.setPendingResource(resource);
+  }
 }

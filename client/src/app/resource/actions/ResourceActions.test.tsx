@@ -11,11 +11,16 @@ describe('ResourceActions', () => {
   beforeEach(() => {
     resourceStore = {
       setResources: jest.fn(),
-      setPendingResource: jest.fn()
+      setPendingResource: jest.fn(),
+      pendingResource: ResourceModel,
+      performLoading: async (runFunction: any) => {
+        await runFunction();
+      }
     };
 
     resourceRepository = {
-      findAll: jest.fn()
+      findAll: jest.fn(),
+      saveResource: jest.fn()
     };
 
     testResources = [
@@ -25,7 +30,6 @@ describe('ResourceActions', () => {
     ];
 
     subject = new ResourceActions({resourceStore} as any, {resourceRepository} as any);
-
   });
 
   it('should set resources in store', async () => {
@@ -47,4 +51,17 @@ describe('ResourceActions', () => {
     subject.createPendingResource();
     expect(resourceStore.setPendingResource).toHaveBeenCalled();
   });
-});
+
+  it('should save a pending resource', async () => {
+    await subject.saveResource();
+    expect(resourceRepository.saveResource).toHaveBeenCalledWith(resourceStore.pendingResource);
+  });
+
+  it('should update title and url of pending resource', () => {
+    let pendingResource = new ResourceModel(null, 'name', '.com');
+    subject.updatePendingResource(pendingResource.name, pendingResource.url);
+    expect(resourceStore.setPendingResource.mock.calls[0][0].name).toEqual(pendingResource.name);
+    expect(resourceStore.setPendingResource.mock.calls[0][0].url).toEqual(pendingResource.url);
+  });
+})
+;
