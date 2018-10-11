@@ -3,3 +3,13 @@
     src: local('Acme'), url('./app/fonts/Acme/Acme-Regular.ttf');
     font-weight: 400;
 }
+
+@font-face {
+    font-family: 'Iglesia';
+    src: local('Iglesia'), url('./app/fonts/Iglesia/Iglesia.ttf');
+    font-weight: 400;
+}
+
+body {
+    background: #9D8189;
+}

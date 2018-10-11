@@ -14,6 +14,5 @@ export const AddResourceIcon = () => {
         <path fillRule="evenodd" clipRule="evenodd" d={pathD} fill="#15191C"/>
       </g>
     </svg>
-
   );
 };

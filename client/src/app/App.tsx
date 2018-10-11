@@ -3,6 +3,7 @@ import { Routes } from './Routes';
 import { withRouter } from 'react-router';
 import { ResourceStore } from './resource/stores/ResourceStore';
 import { inject, observer } from 'mobx-react';
+import { StyledAppBanner } from './component/AppBanner';
 
 export const WrappedRoutes = withRouter((Routes as any));
 
@@ -15,7 +16,7 @@ export class App extends React.Component<Props> {
   render() {
     return (
       <div>
-        <p>UNCLASSIFIED</p>
+        <StyledAppBanner/>
         <WrappedRoutes/>
       </div>
     );

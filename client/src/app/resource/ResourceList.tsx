@@ -3,7 +3,7 @@ import { inject, observer } from 'mobx-react';
 import { ResourceStore } from './stores/ResourceStore';
 import styled from 'styled-components';
 import { ResourceActions } from './actions/ResourceActions';
-import { Resource } from './Resource';
+import { StyledResource } from './Resource';
 import { StyledAddResourceButton } from '../component/button/AddResourceButton';
 
 interface Props {
@@ -23,7 +23,7 @@ export class ResourceList extends React.Component<Props> {
         {
           this.props.resourceStore!.resources.map((resource) => {
             return (
-              <Resource
+              <StyledResource
                 key={resource.id!}
                 name={resource.name}
                 url={resource.url}

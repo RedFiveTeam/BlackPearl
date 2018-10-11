@@ -43,6 +43,7 @@ export const StyledAddResourceButton = inject('resourceActions')(styled(AddResou
   border-bottom: 1px solid grey;
   border-top: 1px solid grey;
   color: #7A7A7A;
+  background: #EAEAEA;
   }
   
   .addResourceTitle {

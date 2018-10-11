@@ -1,6 +1,8 @@
 import * as React from 'react';
-import { observer } from 'mobx-react';
+import { inject, observer } from 'mobx-react';
 import { ResourceStore } from './stores/ResourceStore';
+import styled from 'styled-components';
+import { PearlIcon } from '../icon/PearlIcon';
 
 interface Props {
   resourceStore?: ResourceStore;
@@ -12,10 +14,49 @@ interface Props {
 @observer
 export class Resource extends React.Component<Props> {
   render() {
-    return(
+    return (
       <div className={this.props.className}>
-        <a href={this.props.url} target="_blank">{this.props.name}</a>
+        <a href={this.props.url} target="_blank">
+          <div
+            className="clickArea"
+          >
+            <span className="icon"><PearlIcon/></span>
+            <span className="title">{this.props.name}</span>
+          </div>
+        </a>
       </div>
     );
   }
 }
+
+export const StyledResource = inject('resourceStore')(styled(Resource)`
+  width: 335px;
+  height: 38px;
+  font-size: 14px;
+  border: none;
+  border-top: 1px solid grey;
+  background: #EAEAEA;
+  font-family: Acme;
+  font-size: 18px;
+  vertical-align: middle;
+  line-height: 38px;
+  
+  a {
+    text-decoration: none;
+    color: black;
+  }
+  
+  .clickArea {
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+  }
+  
+  .icon {
+    padding-left: 8px;
+  }
+  
+  .title {
+    padding-left: 7px;
+  }
+`);

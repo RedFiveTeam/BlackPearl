@@ -1,1 +1,0 @@
-{"version":3,"sources":["index.css"],"names":[],"mappings":"AAAA,WACI,iBACA,gDACA,eAAiB,CACpB","file":"static/css/main.30c8c6cb.css","sourcesContent":["@font-face {\n    font-family: 'Acme';\n    src: local('Acme'), url('./app/fonts/Acme/Acme-Regular.ttf');\n    font-weight: 400;\n}\n\n\n\n// WEBPACK FOOTER //\n// ./src/index.css"],"sourceRoot":""}

@@ -19,7 +19,6 @@ export class HomePage extends React.Component<Props> {
             <StyledAddResourcePopup/>
         }
         <div>
-          <p>Home Page</p>
           <StyledResourceList/>
         </div>
       </React.Fragment>
