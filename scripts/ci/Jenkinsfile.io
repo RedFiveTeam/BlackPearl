@@ -3,7 +3,7 @@ node ('') {
         git url: 'git@gitlab.devops.geointservices.io:dgs1sdt/blackpearl.git', branch: 'master', credentialsId: '0059b60b-fe05-4857-acda-41ada14d0c52', poll: true
     }
 
-    stage ('Test and Build') {
+    stage ('Test & Build') {
         sh """
         docker pull dgs1sdt/blackpearl
 
@@ -29,13 +29,13 @@ node ('') {
         }
     }
 
-    stage ('FortifyScan') {
+    stage ('Fortify') {
         sh '/opt/hp_fortify_sca/bin/sourceanalyzer -64 -verbose -Xms2G -Xmx10G -b ${BUILD_NUMBER} -clean'
         sh '/opt/hp_fortify_sca/bin/sourceanalyzer -64 -verbose -Xms2G -Xmx10G -b ${BUILD_NUMBER} "**/*" -exclude "client/node_modules/**/*" -exclude "client/build/**/*" -exclude "build/**/*" -exclude "acceptance/**/*" -exclude "client/src/stories/**/*" -exclude "src/main/resources/static/**/*" -exclude "client/public/**/*"'
         sh '/opt/hp_fortify_sca/bin/sourceanalyzer -64 -verbose -Xms2G -Xmx10G -b ${BUILD_NUMBER} -scan -f fortifyResults-${BUILD_NUMBER}.fpr'
     }
 
-    stage ('PostFortifyResultsToThreadFix') {
+    stage ('ThreadFix') {
         withCredentials([string(credentialsId: 'fc10b28d-d9df-44c7-b282-251816ca5602', variable: 'THREADFIX_VARIABLE')]) {
             sh "/bin/curl -v --insecure -H 'Accept: application/json' -X POST --form file=@fortifyResults-${BUILD_NUMBER}.fpr\
             https://threadfix.devops.geointservices.io/rest/applications/222/upload?apiKey=${THREADFIX_VARIABLE}"
@@ -43,7 +43,7 @@ node ('') {
     }
 
     stage ('Deploy') {
-        withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'a8703712-1b39-4b55-9d80-18e84137bc22', passwordVariable: 'PCFPass', usernameVariable: 'PCFUser']]) {
+        withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: '67a37428-4424-4d73-9af4-03c4f53e4610', passwordVariable: 'PCFPass', usernameVariable: 'PCFUser']]) {
           withEnv(["CF_HOME=${pwd()}"]) {
             sh "cf login -a api.system.dev.east.paas.geointservices.io -u $PCFUser -p $PCFPass -o USAF_Narwhal -s 'Black Pearl Development'"
             sh "cf push"
