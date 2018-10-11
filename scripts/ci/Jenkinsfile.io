@@ -41,4 +41,13 @@ node ('') {
             https://threadfix.devops.geointservices.io/rest/applications/222/upload?apiKey=${THREADFIX_VARIABLE}"
         }
     }
+
+    stage ('Deploy') {
+        withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'a8703712-1b39-4b55-9d80-18e84137bc22', passwordVariable: 'PCFPass', usernameVariable: 'PCFUser']]) {
+          withEnv(["CF_HOME=${pwd()}"]) {
+            sh "cf login -a api.system.dev.east.paas.geointservices.io -u $PCFUser -p $PCFPass -o USAF_Narwhal -s 'Black Pearl Development'"
+            sh "cf push"
+          }
+        }
+    }
 }
