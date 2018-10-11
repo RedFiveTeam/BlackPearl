@@ -12,11 +12,11 @@ Scenario('should display working links', (I) => {
 });
 
 Scenario('should allow the user to add a resource', (I) => {
+  let title = 'Test Page' + Date.now();
   I.amOnPage('/');
   I.click('ADD RESOURCE');
-  I.fillField('.titleField', 'Test Page');
+  I.fillField('.titleField', title);
   I.fillField('.urlField', 'https://www.testpage.com');
   I.click('SAVE', '.modal');
-  I.waitForElement('.resource', 10);
-  I.see('Test Page', '.resource');
+  I.waitForText(title, 10);
 });

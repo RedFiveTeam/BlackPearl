@@ -8,7 +8,7 @@
       "browser": "chrome",
       "desiredCapabilities": {
         "chromeOptions": {
-          "args": [ "--headless", "--disable-gpu", "--no-sandbox"]
+          "args": [ "--disable-gpu", "--no-sandbox"]
         }
       }
     }
