@@ -15,4 +15,8 @@ export class StubResourceRepository implements ResourceRepository {
     resource.setUrl('https://www.newtestresource.com');
     return Promise.resolve(resource);
   }
+
+  delete(resourceId: number): Promise<void> {
+    return Promise.resolve();
+  }
 }

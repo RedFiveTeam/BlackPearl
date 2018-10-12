@@ -50,6 +50,14 @@ function acceptanceTests {
 function unitTests {
     showBanner "Unit Tests"
 
+    pushd ${BASE_DIR}
+        result=$(mvn test | grep -E "\[INFO\]|\[ERROR\]")
+        echo "${result}"
+        if [ $(echo ${result} | grep "\[ERROR\]" | wc -l) -gt 0 ]; then
+            exit 1
+        fi
+    popd
+
     pushd ${BASE_DIR}/client
         CI=true yarn test
     popd

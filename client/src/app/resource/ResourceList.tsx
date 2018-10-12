@@ -26,9 +26,8 @@ export class ResourceList extends React.Component<Props> {
           this.props.resourceStore!.resources.map((resource) => {
             return (
               <StyledResource
+                resource={resource}
                 key={resource.id!}
-                name={resource.name}
-                url={resource.url}
                 className="resource"
               />
             );
@@ -43,7 +42,7 @@ export const StyledResourceList = inject('resourceStore', 'resourceActions')(sty
 overflow-y: auto;
 max-height: 819px;
 //::-webkit-scrollbar {
-//    //width: 0px;
-//    //background: transparent; /* make scrollbar transparent */
+//    width: 0px;
+//    background: transparent; /* make scrollbar transparent */
 //}
 `);

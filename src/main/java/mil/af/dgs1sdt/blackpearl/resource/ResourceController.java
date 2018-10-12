@@ -13,8 +13,10 @@ import javax.validation.Valid;
 public class ResourceController {
     public static final String URI = "/api/resources";
 
-    @Autowired ResourceService resourceService;
-    @Autowired ResourceRepository resourceRepository;
+    @Autowired
+    ResourceService resourceService;
+    @Autowired
+    ResourceRepository resourceRepository;
 
     @GetMapping
     public @ResponseBody
@@ -26,5 +28,12 @@ public class ResourceController {
     public ResponseEntity<Resource> create(@Valid @RequestBody ResourceJSON resourceJSON) {
         Resource resource = new Resource(resourceJSON.getName(), resourceJSON.getUrl());
         return new ResponseEntity<>(this.resourceRepository.save(resource), HttpStatus.CREATED);
+    }
+
+    @DeleteMapping
+    public ResponseEntity<Void> delete(@Valid @RequestBody String resourceId) {
+        Long id = Long.valueOf(resourceId);
+        resourceRepository.deleteById(id);
+        return ResponseEntity.noContent().build();
     }
 }

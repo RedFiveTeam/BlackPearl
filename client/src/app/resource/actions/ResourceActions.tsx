@@ -35,6 +35,12 @@ export class ResourceActions {
   }
 
   @action.bound
+  async delete(resourceId: number) {
+    await this.resourceRepository.delete(resourceId);
+    await this.setAllResources();
+  }
+
+  @action.bound
   async saveResource() {
     if (this.resourceStore.pendingResource != null) {
       await this.resourceRepository.saveResource(this.resourceStore.pendingResource!);

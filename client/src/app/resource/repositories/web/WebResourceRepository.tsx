@@ -21,4 +21,9 @@ export class WebResourceRepository implements ResourceRepository {
     const json = await this.client.postJSON('/api/resources', body);
     return this.resourceSerializer.deserialize(json);
   }
+
+  async delete(resourceId: number): Promise<void> {
+    const json = await this.client.delete('/api/resources', JSON.stringify(resourceId));
+    return Promise.resolve(json);
+  }
 }

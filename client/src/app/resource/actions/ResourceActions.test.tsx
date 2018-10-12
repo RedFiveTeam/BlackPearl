@@ -20,7 +20,8 @@ describe('ResourceActions', () => {
 
     resourceRepository = {
       findAll: jest.fn(),
-      saveResource: jest.fn()
+      saveResource: jest.fn(),
+      delete: jest.fn()
     };
 
     testResources = [
@@ -62,6 +63,12 @@ describe('ResourceActions', () => {
     subject.updatePendingResource(pendingResource.name, pendingResource.url);
     expect(resourceStore.setPendingResource.mock.calls[0][0].name).toEqual(pendingResource.name);
     expect(resourceStore.setPendingResource.mock.calls[0][0].url).toEqual(pendingResource.url);
+  });
+
+  it('should delete a resource and refresh page', async () => {
+    await subject.delete(testResources[0].id!);
+    expect(resourceRepository.delete).toHaveBeenCalledWith(testResources[0].id);
+    expect(resourceStore.setResources).toHaveBeenCalledWith(await resourceRepository.findAll());
   });
 })
 ;

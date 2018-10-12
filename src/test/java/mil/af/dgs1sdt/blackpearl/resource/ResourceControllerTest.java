@@ -10,8 +10,7 @@ import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.equalTo;
 
 public class ResourceControllerTest extends BaseIntegrationTest {
-    @Autowired
-    private ResourceRepository resourceRepository;
+    @Autowired private ResourceRepository resourceRepository;
     private Resource resource1;
     private Resource resource2;
     private Resource resource3;
@@ -32,7 +31,6 @@ public class ResourceControllerTest extends BaseIntegrationTest {
         given()
                 .port(port)
                 .when()
-                .log().all()
                 .get(ResourceController.URI)
                 .then()
                 .statusCode(200)
@@ -50,7 +48,6 @@ public class ResourceControllerTest extends BaseIntegrationTest {
 
         given()
                 .port(port)
-                .log().all()
                 .contentType("application/json")
                 .body(resource)
                 .when()
@@ -59,14 +56,18 @@ public class ResourceControllerTest extends BaseIntegrationTest {
                 .statusCode(201)
                 .body("url", equalTo("https://www.test.com"))
                 .body("name", equalTo("Test"));
+    }
 
-//        given()
-//                .port(port)
-//                .when()
-//                .log().all()
-//                .get(ResourceController.URI)
-//                .then()
-//                .statusCode(200)
-//                .body("url", equalTo(4));4
+    @Test
+    public void deleteTest() {
+        System.out.println(resource1.getId());
+        given()
+                .port(port)
+                .contentType("application/json")
+                .body(resource1.getId())
+                .when()
+                .delete(ResourceController.URI)
+                .then()
+                .statusCode(204);
     }
 }
