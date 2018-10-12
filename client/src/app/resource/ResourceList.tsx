@@ -4,11 +4,11 @@ import { ResourceStore } from './stores/ResourceStore';
 import styled from 'styled-components';
 import { ResourceActions } from './actions/ResourceActions';
 import { StyledResource } from './Resource';
-import { StyledAddResourceButton } from '../component/button/AddResourceButton';
 
 interface Props {
   resourceStore?: ResourceStore;
   resourceActions?: ResourceActions;
+  className?: string;
 }
 
 @observer
@@ -19,7 +19,9 @@ export class ResourceList extends React.Component<Props> {
 
   render() {
     return (
-      <div>
+      <div
+        className={this.props.className}
+      >
         {
           this.props.resourceStore!.resources.map((resource) => {
             return (
@@ -32,12 +34,16 @@ export class ResourceList extends React.Component<Props> {
             );
           })
         }
-        <StyledAddResourceButton
-          className="addResourceButton"
-        />
       </div>
     );
   }
 }
 
-export const StyledResourceList = inject('resourceStore', 'resourceActions')(styled(ResourceList)``);
+export const StyledResourceList = inject('resourceStore', 'resourceActions')(styled(ResourceList)`
+overflow-y: scroll;
+max-height: 819px;
+//::-webkit-scrollbar {
+//    width: 0px;
+//    background: transparent; /* make scrollbar transparent */
+//}
+`);

@@ -35,6 +35,9 @@ export class AddResourceButton extends React.Component<Props> {
 }
 
 export const StyledAddResourceButton = inject('resourceActions')(styled(AddResourceButton)`
+  width: 335px;
+  margin: auto;
+
   .addResourceButton {
   width: 335px;
   height: 38px;
@@ -44,6 +47,7 @@ export const StyledAddResourceButton = inject('resourceActions')(styled(AddResou
   border-top: 1px solid grey;
   color: #7A7A7A;
   background: #EAEAEA;
+  margin: auto;
   }
   
   .addResourceTitle {

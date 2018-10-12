@@ -31,8 +31,4 @@ describe('ResourceList', () => {
   it('should render a list of links', () => {
     expect(subject.find('.resource').length).toBe(3);
   });
-
-  it('should render a add resource button', () => {
-    expect(subject.find('.addResourceButton').length).toBe(1);
-  });
 });

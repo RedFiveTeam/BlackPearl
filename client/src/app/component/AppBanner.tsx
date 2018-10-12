@@ -53,5 +53,6 @@ export const StyledAppBanner = styled(AppBanner)`
     margin-top: 70px;
     margin-left: 10px;
     box-shadow: -1px 3px 3px rgba(0, 0, 0, .25);
+    margin-bottom: 3px;
   }
 `;

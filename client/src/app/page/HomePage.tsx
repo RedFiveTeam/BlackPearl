@@ -1,9 +1,9 @@
 import * as React from 'react';
-import { StyledResourceList } from '../resource/ResourceList';
 import { inject, observer } from 'mobx-react';
 import { ResourceStore } from '../resource/stores/ResourceStore';
 import styled from 'styled-components';
 import { StyledAddResourcePopup } from '../component/popup/AddResourcePopup';
+import { StyledCard } from '../component/card/Card';
 
 interface Props {
   resourceStore?: ResourceStore;
@@ -19,7 +19,9 @@ export class HomePage extends React.Component<Props> {
             <StyledAddResourcePopup/>
         }
         <div>
-          <StyledResourceList/>
+          <StyledCard
+            title="MAIN"
+          />
         </div>
       </React.Fragment>
     );

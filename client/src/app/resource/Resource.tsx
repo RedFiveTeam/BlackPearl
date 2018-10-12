@@ -40,6 +40,7 @@ export const StyledResource = inject('resourceStore')(styled(Resource)`
   font-size: 18px;
   vertical-align: middle;
   line-height: 38px;
+  margin: auto;
   
   a {
     text-decoration: none;
@@ -51,11 +52,7 @@ export const StyledResource = inject('resourceStore')(styled(Resource)`
   height: 100%;
   cursor: pointer;
   }
-  
-  .icon {
-    padding-left: 8px;
-  }
-  
+    
   .title {
     padding-left: 7px;
   }
