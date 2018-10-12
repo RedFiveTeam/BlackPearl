@@ -40,10 +40,10 @@ export class ResourceList extends React.Component<Props> {
 }
 
 export const StyledResourceList = inject('resourceStore', 'resourceActions')(styled(ResourceList)`
-overflow-y: scroll;
+overflow-y: auto;
 max-height: 819px;
 //::-webkit-scrollbar {
-//    width: 0px;
-//    background: transparent; /* make scrollbar transparent */
+//    //width: 0px;
+//    //background: transparent; /* make scrollbar transparent */
 //}
 `);
