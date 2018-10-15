@@ -20,3 +20,8 @@ Scenario('should allow the user to add a resource', (I) => {
   I.click('SAVE', '.modal');
   I.waitForText(title, 10);
 });
+
+Scenario('should see an ATO day', (I) => {
+  I.amOnPage('/');
+  I.see("ATO ", ".atoDay");
+});

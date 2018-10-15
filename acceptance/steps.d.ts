@@ -1,4 +1,3 @@
-
 type ICodeceptCallback = (i: CodeceptJS.I) => void;
 
 declare class FeatureConfig {

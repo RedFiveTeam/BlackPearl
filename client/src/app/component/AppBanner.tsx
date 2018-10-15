@@ -2,6 +2,7 @@ import * as React from 'react';
 import { observer } from 'mobx-react';
 import styled from 'styled-components';
 import { BlackPearlShipIcon } from '../icon/BlackPearlShipIcon';
+import { StyledATODay } from './widgets/ATODay';
 
 interface Props {
   className?: string;
@@ -25,7 +26,9 @@ export class AppBanner extends React.Component<Props> {
           </div>
           <div
             className="informationBanner"
-          />
+          >
+            <StyledATODay/>
+          </div>
         </div>
       </div>
     );
@@ -54,5 +57,9 @@ export const StyledAppBanner = styled(AppBanner)`
     margin-left: 10px;
     box-shadow: -1px 3px 3px rgba(0, 0, 0, .25);
     margin-bottom: 3px;
+    display: flex;
+    justify-content: flex-end;
+    font-family: Acme;
+    font-size: 18px;
   }
 `;
