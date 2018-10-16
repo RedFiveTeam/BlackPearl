@@ -1,9 +1,13 @@
 node ('') {
     stage ('Deploy Staging') {
-        timeout(time: 15, unit: 'SECONDS') {
-            input 'Push to staging?'
-            echo "It pushed!"
+        steps {
+            catchError {
+                timeout(time: 15, unit: 'SECONDS') {
+                    input 'Push to staging?'
+                    echo "It pushed!"
+                }
+            }
+            echo currentBuild.result
         }
-        echo "It didn't push!"
     }
 }
