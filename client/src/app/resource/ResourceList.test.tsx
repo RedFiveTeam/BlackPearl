@@ -1,34 +1,40 @@
 import * as React from 'react';
 import { shallow, ShallowWrapper } from 'enzyme';
 import { ResourceStore } from './stores/ResourceStore';
-import { ResourceModel } from './ResourceModel';
+import { Category, ResourceModel } from './ResourceModel';
 import { ResourceList } from './ResourceList';
-import { ResourceActions } from './actions/ResourceActions';
-import { StubRepositories } from '../utils/Repositories';
-import { stores } from '../utils/Stores';
 
 describe('ResourceList', () => {
   let subject: ShallowWrapper;
   let resourceStore: ResourceStore;
-  let resourceActions: ResourceActions;
+  let resourceActions: any;
 
   beforeEach(() => {
     resourceStore = new ResourceStore();
-    resourceActions = new ResourceActions(stores, StubRepositories);
 
+    resourceActions = {
+      setResourcesInCategory: jest.fn()
+    };
+
+    subject = shallow(
+      <ResourceList
+        resourceStore={resourceStore}
+        resourceActions={resourceActions}
+        category={Category.Main}
+      />
+    );
+
+  });
+
+  it('should render links in a category from those stored in ResourceStore', () => {
     const resources = [
-      new ResourceModel(1, 'https://www.google.com', 'Google'),
-      new ResourceModel(2, 'https://www.yahoo.com', 'Yahoo'),
-      new ResourceModel(3, 'https://www.ebay.com', 'eBay')
+      new ResourceModel(1, 'https://www.google.com', 'Google', Category.Main),
+      new ResourceModel(2, 'https://www.yahoo.com', 'Yahoo', Category.Main),
+      new ResourceModel(3, 'https://www.ebay.com', 'eBay', Category.SituationalAwareness)
     ];
 
     resourceStore.setResources(resources);
 
-    subject = shallow(<ResourceList resourceStore={resourceStore} resourceActions={resourceActions}/>);
-
-  });
-
-  it('should render a list of links', () => {
-    expect(subject.find('.resource').length).toBe(3);
+    expect(subject.find('.resource').length).toBe(2);
   });
 });

@@ -4,4 +4,3 @@ CREATE TABLE resource (
   name VARCHAR (64) NOT NULL,
   PRIMARY KEY (id)
 );
-

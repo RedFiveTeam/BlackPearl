@@ -24,10 +24,15 @@ public class ResourceController {
         return resourceRepository.findAll();
     }
 
+    @GetMapping(path = "/{categoryID}")
+    public @ResponseBody Iterable<Resource> getAllResourcesByCategoryID(@PathVariable Long categoryID) {
+        return resourceRepository.getAllByCategoryID(categoryID);
+    }
+
     @PostMapping
-    public ResponseEntity<Resource> create(@Valid @RequestBody ResourceJSON resourceJSON) {
-        Resource resource = new Resource(resourceJSON.getName(), resourceJSON.getUrl());
-        return new ResponseEntity<>(this.resourceRepository.save(resource), HttpStatus.CREATED);
+    public @ResponseBody Resource create(@Valid @RequestBody ResourceJSON resourceJSON) {
+        Resource resource = new Resource(resourceJSON.getName(), resourceJSON.getUrl(), resourceJSON.getCategoryID());
+        return this.resourceRepository.save(resource);
     }
 
     @DeleteMapping

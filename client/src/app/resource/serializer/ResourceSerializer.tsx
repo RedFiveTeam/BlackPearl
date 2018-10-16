@@ -6,7 +6,8 @@ export class ResourceSerializer implements Serializer<ResourceModel> {
     return {
       id: item.id,
       name: item.name,
-      url: item.url
+      url: item.url,
+      categoryID: item.categoryID
     };
   }
 
@@ -14,7 +15,8 @@ export class ResourceSerializer implements Serializer<ResourceModel> {
     return new ResourceModel(
       item.id,
       item.url,
-      item.name
+      item.name,
+      item.categoryID
     );
   }
 }

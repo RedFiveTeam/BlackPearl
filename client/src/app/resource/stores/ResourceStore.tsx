@@ -1,16 +1,11 @@
 import { ResourceModel } from '../ResourceModel';
 import { action, computed, observable } from 'mobx';
-import { NotificationStore } from '../../component/stores/NotificationStore';
 
-export class ResourceStore extends NotificationStore {
+export class ResourceStore {
   @observable private _resources: ResourceModel[] = [];
   @observable private _pendingResource: ResourceModel | null = null;
   @observable private _pendingDelete: ResourceModel | null = null;
   @observable private _pendingEdit: ResourceModel | null = null;
-
-  constructor() {
-    super();
-  }
 
   @action.bound
   setResources(resources: ResourceModel[]) {
@@ -55,6 +50,12 @@ export class ResourceStore extends NotificationStore {
   @computed
   get pendingResource() {
     return this._pendingResource;
+  }
+
+  returnResourcesInCategory(categoryID: number) {
+    return this._resources.filter(r => r.categoryID === categoryID).map((obj: ResourceModel) => {
+      return obj;
+    });
   }
 
   @computed

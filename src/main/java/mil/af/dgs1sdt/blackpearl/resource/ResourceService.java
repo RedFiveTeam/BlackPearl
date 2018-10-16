@@ -14,6 +14,7 @@ public class ResourceService {
         Resource resource = new Resource();
         resource.setName(json.getName());
         resource.setUrl(json.getUrl());
+        resource.setCategoryID(json.getCategoryID());
         return resourceRepository.save(resource);
     }
 

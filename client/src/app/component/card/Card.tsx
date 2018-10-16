@@ -3,10 +3,11 @@ import { observer } from 'mobx-react';
 import styled from 'styled-components';
 import { StyledResourceList } from '../../resource/ResourceList';
 import { StyledAddResourceButton } from '../button/AddResourceButton';
+import { Category, CategoryName } from '../../resource/ResourceModel';
 
 interface Props {
   className?: string;
-  title: string;
+  category: Category;
 }
 
 @observer
@@ -14,18 +15,23 @@ export class Card extends React.Component<Props> {
   render() {
     return (
       <div
-        className={this.props.className}
+        className={this.props.className  + ' category' + this.props.category}
       >
         <div
           className="cardTitle"
         >
-          {this.props.title}
+          {CategoryName[Category[this.props.category]]}
         </div>
         <div
           className="body"
         >
-          <StyledResourceList/>
-          <StyledAddResourceButton/>
+          <StyledResourceList
+            category={this.props.category}
+          />
+          {
+            (this.props.category === 1) &&
+            <StyledAddResourceButton/>
+          }
         </div>
       </div>
     );
@@ -34,6 +40,7 @@ export class Card extends React.Component<Props> {
 
 export const StyledCard = styled(Card)`
    width: 353px;
+   padding-left: 8px;
    
    .cardTitle {
     width: 100%;

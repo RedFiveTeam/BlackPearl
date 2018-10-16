@@ -2,6 +2,7 @@ package mil.af.dgs1sdt.blackpearl.resource;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import mil.af.dgs1sdt.blackpearl.BaseIntegrationTest;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,17 +17,23 @@ public class ResourceControllerTest extends BaseIntegrationTest {
     private Resource resource3;
     private Resource resource4;
 
+
     @Before
     public void setUp() {
-        resource1 = new Resource("Googerbhjwrle", "https://www.gowqeqweogle.com");
-        resource2 = new Resource("Yahoo", "https://www.yahoo.com");
-        resource3 = new Resource("eBay", "https://www.ebay.com");
-        resource4 = new Resource("notGoogle", "https://www.notgoogle.com");
+        resource1 = new Resource("Googerbhjwrle", "https://www.gowqeqweogle.com", 1L);
+        resource2 = new Resource("Yahoo", "https://www.yahoo.com", 2L);
+        resource3 = new Resource("eBay", "https://www.ebay.com", 3L);
+        resource4 = new Resource("notGoogle", "https://www.notgoogle.com", 1L);
 
         resourceRepository.save(resource1);
         resourceRepository.save(resource2);
         resourceRepository.save(resource3);
         resourceRepository.save(resource4);
+    }
+
+    @After
+    public void tearDown() {
+        super.tearDown();
     }
 
     @Test
@@ -40,7 +47,23 @@ public class ResourceControllerTest extends BaseIntegrationTest {
                 .body("url.size()", equalTo(4))
                 .body("[0].url", equalTo(resource1.getUrl()))
                 .body("[1].url", equalTo(resource2.getUrl()))
-                .body("[2].url", equalTo(resource3.getUrl()));
+                .body("[2].url", equalTo(resource3.getUrl()))
+                .body("[3].url", equalTo(resource4.getUrl()));
+    }
+
+    @Test
+    public void getAllResourcesByCategoryID() {
+        given()
+                .port(port)
+                .when()
+                .get(ResourceController.URI + "/1")
+                .then()
+                .statusCode(200)
+                .body("url.size()", equalTo(2))
+                .body("[0].url", equalTo(resource1.getUrl()))
+                .body("[0].categoryID", equalTo(1))
+                .body("[1].url", equalTo(resource4.getUrl()))
+                .body("[1].categoryID", equalTo(1));
     }
 
     @Test
@@ -48,6 +71,7 @@ public class ResourceControllerTest extends BaseIntegrationTest {
         ResourceJSON resource = new ResourceJSON();
         resource.setName("Test");
         resource.setUrl("https://www.test.com");
+        resource.setCategoryID(1L);
 
         given()
                 .port(port)
@@ -56,9 +80,10 @@ public class ResourceControllerTest extends BaseIntegrationTest {
                 .when()
                 .post(ResourceController.URI)
                 .then()
-                .statusCode(201)
+                .statusCode(200)
                 .body("url", equalTo("https://www.test.com"))
-                .body("name", equalTo("Test"));
+                .body("name", equalTo("Test"))
+                .body("categoryID", equalTo(1));
     }
 
     @Test

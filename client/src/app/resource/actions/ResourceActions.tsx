@@ -25,6 +25,11 @@ export class ResourceActions {
   }
 
   @action.bound
+  async setResourcesInCategory(categoryID: number) {
+    this.resourceStore.setResources(await this.resourceRepository.findResourcesForCategory(categoryID));
+  }
+
+  @action.bound
   clearPendingResource() {
     this.resourceStore.setPendingResource(null);
   }

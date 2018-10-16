@@ -3,9 +3,9 @@ package mil.af.dgs1sdt.blackpearl.resource;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mock;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
-import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.mockito.stubbing.Answer;
 
@@ -37,7 +37,8 @@ public class ResourceServiceTest {
 
         final ResourceJSON json = new ResourceJSON(
                 "Test",
-                "https://www.test.com"
+                "https://www.test.com",
+                1L
         );
 
         Resource savedResource = subject.addResource(json);
@@ -45,13 +46,15 @@ public class ResourceServiceTest {
         assertThat(savedResource.getId()).isNotNull();
         assertThat(savedResource.getName()).isEqualTo("Test");
         assertThat(savedResource.getUrl()).isEqualTo("https://www.test.com");
+        assertThat(savedResource.getCategoryID()).isEqualTo(1);
     }
 
     @Test
     public void updateExistingResource() {
         ResourceJSON json = new ResourceJSON(
                 "Google",
-                "http://www.google.com"
+                "http://www.google.com",
+                1L
         );
 
         Resource resource = Resource.fromJSON(json);

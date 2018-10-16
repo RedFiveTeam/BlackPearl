@@ -1,18 +1,33 @@
 import { action, computed, observable } from 'mobx';
 
+export enum Category {
+  Main = 1,
+  SituationalAwareness = 2,
+  TargetResearch = 3,
+}
+
+export enum CategoryName {
+  Main = 'MAIN',
+  SituationalAwareness = 'SITUATIONAL AWARENESS',
+  TargetResearch = 'TARGET RESEARCH'
+}
+
 export class ResourceModel {
   @observable private _id: number | null = null;
   @observable private _url: string = '';
   @observable private _name: string = '';
+  @observable private _categoryID: number | null = null;
 
   constructor(
     id: number | null = null,
     url: string = '',
-    name: string = ''
+    name: string = '',
+    categoryID: number = 1
   ) {
     this._id = id;
     this._url = url;
     this._name = name;
+    this._categoryID = categoryID;
   }
 
   @computed
@@ -30,6 +45,11 @@ export class ResourceModel {
     return this._url;
   }
 
+  @computed
+  get categoryID(): number | null {
+    return this._categoryID;
+}
+
   @action.bound
   setId(value: number | null) {
     this._id = value;
@@ -43,5 +63,10 @@ export class ResourceModel {
   @action.bound
   setUrl(value: string) {
     this._url = value;
+  }
+
+  @action.bound
+  setCategoryId(value: number) {
+    this._categoryID = value;
   }
 }

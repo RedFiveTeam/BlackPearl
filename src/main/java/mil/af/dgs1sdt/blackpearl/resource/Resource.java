@@ -6,7 +6,6 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @AllArgsConstructor
@@ -19,10 +18,12 @@ public class Resource {
     private Long id;
     private String url;
     private String name;
+    private Long categoryID;
 
-    public Resource(String name, String url) {
+    public Resource(String name, String url, Long categoryID) {
         this.name = name;
         this.url = url;
+        this.categoryID = categoryID;
     }
 
     public Resource update(ResourceJSON json) {
@@ -36,7 +37,8 @@ public class Resource {
         return new Resource(
                 json.getId(),
                 json.getUrl(),
-                json.getName()
+                json.getName(),
+                json.getCategoryID()
         );
     }
 }

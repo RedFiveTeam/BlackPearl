@@ -1,5 +1,5 @@
 import { ResourceStore } from './ResourceStore';
-import { ResourceModel } from '../ResourceModel';
+import { Category, ResourceModel } from '../ResourceModel';
 
 describe('ResourceStore', () => {
   let subject: ResourceStore;
@@ -15,6 +15,18 @@ describe('ResourceStore', () => {
   it('should show pending resource popup', () => {
     subject.setPendingResource(new ResourceModel(0, 'https://www.test.com', 'Test'));
     expect(subject.hasPendingResource).toBeTruthy();
+  });
+
+  it('should categorize resources', () => {
+    let resources: ResourceModel[];
+    resources = [
+      new ResourceModel(1, 'https://www.google.com', 'Google', Category.Main),
+      new ResourceModel(2, 'https://www.yahoo.com', 'Yahoo', Category.Main),
+      new ResourceModel(3, 'https://www.ebay.com', 'eBay', Category.SituationalAwareness)
+    ];
+    subject.setResources(resources);
+    expect(subject.returnResourcesInCategory(Category.Main)).toEqual([resources[0], resources[1]]);
+    expect(subject.returnResourcesInCategory(Category.SituationalAwareness)).toEqual([resources[2]]);
   });
 
   it('should hide pending delete popup by default', () => {

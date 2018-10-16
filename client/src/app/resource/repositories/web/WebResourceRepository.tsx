@@ -16,6 +16,13 @@ export class WebResourceRepository implements ResourceRepository {
     });
   }
 
+  async findResourcesForCategory(categoryID: number): Promise<ResourceModel[]> {
+    const json = await this.client.getJSON('/api/resources/' + categoryID);
+    return json.map((obj: any) => {
+      return this.resourceSerializer.deserialize(obj);
+    });
+  }
+
   async saveResource(resource: ResourceModel): Promise<ResourceModel> {
     const body = JSON.stringify(this.resourceSerializer.serialize(resource));
     const json = await this.client.postJSON('/api/resources', body);

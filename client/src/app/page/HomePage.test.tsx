@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { shallow, ShallowWrapper } from 'enzyme';
 import { HomePage } from './HomePage';
-import { StyledCard } from '../component/card/Card';
 import { StyledAddResourcePopup } from '../component/popup/AddResourcePopup';
 import { ResourceStore } from '../resource/stores/ResourceStore';
 import { ResourceModel } from '../resource/ResourceModel';
+import { StyledCardContainer } from '../component/card/CardContainer';
 
 describe('HomePage', () => {
   let subject: ShallowWrapper;
@@ -21,7 +21,7 @@ describe('HomePage', () => {
   });
 
   it('should display a card', () => {
-    expect(subject.find(StyledCard).exists()).toBeTruthy();
+    expect(subject.find(StyledCardContainer).exists()).toBeTruthy();
   });
 
   it('should not display a add resource popup by default', () => {
@@ -32,5 +32,9 @@ describe('HomePage', () => {
     expect(subject.find(StyledAddResourcePopup).exists()).toBeFalsy();
     resourceStore.setPendingResource(new ResourceModel(null, '', ''));
     expect(subject.find(StyledAddResourcePopup).exists()).toBeTruthy();
+  });
+
+  it('should have a CardContainer', () => {
+    expect(subject.find(StyledCardContainer).exists()).toBeTruthy();
   });
 });

@@ -18,11 +18,16 @@ public class ResourceJSON {
     @NotNull(message = emptyFieldMessage)
     private String url;
 
+    @NotNull(message = emptyFieldMessage)
+    private Long categoryID;
+
     public ResourceJSON(
             String name,
-            String url
+            String url,
+            Long categoryID
     ) {
         this.name = name;
         this.url = url;
+        this.categoryID = categoryID;
     }
 }

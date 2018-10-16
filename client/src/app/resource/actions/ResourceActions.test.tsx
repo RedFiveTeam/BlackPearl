@@ -23,15 +23,16 @@ describe('ResourceActions', () => {
 
     resourceRepository = {
       findAll: jest.fn(),
+      findResourcesForCategory: jest.fn(),
       saveResource: jest.fn(),
       delete: jest.fn(),
       updateResource: jest.fn()
     };
 
     testResources = [
-      new ResourceModel(1, 'https://www.google.com', 'Google'),
-      new ResourceModel(2, 'https://www.yahoo.com', 'Yahoo'),
-      new ResourceModel(3, 'https://www.ebay.com', 'eBay')
+      new ResourceModel(1, 'https://www.google.com', 'Google', 1),
+      new ResourceModel(2, 'https://www.yahoo.com', 'Yahoo', 1),
+      new ResourceModel(3, 'https://www.ebay.com', 'eBay', 2)
     ];
 
     subject = new ResourceActions({resourceStore} as any, {resourceRepository} as any);
@@ -44,7 +45,7 @@ describe('ResourceActions', () => {
 
   it('should store every resource in store', async () => {
     await subject.setAllResources();
-    expect(resourceStore.setResources).toHaveBeenCalledWith(await resourceRepository.findAll());
+    expect(resourceStore.setResources).toHaveBeenCalledWith(resourceRepository.findAll());
   });
 
   it('should clear pending resource', () => {

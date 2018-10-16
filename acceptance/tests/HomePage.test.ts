@@ -47,15 +47,13 @@ Scenario('should render two clocks', async function (I) {
   const clockCount = await I.grabNumberOfVisibleElements('.clock');
   assert.equal(clockCount, 2);
 });
-//
-// Scenario('should allow update of a resource', (I) => {
-//   let name = 'TestPage' + Date.now();
-//   I.amOnPage('/');
-//   I.click('.editButton' + `.${name}`);
-//   I.fillField('.titleField', name);
-//   I.fillField('.urlField', 'https://www.changed.org');
-//   I.click('CONFIRM');
-//   I.waitForText(name, 10);
-//   I.click(name);
-//   I.amOnPage('https://www.changed.org');
-// });
+
+Scenario('should render three unique cards', (I) => {
+  I.amOnPage('/');
+  I.see("MAIN", ".cardTitle");
+  I.see("SITUATIONAL AWARENESS", ".cardTitle");
+  I.see("TARGET RESEARCH", ".cardTitle");
+  I.see("Google", ".category1 .resource");
+  I.see("YouTube", ".category2 .resource");
+  I.see("Reddit", ".category3 .resource");
+});

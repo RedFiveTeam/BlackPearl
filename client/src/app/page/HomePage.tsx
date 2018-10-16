@@ -3,22 +3,25 @@ import { inject, observer } from 'mobx-react';
 import { ResourceStore } from '../resource/stores/ResourceStore';
 import styled from 'styled-components';
 import { StyledAddResourcePopup } from '../component/popup/AddResourcePopup';
-import { StyledCard } from '../component/card/Card';
+import { StyledCardContainer } from '../component/card/CardContainer';
 import { StyledRemoveResourcePopup } from '../component/popup/RemoveResourcePopup';
 import { StyledEditResourcePopup } from '../component/popup/EditResourcePopup';
 
 interface Props {
   resourceStore?: ResourceStore;
+  className?: string;
 }
 
 @observer
 export class HomePage extends React.Component<Props> {
   render() {
     return (
-      <React.Fragment>
+      <div
+        className={this.props.className}
+      >
         {
           this.props.resourceStore!.hasPendingResource &&
-          <StyledAddResourcePopup/>
+            <StyledAddResourcePopup/>
         }
         {
           this.props.resourceStore!.hasPendingEdit &&
@@ -28,14 +31,18 @@ export class HomePage extends React.Component<Props> {
           this.props.resourceStore!.hasPendingDelete &&
           <StyledRemoveResourcePopup/>
         }
-        <div>
-          <StyledCard
-            title="MAIN"
-          />
+        <div
+          className="cardsContainer"
+        >
+          <StyledCardContainer/>
         </div>
-      </React.Fragment>
+      </div>
     );
   }
 }
 
-export const StyledHomePage = inject('resourceStore')(styled(HomePage)``);
+export const StyledHomePage = inject('resourceStore')(styled(HomePage)`
+  .cardsContainer {
+    display: flex;
+  }
+`);

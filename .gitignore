@@ -5,6 +5,8 @@
 /tmp/
 node_modules
 setup_env.sh
+/client/build/**/*
+/src/main/resources/static/**/*
 
 ### STS ###
 .apt_generated
