@@ -3,6 +3,7 @@ import { shallow, ShallowWrapper } from 'enzyme';
 import { AppBanner } from './AppBanner';
 import { BlackPearlShipIcon } from '../icon/BlackPearlShipIcon';
 import { StyledATODay } from './widgets/ATODay';
+import { StyledTZClock } from './widgets/TZClock';
 
 describe('AppBanner', () => {
   let subject: ShallowWrapper;
@@ -25,5 +26,9 @@ describe('AppBanner', () => {
 
   it('should display an ATO Day', () => {
     expect(subject.find(StyledATODay).exists()).toBeTruthy();
+  });
+
+  it('should render timezone clocks', () => {
+    expect(subject.find(StyledTZClock).exists()).toBeTruthy();
   });
 });

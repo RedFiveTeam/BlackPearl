@@ -4,7 +4,7 @@ import { WebRepositories } from './Repositories';
 import { TimeActions } from './TimeActions';
 
 const resourceActions = new ResourceActions(stores, WebRepositories);
-const timeActions = new TimeActions();
+const timeActions = new TimeActions(stores);
 
 export const actions = {
   resourceActions,

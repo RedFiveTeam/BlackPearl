@@ -11,7 +11,6 @@ interface Props {
 @observer
 export class ATODay extends React.Component<Props> {
   render() {
-
     return (
       <span
         className={this.props.className + ' atoDay'}

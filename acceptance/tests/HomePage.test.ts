@@ -1,5 +1,7 @@
 /// <reference path="../steps.d.ts" />
 
+let assert = require('assert');
+
 Feature('Home Page');
 
 Scenario('should allow the user to add and delete a resource', (I) => {
@@ -19,4 +21,10 @@ Scenario('should allow the user to add and delete a resource', (I) => {
 Scenario('should see an ATO day', (I) => {
   I.amOnPage('/');
   I.see("ATO ", ".atoDay");
+});
+
+Scenario('should render two clocks', async function (I) {
+  I.amOnPage('/');
+  const clockCount = await I.grabNumberOfVisibleElements('.clock');
+  assert.equal(clockCount, 2);
 });

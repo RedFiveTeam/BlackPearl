@@ -2,19 +2,30 @@ import { TimeActions } from './TimeActions';
 
 describe('TimeActions', () => {
   let subject: TimeActions;
+  let timeStore: any;
 
   beforeEach(() => {
-    subject = new TimeActions();
+    timeStore = {
+      setTime: jest.fn(),
+      time: '2018-01-01T00:00:00Z'
+    };
+    subject = new TimeActions({timeStore} as any);
   });
 
   it('should return correct ATO Day', () => {
-    expect(subject.returnATODay(1)).toBe('ATO AA');
-    expect(subject.returnATODay(2)).toBe('ATO AB');
-    expect(subject.returnATODay(25)).toBe('ATO AY');
-    expect(subject.returnATODay(26)).toBe('ATO AZ');
-    expect(subject.returnATODay(27)).toBe('ATO BA');
-    expect(subject.returnATODay(52)).toBe('ATO BZ');
-    expect(subject.returnATODay()).toMatch(/ATO [A-Z]{2}/);
+    expect(subject.returnATODay()).toMatch(/ATO AA/);
   });
 
+  it('should return the time for a given timezone', () => {
+    expect(subject.returnCurrentTime(timeStore.time, 'America/Los_Angeles')).toBe('1600');
+    expect(subject.returnCurrentTime(timeStore.time, 'Asia/Magadan')).toBe('1100');
+    expect(subject.returnCurrentTime(timeStore.time, 'America/New_York')).toBe('1900');
+    expect(subject.returnCurrentTime(timeStore.time, 'Asia/Riyadh')).toBe('0300');
+    expect(subject.returnCurrentTime(timeStore.time)).toBe('0000');
+  });
+
+  it('should update time in TimeStore', () => {
+    subject.setCurrentTime();
+    expect(timeStore.setTime).toHaveBeenCalled();
+  });
 });

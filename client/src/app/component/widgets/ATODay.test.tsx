@@ -1,14 +1,15 @@
 import * as React from 'react';
 import { shallow, ShallowWrapper } from 'enzyme';
 import { ATODay } from './ATODay';
-import { TimeActions } from '../../utils/TimeActions';
 
 describe('ATODay', () => {
   let subject: ShallowWrapper;
-  let timeActions: TimeActions;
+  let timeActions: any;
 
   beforeEach(() => {
-    timeActions = new TimeActions();
+    timeActions =  {
+      returnATODay: jest.fn()
+    };
 
     subject = shallow(
       <ATODay
@@ -18,6 +19,7 @@ describe('ATODay', () => {
   });
 
   it('should render an ATO Day', () => {
-    expect(subject.find('.atoDay').text()).toMatch(/ATO [A-Z]{2}/);
+    expect(subject.find('.atoDay').exists()).toBeTruthy();
+    expect(timeActions.returnATODay).toHaveBeenCalled();
   });
 });
