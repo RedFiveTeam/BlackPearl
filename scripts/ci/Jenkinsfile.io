@@ -8,5 +8,6 @@ node ('') {
             }
         }
         currentBuild.result = 'SUCCESS'
+        echo currentBuild.result
     }
 }
