@@ -4,8 +4,8 @@ import styled from 'styled-components';
 import { DeleteIcon } from '../../icon/DeleteIcon';
 import { ResourceActions } from '../../resource/actions/ResourceActions';
 import { StyledButton } from './Button';
-import classNames = require('classnames');
 import { ResourceModel } from '../../resource/ResourceModel';
+import classNames = require('classnames');
 
 interface Props {
   resource: ResourceModel;
@@ -16,7 +16,7 @@ interface Props {
 @observer
 export class DeleteButton extends React.Component<Props> {
   onClick = async () => {
-    await this.props.resourceActions!.delete(this.props.resource.id!);
+    await this.props.resourceActions!.createPendingDelete(this.props.resource);
   };
 
   render() {

@@ -14,6 +14,8 @@ Scenario('should allow the user to add and delete a resource', (I) => {
   I.waitForText(name, 10);
 
   I.click('.deleteButton' + `.${name}`);
+  I.see(name);
+  I.click('CONFIRM');
   I.wait(1);
   I.dontSee(name);
 });

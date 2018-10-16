@@ -13,7 +13,8 @@ describe('Delete Button', () => {
   beforeEach(() => {
     resource = new ResourceModel(1, 'metimber.com', 'Shiver');
     resourceActions = {
-      delete: jest.fn()
+      delete: jest.fn(),
+      createPendingDelete: jest.fn()
     };
 
     subject = shallow(
@@ -30,6 +31,11 @@ describe('Delete Button', () => {
 
   it('should trigger a delete action on click', () => {
     subject.find(StyledButton).simulate('click');
-    expect(resourceActions.delete).toHaveBeenCalledWith(resource.id);
+    expect(resourceActions.createPendingDelete).toHaveBeenCalledWith(resource);
+  });
+
+  it('should render a popup when delete is clicked', () => {
+    subject.find(StyledButton).simulate('click');
+    expect(resourceActions.createPendingDelete).toHaveBeenCalled();
   });
 });

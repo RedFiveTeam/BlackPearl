@@ -4,6 +4,7 @@ import { ResourceStore } from '../resource/stores/ResourceStore';
 import styled from 'styled-components';
 import { StyledAddResourcePopup } from '../component/popup/AddResourcePopup';
 import { StyledCard } from '../component/card/Card';
+import { StyledRemoveResourcePopup } from '../component/popup/RemoveResourcePopup';
 
 interface Props {
   resourceStore?: ResourceStore;
@@ -16,7 +17,11 @@ export class HomePage extends React.Component<Props> {
       <React.Fragment>
         {
           this.props.resourceStore!.hasPendingResource &&
-            <StyledAddResourcePopup/>
+          <StyledAddResourcePopup/>
+        }
+        {
+          this.props.resourceStore!.hasPendingDelete &&
+          <StyledRemoveResourcePopup/>
         }
         <div>
           <StyledCard

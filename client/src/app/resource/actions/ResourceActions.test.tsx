@@ -12,6 +12,7 @@ describe('ResourceActions', () => {
     resourceStore = {
       setResources: jest.fn(),
       setPendingResource: jest.fn(),
+      setPendingDelete: jest.fn(),
       pendingResource: ResourceModel,
       performLoading: async (runFunction: any) => {
         await runFunction();
@@ -69,6 +70,17 @@ describe('ResourceActions', () => {
     await subject.delete(testResources[0].id!);
     expect(resourceRepository.delete).toHaveBeenCalledWith(testResources[0].id);
     expect(resourceStore.setResources).toHaveBeenCalledWith(await resourceRepository.findAll());
+  });
+
+  it('should create a pending delete', () => {
+    let pendingDelete = new ResourceModel(1, 'Delete Me', 'deleteme.com');
+    subject.createPendingDelete(pendingDelete);
+    expect(resourceStore.setPendingDelete).toHaveBeenCalledWith(pendingDelete);
+  });
+
+  it('should clear a pending delete', () => {
+    subject.clearPendingDelete();
+    expect(resourceStore.setPendingDelete).toHaveBeenCalledWith(null);
   });
 })
 ;

@@ -5,6 +5,7 @@ import { NotificationStore } from '../../component/stores/NotificationStore';
 export class ResourceStore extends NotificationStore {
   @observable private _resources: ResourceModel[] = [];
   @observable private _pendingResource: ResourceModel | null = null;
+  @observable private _pendingDelete: ResourceModel | null = null;
 
   constructor() {
     super();
@@ -20,9 +21,19 @@ export class ResourceStore extends NotificationStore {
     this._pendingResource = resource;
   }
 
+  @action.bound
+  setPendingDelete(resource: ResourceModel | null) {
+    this._pendingDelete = resource;
+  }
+
   @computed
   get hasPendingResource() {
     return this._pendingResource !== null;
+  }
+
+  @computed
+  get hasPendingDelete() {
+    return this._pendingDelete !== null;
   }
 
   @computed
@@ -33,5 +44,10 @@ export class ResourceStore extends NotificationStore {
   @computed
   get pendingResource() {
     return this._pendingResource;
+  }
+
+  @computed
+  get pendingDelete() {
+    return this._pendingDelete;
   }
 }

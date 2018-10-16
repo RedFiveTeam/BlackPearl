@@ -35,8 +35,19 @@ export class ResourceActions {
   }
 
   @action.bound
+  createPendingDelete(resource: ResourceModel) {
+    this.resourceStore.setPendingDelete(resource);
+  }
+
+  @action.bound
+  clearPendingDelete() {
+    this.resourceStore.setPendingDelete(null);
+  }
+
+  @action.bound
   async delete(resourceId: number) {
     await this.resourceRepository.delete(resourceId);
+    await this.clearPendingDelete();
     await this.setAllResources();
   }
 
