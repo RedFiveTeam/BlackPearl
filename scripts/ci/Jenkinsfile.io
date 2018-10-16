@@ -6,6 +6,6 @@ node ('') {
                 echo "It pushed!"
             }
         }
-        echo "SUCCESS"
+        currentBuild.result = "SUCCESS"
     }
 }
