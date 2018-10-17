@@ -1,6 +1,10 @@
 node ('') {
     stage ('Checkout') {
-        git url: 'git@gitlab.devops.geointservices.io:dgs1sdt/blackpearl.git', branch: 'master', credentialsId: '0059b60b-fe05-4857-acda-41ada14d0c52', poll: true
+        if(env.BRANCH_NAME == 'acceptance') {
+            git url: 'git@gitlab.devops.geointservices.io:dgs1sdt/blackpearl.git', branch: 'acceptance', credentialsId: '0059b60b-fe05-4857-acda-41ada14d0c52', poll: true
+        } else if (env.BRANCH_NAME == 'master') {
+            git url: 'git@gitlab.devops.geointservices.io:dgs1sdt/blackpearl.git', branch: 'master', credentialsId: '0059b60b-fe05-4857-acda-41ada14d0c52', poll: true
+        }
     }
 
     stage ('Test & Build') {

@@ -29,7 +29,7 @@ export class AddResourcePopup extends React.Component<Props, State> {
     return (
       <div className={this.props.className}>
         <StyledPopupModal
-          title="ADD RESOURCE"
+          title="Add Resource"
           onCancel={() => {
             this.props.resourceActions!.clearPendingResource();
           }}
@@ -38,14 +38,14 @@ export class AddResourcePopup extends React.Component<Props, State> {
             value={this.state.title}
             className="titleField"
             type="text"
-            placeholder="TITLE"
+            placeholder="Title"
             onChange={(e) => this.onTitleFieldChange(e)}
           /><br/>
           <input
             value={this.state.url}
             className="urlField"
             type="text"
-            placeholder="URL"
+            placeholder="Address (i.e. https://www...)"
             onChange={(e) => this.onUrlFieldChange(e)}
           />
           <button
@@ -67,12 +67,26 @@ export class AddResourcePopup extends React.Component<Props, State> {
 }
 
 export const StyledAddResourcePopup = inject('resourceActions')(styled(AddResourcePopup)`
-
+  
+  .modal {
+   width: 514px;
+   height: 250px;
+  }
+  
+  .title {
+  height: 61px;
+  width: 514px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+  }
+  
   input {
-    font-family: Acme;
+    font-family: Alegreya Sans;
     background: #C4C4C4;
     border: none;
-    width: 478px;
+    width: 490px;
     height: 40px;
     left: 480px;
     top: 429px;
@@ -95,16 +109,15 @@ export const StyledAddResourcePopup = inject('resourceActions')(styled(AddResour
     position: absolute;
     left: 15%;
     bottom: 6%;
-    
     background: #C4C4C4;
-    font-family: Acme;
+    font-family: Alegreya Sans;
     width: 157px;
     height: 49px;
     font-size: 24px;
+    outline: 0px;
   }
   
   .titleField {
-    margin-top: 10px;
     margin-bottom: 20px;
   }
   

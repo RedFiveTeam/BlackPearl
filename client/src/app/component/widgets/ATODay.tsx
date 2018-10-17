@@ -21,6 +21,4 @@ export class ATODay extends React.Component<Props> {
   }
 }
 
-export const StyledATODay = inject('timeActions')(styled(ATODay)`
-  margin-right: 5px;
-`);
+export const StyledATODay = inject('timeActions')(styled(ATODay)``);

@@ -52,7 +52,7 @@ export const StyledResource = inject('resourceStore')(styled(Resource)`
   border: none;
   border-top: 1px solid grey;
   background: #EAEAEA;
-  font-family: Acme;
+  font-family: Alegreya Sans;
   font-size: 18px;
   margin: auto;
   display: flex;

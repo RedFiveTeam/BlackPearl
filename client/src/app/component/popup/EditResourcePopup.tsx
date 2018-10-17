@@ -39,7 +39,7 @@ export class EditResourcePopup extends React.Component<Props, State> {
       <div className={this.props.className}>
         <StyledPopupModal
           className="editPopup"
-          title="EDIT RESOURCE"
+          title="Edit Resource"
           onCancel={() => {
             this.props.resourceActions!.clearPendingEdit();
           }}
@@ -90,7 +90,7 @@ export const StyledEditResourcePopup = inject('resourceActions', 'resourceStore'
   
   .pendingEditTitle {
     position: absolute;
-    font-family: Acme;
+    font-family: Alegreya Sans;
     background: #C4C4C4;
     border: none;
     font-size: 24px;
@@ -99,14 +99,13 @@ export const StyledEditResourcePopup = inject('resourceActions', 'resourceStore'
     top: 67px;
     bottom: 89px;
     left: 12px;
-    opacity: 0.5;
     color: black;
     text-align: left;
   }
   
   .pendingEditUrl {
     position: absolute;
-    font-family: Acme;
+    font-family: Alegreya Sans;
     background: #C4C4C4;
     border: none;
     font-size: 24px;
@@ -115,7 +114,6 @@ export const StyledEditResourcePopup = inject('resourceActions', 'resourceStore'
     top: 127px;
     bottom: 89px;
     left: 12px;
-    opacity: 0.5;
     color: black;
     text-align: left;
   }
@@ -125,11 +123,12 @@ export const StyledEditResourcePopup = inject('resourceActions', 'resourceStore'
     left: 15%;
     bottom: 6%;
     background: #C4C4C4;
-    font-family: Acme;
+    font-family: Alegreya Sans;
     width: 157px;
     height: 49px;
     font-size: 24px;
     cursor: pointer;
+    outline: 0px;
   }
   
   .cancelButton {

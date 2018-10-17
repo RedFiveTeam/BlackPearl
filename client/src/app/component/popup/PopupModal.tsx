@@ -46,10 +46,10 @@ export const StyledPopupModal = styled(PopupModal)`
   position: fixed;
   z-index: 1;
   text-align: center;
-  font-family: Acme;
+  font-family: Alegreya Sans;
   
   .modal {
-    border-radius: 12px;
+    border-radius: 10px;
     background: #F6F6F6;
     width: 544px;
     height: 308px;
@@ -70,10 +70,11 @@ export const StyledPopupModal = styled(PopupModal)`
   
   .cancelButton {
   background: #C4C4C4;
-  font-family: Acme;
+  font-family: Alegreya Sans;
   width: 157px;
   height: 49px;
   font-size: 24px;
+  outline: 0px;
   }
   
   .cancelButton:hover {

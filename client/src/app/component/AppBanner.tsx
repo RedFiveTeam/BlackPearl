@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { observer } from 'mobx-react';
 import styled from 'styled-components';
-import { BlackPearlShipIcon } from '../icon/BlackPearlShipIcon';
 import { StyledATODay } from './widgets/ATODay';
 import { StyledTZClock } from './widgets/TZClock';
+import { BlackPearlShipIcon } from '../icon/BlackPearlShipIcon';
 
 interface Props {
   className?: string;
@@ -19,7 +19,7 @@ export class AppBanner extends React.Component<Props> {
         <div
           className="leftSide"
         >
-        <BlackPearlShipIcon/>
+          <BlackPearlShipIcon/>
         </div>
         <div
           className="rightSide"
@@ -31,9 +31,10 @@ export class AppBanner extends React.Component<Props> {
           </div>
           <div
             className="informationBanner"
-          >
-            <StyledATODay/>
-          </div>
+          />
+          <StyledATODay
+            className="atoDay"
+          />
           <div
             className="timeBanner"
           >
@@ -68,22 +69,23 @@ display: flex;
     font-family: Iglesia;
     font-size: 68px;
     position: absolute;
-    left: -12px;
-    top: 20px;
+    left: 10px;
+    bottom: 53px;
+    text-shadow: 0px 3px 6px rgba(0, 0, 0, 0.3);
   }
   
   .informationBanner {
-    background: #EAEAEA;
+    display: none;
+    //background: #EAEAEA;
     width: 968px;
     height: 22px;
     margin-top: 80px;
     margin-left: 10px;
-    box-shadow: -1px 3px 3px rgba(0, 0, 0, .25);
+    //box-shadow: -1px 3px 3px rgba(0, 0, 0, .25);
     margin-bottom: 3px;
     display: flex;
     justify-content: flex-end;
-    font-family: Acme;
-    font-size: 18px;
+    //font-size: 18px;
   }
   
   .timeBanner {
@@ -93,12 +95,22 @@ display: flex;
       box-shadow: -1px 3px 3px rgba(0, 0, 0, .25);
       display: flex;
       justify-content: space-between;
-      font-family: Acme;
+      font-family: Alegreya Sans;
       font-size: 18px;
       padding-left: 10px;
       align-self: flex-end;
       margin-left: 10px;
       position: relative;
       bottom: 6px;
+      border-radius: 10px;
+  }
+  
+  .atoDay {
+  position: absolute;
+  right: 124px;
+  height: 46px;
+  font-size: 36px;
+  font-family: Alegreya Sans;
+  text-shadow: 0px 3px 6px rgba(0, 0, 0, 0.3);
   }
 `;

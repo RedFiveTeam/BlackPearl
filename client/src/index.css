@@ -10,6 +10,12 @@
     font-weight: 400;
 }
 
+@font-face {
+    font-family: 'Alegreya Sans';
+    src: local('Alegreya Sans'), url('./app/fonts/Alegreya_Sans/AlegreyaSans-Bold.ttf');
+    font-weight: 400;
+}
+
 body {
-    background: #9D8189;
+    background: #AEA4BF;
 }

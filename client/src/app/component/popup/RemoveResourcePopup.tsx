@@ -22,7 +22,7 @@ export class RemoveResourcePopup extends React.Component<Props> {
       <div className={this.props.className}>
         <StyledPopupModal
           className="deletePopup"
-          title="ARE YOU SURE YOU WANT TO DELETE THIS RESOURCE?"
+          title="Are you sure you want to delete this resource?"
           onCancel={() => {
             this.props.resourceActions!.clearPendingDelete();
           }}
@@ -44,51 +44,56 @@ export class RemoveResourcePopup extends React.Component<Props> {
 
 export const StyledRemoveResourcePopup = inject('resourceActions', 'resourceStore')(styled(RemoveResourcePopup)`
   .modal {
-  width: 544px;
-  height: 210px;
+  width: 514px;
+  height: 190px;
   }
   
   .title {
-  height: 80px;
-  width: 544px;
-  padding-top: 21px;
-  padding-bottom: 19px;
+  height: 61px;
+  width: 514px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
   }
   
   .pendingDeleteTitle {
     position: absolute;
-    font-family: Acme;
+    font-family: Alegreya Sans;
     background: #C4C4C4;
     border: none;
     font-size: 24px;
-    height: 33px;
-    width: 437px;
-    top: 88px;
+    height: 40px;
+    width: 490px;
+    top: 61px;
     bottom: 89px;
-    left: 51px;
+    left: 12px;
     right: 56px;
     opacity: 0.5;
     color: black;
-    padding-left: 8px;
     text-align: left;
+    padding-left: 7px;
+    box-sizing: border-box;
+    line-height: 40px;
   }
   
   .confirmButton {
     position: absolute;
     left: 15%;
-    bottom: 6%;
+    bottom: 20px;
     background: #C4C4C4;
-    font-family: Acme;
+    font-family: Alegreya Sans;
     width: 157px;
     height: 49px;
     font-size: 24px;
     cursor: pointer;
+    outline: 0px;
   }
   
   .cancelButton {
     position: absolute;
     right: 15%;
-    bottom: 6%;
+    bottom: 20px;
   }
 
 `);

@@ -7,6 +7,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { stores } from './app/utils/Stores';
 import { Provider } from 'mobx-react';
 import { actions } from './app/utils/Actions';
+import '@babel/polyfill';
 
 ReactDOM.render(
   <Provider
