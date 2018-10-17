@@ -13,5 +13,13 @@
     You need to enable JavaScript to run this app.
 </noscript>
 <div id="root"></div>
+<script>
+    try {
+        eval("var foo = (x)=>x+1");
+    } catch (e) {
+        document.getElementById("root").innerHTML = "<p>This browser is unsupported by The Black Pearl. " +
+            "Please use Microsoft Edge, Google Chrome, or Mozilla Firefox.</p>"
+    }
+</script>
 </body>
 </html>
