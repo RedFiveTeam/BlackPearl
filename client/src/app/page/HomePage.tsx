@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import { StyledAddResourcePopup } from '../component/popup/AddResourcePopup';
 import { StyledCard } from '../component/card/Card';
 import { StyledRemoveResourcePopup } from '../component/popup/RemoveResourcePopup';
+import { StyledEditResourcePopup } from '../component/popup/EditResourcePopup';
 
 interface Props {
   resourceStore?: ResourceStore;
@@ -18,6 +19,10 @@ export class HomePage extends React.Component<Props> {
         {
           this.props.resourceStore!.hasPendingResource &&
           <StyledAddResourcePopup/>
+        }
+        {
+          this.props.resourceStore!.hasPendingEdit &&
+            <StyledEditResourcePopup/>
         }
         {
           this.props.resourceStore!.hasPendingDelete &&

@@ -26,4 +26,10 @@ export class WebResourceRepository implements ResourceRepository {
     const json = await this.client.delete('/api/resources', JSON.stringify(resourceId));
     return Promise.resolve(json);
   }
+
+  async updateResource(resource: ResourceModel): Promise<ResourceModel> {
+    const body = JSON.stringify(this.resourceSerializer.serialize(resource));
+    const json = await this.client.putJSON('/api/resources/' + resource.id, body);
+    return Promise.resolve(json);
+  }
 }

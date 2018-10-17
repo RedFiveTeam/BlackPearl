@@ -25,4 +25,13 @@ describe('ResourceStore', () => {
     subject.setPendingDelete(new ResourceModel(1, 'https://www.test1.com', 'Test1'));
     expect(subject.hasPendingDelete).toBeTruthy();
   });
+
+  it('should hide pending edit popup by default', () => {
+    expect(subject.hasPendingEdit).toBeFalsy();
+  });
+
+  it('should show a pending edit popup', () => {
+    subject.setPendingEdit(new ResourceModel(1, 'https://www.test1.com', 'Test1'));
+    expect(subject.hasPendingEdit).toBeTruthy();
+  });
 });

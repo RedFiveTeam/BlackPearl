@@ -14,16 +14,19 @@ public class ResourceControllerTest extends BaseIntegrationTest {
     private Resource resource1;
     private Resource resource2;
     private Resource resource3;
+    private Resource resource4;
 
     @Before
     public void setUp() {
         resource1 = new Resource("Googerbhjwrle", "https://www.gowqeqweogle.com");
         resource2 = new Resource("Yahoo", "https://www.yahoo.com");
         resource3 = new Resource("eBay", "https://www.ebay.com");
+        resource4 = new Resource("notGoogle", "https://www.notgoogle.com");
 
         resourceRepository.save(resource1);
         resourceRepository.save(resource2);
         resourceRepository.save(resource3);
+        resourceRepository.save(resource4);
     }
 
     @Test
@@ -34,7 +37,7 @@ public class ResourceControllerTest extends BaseIntegrationTest {
                 .get(ResourceController.URI)
                 .then()
                 .statusCode(200)
-                .body("url.size()", equalTo(3))
+                .body("url.size()", equalTo(4))
                 .body("[0].url", equalTo(resource1.getUrl()))
                 .body("[1].url", equalTo(resource2.getUrl()))
                 .body("[2].url", equalTo(resource3.getUrl()));
@@ -60,7 +63,6 @@ public class ResourceControllerTest extends BaseIntegrationTest {
 
     @Test
     public void deleteTest() {
-        System.out.println(resource1.getId());
         given()
                 .port(port)
                 .contentType("application/json")
@@ -69,5 +71,22 @@ public class ResourceControllerTest extends BaseIntegrationTest {
                 .delete(ResourceController.URI)
                 .then()
                 .statusCode(204);
+    }
+
+    @Test
+    public void updateTest() throws Exception {
+        resource4.setUrl("https://www.google.com");
+        resource4.setName("Google");
+
+        final String json = objectMapper.writeValueAsString(resource4);
+        given()
+          .port(port)
+          .contentType("application/json")
+          .body(json)
+        .when()
+          .put(ResourceController.URI + "/4")
+        .then()
+          .statusCode(200)
+          .body("url", equalTo("https://www.google.com"));
     }
 }

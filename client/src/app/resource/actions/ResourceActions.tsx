@@ -45,6 +45,16 @@ export class ResourceActions {
   }
 
   @action.bound
+  createPendingEdit(resource: ResourceModel) {
+    this.resourceStore.setPendingEdit(resource);
+  }
+
+  @action.bound
+  clearPendingEdit() {
+    this.resourceStore.setPendingEdit(null);
+  }
+
+  @action.bound
   async delete(resourceId: number) {
     await this.resourceRepository.delete(resourceId);
     await this.clearPendingDelete();
@@ -67,5 +77,14 @@ export class ResourceActions {
     resource.setUrl(url);
 
     this.resourceStore.setPendingResource(resource);
+  }
+
+  @action.bound
+  async updateResource() {
+    if (this.resourceStore.pendingEdit != null) {
+      await this.resourceRepository.updateResource(this.resourceStore.pendingEdit);
+      this.clearPendingEdit();
+      await this.setAllResources();
+    }
   }
 }

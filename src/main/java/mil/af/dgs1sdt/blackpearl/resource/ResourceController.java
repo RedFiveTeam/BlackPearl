@@ -36,4 +36,9 @@ public class ResourceController {
         resourceRepository.deleteById(id);
         return ResponseEntity.noContent().build();
     }
+
+    @PutMapping(path = "/{id}")
+    public @ResponseBody Resource update(@Valid @RequestBody ResourceJSON json) {
+        return this.resourceService.update(json);
+    }
 }

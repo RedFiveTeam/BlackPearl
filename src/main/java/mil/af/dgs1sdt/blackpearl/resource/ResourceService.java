@@ -16,4 +16,9 @@ public class ResourceService {
         resource.setUrl(json.getUrl());
         return resourceRepository.save(resource);
     }
+
+    public Resource update(ResourceJSON json) {
+        final Resource resource = resourceRepository.getOne(json.getId());
+        return resourceRepository.save(resource.update(json));
+    }
 }

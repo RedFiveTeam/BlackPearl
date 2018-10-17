@@ -49,6 +49,7 @@ export const StyledPopupModal = styled(PopupModal)`
   font-family: Acme;
   
   .modal {
+    border-radius: 12px;
     background: #F6F6F6;
     width: 544px;
     height: 308px;
@@ -57,7 +58,7 @@ export const StyledPopupModal = styled(PopupModal)`
     left: 50%;
     top: 50%;
     position: absolute;
-    border: 1px solid;
+    box-shadow: -1px 3px 3px rgba(0, 0, 0, .25);
   }
   
   .title {

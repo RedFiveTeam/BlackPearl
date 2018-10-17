@@ -19,4 +19,10 @@ export class StubResourceRepository implements ResourceRepository {
   delete(resourceId: number): Promise<void> {
     return Promise.resolve();
   }
+
+  updateResource(resource: ResourceModel): Promise<ResourceModel> {
+    resource.setName('Edit Test Resource');
+    resource.setUrl('https://www.editresource.com');
+    return Promise.resolve(resource);
+  }
 }

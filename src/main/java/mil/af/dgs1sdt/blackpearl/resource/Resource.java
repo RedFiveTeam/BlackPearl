@@ -24,4 +24,19 @@ public class Resource {
         this.name = name;
         this.url = url;
     }
+
+    public Resource update(ResourceJSON json) {
+        this.setId(json.getId());
+        this.setName(json.getName());
+        this.setUrl(json.getUrl());
+        return this;
+    }
+
+    public static Resource fromJSON(ResourceJSON json) {
+        return new Resource(
+                json.getId(),
+                json.getUrl(),
+                json.getName()
+        );
+    }
 }

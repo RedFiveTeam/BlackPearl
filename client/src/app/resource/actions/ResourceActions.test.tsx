@@ -13,7 +13,9 @@ describe('ResourceActions', () => {
       setResources: jest.fn(),
       setPendingResource: jest.fn(),
       setPendingDelete: jest.fn(),
+      setPendingEdit: jest.fn(),
       pendingResource: ResourceModel,
+      pendingEdit: ResourceModel,
       performLoading: async (runFunction: any) => {
         await runFunction();
       }
@@ -22,7 +24,8 @@ describe('ResourceActions', () => {
     resourceRepository = {
       findAll: jest.fn(),
       saveResource: jest.fn(),
-      delete: jest.fn()
+      delete: jest.fn(),
+      updateResource: jest.fn()
     };
 
     testResources = [
@@ -81,6 +84,22 @@ describe('ResourceActions', () => {
   it('should clear a pending delete', () => {
     subject.clearPendingDelete();
     expect(resourceStore.setPendingDelete).toHaveBeenCalledWith(null);
+  });
+
+  it('should create a pending edit', () => {
+    let pendingEdit = new ResourceModel(1, 'Edit Me', 'editme.com');
+    subject.createPendingEdit(pendingEdit);
+    expect(resourceStore.setPendingEdit).toHaveBeenCalledWith(pendingEdit);
+  });
+
+  it('should clear a pending edit', () => {
+    subject.clearPendingEdit();
+    expect(resourceStore.setPendingEdit).toHaveBeenCalledWith(null);
+  });
+
+  it('should update a resource', async () => {
+    await subject.updateResource();
+    expect(resourceRepository.updateResource).toHaveBeenCalledWith(resourceStore.pendingEdit);
   });
 })
 ;

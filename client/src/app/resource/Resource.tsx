@@ -6,6 +6,8 @@ import { PearlIcon } from '../icon/PearlIcon';
 import { StyledDeleteButton } from '../component/button/DeleteButton';
 import classNames = require('classnames');
 import { ResourceModel } from './ResourceModel';
+import { StyledEditButton } from '../component/button/EditButton';
+import { BorderIcon } from '../icon/BorderIcon';
 
 interface Props {
   resource: ResourceModel;
@@ -24,10 +26,20 @@ export class Resource extends React.Component<Props> {
             <span className="title">{this.props.resource.name}</span>
           </a>
         </div>
-        {
-          this.props.resource.id &&
-          <StyledDeleteButton resource={this.props.resource}/>
-        }
+        <div className="buttons">
+          {
+            this.props.resource.id &&
+            <StyledEditButton resource={this.props.resource}/>
+          }
+          {
+            this.props.resource.id &&
+              <BorderIcon/>
+          }
+          {
+            this.props.resource.id &&
+            <StyledDeleteButton resource={this.props.resource}/>
+          }
+        </div>
       </div>
     );
   }
@@ -44,6 +56,9 @@ export const StyledResource = inject('resourceStore')(styled(Resource)`
   font-size: 18px;
   margin: auto;
   display: flex;
+  vertical-align: middle;
+  line-height: 27px;
+  overflow: hidden;
   
   a {
    text-decoration: none;
@@ -53,10 +68,22 @@ export const StyledResource = inject('resourceStore')(styled(Resource)`
    //z-index: 1; //makes the a element clickable over other elements if needed
    padding: 7px;
    margin: -1px;
-   width: 290px;
+   width: 266px;
+  }
+  
+  .buttons {
+  display: inline-flex;
+  align-items: center;
+  position: relative;
+  top: 2px;
   }
     
   .title {
     padding-left: 7px;
+  }
+  
+  #borderIcon {
+    position: relative;
+    bottom: 1px;
   }
 `);
