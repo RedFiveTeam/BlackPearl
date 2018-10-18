@@ -18,7 +18,7 @@ interface State  {
 
 @observer
 export class EditResourcePopup extends React.Component<Props, State> {
-  state = {title: '', url: ''};
+  state = {title: this.props.resourceStore!.pendingEdit!.name, url: this.props.resourceStore!.pendingEdit!.url};
 
   onTitleFieldChange = (e: any) => {
     this.setState({title: e.target.value});
@@ -48,12 +48,14 @@ export class EditResourcePopup extends React.Component<Props, State> {
             className="pendingEditTitle"
             type="text"
             placeholder={this.props.resourceStore!.pendingEdit!.name}
+            value={this.state.title}
             onChange={(e) => this.onTitleFieldChange(e)}
           />
           <input
             className="pendingEditUrl"
             type="text"
             placeholder={this.props.resourceStore!.pendingEdit!.url}
+            value={this.state.url}
             onChange={(e) => this.onUrlFieldChange(e)}
           />
           <button
