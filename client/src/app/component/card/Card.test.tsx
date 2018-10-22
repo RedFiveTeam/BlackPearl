@@ -24,7 +24,7 @@ describe('Card', () => {
   });
 
   it('should have a title', () => {
-    expect(subject.find('.cardTitle').text()).toBe('MAIN');
+    expect(subject.find('.cardTitle').text()).toBe('Main');
   });
 
   it('should have a className equal to its category', () => {

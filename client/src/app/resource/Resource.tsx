@@ -3,11 +3,9 @@ import { inject, observer } from 'mobx-react';
 import { ResourceStore } from './stores/ResourceStore';
 import styled from 'styled-components';
 import { PearlIcon } from '../icon/PearlIcon';
-import { StyledDeleteButton } from '../component/button/DeleteButton';
-import classNames = require('classnames');
 import { ResourceModel } from './ResourceModel';
-import { StyledEditButton } from '../component/button/EditButton';
-import { BorderIcon } from '../icon/BorderIcon';
+import { StyledResourceMenuContainer } from './ResourceMenuContainer';
+import classNames = require('classnames');
 
 interface Props {
   resource: ResourceModel;
@@ -26,20 +24,9 @@ export class Resource extends React.Component<Props> {
             <span className="title">{this.props.resource.name}</span>
           </a>
         </div>
-        <div className="buttons">
-          {
-            this.props.resource.id &&
-            <StyledEditButton resource={this.props.resource}/>
-          }
-          {
-            this.props.resource.id &&
-              <BorderIcon/>
-          }
-          {
-            this.props.resource.id &&
-            <StyledDeleteButton resource={this.props.resource}/>
-          }
-        </div>
+        <StyledResourceMenuContainer
+          resource={this.props.resource}
+        />
       </div>
     );
   }
@@ -68,15 +55,15 @@ export const StyledResource = inject('resourceStore')(styled(Resource)`
    //z-index: 1; //makes the a element clickable over other elements if needed
    padding: 7px;
    margin: -1px;
-   width: 266px;
+   width: 235px;
   }
   
-  .buttons {
-  display: inline-flex;
-  align-items: center;
-  position: relative;
-  top: 2px;
-  }
+  //.buttons {
+  //display: inline-flex;
+  //align-items: center;
+  //position: relative;
+  //top: 2px;
+  //}
     
   .title {
     padding-left: 7px;

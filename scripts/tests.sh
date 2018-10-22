@@ -27,6 +27,10 @@ function main {
 function acceptanceTests {
     showBanner "Acceptance Tests"
 
+    pushd ${BASE_DIR}/scripts/seed_db
+        ./seed_db.sh
+    popd
+
     java -jar ${BASE_DIR}/target/blackpearl-[0-9\.]*-SNAPSHOT.jar --server.port=9090 &> ${BASE_DIR}/tmp/acceptance.log &
     echo $! > ${BASE_DIR}/tmp/blackPearl.pid
 
