@@ -14,9 +14,15 @@ export class TimeActions {
 
   @action.bound
   public returnATODay() {
-    let julian = moment(this.timeStore.time).utc().dayOfYear() - 1;
-    let a = String.fromCharCode(65 + (julian / 26));
-    let b = String.fromCharCode(65 + (julian % 26));
+    let start = moment('2018-08-22T00:00:00Z').utc();
+    let days = moment(this.timeStore.time).utc().diff(start);
+    days = days / (1000 * 60 * 60 * 24);
+    if (days > 675) {
+      days = days % 675;
+      days--;
+    }
+    let a = String.fromCharCode(65 + (days / 26));
+    let b = String.fromCharCode(65 + (days % 26));
     return 'ATO ' + a + b;
   }
 
