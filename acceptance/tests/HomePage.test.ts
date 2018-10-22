@@ -17,6 +17,7 @@ Scenario('should allow the user to add, edit and delete a resource', (I) => {
 
   //edit
   I.amOnPage('/');
+  I.click('.threeDotButton' + `.${name}`);
   I.click('.editButton' + `.${name}`);
   I.fillField('.pendingEditTitle', name);
   I.fillField('.pendingEditUrl', 'https://www.google.com');
@@ -30,6 +31,7 @@ Scenario('should allow the user to add, edit and delete a resource', (I) => {
   I.amOnPage('/');
 
   //delete
+  I.click('.threeDotButton' + `.${name}`);
   I.click('.deleteButton' + `.${name}`);
   I.see(name);
   I.click('CONFIRM');
@@ -50,9 +52,9 @@ Scenario('should render two clocks', async function (I) {
 
 Scenario('should render three unique cards', (I) => {
   I.amOnPage('/');
-  I.see("MAIN", ".cardTitle");
-  I.see("SITUATIONAL AWARENESS", ".cardTitle");
-  I.see("TARGET RESEARCH", ".cardTitle");
+  I.see("Main", ".cardTitle");
+  I.see("Situational Awareness", ".cardTitle");
+  I.see("Target Research", ".cardTitle");
   I.see("Google", ".category1 .resource");
   I.see("YouTube", ".category2 .resource");
   I.see("Reddit", ".category3 .resource");

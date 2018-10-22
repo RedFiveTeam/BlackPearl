@@ -7,9 +7,9 @@ export enum Category {
 }
 
 export enum CategoryName {
-  Main = 'MAIN',
-  SituationalAwareness = 'SITUATIONAL AWARENESS',
-  TargetResearch = 'TARGET RESEARCH'
+  Main = 'Main',
+  SituationalAwareness = 'Situational Awareness',
+  TargetResearch = 'Target Research'
 }
 
 export class ResourceModel {

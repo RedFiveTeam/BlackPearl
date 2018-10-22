@@ -5,6 +5,7 @@ import { PearlIcon } from '../icon/PearlIcon';
 import { StyledDeleteButton } from '../component/button/DeleteButton';
 import { ResourceModel } from './ResourceModel';
 import { StyledEditButton } from '../component/button/EditButton';
+import { StyledResourceMenuContainer } from './ResourceMenuContainer';
 
 describe('Resource', () => {
   let subject: ShallowWrapper;
@@ -28,11 +29,12 @@ describe('Resource', () => {
     expect(subject.find(PearlIcon).exists()).toBeTruthy();
   });
 
-  it('should render a delete button', () => {
-    expect(subject.find(StyledDeleteButton).exists()).toBeTruthy();
+  it('should render a three dot menu', () => {
+    expect(subject.find(StyledResourceMenuContainer).exists()).toBeTruthy();
   });
 
-  it('should render a edit button', () => {
-    expect(subject.find(StyledEditButton).exists()).toBeTruthy();
+  it('should hide the delete and edit button by default', () => {
+    expect(subject.find(StyledDeleteButton).exists()).toBeFalsy();
+    expect(subject.find(StyledEditButton).exists()).toBeFalsy();
   });
 });
