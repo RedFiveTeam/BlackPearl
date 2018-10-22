@@ -1,6 +1,6 @@
 import { StubResourceRepository } from '../repositories/stub/StubResourceRepository';
 import { ResourceActions } from './ResourceActions';
-import { ResourceModel } from '../ResourceModel';
+import { Category, ResourceModel } from '../ResourceModel';
 
 describe('ResourceActions', () => {
   let resourceRepository: StubResourceRepository;
@@ -14,6 +14,7 @@ describe('ResourceActions', () => {
       setPendingResource: jest.fn(),
       setPendingDelete: jest.fn(),
       setPendingEdit: jest.fn(),
+      setPendingResourceCategory: jest.fn(),
       pendingResource: ResourceModel,
       pendingEdit: ResourceModel,
       performLoading: async (runFunction: any) => {
@@ -101,6 +102,12 @@ describe('ResourceActions', () => {
   it('should update a resource', async () => {
     await subject.updateResource();
     expect(resourceRepository.updateResource).toHaveBeenCalledWith(resourceStore.pendingEdit);
+  });
+
+  it('should assign a category to a pending resource', () => {
+    subject.createPendingResource();
+    subject.setPendingResourceCategory(Category.Main);
+    expect(resourceStore.setPendingResourceCategory).toHaveBeenCalledWith(Category.Main);
   });
 })
 ;

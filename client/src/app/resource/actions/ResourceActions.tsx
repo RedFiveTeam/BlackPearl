@@ -3,7 +3,7 @@ import { Repositories } from '../../utils/Repositories';
 import { Stores } from '../../utils/Stores';
 import { action } from 'mobx';
 import { ResourceRepository } from '../repositories/ResourceRepository';
-import { ResourceModel } from '../ResourceModel';
+import { Category, ResourceModel } from '../ResourceModel';
 
 export class ResourceActions {
   private resourceRepository: ResourceRepository;
@@ -60,6 +60,11 @@ export class ResourceActions {
   }
 
   @action.bound
+  setPendingResourceCategory(categoryID: Category) {
+    this.resourceStore.setPendingResourceCategory(categoryID);
+  }
+
+  @action.bound
   async delete(resourceId: number) {
     await this.resourceRepository.delete(resourceId);
     await this.clearPendingDelete();
@@ -80,6 +85,7 @@ export class ResourceActions {
     let resource = new ResourceModel();
     resource.setName(title);
     resource.setUrl(url);
+    resource.setCategoryId(this.resourceStore!.pendingResource!.categoryID!);
 
     this.resourceStore.setPendingResource(resource);
   }
