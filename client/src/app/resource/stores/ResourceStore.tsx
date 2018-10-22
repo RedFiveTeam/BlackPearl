@@ -18,6 +18,11 @@ export class ResourceStore {
   }
 
   @action.bound
+  setPendingResourceCategory(categoryID: number) {
+    this._pendingResource!.setCategoryId(categoryID);
+  }
+
+  @action.bound
   setPendingDelete(resource: ResourceModel | null) {
     this._pendingDelete = resource;
   }

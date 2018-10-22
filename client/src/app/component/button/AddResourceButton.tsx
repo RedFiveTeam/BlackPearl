@@ -4,10 +4,12 @@ import { ResourceActions } from '../../resource/actions/ResourceActions';
 import { inject } from 'mobx-react';
 import { StyledButton } from './Button';
 import { AddResourceIcon } from '../../icon/AddResourceIcon';
+import { Category } from '../../resource/ResourceModel';
 
 interface Props {
   resourceActions?: ResourceActions;
   className?: string;
+  category: Category;
 }
 
 export class AddResourceButton extends React.Component<Props> {
@@ -20,6 +22,7 @@ export class AddResourceButton extends React.Component<Props> {
           className="addResourceButton"
           onClick={() => {
             this.props.resourceActions!.createPendingResource();
+            this.props.resourceActions!.setPendingResourceCategory(this.props.category);
           }}
         >
           <div className="icon">

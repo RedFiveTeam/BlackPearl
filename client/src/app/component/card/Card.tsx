@@ -28,10 +28,9 @@ export class Card extends React.Component<Props> {
           <StyledResourceList
             category={this.props.category}
           />
-          {
-            (this.props.category === 1) &&
-            <StyledAddResourceButton/>
-          }
+            <StyledAddResourceButton
+              category={this.props.category}
+            />
         </div>
       </div>
     );
