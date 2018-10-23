@@ -12,7 +12,7 @@ public class TimeControllerTest extends BaseIntegrationTest {
 
     @Test
     public void getTimeTest() {
-        String timeStamp = given()
+        String timestamp = given()
                 .port(port)
                 .when()
                 .get(TimeController.URI)
@@ -20,6 +20,6 @@ public class TimeControllerTest extends BaseIntegrationTest {
                 .statusCode(200)
                 .extract().path("timestamp").toString();
 
-        assertThat(timeStamp, matchesPattern("^\\d{10}$"));
+        assertThat(timestamp, matchesPattern("^\\d{10}$"));
     }
 }
