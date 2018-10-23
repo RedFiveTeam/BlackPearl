@@ -1,11 +1,11 @@
 import * as React from 'react';
 import { inject, observer } from 'mobx-react';
 import styled from 'styled-components';
-import { TimeActions } from '../../utils/TimeActions';
+import { TimeStore } from '../../utils/time/TimeStore';
 
 interface Props {
   className?: string;
-  timeActions?: TimeActions;
+  timeStore?: TimeStore;
 }
 
 @observer
@@ -15,10 +15,10 @@ export class ATODay extends React.Component<Props> {
       <span
         className={this.props.className + ' atoDay'}
       >
-          {this.props.timeActions!.returnATODay()}
+          {this.props.timeStore!.atoDay}
       </span>
     );
   }
 }
 
-export const StyledATODay = inject('timeActions')(styled(ATODay)``);
+export const StyledATODay = inject('timeStore')(styled(ATODay)``);

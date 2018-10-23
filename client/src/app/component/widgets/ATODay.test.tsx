@@ -4,22 +4,21 @@ import { ATODay } from './ATODay';
 
 describe('ATODay', () => {
   let subject: ShallowWrapper;
-  let timeActions: any;
+  let timeStore: any;
 
   beforeEach(() => {
-    timeActions =  {
-      returnATODay: jest.fn()
+    timeStore =  {
+      atoDay: jest.fn()
     };
 
     subject = shallow(
       <ATODay
-        timeActions={timeActions}
+        timeStore={timeStore}
       />
     );
   });
 
   it('should render an ATO Day', () => {
     expect(subject.find('.atoDay').exists()).toBeTruthy();
-    expect(timeActions.returnATODay).toHaveBeenCalled();
   });
 });

@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { inject, observer } from 'mobx-react';
 import styled from 'styled-components';
-import { TimeActions } from '../../utils/TimeActions';
-import { TimeStore } from '../../utils/TimeStore';
+import { TimeActions } from '../../utils/time/TimeActions';
+import { TimeStore } from '../../utils/time/TimeStore';
 
 interface Props {
   className?: string;

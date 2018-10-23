@@ -3,25 +3,36 @@ import { TimeActions } from './TimeActions';
 describe('TimeActions', () => {
   let subject: TimeActions;
   let timeStore: any;
+  let timeRepository: any;
 
   beforeEach(() => {
     timeStore = {
       setTime: jest.fn(),
+      setATODay: jest.fn(),
       time: '2018-08-22T00:00:00Z'
     };
-    subject = new TimeActions({timeStore} as any);
+
+    timeRepository = {
+      getTime: jest.fn()
+    };
+    subject = new TimeActions({timeStore} as any, {timeRepository} as any);
   });
 
   it('should return correct ATO Day', () => {
-    expect(subject.returnATODay()).toMatch(/ATO AA/);
+    subject.setATODay();
+    expect(timeStore.setATODay).toHaveBeenCalledWith('ATO AA');
     timeStore.time = '2018-10-22T00:00:00Z';
-    expect(subject.returnATODay()).toMatch(/ATO CJ/);
+    subject.setATODay();
+    expect(timeStore.setATODay).toHaveBeenCalledWith('ATO CJ');
     timeStore.time = '2020-06-27T00:00:00Z';
-    expect(subject.returnATODay()).toMatch(/ATO ZZ/);
+    subject.setATODay();
+    expect(timeStore.setATODay).toHaveBeenCalledWith('ATO ZZ');
     timeStore.time = '2020-06-28T00:00:00Z';
-    expect(subject.returnATODay()).toMatch(/ATO AA/);
+    subject.setATODay();
+    expect(timeStore.setATODay).toHaveBeenCalledWith('ATO AA');
     timeStore.time = '2020-06-29T00:00:00Z';
-    expect(subject.returnATODay()).toMatch(/ATO AB/);
+    subject.setATODay();
+    expect(timeStore.setATODay).toHaveBeenCalledWith('ATO AB');
   });
 
   it('should return the time for a given timezone', () => {
@@ -32,8 +43,9 @@ describe('TimeActions', () => {
     expect(subject.returnCurrentTime(timeStore.time)).toBe('0000');
   });
 
-  it('should update time in TimeStore', () => {
-    subject.setCurrentTime();
+  it('should update time in TimeStore', async () => {
+    await subject.setCurrentTime();
+    expect(timeRepository.getTime).toHaveBeenCalled();
     expect(timeStore.setTime).toHaveBeenCalled();
   });
 });
