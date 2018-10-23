@@ -18,7 +18,7 @@ Scenario('should allow the user to add, edit and delete a resource', (I) => {
   //edit
   I.amOnPage('/');
   I.click('.threeDotButton' + `.${name}`);
-  I.click('.editButton' + `.${name}`);
+  I.click('.editButton');
   I.fillField('.pendingEditTitle', name);
   I.fillField('.pendingEditUrl', 'https://www.google.com');
   I.click('SAVE');
@@ -32,7 +32,7 @@ Scenario('should allow the user to add, edit and delete a resource', (I) => {
 
   //delete
   I.click('.threeDotButton' + `.${name}`);
-  I.click('.deleteButton' + `.${name}`);
+  I.click('.deleteButton');
   I.see(name);
   I.click('CONFIRM');
   I.wait(1);
@@ -58,4 +58,23 @@ Scenario('should render three unique cards', (I) => {
   I.see("Google", ".category1 .resource");
   I.see("YouTube", ".category2 .resource");
   I.see("Reddit", ".category3 .resource");
+});
+
+Scenario('should display and then hide edit & delete buttons for resources', (I) => {
+  let name = 'TestPage' + Date.now();
+
+  //create
+  I.amOnPage('/');
+  I.click('ADD RESOURCE');
+  I.fillField('.titleField', name);
+  I.fillField('.urlField', 'https://www.testpage.com');
+  I.click('SAVE', '.modal');
+  I.waitForText(name, 10);
+
+  //show and hide
+  I.amOnPage('/');
+  I.click('.threeDotButton' + `.${name}`);
+  I.waitForElement('.editButton', 10);
+  I.click('.bannerTitle');
+  I.dontSee('.editButton');
 });

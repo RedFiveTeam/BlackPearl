@@ -1,62 +1,79 @@
 import * as React from 'react';
-import { observer } from 'mobx-react';
+import { inject, observer } from 'mobx-react';
 import styled from 'styled-components';
 import { StyledThreeDotButton } from '../component/button/ThreeDotButton';
 import { StyledDeleteButton } from '../component/button/DeleteButton';
 import { StyledEditButton } from '../component/button/EditButton';
 import { BorderIcon } from '../icon/BorderIcon';
 import { ResourceModel } from './ResourceModel';
+import { ResourceActions } from './actions/ResourceActions';
+import { ResourceMenuStore } from './stores/ResourceMenuStore';
 
 interface Props {
-  className?: string;
   resource: ResourceModel;
-}
-
-interface State {
-  menuVisible: boolean;
+  resourceMenuStore: ResourceMenuStore;
+  resourceActions?: ResourceActions;
+  className?: string;
 }
 
 @observer
-export class ResourceMenuContainer extends React.Component<Props, State> {
-  state = {menuVisible: false};
+export class ResourceMenuContainer extends React.Component<Props> {
+  node: any = this.node;
 
-  toggleMenuVisible = () => {
-    this.setState({menuVisible: !this.state.menuVisible});
+  componentDidMount() {
+    this.props.resourceMenuStore.hydrate();
+    document.addEventListener('click', this.handleClick, false);
+  }
+
+  handleClick = (e: any) => {
+    if (this.node.contains(e.target)) {
+      return;
+    }
+
+    this.props.resourceMenuStore.menuVisibilityOff();
+  };
+
+  edit = async () => {
+    await this.props.resourceActions!.createPendingEdit(this.props.resource);
+    this.props.resourceMenuStore.menuVisibilityOff();
+  };
+
+  delete = async () => {
+    await this.props.resourceActions!.createPendingDelete(this.props.resource);
+    this.props.resourceMenuStore.menuVisibilityOff();
   };
 
   render() {
+    const {resourceMenuStore} = this.props;
     return (
       <div
+        ref={node => this.node = node}
         className={this.props.className}
       >
         {
-          this.state.menuVisible &&
-          <StyledEditButton
-              resource={this.props.resource}
-          />
+          resourceMenuStore.menuVisible &&
+          <StyledEditButton onClick={this.edit}/>
         }
         {
-          this.state.menuVisible &&
+          resourceMenuStore.menuVisible &&
           <BorderIcon/>
         }
         {
-          this.state.menuVisible &&
-          <StyledDeleteButton
-              resource={this.props.resource}
-          />
+          resourceMenuStore.menuVisible &&
+          <StyledDeleteButton onClick={this.delete}/>
         }
         <StyledThreeDotButton
-          onClick={this.toggleMenuVisible}
-          resource={this.props.resource}
+          onClick={resourceMenuStore.toggleMenuVisibility}
+          className={this.props.resource.name}
         />
       </div>
     );
   }
 }
 
-export const StyledResourceMenuContainer = styled(ResourceMenuContainer)`
-width: 81px;
-display: flex;
-align-items: center;
-justify-content: flex-end;
-`;
+export const StyledResourceMenuContainer = inject('resourceActions')(styled(ResourceMenuContainer)`
+  width: 81px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+`);

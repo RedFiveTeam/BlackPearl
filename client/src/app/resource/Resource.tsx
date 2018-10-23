@@ -6,6 +6,7 @@ import { PearlIcon } from '../icon/PearlIcon';
 import { ResourceModel } from './ResourceModel';
 import { StyledResourceMenuContainer } from './ResourceMenuContainer';
 import classNames = require('classnames');
+import { ResourceMenuStore } from './stores/ResourceMenuStore';
 
 interface Props {
   resource: ResourceModel;
@@ -26,6 +27,7 @@ export class Resource extends React.Component<Props> {
         </div>
         <StyledResourceMenuContainer
           resource={this.props.resource}
+          resourceMenuStore={new ResourceMenuStore()}
         />
       </div>
     );
@@ -52,19 +54,11 @@ export const StyledResource = inject('resourceStore')(styled(Resource)`
    color: black;
    display: inline-block;
    position: relative;
-   //z-index: 1; //makes the a element clickable over other elements if needed
    padding: 7px;
    margin: -1px;
    width: 235px;
   }
   
-  //.buttons {
-  //display: inline-flex;
-  //align-items: center;
-  //position: relative;
-  //top: 2px;
-  //}
-    
   .title {
     padding-left: 7px;
   }
