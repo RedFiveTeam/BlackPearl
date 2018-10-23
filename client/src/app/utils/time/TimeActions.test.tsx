@@ -1,4 +1,6 @@
 import { TimeActions } from './TimeActions';
+import { StubTimeRepository } from './repositories/StubTimeRepository';
+import moment = require('moment-timezone');
 
 describe('TimeActions', () => {
   let subject: TimeActions;
@@ -9,12 +11,12 @@ describe('TimeActions', () => {
     timeStore = {
       setTime: jest.fn(),
       setATODay: jest.fn(),
+      setZones: jest.fn(),
       time: '2018-08-22T00:00:00Z'
     };
 
-    timeRepository = {
-      getTime: jest.fn()
-    };
+    timeRepository = new StubTimeRepository();
+
     subject = new TimeActions({timeStore} as any, {timeRepository} as any);
   });
 
@@ -45,7 +47,12 @@ describe('TimeActions', () => {
 
   it('should update time in TimeStore', async () => {
     await subject.setCurrentTime();
-    expect(timeRepository.getTime).toHaveBeenCalled();
-    expect(timeStore.setTime).toHaveBeenCalled();
+    const timeObj = await timeRepository.getTime();
+    expect(timeStore.setTime).toHaveBeenCalledWith(moment(timeObj.timestamp, 'X').tz('Etc/UTC').format());
+  });
+
+  it('should update timezones in TimeStore', async () => {
+    await subject.setTimezones();
+    expect(timeStore.setZones).toHaveBeenCalled();
   });
 });

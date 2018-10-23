@@ -3,12 +3,33 @@ import { shallow, ShallowWrapper } from 'enzyme';
 import { TimeContainer } from './TimeContainer';
 import { StyledATODay } from './ATODay';
 import { StyledTZClock } from './TZClock';
+import { StubTimeRepository } from '../../utils/time/repositories/StubTimeRepository';
 
 describe('TimeContainer', () => {
   let subject: ShallowWrapper;
+  let timeStore: any;
+  let timeActions: any;
+  let timeRepository: StubTimeRepository;
 
-  beforeEach(() => {
-    subject = shallow(<TimeContainer/>);
+  beforeEach(async () => {
+    timeRepository = new StubTimeRepository();
+
+    let timeObj = await timeRepository.getTime();
+
+    timeStore = {
+      zones: timeObj.zones
+    };
+
+    timeActions = {
+      returnCurrentTime: jest.fn()
+    };
+
+    subject = shallow(
+      <TimeContainer
+        timeStore={timeStore}
+        timeActions={timeActions}
+      />
+    );
   });
 
   it('should render an ATO date', () => {
@@ -16,7 +37,7 @@ describe('TimeContainer', () => {
   });
 
   it('should render six clocks', () => {
-    expect(subject.find(StyledTZClock).length).toBe(6);
+    expect(subject.find(StyledTZClock).length).toBe(2);
   });
 
 });

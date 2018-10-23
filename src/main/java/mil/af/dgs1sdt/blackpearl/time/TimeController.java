@@ -1,5 +1,6 @@
 package mil.af.dgs1sdt.blackpearl.time;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import java.time.Instant;
@@ -9,9 +10,15 @@ import java.time.Instant;
 public class TimeController {
     public static final String URI = "/api/time";
 
+    @Autowired
+    TimeRepository timeRepository;
+
     @GetMapping
     public @ResponseBody TimeJSON getTime() {
-        return new TimeJSON(Instant.now().getEpochSecond());
+        return new TimeJSON(
+                Instant.now().getEpochSecond(),
+                timeRepository.findAll()
+        );
     }
 
 }

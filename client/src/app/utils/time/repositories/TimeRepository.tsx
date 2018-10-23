@@ -1,3 +1,5 @@
+import { TimeModel } from '../TimeModel';
+
 export interface TimeRepository {
-  getTime(): Promise<string>;
+  getTime(): Promise<TimeModel>;
 }
