@@ -44,10 +44,10 @@ Scenario('should see an ATO day', (I) => {
   I.see("ATO ", ".atoDay");
 });
 
-Scenario('should render two clocks', async function (I) {
+Scenario('should render six clocks', async function (I) {
   I.amOnPage('/');
   const clockCount = await I.grabNumberOfVisibleElements('.clock');
-  assert.equal(clockCount, 2);
+  assert.strictEqual(clockCount, 6);
 });
 
 Scenario('should render three unique cards', (I) => {

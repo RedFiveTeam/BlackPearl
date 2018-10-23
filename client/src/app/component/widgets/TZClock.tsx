@@ -38,6 +38,16 @@ export class TZClock extends React.Component<Props> {
 }
 
 export const StyledTZClock = inject('timeActions', 'timeStore')(styled(TZClock)`
-text-align: center;
-margin-right: 10px;
+  text-align: center;
+  margin-right: 10px;
+
+  .title {
+    font-size: 12px;
+    padding-top: 2px;
+    margin-bottom: -5px;
+  }
+
+  .time {
+    font-size: 20px;
+  }
 `);
