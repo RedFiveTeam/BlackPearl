@@ -7,7 +7,8 @@ describe('Routes', () => {
   it('should support all routes', async () => {
     const subject = shallow(<Routes />);
 
-    expect(subject.find(Switch).children().length).toBe(1);
+    expect(subject.find(Switch).children().length).toBe(2);
     expect(subject.find(Route).at(0).prop('path')).toBe('/');
+    expect(subject.find(Route).at(1).prop('path')).toBe('/admin');
   });
 });

@@ -8,11 +8,13 @@ describe('TimeActions', () => {
   let timeRepository: any;
 
   beforeEach(() => {
+
     timeStore = {
+      hydrate: jest.fn(),
       setTime: jest.fn(),
       setATODay: jest.fn(),
       setZones: jest.fn(),
-      time: '2018-08-22T00:00:00Z'
+      time: '2018-08-22T00:00:00Z',
     };
 
     timeRepository = new StubTimeRepository();
@@ -55,4 +57,5 @@ describe('TimeActions', () => {
     await subject.setTimezones();
     expect(timeStore.setZones).toHaveBeenCalled();
   });
+
 });

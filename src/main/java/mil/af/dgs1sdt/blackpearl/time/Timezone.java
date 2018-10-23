@@ -16,10 +16,12 @@ public class Timezone {
     @Id
     @GeneratedValue
     private Long id;
+    private int position;
     private String zone;
     private String name;
 
-    public Timezone(String zone, String name) {
+    public Timezone(int position, String zone, String name) {
+        this.position = position;
         this.zone = zone;
         this.name = name;
     }

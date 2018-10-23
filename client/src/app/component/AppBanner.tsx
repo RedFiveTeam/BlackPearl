@@ -12,25 +12,15 @@ interface Props {
 export class AppBanner extends React.Component<Props> {
   render() {
     return (
-      <div
-        className={this.props.className}
-      >
-        <div
-          className="leftSide"
-        >
+      <div className={this.props.className}>
+        <div className="leftSide">
           <BlackPearlShipIcon/>
         </div>
-        <div
-          className="rightSide"
-        >
-          <div
-            className="bannerTitle"
-          >
+        <div className="rightSide">
+          <div className="bannerTitle">
             The Black Pearl
           </div>
-          <div
-            className="informationBanner"
-          />
+          <div className="informationBanner"/>
           <StyledTimeContainer/>
         </div>
       </div>
@@ -62,15 +52,12 @@ min-width: 1471px;
   
   .informationBanner {
     display: none;
-    //background: #EAEAEA;
     width: 960px;
     height: 22px;
     margin-top: 80px;
     margin-left: 10px;
-    //box-shadow: -1px 3px 3px rgba(0, 0, 0, .25);
     margin-bottom: 3px;
     display: flex;
     justify-content: flex-end;
-    //font-size: 18px;
   }
 `;
