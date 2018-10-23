@@ -1,15 +1,11 @@
 import * as React from 'react';
 import { inject, observer } from 'mobx-react';
 import styled from 'styled-components';
-import { TimeActions } from '../../utils/time/TimeActions';
-import { TimeStore } from '../../utils/time/TimeStore';
 
 interface Props {
   className?: string;
   title: string;
-  timeZone: string;
-  timeActions?: TimeActions;
-  timeStore?: TimeStore;
+  time: string;
 }
 
 @observer
@@ -27,10 +23,7 @@ export class TZClock extends React.Component<Props> {
         <div
           className="time"
         >
-          {
-            this.props.timeStore!.time &&
-            this.props.timeActions!.returnCurrentTime(this.props.timeStore!.time, this.props.timeZone)
-          }
+          {this.props.time}
         </div>
       </div>
     );

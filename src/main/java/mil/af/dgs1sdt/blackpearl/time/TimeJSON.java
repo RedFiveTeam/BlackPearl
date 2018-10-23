@@ -8,9 +8,13 @@ import lombok.NoArgsConstructor;
 public class TimeJSON {
     private Long timestamp;
 
+    private Iterable<Timezone> zones;
+
     public TimeJSON(
-            Long timestamp
+            Long timestamp,
+            Iterable<Timezone> zones
     ) {
         this.timestamp = timestamp;
+        this.zones = zones;
     }
 }

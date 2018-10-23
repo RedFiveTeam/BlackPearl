@@ -1,11 +1,15 @@
 import * as React from 'react';
-import { observer } from 'mobx-react';
+import { observer, inject } from 'mobx-react';
 import styled from 'styled-components';
 import { StyledATODay } from './ATODay';
+import { TimeStore } from '../../utils/time/TimeStore';
+import { TimeActions } from '../../utils/time/TimeActions';
 import { StyledTZClock } from './TZClock';
 
 interface Props {
   className?: string;
+  timeStore?: TimeStore;
+  timeActions?: TimeActions;
 }
 
 @observer
@@ -21,37 +25,24 @@ export class TimeContainer extends React.Component<Props> {
         <div
           className="timeBanner"
         >
-          <StyledTZClock
-            title="LANGLEY"
-            timeZone="America/New_York"
-          />
-          <StyledTZClock
-            title="PACIFIC"
-            timeZone="America/Los_Angeles"
-          />
-          <StyledTZClock
-            title="CENTRAL"
-            timeZone="America/Chicago"
-          />
-          <StyledTZClock
-            title="HAWAII"
-            timeZone="Pacific/Honolulu"
-          />
-          <StyledTZClock
-            title="GERMANY"
-            timeZone="Europe/Berlin"
-          />
-          <StyledTZClock
-            title="ZULU"
-            timeZone="Etc/UTC"
-          />
+          {
+            this.props.timeStore!.zones.map((obj: any) => {
+              return (
+                <StyledTZClock
+                  key={obj.id}
+                  title={obj.name}
+                  time={this.props.timeActions!.returnCurrentTime(this.props.timeStore!.time, obj.zone)}
+                />
+              );
+            })
+          }
         </div>
       </div>
     );
   }
 }
 
-export const StyledTimeContainer = styled(TimeContainer)`
+export const StyledTimeContainer = inject('timeStore', 'timeActions')(styled(TimeContainer)`
   display: flex;
   
   .timeBanner {
@@ -79,4 +70,4 @@ export const StyledTimeContainer = styled(TimeContainer)`
     text-shadow: 0px 3px 6px rgba(0, 0, 0, 0.3);
     padding-top: 25px;
   }
-`;
+`);

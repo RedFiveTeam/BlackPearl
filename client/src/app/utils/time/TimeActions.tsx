@@ -15,6 +15,7 @@ export class TimeActions {
     this.setATODay();
     setTimeout(
       async () => {
+        await this.setTimezones();
         await this.setCurrentTime();
         let secondsLeft = (60 - moment(this.timeStore.time).tz('Etc/UTC').seconds()) * 1000;
         setTimeout(
@@ -32,7 +33,6 @@ export class TimeActions {
       },
       0
     );
-
   }
 
   @action.bound
@@ -58,7 +58,14 @@ export class TimeActions {
 
   @action.bound
   async setCurrentTime() {
-    this.timeStore.setTime(moment(await this.timeRepository.getTime(), 'X').tz('Etc/UTC').format());
+    const timeObj = await this.timeRepository.getTime();
+    this.timeStore.setTime(moment(timeObj.timestamp, 'X').tz('Etc/UTC').format());
     this.setATODay();
+  }
+
+  @action.bound
+  async setTimezones() {
+    const timeObj = await this.timeRepository.getTime();
+    this.timeStore.setZones(timeObj.zones);
   }
 }
