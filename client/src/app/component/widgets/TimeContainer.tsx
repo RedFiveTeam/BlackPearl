@@ -16,16 +16,11 @@ interface Props {
 export class TimeContainer extends React.Component<Props> {
   render() {
     return (
-      <div
-        className={this.props.className}
-      >
-        <StyledATODay
-          className="atoDay"
-        />
-        <div
-          className="timeBanner"
-        >
+      <div className={this.props.className}>
+        <StyledATODay className="atoDay"/>
+        <div className="timeBanner">
           {
+            this.props.timeStore!.time &&
             this.props.timeStore!.zones.map((obj: any) => {
               return (
                 <StyledTZClock

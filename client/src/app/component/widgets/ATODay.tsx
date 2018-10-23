@@ -12,9 +12,7 @@ interface Props {
 export class ATODay extends React.Component<Props> {
   render() {
     return (
-      <span
-        className={this.props.className + ' atoDay'}
-      >
+      <span className={this.props.className + ' atoDay'}>
           {this.props.timeStore!.atoDay}
       </span>
     );

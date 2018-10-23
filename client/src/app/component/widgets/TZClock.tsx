@@ -12,17 +12,11 @@ interface Props {
 export class TZClock extends React.Component<Props> {
   render() {
     return (
-      <div
-        className={this.props.className + ' clock'}
-      >
-        <div
-          className="title"
-        >
+      <div className={this.props.className + ' clock'}>
+        <div className="title">
           {this.props.title}
         </div>
-        <div
-          className="time"
-        >
+        <div className="time">
           {this.props.time}
         </div>
       </div>
@@ -30,7 +24,7 @@ export class TZClock extends React.Component<Props> {
   }
 }
 
-export const StyledTZClock = inject('timeActions', 'timeStore')(styled(TZClock)`
+export const StyledTZClock = inject('adminActions', 'adminStore')(styled(TZClock)`
   text-align: center;
   margin-right: 10px;
 

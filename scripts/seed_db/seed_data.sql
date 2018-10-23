@@ -6,13 +6,13 @@ INSERT INTO resource (url, name, categoryID) VALUES
 ("https://www.youtube.com", "YouTube", 2),
 ("https://www.reddit.com", "Reddit", 3);
 
-INSERT INTO timezone (zone, name) VALUES
-("America/New_York", "LANGLEY"),
-("America/Los_Angeles", "PACIFIC"),
-("America/Chicago", "CENTRAL"),
-("Pacific/Honolulu", "HAWAII"),
-("Europe/Berlin", "GERMANY"),
-("Etc/UTC", "ZULU");
+INSERT INTO timezone (zone, name, position) VALUES
+("America/New_York", "LANGLEY", 1),
+("America/Los_Angeles", "PACIFIC", 2),
+("America/Chicago", "CENTRAL", 3),
+("Pacific/Honolulu", "HAWAII", 4),
+("Europe/Berlin", "GERMANY", 5),
+("Etc/UTC", "ZULU", 6);
 
 INSERT INTO acronym (acronym, definition) VALUES
 ("A&P", "analysis and production"),

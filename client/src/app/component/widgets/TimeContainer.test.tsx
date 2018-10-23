@@ -17,7 +17,8 @@ describe('TimeContainer', () => {
     let timeObj = await timeRepository.getTime();
 
     timeStore = {
-      zones: timeObj.zones
+      zones: timeObj.zones,
+      time: '135123512'
     };
 
     timeActions = {
@@ -39,5 +40,4 @@ describe('TimeContainer', () => {
   it('should render six clocks', () => {
     expect(subject.find(StyledTZClock).length).toBe(2);
   });
-
 });

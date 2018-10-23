@@ -47,6 +47,7 @@ function acceptanceTests {
     testConnection "http://localhost:4444" $(cat ${BASE_DIR}/tmp/selenium.pid)
 
     pushd ${BASE_DIR}/acceptance
+        yarn install
         codeceptjs run -o '{ "helpers": {"WebDriverIO": {"url": "http://localhost:9090"}}}'
     popd
 }

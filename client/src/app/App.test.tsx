@@ -5,10 +5,9 @@ import { StyledAppBanner } from './component/AppBanner';
 
 describe('App', () => {
   let subject: ShallowWrapper;
-  let resourceStore: any;
 
   beforeEach(() => {
-    subject = shallow(<App resourceStore={resourceStore}/>);
+    subject = shallow(<App/>);
   });
 
   it('should have wrapped routes', () => {
