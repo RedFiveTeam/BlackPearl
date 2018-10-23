@@ -13,7 +13,7 @@ describe('TZClock', () => {
     };
 
     timeStore = {
-      time: ''
+      time: '1540305246'
     };
 
     subject = shallow(

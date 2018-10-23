@@ -1,21 +1,21 @@
 import { action, computed, observable } from 'mobx';
 
 export class TimeModel {
-  @observable private _timeStamp: string;
+  @observable private _timestamp: string;
 
   constructor(
-    timeStamp: string
+    timestamp: string
   ) {
-    this._timeStamp = timeStamp;
+    this._timestamp = timestamp;
   }
 
   @computed
-  get timeStamp(): string {
-    return this._timeStamp;
+  get timestamp(): string {
+    return this._timestamp;
   }
 
   @action.bound
-  setTimeStamp(value: string) {
-    this._timeStamp = value;
+  setTimestamp(value: string) {
+    this._timestamp = value;
   }
 }

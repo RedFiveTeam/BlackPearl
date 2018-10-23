@@ -27,7 +27,10 @@ export class TZClock extends React.Component<Props> {
         <div
           className="time"
         >
-          {this.props.timeActions!.returnCurrentTime(this.props.timeStore!.time, this.props.timeZone)}
+          {
+            this.props.timeStore!.time &&
+            this.props.timeActions!.returnCurrentTime(this.props.timeStore!.time, this.props.timeZone)
+          }
         </div>
       </div>
     );

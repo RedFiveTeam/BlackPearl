@@ -12,7 +12,6 @@ export class TimeActions {
   constructor(stores: Partial<Stores>, repositories: Partial<Repositories>) {
     this.timeStore = stores.timeStore!;
     this.timeRepository = repositories.timeRepository!;
-    this.timeStore.setTime(moment().tz('Etc/UTC').format());
     this.setATODay();
     setTimeout(
       async () => {
@@ -31,7 +30,7 @@ export class TimeActions {
           secondsLeft
         );
       },
-      1000
+      0
     );
 
   }
@@ -59,7 +58,7 @@ export class TimeActions {
 
   @action.bound
   async setCurrentTime() {
-    this.timeStore.setTime(moment(await this.timeRepository.getTime()).tz('Etc/UTC').format());
+    this.timeStore.setTime(moment(await this.timeRepository.getTime(), 'X').tz('Etc/UTC').format());
     this.setATODay();
   }
 }

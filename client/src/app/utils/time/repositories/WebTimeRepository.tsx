@@ -10,6 +10,6 @@ export class WebTimeRepository implements TimeRepository {
 
   async getTime(): Promise<string> {
     const json = await this.client.getJSON('/api/time');
-    return this.timeSerializer.deserialize(json).timeStamp;
+    return this.timeSerializer.deserialize(json).timestamp;
   }
 }
