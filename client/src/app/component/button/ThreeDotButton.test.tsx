@@ -2,24 +2,26 @@ import * as React from 'react';
 import { shallow, ShallowWrapper } from 'enzyme';
 import { ThreeDotButton } from './ThreeDotButton';
 import { ThreeDotIcon } from '../../icon/ThreeDotIcon';
-import { ResourceModel } from '../../resource/ResourceModel';
+import { StyledButton } from './Button';
 
 describe('ThreeDotButton', () => {
   let subject: ShallowWrapper;
-  let resource: ResourceModel;
 
   beforeEach(() => {
-    resource = new ResourceModel();
 
     subject = shallow(
       <ThreeDotButton
         onClick={jest.fn()}
-        resource={resource}
+        className={'unique'}
       />
     );
   });
 
   it('should render three dot icon', () => {
     expect(subject.find(ThreeDotIcon).exists()).toBeTruthy();
+  });
+
+  it('should render a button with a unique className', () => {
+    expect(subject.find(StyledButton).prop('className')).toBe('threeDotButton unique');
   });
 });

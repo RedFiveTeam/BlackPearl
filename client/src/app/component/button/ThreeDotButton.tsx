@@ -3,13 +3,11 @@ import { observer } from 'mobx-react';
 import styled from 'styled-components';
 import { ThreeDotIcon } from '../../icon/ThreeDotIcon';
 import { StyledButton } from './Button';
-import { ResourceModel } from '../../resource/ResourceModel';
 import classNames = require('classnames');
 
 interface Props {
-  className?: string;
   onClick: () => void;
-  resource: ResourceModel;
+  className: string;
 }
 
 @observer
@@ -20,7 +18,7 @@ export class ThreeDotButton extends React.Component<Props> {
         className={this.props.className}
       >
         <StyledButton
-          className={classNames('threeDotButton', this.props.resource.name)}
+          className={classNames('threeDotButton', this.props.className)}
           onClick={this.props.onClick}
         >
           <ThreeDotIcon/>
@@ -36,5 +34,5 @@ export const StyledThreeDotButton = styled(ThreeDotButton)`
     border: none;
     background: none;
     cursor: pointer;
-    }
+  }
 `;
