@@ -1,9 +1,8 @@
 import * as React from 'react';
 import { observer } from 'mobx-react';
 import styled from 'styled-components';
-import { StyledATODay } from './widgets/ATODay';
-import { StyledTZClock } from './widgets/TZClock';
 import { BlackPearlShipIcon } from '../icon/BlackPearlShipIcon';
+import { StyledTimeContainer } from './widgets/TimeContainer';
 
 interface Props {
   className?: string;
@@ -32,21 +31,7 @@ export class AppBanner extends React.Component<Props> {
           <div
             className="informationBanner"
           />
-          <StyledATODay
-            className="atoDay"
-          />
-          <div
-            className="timeBanner"
-          >
-            <StyledTZClock
-              title="LANGLEY"
-              timeZone="America/New_York"
-            />
-            <StyledTZClock
-              title="ZULU"
-              timeZone="Etc/UTC"
-            />
-          </div>
+          <StyledTimeContainer/>
         </div>
       </div>
     );
@@ -86,31 +71,5 @@ display: flex;
     display: flex;
     justify-content: flex-end;
     //font-size: 18px;
-  }
-  
-  .timeBanner {
-      background: #EAEAEA;
-      width: 340px;
-      height: 45px;
-      box-shadow: -1px 3px 3px rgba(0, 0, 0, .25);
-      display: flex;
-      justify-content: space-between;
-      font-family: Alegreya Sans;
-      font-size: 18px;
-      padding-left: 10px;
-      align-self: flex-end;
-      margin-left: 10px;
-      position: relative;
-      bottom: 6px;
-      border-radius: 10px;
-  }
-  
-  .atoDay {
-  position: absolute;
-  right: 124px;
-  height: 46px;
-  font-size: 36px;
-  font-family: Alegreya Sans;
-  text-shadow: 0px 3px 6px rgba(0, 0, 0, 0.3);
   }
 `;

@@ -2,8 +2,7 @@ import * as React from 'react';
 import { shallow, ShallowWrapper } from 'enzyme';
 import { AppBanner } from './AppBanner';
 import { BlackPearlShipIcon } from '../icon/BlackPearlShipIcon';
-import { StyledATODay } from './widgets/ATODay';
-import { StyledTZClock } from './widgets/TZClock';
+import { StyledTimeContainer } from './widgets/TimeContainer';
 
 describe('AppBanner', () => {
   let subject: ShallowWrapper;
@@ -24,11 +23,7 @@ describe('AppBanner', () => {
     expect(subject.find('.informationBanner').exists()).toBeTruthy();
   });
 
-  it('should display an ATO Day', () => {
-    expect(subject.find(StyledATODay).exists()).toBeTruthy();
-  });
-
-  it('should render timezone clocks', () => {
-    expect(subject.find(StyledTZClock).exists()).toBeTruthy();
+  it('should display a time container', () => {
+    expect(subject.find(StyledTimeContainer).exists()).toBeTruthy();
   });
 });
