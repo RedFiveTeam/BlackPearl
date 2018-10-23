@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { StyledCard } from './Card';
 import { Category } from '../../resource/ResourceModel';
 import { ResourceActions } from '../../resource/actions/ResourceActions';
+import classNames = require('classnames');
 
 interface Props {
   className?: string;
@@ -18,7 +19,7 @@ export class CardContainer extends React.Component<Props> {
 
   render() {
     return (
-      <div className={this.props.className}>
+      <div className={classNames('cardContainer', this.props.className)}>
         <StyledCard category={Category.Main}/>
         <StyledCard category={Category.SituationalAwareness}/>
         <StyledCard category={Category.TargetResearch}/>
@@ -28,5 +29,7 @@ export class CardContainer extends React.Component<Props> {
 }
 
 export const StyledCardContainer = inject('resourceActions')(styled(CardContainer)`
-display: flex;
+  display: flex;
+  height: 780px;
+  max-height: 780px;
 `);

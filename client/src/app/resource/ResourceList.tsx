@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import { ResourceActions } from './actions/ResourceActions';
 import { StyledResource } from './Resource';
 import { Category } from './ResourceModel';
+import classNames = require('classnames');
 
 interface Props {
   resourceStore?: ResourceStore;
@@ -17,9 +18,7 @@ interface Props {
 export class ResourceList extends React.Component<Props> {
   render() {
     return (
-      <div
-        className={this.props.className}
-      >
+      <div className={classNames('resourceList', this.props.className)}>
         {
           this.props.resourceStore!.returnResourcesInCategory(this.props.category).map((resource) => {
             return (
@@ -37,10 +36,6 @@ export class ResourceList extends React.Component<Props> {
 }
 
 export const StyledResourceList = inject('resourceStore', 'resourceActions')(styled(ResourceList)`
-overflow-y: auto;
-max-height: 819px;
-//::-webkit-scrollbar {
-//    width: 0px;
-//    background: transparent; /* make scrollbar transparent */
-//}
+  overflow-y: auto;
+  max-height: calc(780px - 38px - 32px - 10px);
 `);

@@ -6,31 +6,25 @@ import { StyledAddResourceButton } from '../button/AddResourceButton';
 import { Category, CategoryName } from '../../resource/ResourceModel';
 
 interface Props {
-  className?: string;
   category: Category;
+  className?: string;
 }
 
 @observer
 export class Card extends React.Component<Props> {
   render() {
     return (
-      <div
-        className={this.props.className  + ' category' + this.props.category}
-      >
-        <div
-          className="cardTitle"
-        >
+      <div className={this.props.className + ' category' + this.props.category}>
+        <div className="cardTitle">
           {CategoryName[Category[this.props.category]]}
         </div>
-        <div
-          className="body"
-        >
+        <div className="body">
           <StyledResourceList
             category={this.props.category}
           />
-            <StyledAddResourceButton
-              category={this.props.category}
-            />
+          <StyledAddResourceButton
+            category={this.props.category}
+          />
         </div>
       </div>
     );
@@ -40,6 +34,8 @@ export class Card extends React.Component<Props> {
 export const StyledCard = styled(Card)`
    width: 353px;
    padding-left: 8px;
+   height: inherit;
+   max-height: inherit;
    
    .cardTitle {
     border-radius: 10px 10px 0px 0px;
@@ -59,7 +55,8 @@ export const StyledCard = styled(Card)`
   .body {
     border-radius: 0px 0px 10px 10px;
     background: #EAEAEA;
-    height: 889px;
+    height: inherit;
+    max-height: calc(780px - 32px - 10px);
     width: 100%;
     padding-top: 10px;
     box-shadow: -1px 3px 3px rgba(0, 0, 0, .25);
