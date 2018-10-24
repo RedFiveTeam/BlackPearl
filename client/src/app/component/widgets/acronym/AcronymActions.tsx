@@ -3,6 +3,8 @@ import { AcronymStore } from './AcronymStore';
 import { Repositories } from '../../../utils/Repositories';
 import { Stores } from '../../../utils/Stores';
 import { action } from 'mobx';
+import { AcronymModel } from './AcronymModel';
+import * as fuzzysort from 'fuzzysort';
 
 export class AcronymActions {
   private acronymRepository: AcronymRepository;
@@ -15,6 +17,24 @@ export class AcronymActions {
 
   @action.bound
   async setAllAcronyms() {
-    this.acronymStore.setAcronyms(await this.acronymRepository.findAll());
+    const acronyms = await this.acronymRepository.findAll();
+    const acronymStrings = acronyms.map((obj: AcronymModel) => {
+      return obj.acronym + ' - ' + obj.definition;
+    });
+    this.acronymStore.setAcronyms(acronymStrings);
+  }
+
+  @action.bound
+  async setFilteredAcronyms(filter: string) {
+    const list = this.acronymStore.acronyms;
+    const opts = {
+      limit: 100
+    };
+    let results = fuzzysort.go(filter, list, opts);
+    let matches = results.map((el) => {
+      return fuzzysort.highlight(el, '<span style="background: #FFFF00;">', '</span>');
+    });
+    let filteredAcronyms = matches.map((el) => { return el; });
+    this.acronymStore.setFilteredAcronyms(filteredAcronyms);
   }
 }

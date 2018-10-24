@@ -1,31 +1,41 @@
 import { AcronymActions } from './AcronymActions';
-import { AcronymModel } from './AcronymModel';
+import { StubAcronymRepository } from './repositories/StubAcronymRepository';
+import { AcronymRepository } from './repositories/AcronymRepository';
 
 describe('AcronymActions', () => {
   let subject: AcronymActions;
   let acronymStore: any;
-  let acronymRepository: any;
+  let acronymRepository: AcronymRepository;
+  let acronyms: string[];
 
   beforeEach(() => {
-    let acronyms = [
-      new AcronymModel(1, 'AAA', 'Aaron Allon Arnold')
+    acronyms = [
+      'AAA - Aaron Allon Arnold',
+      'BBB - Baron Bllon Brnold',
+      'CCC - Crazy Cronin Creep',
+      'DDD - Dank Dylan Does'
     ];
 
     acronymStore = {
       setAcronyms: jest.fn(),
+      setFilteredAcronyms: jest.fn(),
       acronyms: acronyms
     };
 
-    acronymRepository = {
-      findAll: jest.fn()
-    };
+    acronymRepository = new StubAcronymRepository();
 
     subject = new AcronymActions({acronymStore} as any, {acronymRepository} as any);
   });
 
   it('should set the list of acronyms', async () => {
     await subject.setAllAcronyms();
-    expect(acronymStore.setAcronyms).toHaveBeenCalled();
-    expect(acronymRepository.findAll).toHaveBeenCalled();
+    expect(acronymStore.setAcronyms).toHaveBeenCalledWith(acronyms);
+  });
+
+  it('should filter our acronyms', async () => {
+    await subject.setFilteredAcronyms('aaa');
+    expect(acronymStore.setFilteredAcronyms).toHaveBeenCalledWith(
+      ['<span style="background: #FFFF00;">AAA</span> - Aaron Allon Arnold']
+    );
   });
 });

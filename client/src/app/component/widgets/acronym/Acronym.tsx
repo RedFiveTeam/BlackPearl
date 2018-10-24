@@ -3,20 +3,23 @@ import { observer } from 'mobx-react';
 import styled from 'styled-components';
 
 interface Props {
-  acronym: string;
-  definition: string;
+  acronym: string | null;
   className?: string;
 }
 
 @observer
 export class Acronym extends React.Component<Props> {
+
+  test() {
+    return { __html: this.props.acronym ? this.props.acronym : '' };
+  }
+
   render() {
     return (
       <div
         className={this.props.className}
-      >
-        {this.props.acronym} - {this.props.definition}
-      </div>
+        dangerouslySetInnerHTML={this.test()}
+      />
     );
   }
 }

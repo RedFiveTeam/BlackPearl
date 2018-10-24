@@ -6,6 +6,7 @@ import { AcronymModel } from './AcronymModel';
 describe('AcronymContainer', () => {
   let acronymStore: any;
   let acronymActions: any;
+  let subject: any;
 
   beforeEach(() => {
     let acronyms = [
@@ -18,10 +19,11 @@ describe('AcronymContainer', () => {
     };
 
     acronymActions = {
-      setAllAcronyms: jest.fn()
+      setAllAcronyms: jest.fn(),
+      setFilteredAcronyms: jest.fn()
     };
 
-    shallow(
+    subject = shallow(
       <AcronymContainer
         acronymStore={acronymStore}
         acronymActions={acronymActions}
@@ -31,5 +33,18 @@ describe('AcronymContainer', () => {
 
   it('should set the list of acronyms', () => {
     expect(acronymActions.setAllAcronyms).toHaveBeenCalled();
+  });
+
+  it('should render an acronym list', () => {
+    expect(subject.find('.acronymList').exists()).toBeTruthy();
+  });
+
+  it('should render a search box', () => {
+    expect(subject.find('.acronymSearch').exists()).toBeTruthy();
+  });
+
+  it('should update acronym list on type in search box', () => {
+    subject.find('.acronymSearch').simulate('change', {target: { value: 'test' }});
+    expect(acronymActions.setFilteredAcronyms).toHaveBeenCalled();
   });
 });

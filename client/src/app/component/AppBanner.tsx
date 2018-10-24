@@ -40,6 +40,7 @@ export class AppBanner extends React.Component<Props> {
 
 export const StyledAppBanner = styled(AppBanner)`
 display: flex;
+min-width: 1471px;
 
   .leftSide {
     min-width: 104px;
