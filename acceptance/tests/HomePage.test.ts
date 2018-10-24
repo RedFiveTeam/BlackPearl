@@ -17,6 +17,7 @@ Scenario('should allow the user to add, edit and delete a resource', (I) => {
 
   //edit
   I.amOnPage('/');
+  I.waitForElement('.threeDotButton' + `.${name}`, 10);
   I.click('.threeDotButton' + `.${name}`);
   I.click('.editButton');
   I.fillField('.pendingEditTitle', name);
@@ -31,6 +32,7 @@ Scenario('should allow the user to add, edit and delete a resource', (I) => {
   I.amOnPage('/');
 
   //delete
+  I.waitForElement('.threeDotButton' + `.${name}`, 10);
   I.click('.threeDotButton' + `.${name}`);
   I.click('.deleteButton');
   I.see(name);
@@ -81,5 +83,6 @@ Scenario('should display and then hide edit & delete buttons for resources', (I)
 
 Scenario('should display a list of acronyms', (I) => {
   I.amOnPage('/');
+  I.fillField('.acronymSearch', 'AAM');
   I.waitForText("AAM - air-to-air missile", 10, ".acronym");
 });
