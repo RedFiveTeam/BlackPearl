@@ -62,7 +62,7 @@ display: flex;
   .informationBanner {
     display: none;
     //background: #EAEAEA;
-    width: 968px;
+    width: 960px;
     height: 22px;
     margin-top: 80px;
     margin-left: 10px;

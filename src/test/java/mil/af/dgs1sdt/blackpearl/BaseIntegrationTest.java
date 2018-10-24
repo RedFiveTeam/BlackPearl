@@ -1,6 +1,7 @@
 package mil.af.dgs1sdt.blackpearl;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import mil.af.dgs1sdt.blackpearl.acronym.AcronymRepository;
 import mil.af.dgs1sdt.blackpearl.resource.ResourceRepository;
 import mil.af.dgs1sdt.blackpearl.time.TimeRepository;
 import org.junit.runner.RunWith;
@@ -18,9 +19,9 @@ import java.util.Map;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public abstract class BaseIntegrationTest {
     protected final static ObjectMapper objectMapper = new ObjectMapper();
-    @Autowired
-    protected ResourceRepository resourceRepository;
+    @Autowired protected ResourceRepository resourceRepository;
     @Autowired protected TimeRepository timeRepository;
+    @Autowired protected AcronymRepository acronymRepository;
     @LocalServerPort
     protected int port;
     @Autowired
