@@ -32,7 +32,7 @@
   "scripts": {
     "build": "react-scripts-ts build && rm -rf ../src/main/resources/static && cp -r build ../src/main/resources/static ",
     "lint": "tslint -c tslint.json 'src/**/*.{ts,tsx}'",
-    "start": "yarn lint --fix; react-scripts-ts start",
+    "start": "yarn lint --fix && react-scripts-ts start",
     "test": "react-scripts-ts test --env=jsdom"
   },
   "devDependencies": {

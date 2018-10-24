@@ -17,9 +17,6 @@ describe('ResourceActions', () => {
       setPendingResourceCategory: jest.fn(),
       pendingResource: ResourceModel,
       pendingEdit: ResourceModel,
-      performLoading: async (runFunction: any) => {
-        await runFunction();
-      }
     };
 
     resourceRepository = {

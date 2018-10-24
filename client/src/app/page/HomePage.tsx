@@ -6,6 +6,7 @@ import { StyledAddResourcePopup } from '../component/popup/AddResourcePopup';
 import { StyledCardContainer } from '../component/card/CardContainer';
 import { StyledRemoveResourcePopup } from '../component/popup/RemoveResourcePopup';
 import { StyledEditResourcePopup } from '../component/popup/EditResourcePopup';
+import { StyledAcronymContainer } from '../component/widgets/acronym/AcronymContainer';
 
 interface Props {
   resourceStore?: ResourceStore;
@@ -35,6 +36,7 @@ export class HomePage extends React.Component<Props> {
           className="cardsContainer"
         >
           <StyledCardContainer/>
+          <StyledAcronymContainer/>
         </div>
       </div>
     );

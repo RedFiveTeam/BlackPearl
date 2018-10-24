@@ -78,3 +78,8 @@ Scenario('should display and then hide edit & delete buttons for resources', (I)
   I.click('.bannerTitle');
   I.dontSee('.editButton');
 });
+
+Scenario('should display a list of acronyms', (I) => {
+  I.amOnPage('/');
+  I.waitForText("AAM - air-to-air missile", 10, ".acronym");
+});

@@ -1,7 +1,6 @@
 package mil.af.dgs1sdt.blackpearl.resource;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -25,12 +24,14 @@ public class ResourceController {
     }
 
     @GetMapping(path = "/{categoryID}")
-    public @ResponseBody Iterable<Resource> getAllResourcesByCategoryID(@PathVariable Long categoryID) {
+    public @ResponseBody
+    Iterable<Resource> getAllResourcesByCategoryID(@PathVariable Long categoryID) {
         return resourceRepository.getAllByCategoryID(categoryID);
     }
 
     @PostMapping
-    public @ResponseBody Resource create(@Valid @RequestBody ResourceJSON resourceJSON) {
+    public @ResponseBody
+    Resource create(@Valid @RequestBody ResourceJSON resourceJSON) {
         Resource resource = new Resource(resourceJSON.getName(), resourceJSON.getUrl(), resourceJSON.getCategoryID());
         return this.resourceRepository.save(resource);
     }
@@ -43,7 +44,8 @@ public class ResourceController {
     }
 
     @PutMapping(path = "/{id}")
-    public @ResponseBody Resource update(@Valid @RequestBody ResourceJSON json) {
+    public @ResponseBody
+    Resource update(@Valid @RequestBody ResourceJSON json) {
         return this.resourceService.update(json);
     }
 }
