@@ -15,7 +15,7 @@ describe('EditResourcePopup', () => {
     };
 
     resourceStore = {
-      pendingEdit: new ResourceModel(1, 'editMe.com', 'Edit Me')
+      pendingEdit: new ResourceModel(1, 'https://www.editMe.com', 'Edit Me')
     };
 
     subject = mount(<StyledEditResourcePopup resourceActions={resourceActions} resourceStore={resourceStore}/>);
@@ -37,5 +37,19 @@ describe('EditResourcePopup', () => {
 
   it('should render the url', () => {
     expect(subject.find('.pendingEditUrl').length).toBe(1);
+  });
+
+  it('should stop you from inputting an invalid url', async () => {
+    subject.find('.pendingEditUrl').simulate('change', {target: {value: 'www.google.com'}});
+    subject.find('.saveButton').simulate('click');
+    expect(subject.find('.urlError').text()).toBe('Please enter a valid address (https://www...)');
+  });
+
+  it('should stop you from inputting an empty title and url', () => {
+    subject.find('.pendingEditTitle').simulate('change', {target: {value: ''}});
+    subject.find('.pendingEditUrl').simulate('change', {target: {value: ''}});
+    subject.find('.saveButton').simulate('click');
+    expect(subject.find('.titleError').html()).toContain('Please enter a title');
+    expect(subject.find('.urlError').text()).toBe('Please enter an address');
   });
 });

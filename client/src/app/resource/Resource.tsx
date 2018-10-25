@@ -20,7 +20,7 @@ export class Resource extends React.Component<Props> {
     return (
       <div className={classNames(this.props.className, 'resource')}>
         <div>
-          <a href={this.props.resource.url} target="_blank">
+          <a href={this.props.resource.url} target="_blank" title={this.props.resource.name}>
             <span className="icon"><PearlIcon/></span>
             <span className="title">{this.props.resource.name}</span>
           </a>
@@ -52,7 +52,7 @@ export const StyledResource = inject('resourceStore')(styled(Resource)`
   a {
    text-decoration: none;
    color: black;
-   display: inline-block;
+   display: inline-flex;
    position: relative;
    padding: 7px;
    margin: -1px;
@@ -61,6 +61,8 @@ export const StyledResource = inject('resourceStore')(styled(Resource)`
   
   .title {
     padding-left: 7px;
+    text-overflow: ellipsis;
+    overflow: hidden;
   }
   
   #borderIcon {

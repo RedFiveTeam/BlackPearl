@@ -4,6 +4,8 @@ import styled from 'styled-components';
 import { ResourceActions } from '../../resource/actions/ResourceActions';
 import { StyledPopupModal } from './PopupModal';
 import { ResourceStore } from '../../resource/stores/ResourceStore';
+import { InputValidation } from '../../utils/InputValidation';
+import { CSSProperties } from 'react';
 
 interface Props {
   className?: string;
@@ -14,11 +16,22 @@ interface Props {
 interface State  {
   title: string;
   url: string;
+  urlError: string;
+  titleError: string;
+  urlCSS: CSSProperties;
+  titleCSS: CSSProperties;
 }
 
 @observer
 export class EditResourcePopup extends React.Component<Props, State> {
-  state = {title: this.props.resourceStore!.pendingEdit!.name, url: this.props.resourceStore!.pendingEdit!.url};
+  state = {
+    title: this.props.resourceStore!.pendingEdit!.name,
+    url: this.props.resourceStore!.pendingEdit!.url,
+    urlError: '',
+    titleError: '',
+    urlCSS: {},
+    titleCSS: {}
+  };
 
   onTitleFieldChange = (e: any) => {
     this.setState({title: e.target.value});
@@ -28,11 +41,33 @@ export class EditResourcePopup extends React.Component<Props, State> {
     this.setState({url: e.target.value});
   };
 
-  onClick = async () => {
-    this.props.resourceStore!.pendingEdit!.setUrl(this.state.url);
-    this.props.resourceStore!.pendingEdit!.setName(this.state.title);
-    await this.props.resourceActions!.updateResource();
-  };
+  async onSaveButtonClick() {
+    let inputValidation = new InputValidation();
+    let survivedEverything: boolean = true;
+    this.setState({urlError: '', titleError: '', urlCSS: {}, titleCSS: {}});
+
+    if (this.state.title === '') {
+      survivedEverything = false;
+      this.setState({titleError: 'Please enter a title'});
+      this.setState({titleCSS: {'border': 'solid 1px #A40000'}});
+    }
+
+    if (this.state.url === '') {
+      survivedEverything = false;
+      this.setState({urlError: 'Please enter an address'});
+      this.setState({urlCSS: {'border': 'solid 1px #A40000'}});
+    } else if (!inputValidation.isURLValid(this.state.url)) {
+      survivedEverything = false;
+      this.setState({urlError: 'Please enter a valid address (https://www...)'});
+      this.setState({urlCSS: {'border': 'solid 1px #A40000'}});
+    }
+
+    if (survivedEverything) {
+      this.props.resourceStore!.pendingEdit!.setUrl(this.state.url);
+      this.props.resourceStore!.pendingEdit!.setName(this.state.title);
+      await this.props.resourceActions!.updateResource();
+    }
+  }
 
   render() {
     return (
@@ -47,20 +82,31 @@ export class EditResourcePopup extends React.Component<Props, State> {
           <input
             className="pendingEditTitle"
             type="text"
+            maxLength={64}
+            style={this.state.titleCSS}
             placeholder={this.props.resourceStore!.pendingEdit!.name}
             value={this.state.title}
             onChange={(e) => this.onTitleFieldChange(e)}
           />
+          {
+            this.state.titleError !== '' &&
+            <div className="titleError">{this.state.titleError}</div>
+          }
           <input
             className="pendingEditUrl"
             type="text"
+            style={this.state.urlCSS}
             placeholder={this.props.resourceStore!.pendingEdit!.url}
             value={this.state.url}
             onChange={(e) => this.onUrlFieldChange(e)}
           />
+          {
+            this.state.urlError !== '' &&
+            <div className="urlError">{this.state.urlError}</div>
+          }
           <button
             className="saveButton"
-            onClick={this.onClick}
+            onClick={async () => { await this.onSaveButtonClick(); }}
           >
             SAVE
           </button>
@@ -81,6 +127,20 @@ export const StyledEditResourcePopup = inject('resourceActions', 'resourceStore'
   width: 514px;
   padding-top: 21px;
   padding-bottom: 19px;
+  }
+  
+  .titleError {
+    position: absolute;
+    top: 108px;
+    left: 20px;
+    color: #A40000;
+  }
+  
+  .urlError {
+    position: absolute;
+    top: 167px;
+    left: 20px;
+    color: #A40000;
   }
   
   input {

@@ -46,8 +46,33 @@ Scenario('should see an ATO day', (I) => {
   I.see("ATO ", ".atoDay");
 });
 
+Scenario('should validate user resource input', async (I) => {
+  //empty
+  I.amOnPage('/');
+  I.click('ADD RESOURCE');
+  I.click('SAVE', '.modal');
+  I.waitForText('Please enter a title', 10);
+  I.waitForText('Please enter an address', 10);
+  I.click('CANCEL', '.modal');
+  //tooLong
+  I.click('ADD RESOURCE');
+  let superLongTitle = 'This string is waaaaaaay too long to possible be a title. what am i even doing????? Whyyyyyyyy';
+  I.fillField('.titleField', superLongTitle);
+  let title = await I.grabValueFrom('.titleField');
+  assert.strictEqual(title.length, 64);
+  let validTitle = "This is a pretty decent title";
+  I.fillField('.titleField', validTitle);
+  title = await I.grabValueFrom('.titleField');
+  assert.strictEqual(title, validTitle);
+  //invalid url
+  I.fillField('.urlField', 'sometrash.com');
+  I.click('SAVE', '.modal');
+  I.waitForText('Please enter a valid address (https://www...)');
+});
+
 Scenario('should render six clocks', async function (I) {
   I.amOnPage('/');
+  I.waitForElement('.clock', 10);
   const clockCount = await I.grabNumberOfVisibleElements('.clock');
   assert.strictEqual(clockCount, 6);
 });

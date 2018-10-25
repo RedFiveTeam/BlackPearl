@@ -34,7 +34,21 @@ describe('AddResourcePopup', () => {
   });
 
   it('should save pending resource with information', () => {
+    subject.find('.urlField').simulate('change', {target: {value: 'https://www.google.com'}});
+    subject.find('.titleField').simulate('change', {target: {value: 'Google'}});
     subject.find('.saveButton').simulate('click');
     expect(resourceActions.saveResource).toHaveBeenCalled();
+  });
+
+  it('should stop you from inputting an invalid url', async () => {
+    subject.find('.urlField').simulate('change', {target: {value: 'www.google.com'}});
+    subject.find('.saveButton').simulate('click');
+    expect(subject.find('.urlError').text()).toBe('Please enter a valid address (https://www...)');
+  });
+
+  it('should stop you from inputting an empty title and url', () => {
+    subject.find('.saveButton').simulate('click');
+    expect(subject.find('.titleError').text()).toBe('Please enter a title');
+    expect(subject.find('.urlError').text()).toBe('Please enter an address');
   });
 });
