@@ -2,7 +2,7 @@ import * as React from 'react';
 import { observer } from 'mobx-react';
 import styled from 'styled-components';
 import { BlackPearlShipIcon } from '../icon/BlackPearlShipIcon';
-import { StyledTimeContainer } from './widgets/TimeContainer';
+import { StyledTimeContainer } from './widgets/time/TimeContainer';
 
 interface Props {
   className?: string;

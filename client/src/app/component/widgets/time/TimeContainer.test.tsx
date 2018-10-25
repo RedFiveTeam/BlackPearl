@@ -3,7 +3,7 @@ import { shallow, ShallowWrapper } from 'enzyme';
 import { TimeContainer } from './TimeContainer';
 import { StyledATODay } from './ATODay';
 import { StyledTZClock } from './TZClock';
-import { StubTimeRepository } from '../../utils/time/repositories/StubTimeRepository';
+import { StubTimeRepository } from '../../../utils/time/repositories/StubTimeRepository';
 
 describe('TimeContainer', () => {
   let subject: ShallowWrapper;

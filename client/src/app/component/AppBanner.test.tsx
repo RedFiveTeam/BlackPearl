@@ -2,7 +2,7 @@ import * as React from 'react';
 import { shallow, ShallowWrapper } from 'enzyme';
 import { AppBanner } from './AppBanner';
 import { BlackPearlShipIcon } from '../icon/BlackPearlShipIcon';
-import { StyledTimeContainer } from './widgets/TimeContainer';
+import { StyledTimeContainer } from './widgets/time/TimeContainer';
 
 describe('AppBanner', () => {
   let subject: ShallowWrapper;

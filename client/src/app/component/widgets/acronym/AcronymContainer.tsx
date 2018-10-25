@@ -57,19 +57,21 @@ export const StyledAcronymContainer = inject('acronymStore', 'acronymActions')(s
   height: 300px;
   border-radius: 10px;
   margin-left: 8px;
+  box-shadow: -1px 3px 3px rgba(0, 0, 0, .25);
   
   .title {
-    margin-top: 5px;
-    margin-bottom: 5px;
+    height: 42px;
+    line-height: 42px;
   }
   
   .acronymSearch {
-    width: 324px;
+    width: 326px;
     height: 20px;
     margin-bottom: 10px;
     font-size: 18px;
     font-weight: bold;
     outline: none;
+    border: none;
   }
 
   .acronymList {

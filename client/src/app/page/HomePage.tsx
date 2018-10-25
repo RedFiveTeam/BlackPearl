@@ -7,6 +7,9 @@ import { StyledCardContainer } from '../component/card/CardContainer';
 import { StyledRemoveResourcePopup } from '../component/popup/RemoveResourcePopup';
 import { StyledEditResourcePopup } from '../component/popup/EditResourcePopup';
 import { StyledAcronymContainer } from '../component/widgets/acronym/AcronymContainer';
+import {
+  StyledCoordinateConverterContainer
+} from '../component/widgets/coordinateConverter/CoordinateConverterContainer';
 
 interface Props {
   resourceStore?: ResourceStore;
@@ -22,11 +25,11 @@ export class HomePage extends React.Component<Props> {
       >
         {
           this.props.resourceStore!.hasPendingResource &&
-            <StyledAddResourcePopup/>
+          <StyledAddResourcePopup/>
         }
         {
           this.props.resourceStore!.hasPendingEdit &&
-            <StyledEditResourcePopup/>
+          <StyledEditResourcePopup/>
         }
         {
           this.props.resourceStore!.hasPendingDelete &&
@@ -36,7 +39,10 @@ export class HomePage extends React.Component<Props> {
           className="cardsContainer"
         >
           <StyledCardContainer/>
-          <StyledAcronymContainer/>
+          <div className="widgetSection">
+            <StyledAcronymContainer/>
+            <StyledCoordinateConverterContainer/>
+          </div>
         </div>
       </div>
     );
