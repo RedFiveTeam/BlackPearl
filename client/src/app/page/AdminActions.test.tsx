@@ -3,11 +3,14 @@ import { TimeRepository } from '../utils/time/repositories/TimeRepository';
 import { StubTimeRepository } from '../utils/time/repositories/StubTimeRepository';
 import { TimezoneModel } from '../utils/time/TimezoneModel';
 import { AdminActions } from './AdminActions';
+import { WeatherRepository } from '../component/widgets/weather/repositories/WeatherRepository';
+import { StubWeatherRepository } from '../component/widgets/weather/repositories/StubWeatherRepository';
 
 describe('AdminActions', () => {
   let subject: AdminActions;
   let adminStore: any;
   let timeRepository: TimeRepository;
+  let weatherRepository: WeatherRepository;
   let updateSpy: Mock;
 
   beforeEach(() => {
@@ -19,17 +22,24 @@ describe('AdminActions', () => {
     };
 
     timeRepository = new StubTimeRepository();
+    weatherRepository = new StubWeatherRepository();
     timeRepository.update = updateSpy;
+    weatherRepository.update = updateSpy;
 
-    subject = new AdminActions({adminStore} as any, {timeRepository} as any);
+    subject = new AdminActions({adminStore} as any, {timeRepository, weatherRepository} as any);
   });
-  it('should initialize the time store with the repository', async () => {
-    await subject.initializeTimeStore();
-    expect(adminStore.hydrate).toHaveBeenCalledWith(timeRepository);
+  it('should initialize the time store with the repositories', async () => {
+    await subject.initializeStores();
+    expect(adminStore.hydrate).toHaveBeenCalledWith(timeRepository, weatherRepository);
   });
 
   it('should use the repository to send timezones change requests', async () => {
     await subject.submitChanges();
     expect(updateSpy).toHaveBeenCalledWith((adminStore.timezones));
+  });
+
+  it('should use the repository to send weather change request', async () => {
+    await subject.submitChanges();
+    expect(updateSpy).toHaveBeenCalledWith((adminStore.weather));
   });
 });

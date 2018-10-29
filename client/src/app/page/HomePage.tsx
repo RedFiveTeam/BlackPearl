@@ -7,6 +7,7 @@ import { StyledCardContainer } from '../component/card/CardContainer';
 import { StyledRemoveResourcePopup } from '../component/popup/RemoveResourcePopup';
 import { StyledEditResourcePopup } from '../component/popup/EditResourcePopup';
 import { StyledAcronymContainer } from '../component/widgets/acronym/AcronymContainer';
+import { StyledWeatherContainer } from '../component/widgets/weather/WeatherContainer';
 import {
   StyledCoordinateConverterContainer
 } from '../component/widgets/coordinateConverter/CoordinateConverterContainer';
@@ -42,6 +43,7 @@ export class HomePage extends React.Component<Props> {
           <div className="widgetSection">
             <StyledAcronymContainer/>
             <StyledCoordinateConverterContainer/>
+            <StyledWeatherContainer/>
           </div>
         </div>
       </div>
@@ -52,5 +54,9 @@ export class HomePage extends React.Component<Props> {
 export const StyledHomePage = inject('resourceStore')(styled(HomePage)`
   .cardsContainer {
     display: flex;
+  }
+  
+  .widgetSection {
+    display: block;
   }
 `);

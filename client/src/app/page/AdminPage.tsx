@@ -14,7 +14,7 @@ interface Props {
 @observer
 export class AdminPage extends React.Component<Props> {
   async componentDidMount() {
-    await this.props.adminActions!.initializeTimeStore();
+    await this.props.adminActions!.initializeStores();
   }
 
   generateTimezoneRows() {
@@ -51,6 +51,16 @@ export class AdminPage extends React.Component<Props> {
           this.props.adminStore!.timezones &&
           this.generateTimezoneRows()
         }
+        <div className="weather">
+          <span>Weather URL:</span>
+          {
+            this.props.adminStore!.weather &&
+            <input
+                value={this.props.adminStore!.weather[0].url}
+                onChange={(e) => this.props.adminStore!.setWeatherUrl(0, e.target.value)}
+            />
+          }
+        </div>
         <button onClick={this.props.adminActions!.submitChanges}>Submit</button>
       </div>
     );

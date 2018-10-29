@@ -2,6 +2,7 @@ import * as React from 'react';
 import { shallow, ShallowWrapper } from 'enzyme';
 import { AdminPage } from './AdminPage';
 import { TimezoneModel } from '../utils/time/TimezoneModel';
+import { WeatherModel } from '../component/widgets/weather/WeatherModel';
 
 describe('AdminPage', () => {
   let subject: ShallowWrapper;
@@ -9,23 +10,31 @@ describe('AdminPage', () => {
   let adminActions: any;
 
   beforeEach(() => {
+
     adminStore = {
       timezones: [
         new TimezoneModel(1, 4, '1', '1'),
         new TimezoneModel(2, 5, '2', '2'),
         new TimezoneModel(3, 6, '3', '3')
       ],
+      weather: [
+        new WeatherModel(1, 'https://www.weather.com')
+      ],
       setTimezoneZone: jest.fn(),
-      setTimezoneName: jest.fn()
+      setTimezoneName: jest.fn(),
+      setWeatherUrl: jest.fn()
     };
 
     adminActions = {
       submitChanges: jest.fn(),
-      initializeTimeStore: jest.fn(),
+      initializeStores: jest.fn(),
     };
 
     subject = shallow(
-      <AdminPage adminActions={adminActions} adminStore={adminStore}/>
+      <AdminPage
+        adminActions={adminActions}
+        adminStore={adminStore}
+      />
     );
   });
 
@@ -88,7 +97,7 @@ describe('AdminPage', () => {
   });
 
   it('should hydrate the time store to have current timezones', () => {
-    expect(adminActions.initializeTimeStore).toHaveBeenCalled();
+    expect(adminActions.initializeStores).toHaveBeenCalled();
   });
 
   it('should set the new value on dropdown selection', () => {
@@ -99,5 +108,18 @@ describe('AdminPage', () => {
   it('should update the timezone friendly zone on text input', () => {
     subject.find('.timezoneRow').at(0).find('input').simulate('change', {target: {value: 'Friendly'}});
     expect(adminStore.setTimezoneName).toHaveBeenCalledWith(0, 'Friendly');
+  });
+
+  it('should render a weather URL input', () => {
+    expect(subject.find('.weather').at(0).find('input').exists()).toBeTruthy();
+  });
+
+  it('should populate current weather URL', () => {
+    expect(subject.find('.weather').at(0).find('input').props().value).toBe('https://www.weather.com');
+  });
+
+  it('should update the weather url on text input', () => {
+    subject.find('.weather').at(0).find('input').simulate('change', {target: {value: 'https://notWeather.com'}});
+    expect(adminStore.setWeatherUrl).toHaveBeenCalledWith(0, 'https://notWeather.com');
   });
 });

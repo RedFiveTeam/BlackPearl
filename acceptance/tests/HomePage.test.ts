@@ -111,3 +111,14 @@ Scenario('should display a list of acronyms', (I) => {
   I.fillField('.acronymSearch', 'AAM');
   I.waitForText("AAM - air-to-air missile", 10, ".acronym");
 });
+
+Scenario('should allow users to convert coordinates', async (I) => {
+  I.amOnPage('/');
+  I.waitForElement('.latLongInput', 10);
+  I.fillField('.latLongInput', '37° 8\'1.97"N 76° 6\'30.23"W');
+  let mgrsValue = await I.grabValueFrom('.mgrsInput');
+  assert.strictEqual(mgrsValue, '18SVG0155110299');
+  I.fillField('.mgrsInput', '18SVG0493917349');
+  let latLongValue = await I.grabValueFrom('.latLongInput');
+  assert.strictEqual(latLongValue, '371152N 0760416W');
+});

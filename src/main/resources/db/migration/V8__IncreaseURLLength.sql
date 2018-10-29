@@ -1,0 +1,2 @@
+ALTER TABLE resource
+MODIFY COLUMN url TEXT;

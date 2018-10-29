@@ -11,8 +11,15 @@ export class CoordinateConverterActions {
 
   @action.bound
   convertToMGRS(input: string) {
+    this.coordinateConverterStore.setLatLong(input);
     let decimal: number[] | null;
-    decimal = this.coordinateConverterStore.convertToDecimal(input);
-    this.coordinateConverterStore.convertDecimalToMGRS(decimal);
+    decimal = this.coordinateConverterStore.parseAsCoordinates(input);
+    this.coordinateConverterStore.convertCoordinatesToMGRS(decimal);
+  }
+
+  @action.bound
+  convertToLatLong(input: string) {
+    this.coordinateConverterStore.setMGRS(input);
+    this.coordinateConverterStore.convertMGRSToLatLong(input);
   }
 }

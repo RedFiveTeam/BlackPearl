@@ -6,17 +6,28 @@ describe('CoordinateConverterActions', () => {
 
   beforeEach(() => {
     coordinateConverterStore = {
-      convertToDecimal: jest.fn(),
-      convertDecimalToMGRS: jest.fn()
+      parseAsCoordinates: jest.fn(),
+      convertCoordinatesToMGRS: jest.fn(),
+      convertMGRSToLatLong: jest.fn(),
+      setLatLong: jest.fn(),
+      setMGRS: jest.fn()
     };
 
     subject = new CoordinateConverterActions({coordinateConverterStore} as any);
   });
 
-  it('should facilitate mgrs being saved in the store', () => {
+  it('should facilitate the store in converting from lat long to mgrs', () => {
     let input = '37°5\'46.38"N 76°25\'1.02"W';
     subject.convertToMGRS(input);
-    expect(coordinateConverterStore.convertToDecimal).toHaveBeenCalledWith(input);
-    expect(coordinateConverterStore.convertDecimalToMGRS).toHaveBeenCalled();
+    expect(coordinateConverterStore.setLatLong).toHaveBeenCalledWith('37°5\'46.38"N 76°25\'1.02"W');
+    expect(coordinateConverterStore.parseAsCoordinates).toHaveBeenCalledWith(input);
+    expect(coordinateConverterStore.convertCoordinatesToMGRS).toHaveBeenCalled();
+  });
+
+  it('should facilitate the store in converting from mgrs to lat long', () => {
+    let input = 'foo';
+    subject.convertToLatLong(input);
+    expect(coordinateConverterStore.setMGRS).toHaveBeenCalledWith('foo');
+    expect(coordinateConverterStore.convertMGRSToLatLong).toHaveBeenCalledWith(input);
   });
 });

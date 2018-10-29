@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { shallow, ShallowWrapper } from 'enzyme';
 import { CoordinateConverterContainer } from './CoordinateConverterContainer';
+import { DownArrow, UpArrow } from '../../../icon/ConversionArrow';
 
 describe('CoordinateConverterContainer', () => {
   let subject: ShallowWrapper;
@@ -9,11 +10,13 @@ describe('CoordinateConverterContainer', () => {
 
   beforeEach(() => {
     coordinateConverterActions = {
-      convertToMGRS: jest.fn()
+      convertToMGRS: jest.fn(),
+      convertToLatLong: jest.fn()
     };
 
     coordinateConverterStore = {
-      mgrs: jest.fn()
+      mgrs: jest.fn(),
+      latLong: '123456N 1234567E'
     };
 
     subject = shallow(
@@ -39,5 +42,19 @@ describe('CoordinateConverterContainer', () => {
   it('should trigger a conversion on typing in text input', () => {
     subject.find('.latLongInput').simulate('change', {target: {value: 'foo'}});
     expect(coordinateConverterActions.convertToMGRS).toHaveBeenCalledWith('foo');
+  });
+
+  it('should convert MGRS to lat/long', () => {
+    subject.find('.mgrsInput').simulate('change', {target: {value: 'mgrs'}});
+    expect(coordinateConverterActions.convertToLatLong).toHaveBeenCalledWith('mgrs');
+  });
+
+  it('should display a latlong value from the store', () => {
+    expect(subject.find('.latLongInput').prop('value')).toBe('123456N 1234567E');
+  });
+
+  it('should contain two, strictly cosmetic, arrows', () => {
+    expect(subject.find(DownArrow).exists()).toBeTruthy();
+    expect(subject.find(UpArrow).exists()).toBeTruthy();
   });
 });

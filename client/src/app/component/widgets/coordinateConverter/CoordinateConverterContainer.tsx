@@ -3,6 +3,7 @@ import { inject, observer } from 'mobx-react';
 import styled from 'styled-components';
 import { CoordinateConverterActions } from './CoordinateConverterActions';
 import { CoordinateConverterStore } from './CoordinateConverterStore';
+import { DownArrow, UpArrow } from '../../../icon/ConversionArrow';
 
 interface Props {
   className?: string;
@@ -19,13 +20,15 @@ export class CoordinateConverterContainer extends React.Component<Props> {
         <input
           className="latLongInput"
           placeholder="Lat/Long"
+          value={this.props.coordinateConverterStore!.latLong}
           onChange={(e) => this.props.coordinateConverterActions!.convertToMGRS(e.target.value)}
-        /><br/>
+        />
+        <div className="iconContainer"><UpArrow/><DownArrow/></div>
         <input
           className="mgrsInput"
           placeholder="MGRS"
-          contentEditable={false}
           value={this.props.coordinateConverterStore!.mgrs}
+          onChange={(e) => this.props.coordinateConverterActions!.convertToLatLong(e.target.value)}
         />
       </div>
     );
@@ -53,19 +56,29 @@ export const StyledCoordinateConverterContainer = inject('coordinateConverterAct
   }
   
   .latLongInput {
-    margin-bottom: 28px;
     ::placeholder {
        color: #15191C;
        opacity: .25;
     }
   }
   
+  .invertedIcon {
+    transform: rotate(180);
+  }
+  
+  .iconContainer {
+    height: 30px;
+    width: 100px;
+    line-height: 30px;
+    justify-content: space-evenly;
+    display: inline-flex;
+    align-items: center;
+  }
+  
   .mgrsInput {
-    background: #C0C0C0;
-    margin-bottom: 8px;
-    ::placeholder {
+     ::placeholder {
        color: #15191C;
-       opacity: .4;
+       opacity: .25;
     }
   }
   

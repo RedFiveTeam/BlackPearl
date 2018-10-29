@@ -5,6 +5,8 @@ import { StyledAddResourcePopup } from '../component/popup/AddResourcePopup';
 import { ResourceStore } from '../resource/stores/ResourceStore';
 import { ResourceModel } from '../resource/ResourceModel';
 import { StyledCardContainer } from '../component/card/CardContainer';
+import { StyledAcronymContainer } from '../component/widgets/acronym/AcronymContainer';
+import { StyledWeatherContainer } from '../component/widgets/weather/WeatherContainer';
 import {
   StyledCoordinateConverterContainer
 } from '../component/widgets/coordinateConverter/CoordinateConverterContainer';
@@ -37,12 +39,20 @@ describe('HomePage', () => {
     expect(subject.find(StyledAddResourcePopup).exists()).toBeTruthy();
   });
 
+  it('should have an acronym container', () => {
+    expect(subject.find(StyledAcronymContainer).exists()).toBeTruthy();
+  });
+
   it('should have a widgets section', () => {
     expect(subject.find('.widgetSection').exists()).toBeTruthy();
   });
 
   it('should have a CardContainer', () => {
     expect(subject.find(StyledCardContainer).exists()).toBeTruthy();
+  });
+
+  it('should have a weather container', () => {
+    expect(subject.find(StyledWeatherContainer).exists()).toBeTruthy();
   });
 
   it('should have a Coordinate Converter', () => {
