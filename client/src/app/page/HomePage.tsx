@@ -11,6 +11,7 @@ import { StyledWeatherContainer } from '../component/widgets/weather/WeatherCont
 import {
   StyledCoordinateConverterContainer
 } from '../component/widgets/coordinateConverter/CoordinateConverterContainer';
+import { StyledLoadingOverlay } from '../component/LoadingOverlay';
 
 interface Props {
   resourceStore?: ResourceStore;
@@ -24,6 +25,10 @@ export class HomePage extends React.Component<Props> {
       <div
         className={this.props.className}
       >
+        {
+          this.props.resourceStore!.loading &&
+            <StyledLoadingOverlay/>
+        }
         {
           this.props.resourceStore!.hasPendingResource &&
           <StyledAddResourcePopup/>

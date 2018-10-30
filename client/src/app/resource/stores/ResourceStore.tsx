@@ -1,7 +1,8 @@
 import { ResourceModel } from '../ResourceModel';
 import { action, computed, observable } from 'mobx';
+import { LoadingStore } from '../../utils/LoadingStore';
 
-export class ResourceStore {
+export class ResourceStore extends LoadingStore {
   @observable private _resources: ResourceModel[] = [];
   @observable private _pendingResource: ResourceModel | null = null;
   @observable private _pendingDelete: ResourceModel | null = null;

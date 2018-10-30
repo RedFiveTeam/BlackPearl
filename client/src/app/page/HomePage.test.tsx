@@ -10,6 +10,7 @@ import { StyledWeatherContainer } from '../component/widgets/weather/WeatherCont
 import {
   StyledCoordinateConverterContainer
 } from '../component/widgets/coordinateConverter/CoordinateConverterContainer';
+import { StyledLoadingOverlay } from '../component/LoadingOverlay';
 
 describe('HomePage', () => {
   let subject: ShallowWrapper;
@@ -57,5 +58,10 @@ describe('HomePage', () => {
 
   it('should have a Coordinate Converter', () => {
     expect(subject.find(StyledCoordinateConverterContainer).exists()).toBeTruthy();
+  });
+
+  it('should render the loading overlay', () => {
+    resourceStore.setLoading(true);
+    expect(subject.find(StyledLoadingOverlay).exists()).toBeTruthy();
   });
 });

@@ -66,17 +66,21 @@ export class ResourceActions {
 
   @action.bound
   async delete(resourceId: number) {
-    await this.resourceRepository.delete(resourceId);
-    await this.clearPendingDelete();
-    await this.setAllResources();
+    await this.resourceStore.performLoading(async () => {
+      await this.resourceRepository.delete(resourceId);
+      await this.clearPendingDelete();
+      await this.setAllResources();
+    });
   }
 
   @action.bound
   async saveResource() {
     if (this.resourceStore.pendingResource != null) {
-      await this.resourceRepository.saveResource(this.resourceStore.pendingResource!);
-      this.clearPendingResource();
-      await this.setAllResources();
+      await this.resourceStore.performLoading(async () => {
+        await this.resourceRepository.saveResource(this.resourceStore.pendingResource!);
+        this.clearPendingResource();
+        await this.setAllResources();
+      });
     }
   }
 
@@ -93,9 +97,11 @@ export class ResourceActions {
   @action.bound
   async updateResource() {
     if (this.resourceStore.pendingEdit != null) {
-      await this.resourceRepository.updateResource(this.resourceStore.pendingEdit);
-      this.clearPendingEdit();
-      await this.setAllResources();
+      await this.resourceStore.performLoading(async () => {
+        await this.resourceRepository.updateResource(this.resourceStore.pendingEdit!);
+        this.clearPendingEdit();
+        await this.setAllResources();
+      });
     }
   }
 }

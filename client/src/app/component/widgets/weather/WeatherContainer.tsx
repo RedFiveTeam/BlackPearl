@@ -46,7 +46,7 @@ border-radius: 10px;
 margin-top: 8px;
 margin-left: 8px;
 text-align: center;
-font-family: "Alegreya Sans";
+font-family: Amaranth;
 font-size: 24px;
 color: #FFFFFF;
 box-shadow: -1px 3px 3px rgba(0, 0, 0, .25);
