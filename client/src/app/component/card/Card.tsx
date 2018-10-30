@@ -41,8 +41,8 @@ export const StyledCard = styled(Card)`
     border-radius: 10px 10px 0px 0px;
     width: 100%;
     height: 32px;
-    background: #15191C;
-    font-family: Alegreya Sans;
+    background: #364958;
+    font-family: Amaranth;
     font-size: 24px;
     text-align: center;
     line-height: 32px;

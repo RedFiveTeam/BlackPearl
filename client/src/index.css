@@ -1,18 +1,12 @@
 @font-face {
-    font-family: 'Acme';
-    src: local('Acme'), url('./app/fonts/Acme/Acme-Regular.ttf');
-    font-weight: 400;
-}
-
-@font-face {
     font-family: 'Iglesia';
     src: local('Iglesia'), url('./app/fonts/Iglesia/Iglesia.ttf');
     font-weight: 400;
 }
 
 @font-face {
-    font-family: 'Alegreya Sans';
-    src: local('Alegreya Sans'), url('./app/fonts/Alegreya_Sans/AlegreyaSans-Bold.ttf');
+    font-family: 'Amaranth';
+    src: local('Amaranth'), url('./app/fonts/Amaranth/Amaranth-Regular.ttf');
     font-weight: 400;
 }
 

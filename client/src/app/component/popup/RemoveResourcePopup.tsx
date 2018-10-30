@@ -27,14 +27,17 @@ export class RemoveResourcePopup extends React.Component<Props> {
             this.props.resourceActions!.clearPendingDelete();
           }}
         >
-          <output className="pendingDeleteTitle">
+          <output
+            className="pendingDeleteTitle"
+            title={this.props.resourceStore!.pendingDelete!.name}
+          >
             {this.props.resourceStore!.pendingDelete!.name}
           </output>
           <button
             className="confirmButton"
             onClick={this.onClick}
           >
-            CONFIRM
+            DELETE
           </button>
         </StyledPopupModal>
       </div>
@@ -59,7 +62,7 @@ export const StyledRemoveResourcePopup = inject('resourceActions', 'resourceStor
   
   .pendingDeleteTitle {
     position: absolute;
-    font-family: Alegreya Sans;
+    font-family: Amaranth;
     background: #C4C4C4;
     border: none;
     font-size: 24px;
@@ -75,25 +78,32 @@ export const StyledRemoveResourcePopup = inject('resourceActions', 'resourceStor
     padding-left: 7px;
     box-sizing: border-box;
     line-height: 40px;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
   
   .confirmButton {
     position: absolute;
     left: 15%;
     bottom: 20px;
-    background: #C4C4C4;
-    font-family: Alegreya Sans;
+    background: #844646;
+    font-family: Amaranth;
     width: 157px;
     height: 49px;
     font-size: 24px;
     cursor: pointer;
     outline: 0px;
+    border: solid #844646;
+    color: #FFFFFF;
   }
   
   .cancelButton {
     position: absolute;
     right: 15%;
     bottom: 20px;
+    background: white;
+    border: solid #844646;
+    color: #844646;
   }
 
 `);

@@ -29,7 +29,7 @@ export class AddResourceButton extends React.Component<Props> {
             <AddResourceIcon/>
           </div>
           <div className="addResourceTitle">
-          ADD RESOURCE
+          Add Resource
           </div>
         </StyledButton>
       </div>

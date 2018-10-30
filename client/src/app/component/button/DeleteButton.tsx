@@ -28,7 +28,6 @@ export class DeleteButton extends React.Component<Props> {
 }
 
 export const StyledDeleteButton = inject('resourceActions')(styled(DeleteButton)`
-     
   .deleteButton {
     height: 37px;
     border: none;

@@ -1,5 +1,4 @@
 /// <reference path="../steps.d.ts" />
-
 let assert = require('assert');
 
 Feature('Home Page');
@@ -9,7 +8,7 @@ Scenario('should allow the user to add, edit and delete a resource', (I) => {
 
   //create
   I.amOnPage('/');
-  I.click('ADD RESOURCE');
+  I.click('Add Resource');
   I.fillField('.titleField', name);
   I.fillField('.urlField', 'https://www.testpage.com');
   I.click('SAVE', '.modal');
@@ -36,7 +35,7 @@ Scenario('should allow the user to add, edit and delete a resource', (I) => {
   I.click('.threeDotButton' + `.${name}`);
   I.click('.deleteButton');
   I.see(name);
-  I.click('CONFIRM');
+  I.click('DELETE');
   I.wait(1);
   I.dontSee(name);
 });
@@ -49,13 +48,13 @@ Scenario('should see an ATO day', (I) => {
 Scenario('should validate user resource input', async (I) => {
   //empty
   I.amOnPage('/');
-  I.click('ADD RESOURCE');
+  I.click('Add Resource');
   I.click('SAVE', '.modal');
   I.waitForText('Please enter a title', 10);
   I.waitForText('Please enter an address', 10);
   I.click('CANCEL', '.modal');
   //tooLong
-  I.click('ADD RESOURCE');
+  I.click('Add Resource');
   let superLongTitle = 'This string is waaaaaaay too long to possible be a title. what am i even doing????? Whyyyyyyyy';
   I.fillField('.titleField', superLongTitle);
   let title = await I.grabValueFrom('.titleField');
@@ -92,7 +91,7 @@ Scenario('should display and then hide edit & delete buttons for resources', (I)
 
   //create
   I.amOnPage('/');
-  I.click('ADD RESOURCE');
+  I.click('Add Resource');
   I.fillField('.titleField', name);
   I.fillField('.urlField', 'https://www.testpage.com');
   I.click('SAVE', '.modal');

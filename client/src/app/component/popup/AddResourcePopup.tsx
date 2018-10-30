@@ -39,17 +39,17 @@ export class AddResourcePopup extends React.Component<Props, State> {
     if (this.state.title === '') {
       survivedEverything = false;
       this.setState({titleError: 'Please enter a title'});
-      this.setState({titleCSS: {'border': 'solid 1px #A40000'}});
+      this.setState({titleCSS: {'border': 'solid 2px #A40000'}});
     }
 
     if (this.state.url === '') {
       survivedEverything = false;
       this.setState({urlError: 'Please enter an address'});
-      this.setState({urlCSS: {'border': 'solid 1px #A40000'}});
+      this.setState({urlCSS: {'border': 'solid 2px #A40000'}});
     } else if (!inputValidation.isURLValid(this.state.url)) {
       survivedEverything = false;
       this.setState({urlError: 'Please enter a valid address (https://www...)'});
-      this.setState({urlCSS: {'border': 'solid 1px #A40000'}});
+      this.setState({urlCSS: {'border': 'solid 2px #A40000'}});
     }
 
     if (survivedEverything) {
@@ -109,58 +109,18 @@ export class AddResourcePopup extends React.Component<Props, State> {
 }
 
 export const StyledAddResourcePopup = inject('resourceActions')(styled(AddResourcePopup)`
-  
   .modal {
    width: 514px;
    height: 250px;
   }
   
   .title {
-  height: 61px;
-  width: 514px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 0;
-  }
-  
-  input {
-    font-family: Alegreya Sans;
-    background: #C4C4C4;
-    border: none;
-    width: 490px;
-    height: 40px;
-    left: 480px;
-    top: 429px;
-    font-size: 24px;
-  }
-  
-  input::placeholder {
-    padding-left: 8px;
-    opacity: 0.5;
-    color: black;
-  }
-  
-  .cancelButton {
-    position: absolute;
-    right: 15%;
-    bottom: 6%;
-  }
-  
-  .saveButton {
-    position: absolute;
-    left: 15%;
-    bottom: 6%;
-    background: #C4C4C4;
-    font-family: Alegreya Sans;
-    width: 157px;
-    height: 49px;
-    font-size: 24px;
-    outline: 0px;
-  }
-  
-  .titleField {
-    margin-bottom: 20px;
+    height: 61px;
+    width: 514px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
   }
   
   .titleError {
@@ -172,12 +132,56 @@ export const StyledAddResourcePopup = inject('resourceActions')(styled(AddResour
   
   .urlError {
     position: absolute;
-    top: 168px;
+    top: 166px;
     left: 20px;
     color: #A40000;
   }
   
+  input {
+    font-family: Amaranth;
+    background: #C4C4C4;
+    border: 2px solid #C4C4C4;
+    width: 490px;
+    height: 40px;
+    left: 480px;
+    top: 429px;
+    font-size: 24px;
+    outline: none;
+    ::placeholder {
+      padding-left: 8px;
+      opacity: 0.5;
+      color: black;
+    }
+  }
+  
+  .titleField {
+    margin-bottom: 15px;
+  }
+  
   .urlField {
     margin-bottom: 10px;
+  }
+  
+  .saveButton {
+    position: absolute;
+    left: 15%;
+    bottom: 6%;
+    background: #65768B;
+    font-family: Amaranth;
+    width: 157px;
+    height: 49px;
+    font-size: 24px;
+    outline: 0px;
+    border: solid #65768B;
+    color: #FFFFFF;
+  }
+    
+  .cancelButton {
+    position: absolute;
+    right: 15%;
+    bottom: 6%;
+    background: #FFFFFF;
+    border: solid #65768B;
+    color: #65768B;
   }
 `);

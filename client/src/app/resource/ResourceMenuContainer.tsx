@@ -72,8 +72,22 @@ export class ResourceMenuContainer extends React.Component<Props> {
 }
 
 export const StyledResourceMenuContainer = inject('resourceActions')(styled(ResourceMenuContainer)`
-  width: 81px;
+  width: 100px;
   display: flex;
   align-items: center;
   justify-content: flex-end;
+  
+  svg {
+    padding-left: 7px;
+    filter: drop-shadow(-1px 1px 1px rgba(0,0,0,0.25));
+  }
+  
+  .deleteButton {
+      padding-top: 15%;
+      padding-right: 0px;
+  }
+  
+  .editButton {
+      padding-top: 15%;
+  }
 `);

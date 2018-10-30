@@ -32,6 +32,9 @@ export const StyledTZClock = inject('adminActions', 'adminStore')(styled(TZClock
     font-size: 12px;
     padding-top: 2px;
     margin-bottom: -5px;
+    overflow: hidden;
+    white-space: nowrap;
+    max-width: 60px;
   }
 
   .time {

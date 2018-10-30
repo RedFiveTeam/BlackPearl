@@ -21,6 +21,6 @@ export class Button extends React.Component<Props> {
 }
 
 export const StyledButton = styled(Button)`
-  font-family: Alegreya Sans;
+  font-family: Amaranth;
   outline: 0px;
 `;

@@ -49,17 +49,17 @@ export class EditResourcePopup extends React.Component<Props, State> {
     if (this.state.title === '') {
       survivedEverything = false;
       this.setState({titleError: 'Please enter a title'});
-      this.setState({titleCSS: {'border': 'solid 1px #A40000'}});
+      this.setState({titleCSS: {'border': 'solid 2px #A40000'}});
     }
 
     if (this.state.url === '') {
       survivedEverything = false;
       this.setState({urlError: 'Please enter an address'});
-      this.setState({urlCSS: {'border': 'solid 1px #A40000'}});
+      this.setState({urlCSS: {'border': 'solid 2px #A40000'}});
     } else if (!inputValidation.isURLValid(this.state.url)) {
       survivedEverything = false;
       this.setState({urlError: 'Please enter a valid address (https://www...)'});
-      this.setState({urlCSS: {'border': 'solid 1px #A40000'}});
+      this.setState({urlCSS: {'border': 'solid 2px #A40000'}});
     }
 
     if (survivedEverything) {
@@ -118,15 +118,15 @@ export class EditResourcePopup extends React.Component<Props, State> {
 
 export const StyledEditResourcePopup = inject('resourceActions', 'resourceStore')(styled(EditResourcePopup)`
   .modal {
-  width: 514px;
-  height: 250px;
+    width: 514px;
+    height: 250px;
   }
   
   .title {
-  height: 80px;
-  width: 514px;
-  padding-top: 21px;
-  padding-bottom: 19px;
+    height: 80px;
+    width: 514px;
+    padding-top: 21px;
+    padding-bottom: 19px;
   }
   
   .titleError {
@@ -144,13 +144,14 @@ export const StyledEditResourcePopup = inject('resourceActions', 'resourceStore'
   }
   
   input {
-  padding-left: 7px;
-  box-sizing: border-box;
+    padding-left: 7px;
+    box-sizing: border-box;
+    outline: none;
   }
   
   .pendingEditTitle {
     position: absolute;
-    font-family: Alegreya Sans;
+    font-family: Amaranth;
     background: #C4C4C4;
     border: none;
     font-size: 24px;
@@ -165,7 +166,7 @@ export const StyledEditResourcePopup = inject('resourceActions', 'resourceStore'
   
   .pendingEditUrl {
     position: absolute;
-    font-family: Alegreya Sans;
+    font-family: Amaranth;
     background: #C4C4C4;
     border: none;
     font-size: 24px;
@@ -182,19 +183,24 @@ export const StyledEditResourcePopup = inject('resourceActions', 'resourceStore'
     position: absolute;
     left: 15%;
     bottom: 6%;
-    background: #C4C4C4;
-    font-family: Alegreya Sans;
+    background: #65768B;
+    font-family: Amaranth;
     width: 157px;
     height: 49px;
     font-size: 24px;
     cursor: pointer;
     outline: 0px;
+    color: #FFFFFF;
+    border: solid #65768B;
   }
   
   .cancelButton {
     position: absolute;
     right: 15%;
     bottom: 6%;
+    border: solid #65768B;
+    background: #FFFFFF;
+    color: #65768B;
   }
 
 `);

@@ -46,7 +46,7 @@ export const StyledPopupModal = styled(PopupModal)`
   position: fixed;
   z-index: 1;
   text-align: center;
-  font-family: Alegreya Sans;
+  font-family: Amaranth;
   
   .modal {
     border-radius: 10px;
@@ -70,7 +70,7 @@ export const StyledPopupModal = styled(PopupModal)`
   
   .cancelButton {
   background: #C4C4C4;
-  font-family: Alegreya Sans;
+  font-family: Amaranth;
   width: 157px;
   height: 49px;
   font-size: 24px;

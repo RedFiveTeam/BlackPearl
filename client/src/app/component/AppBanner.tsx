@@ -34,6 +34,7 @@ min-width: 1471px;
 
   .leftSide {
     min-width: 104px;
+    margin-left: 7px;
   }
 
   .rightSide {
@@ -52,7 +53,7 @@ min-width: 1471px;
   
   .informationBanner {
     display: none;
-    width: 960px;
+    width: 954px;
     height: 22px;
     margin-top: 80px;
     margin-left: 10px;

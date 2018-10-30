@@ -41,7 +41,7 @@ export const StyledResource = inject('resourceStore')(styled(Resource)`
   border: none;
   border-top: 1px solid grey;
   background: #EAEAEA;
-  font-family: Alegreya Sans;
+  font-family: Amaranth;
   font-size: 18px;
   margin: auto;
   display: flex;
@@ -56,13 +56,14 @@ export const StyledResource = inject('resourceStore')(styled(Resource)`
    position: relative;
    padding: 7px;
    margin: -1px;
-   width: 235px;
+   width: 223px;
   }
   
   .title {
     padding-left: 7px;
     text-overflow: ellipsis;
     overflow: hidden;
+    margin-top: -1px;
   }
   
   #borderIcon {

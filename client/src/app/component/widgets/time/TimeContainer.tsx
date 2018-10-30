@@ -47,7 +47,7 @@ export const StyledTimeContainer = inject('timeStore', 'timeActions')(styled(Tim
       box-shadow: -1px 3px 3px rgba(0, 0, 0, .25);
       display: flex;
       justify-content: space-between;
-      font-family: Alegreya Sans;
+      font-family: Amaranth;
       padding-left: 10px;
       align-self: flex-end;
       margin-left: 10px;
@@ -61,7 +61,7 @@ export const StyledTimeContainer = inject('timeStore', 'timeActions')(styled(Tim
     right: 124px;
     height: 46px;
     font-size: 36px;
-    font-family: Alegreya Sans;
+    font-family: Amaranth;
     text-shadow: 0px 3px 6px rgba(0, 0, 0, 0.3);
     padding-top: 25px;
   }

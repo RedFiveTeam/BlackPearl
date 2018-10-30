@@ -37,14 +37,14 @@ export class CoordinateConverterContainer extends React.Component<Props> {
 
 export const StyledCoordinateConverterContainer = inject('coordinateConverterActions', 'coordinateConverterStore')
 (styled(CoordinateConverterContainer)`
-  font-family: Alegreya Sans;
+  font-family: Amaranth;
   text-align: center;
   font-size: 24px;
   color: #FFFFFF;
   background: #364958;
   width: 350px;
   min-width: 350px;
-  height: 160px;
+  height: 165px;
   border-radius: 10px;
   margin-left: 8px;
   margin-top: 10px;
@@ -59,6 +59,7 @@ export const StyledCoordinateConverterContainer = inject('coordinateConverterAct
     ::placeholder {
        color: #15191C;
        opacity: .25;
+       padding-left: 5px;
     }
   }
   
@@ -79,6 +80,7 @@ export const StyledCoordinateConverterContainer = inject('coordinateConverterAct
      ::placeholder {
        color: #15191C;
        opacity: .25;
+       padding-left: 5px;
     }
   }
   

@@ -25,6 +25,7 @@ export class AcronymContainer extends React.Component<Props> {
         <div className="title">Acronym Search</div>
         <input
           className="acronymSearch"
+          placeholder="Find Acronym..."
           onChange={async (e) => { await this.props.acronymActions!.setFilteredAcronyms(e.target.value); }}
         />
         <div className="acronymList">
@@ -47,7 +48,7 @@ export class AcronymContainer extends React.Component<Props> {
 }
 
 export const StyledAcronymContainer = inject('acronymStore', 'acronymActions')(styled(AcronymContainer)`
-  font-family: Alegreya Sans;
+  font-family: Amaranth;
   text-align: center;
   font-size: 24px;
   color: #FFFFFF;
@@ -65,13 +66,19 @@ export const StyledAcronymContainer = inject('acronymStore', 'acronymActions')(s
   }
   
   .acronymSearch {
-    width: 326px;
+    font-family: Amaranth;
+    width: 327.5px;
     height: 20px;
     margin-bottom: 10px;
     font-size: 18px;
     font-weight: bold;
     outline: none;
     border: none;
+    ::placeholder {
+       color: #15191C;
+       opacity: .25;
+       padding-left: 5px;
+    }
   }
 
   .acronymList {

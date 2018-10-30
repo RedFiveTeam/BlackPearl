@@ -30,6 +30,7 @@ export class ThreeDotButton extends React.Component<Props> {
 
 export const StyledThreeDotButton = styled(ThreeDotButton)`
   .threeDotButton {
+    line-height: 50%;
     height: 37px;
     border: none;
     background: none;
