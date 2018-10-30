@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "loaders.css": "^0.1.2",
+    "react-loaders": "^3.0.1"
+  }
+}

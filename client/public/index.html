@@ -7,18 +7,80 @@
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json">
     <title>The Black Pearl</title>
     <link rel="shortcut icon" href="favicon.ico"/>
+    <style>
+
+        .ball-scale-ripple-multiple {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            -webkit-transform: translateY(-25px);
+            transform: translateY(-25px);
+        }
+
+        .ball-scale-ripple-multiple > div:nth-child(1) {
+            -webkit-animation-delay: -.6s;
+            animation-delay: -.6s;
+        }
+
+        .ball-scale-ripple-multiple > div:nth-child(2) {
+            -webkit-animation-delay: -.4s;
+            animation-delay: -.4s;
+        }
+
+        .ball-scale-ripple-multiple > div:nth-child(3) {
+            -webkit-animation-delay: -.2s;
+            animation-delay: -.2s;
+        }
+
+        .ball-scale-ripple-multiple > div {
+            position: absolute;
+            top: -2px;
+            left: -26px;
+            width: 50px;
+            height: 50px;
+            border-radius: 100%;
+            border: 2px solid #fff;
+            -webkit-animation: ball-scale-ripple-multiple 1.25s 0s infinite cubic-bezier(.21, .53, .56, .8);
+            animation: ball-scale-ripple-multiple 1.25s 0s infinite cubic-bezier(.21, .53, .56, .8);
+        }
+
+        body {
+            background-color: #aea4bf;
+        }
+
+        @keyframes ball-scale-ripple-multiple {
+            0% {
+                -webkit-transform: scale(.1);
+                transform: scale(.1);
+                opacity: 1;
+            }
+            70% {
+                -webkit-transform: scale(1);
+                transform: scale(1);
+                opacity: .7;
+            }
+            100% {
+                opacity: 0;
+            }
+        }
+    </style>
 </head>
 <body>
 <noscript>
     You need to enable JavaScript to run this app.
 </noscript>
-<div id="root"></div>
+<div id="root">
+    <div class="ball-scale-ripple-multiple">
+        <div></div>
+        <div></div>
+        <div></div>
+    </div>
+</div>
 <script>
     try {
         eval("var foo = (x)=>x+1");
     } catch (e) {
-        document.getElementById("root").innerHTML = "<p>This browser is unsupported by The Black Pearl. " +
-            "Please use Microsoft Edge, Google Chrome, or Mozilla Firefox.</p>"
+        document.getElementById("root").innerHTML = "<p>This browser is unsupported by The Black Pearl. " + "Please use Microsoft Edge, Google Chrome, or Mozilla Firefox.</p>"
     }
 </script>
 </body>
