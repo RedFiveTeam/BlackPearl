@@ -15,7 +15,11 @@ public class WeatherJSON {
   @NotNull(message = emptyFieldMessage)
   private String url;
 
-  public WeatherJSON(String url) {
+  @NotNull(message = emptyFieldMessage)
+  private String label;
+
+  public WeatherJSON(String url, String label) {
     this.url = url;
+    this.label = label;
   }
 }

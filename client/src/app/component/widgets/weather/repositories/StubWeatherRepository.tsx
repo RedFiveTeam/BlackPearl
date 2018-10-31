@@ -6,7 +6,8 @@ export class StubWeatherRepository implements WeatherRepository {
     return Promise.resolve(
       [new WeatherModel(
         1,
-        'https://www.weather.com'
+        'https://www.weather.com',
+        'USA'
       )]
     );
   }

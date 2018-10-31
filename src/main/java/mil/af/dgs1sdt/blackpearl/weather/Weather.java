@@ -17,21 +17,25 @@ public class Weather {
   @GeneratedValue
   private Long id;
   private String url;
+  private String label;
 
-  public Weather(String url) {
+  public Weather(String url, String label) {
     this.url = url;
+    this.label = label;
   }
 
   public Weather update(WeatherJSON json) {
     this.setId(json.getId());
     this.setUrl(json.getUrl());
+    this.setLabel(json.getLabel());
     return this;
   }
 
   public static Weather fromJSON(WeatherJSON json) {
     return new Weather(
       json.getId(),
-      json.getUrl()
+      json.getUrl(),
+      json.getLabel()
     );
   }
 }

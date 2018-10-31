@@ -30,7 +30,8 @@ public class WeatherController {
       weather.add(
         new Weather(
           item.getId(),
-          item.getUrl()
+          item.getUrl(),
+          item.getLabel()
         )));
     return this.weatherRepository.saveAll(weather);
   }

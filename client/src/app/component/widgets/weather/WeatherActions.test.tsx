@@ -19,7 +19,7 @@ describe('WeatherActions', () => {
       update: jest.fn()
     };
 
-    testWeather = [new WeatherModel(1, 'https://testWeather.com')];
+    testWeather = [new WeatherModel(1, 'https://testWeather.com', 'USA')];
 
     subject = new WeatherActions({weatherStore} as any, {weatherRepository} as any);
   });

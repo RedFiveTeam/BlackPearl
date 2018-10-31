@@ -34,6 +34,13 @@ export class AdminStore {
     }
   }
 
+  @action.bound
+  setWeatherLabel(index: number, label: string) {
+    if (index < this.weather.length) {
+      this.weather[index].setLabel(label);
+    }
+  }
+
   @computed
   get timezones() {
     return this._timezones;

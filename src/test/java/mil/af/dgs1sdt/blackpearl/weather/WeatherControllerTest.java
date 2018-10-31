@@ -14,7 +14,7 @@ public class WeatherControllerTest extends BaseIntegrationTest {
 
   @Before
   public void setUp() {
-    weather = new Weather("https://weather.com");
+    weather = new Weather("https://weather.com", "USA");
 
     weatherRepository.save(weather);
   }
@@ -32,12 +32,14 @@ public class WeatherControllerTest extends BaseIntegrationTest {
       .get(WeatherController.URI)
       .then()
       .statusCode(200)
-      .body("[0].url", equalTo("https://weather.com"));
+      .body("[0].url", equalTo("https://weather.com"))
+      .body("[0].label", equalTo("USA"));
   }
 
   @Test
   public void updateWeatherTest() throws Exception {
     weather.setUrl("https://notWeather.com");
+    weather.setLabel("NOTUSA");
 
     Weather[] w = {weather};
 
@@ -50,6 +52,7 @@ public class WeatherControllerTest extends BaseIntegrationTest {
       .put(WeatherController.URI)
       .then()
       .statusCode(200)
-      .body("[0].url", equalTo("https://notWeather.com"));
+      .body("[0].url", equalTo("https://notWeather.com"))
+      .body("[0].label", equalTo("NOTUSA"));
   }
 }

@@ -20,3 +20,16 @@ Scenario('should allow admin to change a time zone', async (I) => {
   const actualTime = timeValue[0].substr(0,3);
   assert.strictEqual(actualTime, expectedTime);
 });
+
+Scenario('should allow admin to change a weather data', async (I) => {
+  I.amOnPage('/admin');
+  I.waitForElement('.weatherURL', 10);
+  I.fillField(locate('.weatherURL').first(), 'http://superweather.com');
+  I.fillField(locate('.weatherLabel').first(), 'SUP');
+  I.click('Submit');
+  I.wait(5);
+  I.amOnPage('/');
+  I.waitForText('SUP');
+  const url = await I.grabAttributeFrom(locate('.weatherURL').first(), 'href');
+  assert(url, 'http://superweather.com');
+});

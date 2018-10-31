@@ -22,17 +22,21 @@ export class WeatherContainer extends React.Component<Props> {
       <div
         className={this.props.className}
       >
-        <div className="title">
-          Weather
-        </div>
-        <div className="weather">
-          {
-            this.props.weatherStore!.weather[0] &&
-            <a target="__blank" href={this.props.weatherStore!.weather[0].url}>
-                <WeatherIcon/>
-            </a>
-          }
-        </div>
+        <WeatherIcon/>
+        {
+          this.props.weatherStore!.weather.map((w, index) => {
+            return (
+              <a
+                target="__blank"
+                key={index}
+                className={'weatherURL weather' + index}
+                href={w.url}
+              >
+                <span key={index} className="weatherLabel">{w.label}</span>
+              </a>
+            );
+          })
+        }
       </div>
     );
   }
@@ -50,12 +54,49 @@ font-family: Amaranth;
 font-size: 24px;
 color: #FFFFFF;
 box-shadow: -1px 3px 3px rgba(0, 0, 0, .25);
+position: relative;
+display: flex;
 
-  .title {
-    padding-top: 5px;
+  svg {
+    position: absolute;
+    align-self: center;
+    left: 71px;
   }
   
-  svg {
-    margin-top: 20px;
+  .weatherURL {
+    width: 175px;
+    height: 118px;
+    line-height: 118px;
+    position: absolute;
+    font-family: Amaranth;
+    font-size: 48px;
+    color: #CFCECE;
+    font-weight: 800;
+    text-decoration: none;
   }
+  
+  .weatherLabel {
+    text-shadow: rgba(0,0,0,0.3) -1px 4px 12px;
+  }
+  
+  .weather0 {
+    border-right: solid #959595 5px;
+    border-bottom: solid #959595 5px;
+  }
+  
+  .weather1 {
+    left: 50%;
+    border-bottom: solid #959595 5px;
+  }
+  
+  .weather2 {
+    top: 51%;
+    border-right: solid #959595 5px;
+  }
+  
+  .weather3 {
+    top: 51%;
+    left: 50%;
+  }
+
 `);

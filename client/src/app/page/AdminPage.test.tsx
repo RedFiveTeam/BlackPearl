@@ -18,11 +18,15 @@ describe('AdminPage', () => {
         new TimezoneModel(3, 6, '3', '3')
       ],
       weather: [
-        new WeatherModel(1, 'https://www.weather.com')
+        new WeatherModel(1, 'https://www.weather.com', 'USA'),
+        new WeatherModel(1, 'https://www.weather2.com', 'CAN'),
+        new WeatherModel(1, 'https://www.weather3.com', 'AUS'),
+        new WeatherModel(1, 'https://www.weather4.com', 'EUR')
       ],
       setTimezoneZone: jest.fn(),
       setTimezoneName: jest.fn(),
-      setWeatherUrl: jest.fn()
+      setWeatherUrl: jest.fn(),
+      setWeatherLabel: jest.fn()
     };
 
     adminActions = {
@@ -110,16 +114,32 @@ describe('AdminPage', () => {
     expect(adminStore.setTimezoneName).toHaveBeenCalledWith(0, 'Friendly');
   });
 
-  it('should render a weather URL input', () => {
-    expect(subject.find('.weather').at(0).find('input').exists()).toBeTruthy();
+  it('should render 4 weather URL inputs', () => {
+    expect(subject.find('.weatherURL').length).toBe(4);
   });
 
-  it('should populate current weather URL', () => {
-    expect(subject.find('.weather').at(0).find('input').props().value).toBe('https://www.weather.com');
+  it('should populate current weather URLs', () => {
+    expect(subject.find('.weatherURL').at(0).find('input').props().value).toBe('https://www.weather.com');
+    expect(subject.find('.weatherURL').at(1).find('input').props().value).toBe('https://www.weather2.com');
+    expect(subject.find('.weatherURL').at(2).find('input').props().value).toBe('https://www.weather3.com');
+    expect(subject.find('.weatherURL').at(3).find('input').props().value).toBe('https://www.weather4.com');
+
+  });
+
+  it('should populate current weather labels', () => {
+    expect(subject.find('.weatherLabel').at(0).find('input').props().value).toBe('USA');
+    expect(subject.find('.weatherLabel').at(1).find('input').props().value).toBe('CAN');
+    expect(subject.find('.weatherLabel').at(2).find('input').props().value).toBe('AUS');
+    expect(subject.find('.weatherLabel').at(3).find('input').props().value).toBe('EUR');
   });
 
   it('should update the weather url on text input', () => {
-    subject.find('.weather').at(0).find('input').simulate('change', {target: {value: 'https://notWeather.com'}});
+    subject.find('.weatherURL').at(0).simulate('change', {target: {value: 'https://notWeather.com'}});
     expect(adminStore.setWeatherUrl).toHaveBeenCalledWith(0, 'https://notWeather.com');
+  });
+
+  it('should update the weather label on text input', () => {
+    subject.find('.weatherLabel').at(0).simulate('change', {target: {value: 'NOTUSA'}});
+    expect(adminStore.setWeatherLabel).toHaveBeenCalledWith(0, 'NOTUSA');
   });
 });

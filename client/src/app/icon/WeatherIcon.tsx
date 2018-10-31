@@ -14,33 +14,33 @@ export const WeatherIcon = () => {
     <svg width="209" height="129" viewBox="0 0 209 129" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path
         d={pathA}
-        fill="#EAEAEA"
+        fill="#000000"
       />
       <path
         d={pathB}
-        fill="#EAEAEA"
+        fill="#000000"
       />
       <path
         d={pathC}
-        fill="#EAEAEA"
+        fill="#000000"
       />
       <path
         d={pathD}
-        fill="#EAEAEA"
+        fill="#000000"
       />
       <path
         d={pathE}
-        fill="#EAEAEA"
+        fill="#000000"
       />
       <path
         d={pathF}
-        fill="#EAEAEA"
+        fill="#000000"
       />
       <path
         fillRule="evenodd"
         clipRule="evenodd"
         d={pathG}
-        fill="#EAEAEA"
+        fill="#000000"
       />
     </svg>
   );

@@ -121,3 +121,10 @@ Scenario('should allow users to convert coordinates', async (I) => {
   let latLongValue = await I.grabValueFrom('.latLongInput');
   assert.strictEqual(latLongValue, '371152N 0760416W');
 });
+
+Scenario('should see 4 weather links', async (I) => {
+  I.amOnPage('/');
+  I.waitForElement('.weatherURL', 10);
+  let weatherCount = await I.grabNumberOfVisibleElements('.weatherURL');
+  assert.strictEqual(weatherCount, 4);
+});

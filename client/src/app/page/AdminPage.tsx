@@ -52,13 +52,27 @@ export class AdminPage extends React.Component<Props> {
           this.generateTimezoneRows()
         }
         <div className="weather">
-          <span>Weather URL:</span>
+          <span>Weather URLs:</span>
           {
             this.props.adminStore!.weather &&
-            <input
-                value={this.props.adminStore!.weather[0].url}
-                onChange={(e) => this.props.adminStore!.setWeatherUrl(0, e.target.value)}
-            />
+            this.props.adminStore!.weather.map((w, index) => {
+              return (
+                <div
+                  key={index}
+                >
+                  <input
+                    value={w.label}
+                    className="weatherLabel"
+                    onChange={(e) => this.props.adminStore!.setWeatherLabel(index, e.target.value)}
+                  />
+                  <input
+                    value={w.url}
+                    className="weatherURL"
+                    onChange={(e) => this.props.adminStore!.setWeatherUrl(index, e.target.value)}
+                  />
+                </div>
+              );
+            })
           }
         </div>
         <button onClick={this.props.adminActions!.submitChanges}>Submit</button>
@@ -67,4 +81,8 @@ export class AdminPage extends React.Component<Props> {
   }
 }
 
-export const StyledAdminPage = inject('adminStore', 'adminActions')(styled(AdminPage)``);
+export const StyledAdminPage = inject('adminStore', 'adminActions')(styled(AdminPage)`
+  .weatherURL {
+    width: 80%;
+  }
+`);
