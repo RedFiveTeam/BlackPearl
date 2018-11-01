@@ -5,6 +5,7 @@ import { StyledCard } from './Card';
 import { Category } from '../../resource/ResourceModel';
 import { ResourceActions } from '../../resource/actions/ResourceActions';
 import classNames = require('classnames');
+import { StyledInformationCard } from './InformationCard';
 
 interface Props {
   className?: string;
@@ -23,6 +24,7 @@ export class CardContainer extends React.Component<Props> {
         <StyledCard category={Category.Main}/>
         <StyledCard category={Category.SituationalAwareness}/>
         <StyledCard category={Category.TargetResearch}/>
+        <StyledInformationCard/>
       </div>
     );
   }
@@ -30,6 +32,7 @@ export class CardContainer extends React.Component<Props> {
 
 export const StyledCardContainer = inject('resourceActions')(styled(CardContainer)`
   display: flex;
-  height: 780px;
-  max-height: 780px;
+  height: 955px;
+  max-height: 955px;
+  position: relative;
 `);

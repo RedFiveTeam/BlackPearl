@@ -34,7 +34,7 @@ export class Card extends React.Component<Props> {
 export const StyledCard = styled(Card)`
    width: 353px;
    padding-left: 8px;
-   height: inherit;
+   height: 570px;
    max-height: inherit;
    
    .cardTitle {
