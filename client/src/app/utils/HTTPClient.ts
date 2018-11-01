@@ -1,4 +1,3 @@
-import * as Cookie from 'js-cookie';
 import * as urljoin from 'url-join';
 
 export class ErrorResponse {
@@ -11,16 +10,11 @@ export class UnauthorizedErrorResponse extends ErrorResponse {
 }
 
 export class HTTPClient {
-  private csrfToken: string = Cookie.get('XSRF-TOKEN') || '';
-
   constructor(private baseURL: string = '/') {
   }
 
   async getJSON(path: string) {
-    const resp = await fetch(urljoin(this.baseURL, path), {credentials: 'include'});
-    if (resp.status === 403) {
-      return new UnauthorizedErrorResponse('You are not authorized to access this resource');
-    }
+    const resp = await fetch(urljoin(this.baseURL, path));
     return await resp.json();
   }
 
@@ -29,9 +23,8 @@ export class HTTPClient {
       urljoin(this.baseURL, path),
       {
         method: 'POST',
-        headers: [['Content-Type', 'application/json'], ['X-XSRF-TOKEN', this.csrfToken]],
+        headers: [['Content-Type', 'application/json']],
         body: body,
-        credentials: 'include'
       }
     );
     const json = await resp.json();
@@ -45,8 +38,7 @@ export class HTTPClient {
       {
         method: 'PUT',
         body: body,
-        headers: [['Content-Type', 'application/json'], ['X-XSRF-TOKEN', this.csrfToken]],
-        credentials: 'include',
+        headers: [['Content-Type', 'application/json']],
       }
     );
     const json = await resp.json();
@@ -55,28 +47,14 @@ export class HTTPClient {
   }
 
   async put(path: string) {
-    const resp = await fetch(
-      urljoin(this.baseURL, path),
-      {
-        method: 'PUT',
-        headers: [['X-XSRF-TOKEN', this.csrfToken]],
-        credentials: 'include',
-      }
-    );
+    const resp = await fetch(urljoin(this.baseURL, path), {method: 'PUT'});
     const json = await resp.json();
     this.handleErrors(resp.status, json);
     return json;
   }
 
   async deleteJSON(path: string) {
-    const resp = await fetch(
-      urljoin(this.baseURL, path),
-      {
-        method: 'DELETE',
-        headers: [['X-XSRF-TOKEN', this.csrfToken]],
-        credentials: 'include'
-      }
-    );
+    const resp = await fetch(urljoin(this.baseURL, path), {method: 'DELETE'});
     return await resp.json();
   }
 
@@ -86,15 +64,13 @@ export class HTTPClient {
       {
         method: 'DELETE',
         body: body ? body : null,
-        headers: [['Content-Type', 'application/json'], ['X-XSRF-TOKEN', this.csrfToken]],
-        credentials: 'include'
+        headers: [['Content-Type', 'application/json']],
       }
     );
 
     if (resp.status < 200 || resp.status >= 300) {
       throw new Error('Failed to setPendingDelete item');
     }
-
   }
 
   async postFile(path: string, file: File, timezone: string) {
@@ -105,9 +81,7 @@ export class HTTPClient {
       urljoin(this.baseURL, path),
       {
         method: 'POST',
-        headers: [['X-XSRF-TOKEN', this.csrfToken]],
-        body: formData,
-        credentials: 'include'
+        body: formData
       }
     );
   }

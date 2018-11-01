@@ -10,42 +10,41 @@ import javax.validation.Valid;
 @Controller
 @RequestMapping(ResourceController.URI)
 public class ResourceController {
-    public static final String URI = "/api/resources";
+  public static final String URI = "/api/resources";
 
-    @Autowired
-    ResourceService resourceService;
-    @Autowired
-    ResourceRepository resourceRepository;
+  @Autowired
+  ResourceRepository resourceRepository;
 
-    @GetMapping
-    public @ResponseBody
-    Iterable<Resource> getAllResources() {
-        return resourceRepository.findAll();
-    }
+  @GetMapping
+  public @ResponseBody
+  Iterable<Resource> getAllResources() {
+    return resourceRepository.findAll();
+  }
 
-    @GetMapping(path = "/{categoryID}")
-    public @ResponseBody
-    Iterable<Resource> getAllResourcesByCategoryID(@PathVariable Long categoryID) {
-        return resourceRepository.getAllByCategoryID(categoryID);
-    }
+  @GetMapping(path = "/{categoryID}")
+  public @ResponseBody
+  Iterable<Resource> getAllResourcesByCategoryID(@PathVariable Long categoryID) {
+    return resourceRepository.getAllByCategoryID(categoryID);
+  }
 
-    @PostMapping
-    public @ResponseBody
-    Resource create(@Valid @RequestBody ResourceJSON resourceJSON) {
-        Resource resource = new Resource(resourceJSON.getName(), resourceJSON.getUrl(), resourceJSON.getCategoryID());
-        return this.resourceRepository.save(resource);
-    }
+  @PostMapping
+  public @ResponseBody
+  Resource create(@Valid @RequestBody ResourceJSON resourceJSON) {
+    Resource resource = new Resource(resourceJSON.getName(), resourceJSON.getUrl(), resourceJSON.getCategoryID());
+    return this.resourceRepository.save(resource);
+  }
 
-    @DeleteMapping
-    public ResponseEntity<Void> delete(@Valid @RequestBody String resourceId) {
-        Long id = Long.valueOf(resourceId);
-        resourceRepository.deleteById(id);
-        return ResponseEntity.noContent().build();
-    }
+  @DeleteMapping
+  public ResponseEntity<Void> delete(@Valid @RequestBody String resourceId) {
+    Long id = Long.valueOf(resourceId);
+    resourceRepository.deleteById(id);
+    return ResponseEntity.noContent().build();
+  }
 
-    @PutMapping(path = "/{id}")
-    public @ResponseBody
-    Resource update(@Valid @RequestBody ResourceJSON json) {
-        return this.resourceService.update(json);
-    }
+  @PutMapping(path = "/{id}")
+  public @ResponseBody
+  Resource update(@Valid @RequestBody ResourceJSON json) {
+    final Resource resource = resourceRepository.getOne(json.getId());
+    return resourceRepository.save(resource.update(json));
+  }
 }

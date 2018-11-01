@@ -1,11 +1,13 @@
 import { ResourceActions } from '../resource/actions/ResourceActions';
 import { stores } from './Stores';
 import { WebRepositories } from './Repositories';
-import { TimeActions } from './time/TimeActions';
-import { AdminActions } from '../page/AdminActions';
-import { AcronymActions } from '../component/widgets/acronym/AcronymActions';
-import { WeatherActions } from '../component/widgets/weather/WeatherActions';
-import { CoordinateConverterActions } from '../component/widgets/coordinateConverter/CoordinateConverterActions';
+import { TimeActions } from '../component/widgets/time/actions/TimeActions';
+import { AdminActions } from '../page/actions/AdminActions';
+import { AcronymActions } from '../component/widgets/acronym/actions/AcronymActions';
+import { WeatherActions } from '../component/widgets/weather/actions/WeatherActions';
+import {
+  CoordinateConverterActions
+} from '../component/widgets/coordinateConverter/actions/CoordinateConverterActions';
 
 const adminActions = new AdminActions(stores, WebRepositories);
 const acronymActions = new AcronymActions(stores, WebRepositories);

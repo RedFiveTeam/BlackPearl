@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { shallow, ShallowWrapper } from 'enzyme';
 import { AdminPage } from './AdminPage';
-import { TimezoneModel } from '../utils/time/TimezoneModel';
+import { TimezoneModel } from '../component/widgets/time/TimezoneModel';
 import { WeatherModel } from '../component/widgets/weather/WeatherModel';
 
 describe('AdminPage', () => {

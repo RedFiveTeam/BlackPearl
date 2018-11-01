@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { ResourceActions } from '../../resource/actions/ResourceActions';
 import { StyledPopupModal } from './PopupModal';
 import { ResourceStore } from '../../resource/stores/ResourceStore';
-import { InputValidation } from '../../utils/InputValidation';
+import { InputValidation } from '../../utils/inputValidation/InputValidation';
 import { CSSProperties } from 'react';
 
 interface Props {
@@ -42,7 +42,7 @@ export class EditResourcePopup extends React.Component<Props, State> {
   };
 
   async onSaveButtonClick() {
-    let inputValidation = new InputValidation();
+    let valid = new InputValidation();
     let survivedEverything: boolean = true;
     this.setState({urlError: '', titleError: '', urlCSS: {}, titleCSS: {}});
 
@@ -56,7 +56,7 @@ export class EditResourcePopup extends React.Component<Props, State> {
       survivedEverything = false;
       this.setState({urlError: 'Please enter an address'});
       this.setState({urlCSS: {'border': 'solid 2px #A40000'}});
-    } else if (!inputValidation.isURLValid(this.state.url)) {
+    } else if (!valid.isURLValid(this.state.url)) {
       survivedEverything = false;
       this.setState({urlError: 'Please enter a valid address (https://www...)'});
       this.setState({urlCSS: {'border': 'solid 2px #A40000'}});

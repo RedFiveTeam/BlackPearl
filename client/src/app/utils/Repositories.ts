@@ -2,9 +2,9 @@ import { ResourceRepository } from '../resource/repositories/ResourceRepository'
 import { WebResourceRepository } from '../resource/repositories/web/WebResourceRepository';
 import { HTTPClient } from './HTTPClient';
 import { StubResourceRepository } from '../resource/repositories/stub/StubResourceRepository';
-import { TimeRepository } from './time/repositories/TimeRepository';
-import { WebTimeRepository } from './time/repositories/WebTimeRepository';
-import { StubTimeRepository } from './time/repositories/StubTimeRepository';
+import { TimeRepository } from '../component/widgets/time/repositories/TimeRepository';
+import { WebTimeRepository } from '../component/widgets/time/repositories/WebTimeRepository';
+import { StubTimeRepository } from '../component/widgets/time/repositories/StubTimeRepository';
 import { WebAcronymRepository } from '../component/widgets/acronym/repositories/WebAcronymRepository';
 import { StubAcronymRepository } from '../component/widgets/acronym/repositories/StubAcronymRepository';
 import { AcronymRepository } from '../component/widgets/acronym/repositories/AcronymRepository';
