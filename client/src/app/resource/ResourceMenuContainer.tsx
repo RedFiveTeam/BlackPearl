@@ -26,10 +26,9 @@ export class ResourceMenuContainer extends React.Component<Props> {
   }
 
   handleClick = (e: any) => {
-    if (this.node.contains(e.target)) {
+    if (this.node && this.node.contains(e.target)) {
       return;
     }
-
     this.props.resourceMenuStore.menuVisibilityOff();
   };
 

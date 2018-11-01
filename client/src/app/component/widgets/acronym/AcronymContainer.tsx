@@ -3,7 +3,7 @@ import { inject, observer } from 'mobx-react';
 import styled from 'styled-components';
 import { AcronymStore } from './AcronymStore';
 import { StyledAcronym } from './Acronym';
-import { AcronymActions } from './AcronymActions';
+import { AcronymActions } from './actions/AcronymActions';
 
 interface Props {
   acronymStore?: AcronymStore;

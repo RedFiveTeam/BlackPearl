@@ -10,7 +10,7 @@ import { StyledWeatherContainer } from '../component/widgets/weather/WeatherCont
 import {
   StyledCoordinateConverterContainer
 } from '../component/widgets/coordinateConverter/CoordinateConverterContainer';
-import { StyledLoadingOverlay } from '../component/LoadingOverlay';
+import { StyledLoadingOverlay } from '../component/loading/LoadingOverlay';
 
 describe('HomePage', () => {
   let subject: ShallowWrapper;

@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { inject, observer } from 'mobx-react';
 import styled from 'styled-components';
-import { AdminStore } from './AdminStore';
-import { AdminActions } from './AdminActions';
+import { AdminStore } from './stores/AdminStore';
+import { AdminActions } from './actions/AdminActions';
 import moment = require('moment-timezone');
 
 interface Props {

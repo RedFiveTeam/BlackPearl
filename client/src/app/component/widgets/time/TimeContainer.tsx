@@ -2,8 +2,8 @@ import * as React from 'react';
 import { observer, inject } from 'mobx-react';
 import styled from 'styled-components';
 import { StyledATODay } from './ATODay';
-import { TimeStore } from '../../../utils/time/TimeStore';
-import { TimeActions } from '../../../utils/time/TimeActions';
+import { TimeStore } from './TimeStore';
+import { TimeActions } from './actions/TimeActions';
 import { StyledTZClock } from './TZClock';
 
 interface Props {

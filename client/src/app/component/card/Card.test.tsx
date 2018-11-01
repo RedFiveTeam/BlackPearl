@@ -1,22 +1,21 @@
 import * as React from 'react';
-import { StyledResourceList } from '../../resource/ResourceList';
 import { shallow, ShallowWrapper } from 'enzyme';
 import { Card } from './Card';
 import { StyledAddResourceButton } from '../button/AddResourceButton';
 import { Category } from '../../resource/ResourceModel';
+import { StyledResourceContainer } from '../../resource/ResourceContainer';
 
 describe('Card', () => {
   let subject: ShallowWrapper;
 
   beforeEach(() => {
-
     subject = shallow(
       <Card category={Category.Main}/>
     );
   });
 
   it('should render a resource list', () => {
-    expect(subject.find(StyledResourceList).exists()).toBeTruthy();
+    expect(subject.find(StyledResourceContainer).exists()).toBeTruthy();
   });
 
   it('should render a add resource button', () => {

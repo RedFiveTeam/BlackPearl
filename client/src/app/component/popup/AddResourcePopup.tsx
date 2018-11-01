@@ -3,7 +3,7 @@ import { StyledPopupModal } from './PopupModal';
 import styled from 'styled-components';
 import { ResourceActions } from '../../resource/actions/ResourceActions';
 import { inject } from 'mobx-react';
-import { InputValidation } from '../../utils/InputValidation';
+import { InputValidation } from '../../utils/inputValidation/InputValidation';
 import { CSSProperties } from 'react';
 
 interface Props {

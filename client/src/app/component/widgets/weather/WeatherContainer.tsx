@@ -2,7 +2,7 @@ import * as React from 'react';
 import { inject, observer } from 'mobx-react';
 import styled from 'styled-components';
 import { WeatherStore } from './WeatherStore';
-import { WeatherActions } from './WeatherActions';
+import { WeatherActions } from './actions/WeatherActions';
 import { WeatherIcon } from '../../../icon/WeatherIcon';
 
 interface Props {

@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { observer } from 'mobx-react';
 import styled from 'styled-components';
-import { StyledResourceList } from '../../resource/ResourceList';
 import { StyledAddResourceButton } from '../button/AddResourceButton';
 import { Category, CategoryName } from '../../resource/ResourceModel';
+import { StyledResourceContainer } from '../../resource/ResourceContainer';
 
 interface Props {
   category: Category;
@@ -19,7 +19,7 @@ export class Card extends React.Component<Props> {
           {CategoryName[Category[this.props.category]]}
         </div>
         <div className="body">
-          <StyledResourceList
+          <StyledResourceContainer
             category={this.props.category}
           />
           <StyledAddResourceButton

@@ -1,6 +1,6 @@
 import { ResourceModel } from '../ResourceModel';
 import { action, computed, observable } from 'mobx';
-import { LoadingStore } from '../../utils/LoadingStore';
+import { LoadingStore } from '../../component/loading/stores/LoadingStore';
 
 export class ResourceStore extends LoadingStore {
   @observable private _resources: ResourceModel[] = [];
