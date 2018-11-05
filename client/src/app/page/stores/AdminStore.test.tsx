@@ -3,17 +3,21 @@ import { StubTimeRepository } from '../../component/widgets/time/repositories/St
 import { AdminStore } from './AdminStore';
 import { WeatherRepository } from '../../component/widgets/weather/repositories/WeatherRepository';
 import { StubWeatherRepository } from '../../component/widgets/weather/repositories/StubWeatherRepository';
+import { InformationRepository } from '../../component/card/information/repositories/InformationRepository';
+import { StubInformationRepository } from '../../component/card/information/repositories/StubInformationRepository';
 
 describe('AdminStore', () => {
   let subject: AdminStore;
   let timeRepository: TimeRepository;
   let weatherRepository: WeatherRepository;
+  let informationRepository: InformationRepository;
 
   beforeEach(async () => {
     timeRepository = new StubTimeRepository();
     weatherRepository = new StubWeatherRepository();
+    informationRepository = new StubInformationRepository();
     subject = new AdminStore();
-    await subject.hydrate(timeRepository, weatherRepository);
+    await subject.hydrate(timeRepository, weatherRepository, informationRepository);
   });
 
   it('should hydrate with all timezones', async () => {
@@ -22,6 +26,11 @@ describe('AdminStore', () => {
 
   it('should hydrate with the weather', async () => {
     expect(subject.weather[0].url).toBe('https://www.weather.com');
+  });
+
+  it('should hydrate with all the general information', async () => {
+    expect(subject.information[0].name).toBe('Phone Number');
+    expect(subject.information[0].content).toBe('123-456-7890');
   });
 
   it('should update the timezone zone from action', () => {
@@ -37,5 +46,10 @@ describe('AdminStore', () => {
   it('should update the weather url', () => {
     subject.setWeatherUrl(0, 'https://www.notWeather.com');
     expect(subject.weather[0].url).toBe('https://www.notWeather.com');
+  });
+
+  it('should update the information content', () => {
+    subject.setInformationContent(0, '098-765-4321');
+    expect(subject.information[0].content).toBe('098-765-4321');
   });
 });

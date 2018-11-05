@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { inject, observer } from 'mobx-react';
-import { ResourceStore } from '../resource/stores/ResourceStore';
+import { ResourceStore } from '../component/resource/stores/ResourceStore';
 import styled from 'styled-components';
 import { StyledAddResourcePopup } from '../component/popup/AddResourcePopup';
 import { StyledCardContainer } from '../component/card/CardContainer';

@@ -2,8 +2,8 @@ import * as React from 'react';
 import { shallow, ShallowWrapper } from 'enzyme';
 import { Card } from './Card';
 import { StyledAddResourceButton } from '../button/AddResourceButton';
-import { Category } from '../../resource/ResourceModel';
-import { StyledResourceContainer } from '../../resource/ResourceContainer';
+import { Category } from '../resource/ResourceModel';
+import { StyledResourceContainer } from '../resource/ResourceContainer';
 
 describe('Card', () => {
   let subject: ShallowWrapper;

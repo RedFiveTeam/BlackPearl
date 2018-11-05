@@ -2,7 +2,7 @@ import * as React from 'react';
 import { mount, ReactWrapper } from 'enzyme';
 import { StyledAddResourceButton } from './AddResourceButton';
 import { StyledButton } from './Button';
-import { Category } from '../../resource/ResourceModel';
+import { Category } from '../resource/ResourceModel';
 
 describe('AddResourceButton', () => {
   let subject: ReactWrapper;

@@ -20,6 +20,15 @@ INSERT INTO weather (url, label) VALUES
     ("https://weather.com/weather/today/l/ASXX0112:1:AS", "AUS"),
     ("https://weather.com/weather/today/l/BOXX2872:1:BO", "EUR");
 
+INSERT INTO information (name, content) VALUES
+    ("Image Server", "earth.gvs.nga.smil.mil"),
+    ("Image Server (JWICS)", "earth.gvs.nga.ic.gov"),
+    ("AUAB", "irc1.auab.aorcentaf.af.smil.mil"),
+    ("NAVCENT", "chat.ior.navy.smil.mil"),
+    ("DSN", "575-1410"),
+    ("SVOIP", "302-574-0375(0376)"),
+    ("TSVOIP", "984-4971");
+
 INSERT INTO acronym (acronym, definition) VALUES
     ("A&P", "analysis and production"),
     ("A-1", "director of manpower, personnel, and services"),

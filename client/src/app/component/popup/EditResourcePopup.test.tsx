@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { mount, ReactWrapper } from 'enzyme';
-import { ResourceModel } from '../../resource/ResourceModel';
+import { ResourceModel } from '../resource/ResourceModel';
 import { StyledEditResourcePopup } from './EditResourcePopup';
 
 describe('EditResourcePopup', () => {

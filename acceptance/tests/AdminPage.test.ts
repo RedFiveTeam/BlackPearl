@@ -10,7 +10,7 @@ Scenario('should allow admin to change a time zone', async (I) => {
   I.fillField(locate('input').inside('.timezoneRow').first(), 'accTest');
 
   I.selectOption(locate('select').inside('.timezoneRow').first(), 'America/Tortola');
-  I.click('Submit');
+  I.click('Save');
   I.wait(5);
   I.amOnPage('/');
   I.waitForText('accTest', 10);
@@ -26,10 +26,20 @@ Scenario('should allow admin to change a weather data', async (I) => {
   I.waitForElement('.weatherURL', 10);
   I.fillField(locate('.weatherURL').first(), 'http://superweather.com');
   I.fillField(locate('.weatherLabel').first(), 'SUP');
-  I.click('Submit');
+  I.click('Save');
   I.wait(5);
   I.amOnPage('/');
-  I.waitForText('SUP');
+  I.waitForText('SUP', 10);
   const url = await I.grabAttributeFrom(locate('.weatherURL').first(), 'href');
   assert(url, 'http://superweather.com');
+});
+
+Scenario('should allow admin to change general information', async (I) => {
+  I.amOnPage('/admin');
+  I.waitForElement('.information', 10);
+  I.fillField(locate('.informationContent').first(), 'www.com');
+  I.click('Save');
+  I.wait(5);
+  I.amOnPage('/');
+  I.waitForText('www.com', 10);
 });

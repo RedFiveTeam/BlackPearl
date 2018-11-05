@@ -2,8 +2,8 @@ import * as React from 'react';
 import { observer } from 'mobx-react';
 import styled from 'styled-components';
 import { StyledAddResourceButton } from '../button/AddResourceButton';
-import { Category, CategoryName } from '../../resource/ResourceModel';
-import { StyledResourceContainer } from '../../resource/ResourceContainer';
+import { Category, CategoryName } from '../resource/ResourceModel';
+import { StyledResourceContainer } from '../resource/ResourceContainer';
 
 interface Props {
   category: Category;

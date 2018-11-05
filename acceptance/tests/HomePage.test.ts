@@ -128,3 +128,16 @@ Scenario('should see 4 weather links', async (I) => {
   let weatherCount = await I.grabNumberOfVisibleElements('.weatherURL');
   assert.strictEqual(weatherCount, 4);
 });
+
+Scenario('should see a general information', (I) => {
+  I.amOnPage('/');
+  I.waitForElement('.information', 10);
+  I.see('Image Server', '.information');
+  I.see('Call Out Format', '.information');
+  I.see('Image Server (JWICS)', '.information');
+  I.see('AUAB', '.information');
+  I.see('NAVCENT', '.information');
+  I.see('DSN', '.information');
+  I.see('SVOIP', '.information');
+  I.see('TSVOIP', '.information');
+});
