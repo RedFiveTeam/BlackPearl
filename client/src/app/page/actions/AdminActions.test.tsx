@@ -7,36 +7,54 @@ import { WeatherRepository } from '../../component/widgets/weather/repositories/
 import { StubWeatherRepository } from '../../component/widgets/weather/repositories/StubWeatherRepository';
 import { InformationRepository } from '../../component/card/information/repositories/InformationRepository';
 import { StubInformationRepository } from '../../component/card/information/repositories/StubInformationRepository';
+import { AcronymRepository } from '../../component/widgets/acronym/repositories/AcronymRepository';
+import { StubAcronymRepository } from '../../component/widgets/acronym/repositories/StubAcronymRepository';
+import { AcronymModel } from '../../component/widgets/acronym/AcronymModel';
 
 describe('AdminActions', () => {
   let subject: AdminActions;
   let adminStore: any;
+  let acronymRepository: AcronymRepository;
   let timeRepository: TimeRepository;
   let weatherRepository: WeatherRepository;
   let informationRepository: InformationRepository;
   let updateSpy: Mock;
+  let saveSpy: Mock;
 
   beforeEach(() => {
     updateSpy = jest.fn();
+    saveSpy = jest.fn();
 
     adminStore = {
       hydrate: jest.fn(),
-      timezones: [new TimezoneModel(1, 1, '1', '1'), new TimezoneModel(2, 2, '2', '2') ]
+      setPendingAcronym: jest.fn(),
+      timezones: [new TimezoneModel(1, 1, '1', '1'), new TimezoneModel(2, 2, '2', '2')]
     };
 
+    acronymRepository = new StubAcronymRepository();
     timeRepository = new StubTimeRepository();
     weatherRepository = new StubWeatherRepository();
     informationRepository = new StubInformationRepository();
+    acronymRepository.saveAcronym = saveSpy;
     timeRepository.update = updateSpy;
     weatherRepository.update = updateSpy;
     informationRepository.update = updateSpy;
 
-    subject = new AdminActions({adminStore} as any, {timeRepository, weatherRepository, informationRepository} as any);
+    subject = new AdminActions({adminStore} as any, {
+      acronymRepository,
+      timeRepository,
+      weatherRepository,
+      informationRepository
+    } as any);
   });
 
   it('should initialize the time store with the repositories', async () => {
     await subject.initializeStores();
-    expect(adminStore.hydrate).toHaveBeenCalledWith(timeRepository, weatherRepository, informationRepository);
+    expect(adminStore.hydrate).toHaveBeenCalledWith(
+      acronymRepository,
+      timeRepository,
+      weatherRepository,
+      informationRepository);
   });
 
   it('should use the repository to send timezones change requests', async () => {
@@ -47,5 +65,17 @@ describe('AdminActions', () => {
   it('should use the repository to send weather change request', async () => {
     await subject.submitChanges();
     expect(updateSpy).toHaveBeenCalledWith((adminStore.weather));
+  });
+
+  it('should use the repository to add an acronym', async() => {
+    await subject.addAcronym();
+    expect(saveSpy).toHaveBeenCalledWith(adminStore.acronym);
+  });
+
+  it('should update a pending acronym', () => {
+    let pendingAcronym = new AcronymModel(null, 'AT', 'acronym title');
+    subject.updatePendingAcronym(pendingAcronym.acronym, pendingAcronym.definition);
+    expect(adminStore.setPendingAcronym.mock.calls[0][0].acronym).toEqual(pendingAcronym.acronym);
+    expect(adminStore.setPendingAcronym.mock.calls[0][0].definition).toEqual(pendingAcronym.definition);
   });
 });

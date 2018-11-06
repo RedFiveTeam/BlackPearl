@@ -3,6 +3,7 @@
 set -e
 
 BASE_DIR="$(dirname $( cd "$(dirname "$0")" ; pwd -P ))"
+echo ${BASE_DIR}
 
 pushd ${BASE_DIR}/client
     yarn install

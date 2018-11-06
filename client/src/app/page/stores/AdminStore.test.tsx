@@ -5,19 +5,23 @@ import { WeatherRepository } from '../../component/widgets/weather/repositories/
 import { StubWeatherRepository } from '../../component/widgets/weather/repositories/StubWeatherRepository';
 import { InformationRepository } from '../../component/card/information/repositories/InformationRepository';
 import { StubInformationRepository } from '../../component/card/information/repositories/StubInformationRepository';
+import { AcronymRepository } from '../../component/widgets/acronym/repositories/AcronymRepository';
+import { StubAcronymRepository } from '../../component/widgets/acronym/repositories/StubAcronymRepository';
 
 describe('AdminStore', () => {
   let subject: AdminStore;
+  let acronymRepository: AcronymRepository;
   let timeRepository: TimeRepository;
   let weatherRepository: WeatherRepository;
   let informationRepository: InformationRepository;
 
   beforeEach(async () => {
+    acronymRepository = new StubAcronymRepository();
     timeRepository = new StubTimeRepository();
     weatherRepository = new StubWeatherRepository();
     informationRepository = new StubInformationRepository();
     subject = new AdminStore();
-    await subject.hydrate(timeRepository, weatherRepository, informationRepository);
+    await subject.hydrate(acronymRepository, informationRepository, timeRepository, weatherRepository);
   });
 
   it('should hydrate with all timezones', async () => {

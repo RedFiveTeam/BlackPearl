@@ -10,4 +10,10 @@ export class StubAcronymRepository implements AcronymRepository {
       new AcronymModel(4, 'DDD', 'Dank Dylan Does'),
     ]);
   }
+
+  saveAcronym(acronym: AcronymModel): Promise<AcronymModel> {
+    acronym.setAcronym('NTA');
+    acronym.setDefinition('New Test Acronym');
+    return Promise.resolve(acronym);
+  }
 }

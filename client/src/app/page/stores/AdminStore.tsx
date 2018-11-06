@@ -5,20 +5,36 @@ import { WeatherRepository } from '../../component/widgets/weather/repositories/
 import { WeatherModel } from '../../component/widgets/weather/WeatherModel';
 import { InformationModel } from '../../component/card/information/InformationModel';
 import { InformationRepository } from '../../component/card/information/repositories/InformationRepository';
+import { AcronymModel } from '../../component/widgets/acronym/AcronymModel';
+import { AcronymRepository } from '../../component/widgets/acronym/repositories/AcronymRepository';
 
 export class AdminStore {
+  @observable private _acronym: AcronymModel[];
+  @observable private _pendingAcronym: AcronymModel;
+  @observable private _information: InformationModel[];
   @observable private _timezones: TimezoneModel[];
   @observable private _weather: WeatherModel[];
-  @observable private _information: InformationModel[];
 
   async hydrate(
+    acronymRepository: AcronymRepository,
+    informationRepository: InformationRepository,
     timeRepository: TimeRepository,
-    weatherRepository: WeatherRepository,
-    informationRepository: InformationRepository
+    weatherRepository: WeatherRepository
   ) {
+    this._acronym = await acronymRepository.findAll();
+    this._information = await informationRepository.findAll();
     this._timezones = await timeRepository.getTimezones();
     this._weather = await weatherRepository.getWeather();
-    this._information = await informationRepository.findAll();
+  }
+
+  @action.bound
+  setPendingAcronym(acronym: AcronymModel) {
+    this._pendingAcronym = acronym;
+  }
+
+  @action.bound
+  setAcronym(acronym: AcronymModel[]) {
+    this._acronym = acronym;
   }
 
   @action.bound
@@ -54,6 +70,16 @@ export class AdminStore {
     if (index < this.information.length) {
       this.information[index].setContent(content);
     }
+  }
+
+  @computed
+  get acronym() {
+    return this._acronym;
+  }
+
+  @computed
+  get pendingAcronym() {
+    return this._pendingAcronym;
   }
 
   @computed

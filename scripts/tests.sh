@@ -79,7 +79,7 @@ function cleanup {
 trap cleanup EXIT
 
 function jarBuild {
-    ${BASE_DIR}/scripts/build_jar.sh
+    ${BASE_DIR}/scripts/build_jar.sh --no-replace
 }
 
 function setup {

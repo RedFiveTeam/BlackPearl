@@ -1,4 +1,3 @@
-
 package mil.af.dgs1sdt.blackpearl.config;
 
 import mil.af.dgs1sdt.blackpearl.account.AccountService;

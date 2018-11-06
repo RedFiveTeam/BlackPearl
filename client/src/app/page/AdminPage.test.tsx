@@ -35,7 +35,9 @@ describe('AdminPage', () => {
     };
 
     adminActions = {
+      addAcronym: jest.fn(),
       submitChanges: jest.fn(),
+      updatePendingAcronym: jest.fn(),
       initializeStores: jest.fn(),
     };
 
@@ -96,12 +98,12 @@ describe('AdminPage', () => {
   });
 
   it('should have a save button', () => {
-    expect(subject.find('button').exists()).toBeTruthy();
-    expect(subject.find('button').text()).toBe('Save');
+    expect(subject.find('.saveAll').exists()).toBeTruthy();
+    expect(subject.find('.saveAll').text()).toBe('Save');
   });
 
   it('should submit changes on click', () => {
-    subject.find('button').simulate('click');
+    subject.find('.saveAll').simulate('click');
     expect(adminActions.submitChanges).toHaveBeenCalled();
   });
 
@@ -152,5 +154,39 @@ describe('AdminPage', () => {
     expect(subject.find('.informationContent').at(0).find('input').props().value).toBe('123-456-7890');
     expect(subject.find('.informationName').at(1).find('.informationName').text()).toBe('Server');
     expect(subject.find('.informationContent').at(1).find('input').props().value).toBe('www.com');
+  });
+
+  it('should have an add acronym button', () => {
+  expect(subject.find('.addAcronymButton').exists()).toBeTruthy();
+  expect(subject.find('.addAcronymButton').text()).toBe('Add');
+  });
+
+  it('should have an input for an acronym and a definition', () => {
+    expect(subject.find('.acronym').exists()).toBeTruthy();
+    expect(subject.find('.acronymDefinition').exists()).toBeTruthy();
+  });
+
+  it('should pass the new acronym values to be saved', () => {
+    subject.find('.acronym').simulate('change', {target: {value: 'AT'}});
+    subject.find('.acronymDefinition').simulate('change', {target: {value: 'Acronym Test'}});
+    subject.find('.addAcronymButton').simulate('click');
+    expect(adminActions.updatePendingAcronym).toHaveBeenCalledWith('AT', 'Acronym Test');
+  });
+
+  it('should have an add acronym button', () => {
+  expect(subject.find('.addAcronymButton').exists()).toBeTruthy();
+  expect(subject.find('.addAcronymButton').text()).toBe('Add');
+  });
+
+  it('should have an input for an acronym and a definition', () => {
+    expect(subject.find('.acronym').exists()).toBeTruthy();
+    expect(subject.find('.acronymDefinition').exists()).toBeTruthy();
+  });
+
+  it('should pass the new acronym values to be saved', () => {
+    subject.find('.acronym').simulate('change', {target: {value: 'AT'}});
+    subject.find('.acronymDefinition').simulate('change', {target: {value: 'Acronym Test'}});
+    subject.find('.addAcronymButton').simulate('click');
+    expect(adminActions.updatePendingAcronym).toHaveBeenCalledWith('AT', 'Acronym Test');
   });
 });

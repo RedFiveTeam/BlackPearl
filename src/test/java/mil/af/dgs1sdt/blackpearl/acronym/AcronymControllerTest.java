@@ -1,5 +1,6 @@
 package mil.af.dgs1sdt.blackpearl.acronym;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import mil.af.dgs1sdt.blackpearl.BaseIntegrationTest;
 import org.junit.After;
 import org.junit.Before;
@@ -52,5 +53,23 @@ public class AcronymControllerTest extends BaseIntegrationTest {
       .body("[2].acronym", equalTo(acronym3.getAcronym()))
       .body("[3].acronym", equalTo(acronym4.getAcronym()))
       .body("[4].acronym", equalTo(acronym5.getAcronym()));
+  }
+
+  @Test
+  public void addAcronymTest() throws JsonProcessingException {
+    AcronymJSON acronym = new AcronymJSON();
+    acronym.setAcronym("AT");
+    acronym.setDefinition("Acronym Test");
+
+    given()
+      .port(port)
+      .contentType("application/json")
+      .body(acronym)
+      .when()
+      .post(AcronymController.URI)
+      .then()
+      .statusCode(200)
+      .body("acronym", equalTo("AT"))
+      .body("definition", equalTo("Acronym Test"));
   }
 }
