@@ -227,7 +227,7 @@ declare namespace CodeceptJS {
     debugSection(section: string, msg: string) : void,
     say(msg: string) : void,
     retryStep(opts: string) : void,
-
+    haveHeader(header: string, value: string) : void,
   }
 
 }

@@ -34,21 +34,16 @@ function acceptanceTests {
     java -jar ${BASE_DIR}/target/blackpearl-[0-9\.]*-SNAPSHOT.jar --server.port=9090 &> ${BASE_DIR}/tmp/acceptance.log &
     echo $! > ${BASE_DIR}/tmp/blackPearl.pid
 
-    testConnection "http://localhost:9090" $(cat ${BASE_DIR}/tmp/blackPearl.pid)
-
-    if [ $(ps -ef | grep -i selenium-standalone | wc -l) -le 1 ]; then
-        echo "Starting selenium..."
-        selenium-standalone start &> ${BASE_DIR}/tmp/selenium.log &
-        sleep 1 # Allow time for selenium to fully start
-    fi
-
-    ps -ef | grep -i selenium | grep -i java | tr -s " " | cut -d " " -f3 > ${BASE_DIR}/tmp/selenium.pid
-
-    testConnection "http://localhost:4444" $(cat ${BASE_DIR}/tmp/selenium.pid)
+    testConnection ${REACT_APP_HOST} $(cat ${BASE_DIR}/tmp/blackPearl.pid)
 
     pushd ${BASE_DIR}/acceptance
         yarn install
-        codeceptjs run -o '{ "helpers": {"WebDriverIO": {"url": "http://localhost:9090"}}}'
+        yarn codeceptjs run -o "{ \"helpers\": {\"Nightmare\": {\"url\": \"${REACT_APP_HOST}\"}}}" --verbose
+
+        if [ "${?}" == "1" ]; then
+            echo "Acceptance Tests Failed... Exiting"
+            exit 1
+        fi
     popd
 }
 
@@ -71,33 +66,10 @@ function unitTests {
 
 # Utilities
 
-function checkDependencies {
-    showBanner "Checking Dependencies"
-    if [ "$(which selenium-standalone)" == "" ] && [ "$(which npm)" != "" ] ; then
-        echo "selenium-standalone is not installed. Installing..."
-        npm -g install selenium-standalone@latest
-        selenium-standalone install
-    fi
-
-    if [ "$(which codeceptjs)" == "" ] && [ "$(which npm)" != "" ] ; then
-        echo "codeceptjs is not installed. Installing..."
-        npm -g install codeceptjs@latest
-    fi
-
-    if [ "$(which wdio)" == "" ] && [ "$(which npm)" != "" ] ; then
-        echo "webdriverio is not installed. Installing..."
-        npm -g install webdriverio@latest
-    fi
-}
-
 function cleanup {
     if [ -f ${BASE_DIR}/tmp/blackPearl.pid ]; then
         cat ${BASE_DIR}/tmp/blackPearl.pid | xargs kill -9
         rm ${BASE_DIR}/tmp/blackPearl.pid
-    fi
-    if [ -f ${BASE_DIR}/tmp/selenium.pid ]; then
-        cat ${BASE_DIR}/tmp/selenium.pid | xargs kill -9
-        rm ${BASE_DIR}/tmp/selenium.pid
     fi
 
     pushd ${BASE_DIR}/scripts/seed_db
@@ -107,18 +79,24 @@ function cleanup {
 trap cleanup EXIT
 
 function jarBuild {
-    ${BASE_DIR}/scripts/build_jar.sh --no-replace
+    ${BASE_DIR}/scripts/build_jar.sh
 }
 
 function setup {
     showBanner "Setup"
 
     BASE_DIR="$(dirname $( cd "$(dirname "$0")" ; pwd -P ))"
-    REACT_APP_HOST=http://localhost:9090
+
+    if [ "${BLACKPEARL_CI}" ]; then
+        REACT_APP_HOST=http://localhost:9090
+    else
+        REACT_APP_HOST=https://localhost:9090
+    fi
+
+    echo "BLACKPEARL_CI: ${BLACKPEARL_CI}"
+    echo "REACT_APP_HOST: ${REACT_APP_HOST}"
 
     mkdir -p ${BASE_DIR}/tmp
-
-    checkDependencies
 }
 
 function showBanner {
@@ -130,7 +108,7 @@ function showBanner {
 function testConnection {
     COUNTER=0
     echo "Attempting to connect to ${1} (PID: ${2})..."
-    until curl $1 &>/dev/null; do
+    until curl --insecure $1 &>/dev/null; do
         sleep 1
         let COUNTER+=1
 

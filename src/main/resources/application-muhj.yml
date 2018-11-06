@@ -1,0 +1,9 @@
+server:
+  ssl:
+    key-store: classpath:pki/keystore.jks
+    key-store-password: changeit
+    trust-store: classpath:pki/truststore.dod
+    trust-store-password: password
+    key-alias: localhost
+    enabled: true
+    client-auth: want

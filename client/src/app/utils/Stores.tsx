@@ -5,12 +5,14 @@ import { AcronymStore } from '../component/widgets/acronym/AcronymStore';
 import { WeatherStore } from '../component/widgets/weather/WeatherStore';
 import { CoordinateConverterStore } from '../component/widgets/coordinateConverter/store/CoordinateConverterStore';
 import { LoadingStore } from '../component/loading/stores/LoadingStore';
+import { ProfileStore } from '../profile/ProfileStore';
 import { InformationStore } from '../component/card/information/InformationStore';
 
 const adminStore = new AdminStore();
 const acronymStore = new AcronymStore();
 const coordinateConverterStore = new CoordinateConverterStore();
 const loadingStore = new LoadingStore();
+const profileStore = new ProfileStore();
 const resourceStore = new ResourceStore();
 const timeStore = new TimeStore();
 const weatherStore = new WeatherStore();
@@ -21,6 +23,7 @@ export interface Stores {
   acronymStore: AcronymStore;
   coordinateConverterStore: CoordinateConverterStore;
   loadingStore: LoadingStore;
+  profileStore: ProfileStore;
   resourceStore: ResourceStore;
   timeStore: TimeStore;
   weatherStore: WeatherStore;
@@ -32,6 +35,7 @@ export const stores = {
   acronymStore,
   coordinateConverterStore,
   loadingStore,
+  profileStore,
   resourceStore,
   timeStore,
   weatherStore,

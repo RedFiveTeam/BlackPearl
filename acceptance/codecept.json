@@ -3,14 +3,12 @@
   "timeout": 10000,
   "output": "./output",
   "helpers": {
-    "WebDriverIO": {
-      "url": "http://localhost:8080/",
-      "browser": "chrome",
-      "desiredCapabilities": {
-        "chromeOptions": {
-          "args": [ "--headless", "--disable-gpu", "--no-sandbox"]
-        }
-      }
+    "Nightmare": {
+      "url": "http://localhost:9090",
+      "show": false,
+      "restart": true,
+      "height": 1080,
+      "width": 1920
     }
   },
   "include": {},

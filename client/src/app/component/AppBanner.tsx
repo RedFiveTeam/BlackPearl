@@ -1,15 +1,26 @@
 import * as React from 'react';
-import { observer } from 'mobx-react';
+import { inject, observer } from 'mobx-react';
 import styled from 'styled-components';
 import { BlackPearlShipIcon } from '../icon/BlackPearlShipIcon';
 import { StyledTimeContainer } from './widgets/time/TimeContainer';
+import { ProfileActions } from '../profile/ProfileActions';
+import { ProfileStore } from '../profile/ProfileStore';
+
+const Person = require('../icon/Person.png');
 
 interface Props {
   className?: string;
+  profileActions?: ProfileActions;
+  profileStore?: ProfileStore;
 }
 
 @observer
 export class AppBanner extends React.Component<Props> {
+
+  async componentDidMount() {
+    await this.props.profileActions!.setProfile();
+  }
+
   render() {
     return (
       <div className={this.props.className}>
@@ -20,7 +31,13 @@ export class AppBanner extends React.Component<Props> {
           <div className="bannerTitle">
             The Black Pearl
           </div>
-          <div className="informationBanner"/>
+          <div className="informationBanner">
+            {
+              this.props.profileStore!.profile &&
+              this.props.profileStore!.profile.name
+            }
+            <img src={Person}/>
+          </div>
           <StyledTimeContainer/>
         </div>
       </div>
@@ -28,7 +45,7 @@ export class AppBanner extends React.Component<Props> {
   }
 }
 
-export const StyledAppBanner = styled(AppBanner)`
+export const StyledAppBanner = inject('profileActions', 'profileStore')(styled(AppBanner)`
 display: flex;
 min-width: 1471px;
 
@@ -52,13 +69,26 @@ min-width: 1471px;
   }
   
   .informationBanner {
-    display: none;
-    width: 954px;
-    height: 22px;
-    margin-top: 80px;
-    margin-left: 10px;
+    background: #EAEAEA;
+    display: inline-block;
+    width: 967px;
+    height: 37px;
+    margin-top: 76px;
     margin-bottom: 3px;
     display: flex;
     justify-content: flex-end;
+    border-radius: 18px;
+    box-shadow: -1px 3px 3px rgba(0, 0, 0, .25);
+    font-size: 12px;
+    font-family: Amaranth;
+    text-decoration: underline;
+    align-items: center;
   }
-`;
+  
+  img {
+  width: 31px;
+  height: 31px;
+  margin-right: 4px;
+  margin-left: 10px;
+  }
+`);
