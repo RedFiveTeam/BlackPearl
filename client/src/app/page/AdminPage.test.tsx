@@ -3,6 +3,7 @@ import { shallow, ShallowWrapper } from 'enzyme';
 import { AdminPage } from './AdminPage';
 import { TimezoneModel } from '../component/widgets/time/TimezoneModel';
 import { WeatherModel } from '../component/widgets/weather/WeatherModel';
+import { InformationModel } from '../component/card/information/InformationModel';
 
 describe('AdminPage', () => {
   let subject: ShallowWrapper;
@@ -22,6 +23,10 @@ describe('AdminPage', () => {
         new WeatherModel(1, 'https://www.weather2.com', 'CAN'),
         new WeatherModel(1, 'https://www.weather3.com', 'AUS'),
         new WeatherModel(1, 'https://www.weather4.com', 'EUR')
+      ],
+      information: [
+        new InformationModel(1, 'Phone Number', '123-456-7890'),
+        new InformationModel(2, 'Server', 'www.com')
       ],
       setTimezoneZone: jest.fn(),
       setTimezoneName: jest.fn(),
@@ -90,9 +95,9 @@ describe('AdminPage', () => {
     expect(subject.find('.timezoneRow').at(2).find('input').prop('value')).toBe(`${adminStore.timezones[2].id}`);
   });
 
-  it('should have a submit button', () => {
+  it('should have a save button', () => {
     expect(subject.find('button').exists()).toBeTruthy();
-    expect(subject.find('button').text()).toBe('Submit');
+    expect(subject.find('button').text()).toBe('Save');
   });
 
   it('should submit changes on click', () => {
@@ -123,7 +128,6 @@ describe('AdminPage', () => {
     expect(subject.find('.weatherURL').at(1).find('input').props().value).toBe('https://www.weather2.com');
     expect(subject.find('.weatherURL').at(2).find('input').props().value).toBe('https://www.weather3.com');
     expect(subject.find('.weatherURL').at(3).find('input').props().value).toBe('https://www.weather4.com');
-
   });
 
   it('should populate current weather labels', () => {
@@ -141,5 +145,12 @@ describe('AdminPage', () => {
   it('should update the weather label on text input', () => {
     subject.find('.weatherLabel').at(0).simulate('change', {target: {value: 'NOTUSA'}});
     expect(adminStore.setWeatherLabel).toHaveBeenCalledWith(0, 'NOTUSA');
+  });
+
+  it('should have a field and label for each piece of general information', () => {
+    expect(subject.find('.informationName').at(0).text()).toBe('Phone Number');
+    expect(subject.find('.informationContent').at(0).find('input').props().value).toBe('123-456-7890');
+    expect(subject.find('.informationName').at(1).find('.informationName').text()).toBe('Server');
+    expect(subject.find('.informationContent').at(1).find('input').props().value).toBe('www.com');
   });
 });

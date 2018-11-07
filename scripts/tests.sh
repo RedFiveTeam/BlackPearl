@@ -99,6 +99,10 @@ function cleanup {
         cat ${BASE_DIR}/tmp/selenium.pid | xargs kill -9
         rm ${BASE_DIR}/tmp/selenium.pid
     fi
+
+    pushd ${BASE_DIR}/scripts/seed_db
+        ./seed_db.sh
+    popd
 }
 trap cleanup EXIT
 

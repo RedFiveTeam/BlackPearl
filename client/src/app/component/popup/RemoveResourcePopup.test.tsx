@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { mount, ReactWrapper } from 'enzyme';
 import { StyledRemoveResourcePopup } from './RemoveResourcePopup';
-import { ResourceModel } from '../../resource/ResourceModel';
+import { ResourceModel } from '../resource/ResourceModel';
 
 describe('RemoveResourcePopup', () => {
   let subject: ReactWrapper;

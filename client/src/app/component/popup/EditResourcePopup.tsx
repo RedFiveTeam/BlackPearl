@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { inject, observer } from 'mobx-react';
 import styled from 'styled-components';
-import { ResourceActions } from '../../resource/actions/ResourceActions';
+import { ResourceActions } from '../resource/actions/ResourceActions';
 import { StyledPopupModal } from './PopupModal';
-import { ResourceStore } from '../../resource/stores/ResourceStore';
+import { ResourceStore } from '../resource/stores/ResourceStore';
 import { InputValidation } from '../../utils/inputValidation/InputValidation';
 import { CSSProperties } from 'react';
 

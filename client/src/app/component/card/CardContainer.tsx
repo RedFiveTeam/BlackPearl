@@ -2,10 +2,10 @@ import * as React from 'react';
 import { inject, observer } from 'mobx-react';
 import styled from 'styled-components';
 import { StyledCard } from './Card';
-import { Category } from '../../resource/ResourceModel';
-import { ResourceActions } from '../../resource/actions/ResourceActions';
+import { Category } from '../resource/ResourceModel';
+import { ResourceActions } from '../resource/actions/ResourceActions';
+import { StyledInformationContainer } from './information/InformationContainer';
 import classNames = require('classnames');
-import { StyledInformationCard } from './InformationCard';
 
 interface Props {
   className?: string;
@@ -24,7 +24,7 @@ export class CardContainer extends React.Component<Props> {
         <StyledCard category={Category.Main}/>
         <StyledCard category={Category.SituationalAwareness}/>
         <StyledCard category={Category.TargetResearch}/>
-        <StyledInformationCard/>
+        <StyledInformationContainer/>
       </div>
     );
   }

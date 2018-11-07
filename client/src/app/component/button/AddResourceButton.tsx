@@ -1,10 +1,10 @@
 import * as React from 'react';
 import styled from 'styled-components';
-import { ResourceActions } from '../../resource/actions/ResourceActions';
+import { ResourceActions } from '../resource/actions/ResourceActions';
 import { inject } from 'mobx-react';
 import { StyledButton } from './Button';
 import { AddResourceIcon } from '../../icon/AddResourceIcon';
-import { Category } from '../../resource/ResourceModel';
+import { Category } from '../resource/ResourceModel';
 
 interface Props {
   resourceActions?: ResourceActions;
