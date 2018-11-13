@@ -26,8 +26,7 @@ Scenario('should allow the user to add, edit and delete a resource', async (I) =
   I.wait(1);
   I.waitForText(name, 10);
   const href = await I.grabAttributeFrom('.resource:nth-of-type(5) > div > a', 'href');
-  console.log(href);
-  homeAssert.strictEqual('https://www.google.com', href)
+  homeAssert.strictEqual('https://www.google.com', href);
   // I.click(name);
   // I.switchToNextTab();
   // I.seeInCurrentUrl('google');

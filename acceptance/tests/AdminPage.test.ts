@@ -5,7 +5,7 @@ const moment = require('moment-timezone');
 Feature('Admin Page');
 
 Scenario('should allow admin to change a time zone', async (I) => {
-  I.haveHeader('Authorization', 'Basic Sk9SREFOOjE=');
+  I.wait(5);
   I.amOnPage('/admin');
   I.waitForElement('input', 10);
 

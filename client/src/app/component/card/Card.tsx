@@ -56,7 +56,7 @@ export const StyledCard = styled(Card)`
     border-radius: 0px 0px 10px 10px;
     background: #EAEAEA;
     height: inherit;
-    max-height: calc(780px - 32px - 10px);
+    max-height: calc(600px - 32px - 10px);
     width: 100%;
     padding-top: 10px;
     box-shadow: -1px 3px 3px rgba(0, 0, 0, .25);

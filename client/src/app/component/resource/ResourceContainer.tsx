@@ -37,5 +37,5 @@ export class ResourceContainer extends React.Component<Props> {
 
 export const StyledResourceContainer = inject('resourceStore', 'resourceActions')(styled(ResourceContainer)`
   overflow-y: auto;
-  max-height: calc(780px - 38px - 32px - 10px);
+  max-height: calc(600px - 38px - 32px - 10px);
 `);

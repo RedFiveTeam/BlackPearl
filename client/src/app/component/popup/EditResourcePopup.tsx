@@ -56,7 +56,7 @@ export class EditResourcePopup extends React.Component<Props, State> {
       survivedEverything = false;
       this.setState({urlError: 'Please enter an address'});
       this.setState({urlCSS: {'border': 'solid 2px #A40000'}});
-    } else if (!valid.isURLValid(this.state.url)) {
+    } else if (!valid.isResourceValid(this.state.url)) {
       survivedEverything = false;
       this.setState({urlError: 'Please enter a valid address (https://www...)'});
       this.setState({urlCSS: {'border': 'solid 2px #A40000'}});

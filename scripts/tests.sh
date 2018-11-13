@@ -38,7 +38,7 @@ function acceptanceTests {
 
     pushd ${BASE_DIR}/acceptance
         yarn install
-        yarn codeceptjs run -o "{ \"helpers\": {\"Nightmare\": {\"url\": \"${REACT_APP_HOST}\"}}}" --verbose
+        yarn codeceptjs run -o "{ \"helpers\": {\"Nightmare\": {\"url\": \"${REACT_APP_HOST}\"}}}"
 
         if [ "${?}" == "1" ]; then
             echo "Acceptance Tests Failed... Exiting"
