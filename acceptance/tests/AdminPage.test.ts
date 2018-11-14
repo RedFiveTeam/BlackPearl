@@ -50,3 +50,16 @@ Scenario('should allow admin to change general information', async (I) => {
   I.amOnPage('/');
   I.waitForText('www.com', 10);
 });
+
+Scenario('should allow admin to add an acronym', async (I) => {
+  I.haveHeader('Authorization', 'Basic Sk9SREFOOjE=');
+  I.amOnPage('/admin');
+  I.waitForElement('.acronym', 10);
+  I.fillField('.acronym', 'WAT');
+  I.fillField('.acronymDefinition', 'Wombats Are Tasty');
+  I.click('.addAcronymButton');
+  I.wait(2);
+  I.amOnPage('/');
+  I.fillField('.acronymSearch', 'WAT');
+  I.waitForText('Wombats Are Tasty', 10);
+});

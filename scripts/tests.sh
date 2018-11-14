@@ -9,7 +9,7 @@ function main {
     case "${1}" in
         acc|acceptance)
             jarBuild
-            acceptanceTests
+            acceptanceTests ${@}
         ;;
         unit)
             yarnBuild
@@ -27,6 +27,12 @@ function main {
 function acceptanceTests {
     showBanner "Acceptance Tests"
 
+    SPECIFIC_TESTS=""
+
+    if [[ "${2}" == "./tests/"*".test.ts" ]]; then
+        SPECIFIC_TESTS=${2}
+    fi
+
     pushd ${BASE_DIR}/scripts/seed_db
         ./seed_db.sh
     popd
@@ -38,7 +44,7 @@ function acceptanceTests {
 
     pushd ${BASE_DIR}/acceptance
         yarn install
-        yarn codeceptjs run -o "{ \"helpers\": {\"Nightmare\": {\"url\": \"${REACT_APP_HOST}\"}}}"
+        yarn codeceptjs run -o "{ \"helpers\": {\"Nightmare\": {\"url\": \"${REACT_APP_HOST}\"}}}" ${SPECIFIC_TESTS}
 
         if [ "${?}" == "1" ]; then
             echo "Acceptance Tests Failed... Exiting"
@@ -132,4 +138,4 @@ function yarnBuild {
     popd
 }
 
-main ${1}
+main ${@}

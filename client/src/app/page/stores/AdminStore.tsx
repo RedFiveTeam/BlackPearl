@@ -7,8 +7,9 @@ import { InformationModel } from '../../component/card/information/InformationMo
 import { InformationRepository } from '../../component/card/information/repositories/InformationRepository';
 import { AcronymModel } from '../../component/widgets/acronym/AcronymModel';
 import { AcronymRepository } from '../../component/widgets/acronym/repositories/AcronymRepository';
+import { LoadingStore } from '../../component/loading/stores/LoadingStore';
 
-export class AdminStore {
+export class AdminStore extends LoadingStore {
   @observable private _acronym: AcronymModel[];
   @observable private _pendingAcronym: AcronymModel;
   @observable private _information: InformationModel[];

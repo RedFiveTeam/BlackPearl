@@ -31,7 +31,8 @@ describe('AdminPage', () => {
       setTimezoneZone: jest.fn(),
       setTimezoneName: jest.fn(),
       setWeatherUrl: jest.fn(),
-      setWeatherLabel: jest.fn()
+      setWeatherLabel: jest.fn(),
+      performLoading: async (fun: any) => { await fun(); }
     };
 
     adminActions = {
@@ -166,27 +167,11 @@ describe('AdminPage', () => {
     expect(subject.find('.acronymDefinition').exists()).toBeTruthy();
   });
 
-  it('should pass the new acronym values to be saved', () => {
+  it('should pass the new acronym values to be saved', async () => {
     subject.find('.acronym').simulate('change', {target: {value: 'AT'}});
     subject.find('.acronymDefinition').simulate('change', {target: {value: 'Acronym Test'}});
-    subject.find('.addAcronymButton').simulate('click');
+    await (subject.instance() as AdminPage).onAddAcronymButtonClick();
     expect(adminActions.updatePendingAcronym).toHaveBeenCalledWith('AT', 'Acronym Test');
-  });
-
-  it('should have an add acronym button', () => {
-  expect(subject.find('.addAcronymButton').exists()).toBeTruthy();
-  expect(subject.find('.addAcronymButton').text()).toBe('Add');
-  });
-
-  it('should have an input for an acronym and a definition', () => {
-    expect(subject.find('.acronym').exists()).toBeTruthy();
-    expect(subject.find('.acronymDefinition').exists()).toBeTruthy();
-  });
-
-  it('should pass the new acronym values to be saved', () => {
-    subject.find('.acronym').simulate('change', {target: {value: 'AT'}});
-    subject.find('.acronymDefinition').simulate('change', {target: {value: 'Acronym Test'}});
-    subject.find('.addAcronymButton').simulate('click');
-    expect(adminActions.updatePendingAcronym).toHaveBeenCalledWith('AT', 'Acronym Test');
+    expect(adminActions.addAcronym).toHaveBeenCalled();
   });
 });

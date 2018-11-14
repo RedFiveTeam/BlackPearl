@@ -12,13 +12,10 @@ interface Props {
   className?: string;
 }
 
-interface State {
-  acronym: string;
-  definition: string;
-}
-
 @observer
-export class AdminPage extends React.Component<Props, State> {
+export class AdminPage extends React.Component<Props> {
+  state = {acronym: '', definition: ''};
+  
   async componentDidMount() {
     await this.props.adminActions!.initializeStores();
   }
@@ -32,8 +29,11 @@ export class AdminPage extends React.Component<Props, State> {
   };
 
   async onAddAcronymButtonClick() {
-    this.props.adminActions!.updatePendingAcronym(this.state.acronym, this.state.definition);
-    await this.props.adminActions!.addAcronym();
+    await this.props.adminStore!.performLoading(async () => {
+      this.props.adminActions!.updatePendingAcronym(this.state.acronym, this.state.definition);
+      await this.props.adminActions!.addAcronym();
+      this.setState({acronym: '', definition: ''});
+    });
   }
 
   generateTimezoneRows() {
@@ -131,11 +131,13 @@ export class AdminPage extends React.Component<Props, State> {
         >
           <span>Acronym:</span>
           <input
+            value={this.state.acronym}
             className="acronym"
             onChange={(e) => this.onAcronymFieldChange(e)}
           />
           <span>Definition:</span>
           <input
+            value={this.state.definition}
             className="acronymDefinition"
             onChange={(e) => this.onDefinitionFieldChange(e)}
           />
