@@ -16,7 +16,6 @@ public class AuthenticationEntryPoint extends BasicAuthenticationEntryPoint {
   public void commence
     (HttpServletRequest request, HttpServletResponse response, AuthenticationException authEx)
     throws IOException, ServletException {
-    System.out.println(response.getStatus());
 
     response.addHeader("WWW-Authenticate", "Basic realm=\"Baeldung\"");
     response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);

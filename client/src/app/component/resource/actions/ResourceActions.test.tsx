@@ -1,12 +1,15 @@
 import { StubResourceRepository } from '../repositories/stub/StubResourceRepository';
 import { ResourceActions } from './ResourceActions';
 import { Category, ResourceModel } from '../ResourceModel';
+import { ResourceRepository } from '../repositories/ResourceRepository';
+import { ProfileModel } from '../../../profile/ProfileModel';
 
 describe('ResourceActions', () => {
-  let resourceRepository: StubResourceRepository;
+  let resourceRepository: ResourceRepository;
   let resourceStore: any;
   let subject: ResourceActions;
   let testResources: ResourceModel[];
+  let profileStore: any;
 
   beforeEach(() => {
     resourceStore = {
@@ -20,13 +23,15 @@ describe('ResourceActions', () => {
       performLoading: async (fun: any) => { await fun(); }
     };
 
-    resourceRepository = {
-      findAll: jest.fn(),
-      findResourcesForCategory: jest.fn(),
-      saveResource: jest.fn(),
-      delete: jest.fn(),
-      updateResource: jest.fn()
+    profileStore = {
+      profile: new ProfileModel('GUEST', 'GUEST')
     };
+
+    resourceRepository = new StubResourceRepository();
+
+    resourceRepository.delete = jest.fn();
+    resourceRepository.updateResource = jest.fn();
+    resourceRepository.saveResource = jest.fn();
 
     testResources = [
       new ResourceModel(1, 'https://www.google.com', 'Google', 1),
@@ -34,7 +39,7 @@ describe('ResourceActions', () => {
       new ResourceModel(3, 'https://www.ebay.com', 'eBay', 2)
     ];
 
-    subject = new ResourceActions({resourceStore} as any, {resourceRepository} as any);
+    subject = new ResourceActions({resourceStore, profileStore} as any, {resourceRepository} as any);
   });
 
   it('should set resources in store', async () => {
@@ -44,7 +49,7 @@ describe('ResourceActions', () => {
 
   it('should store every resource in store', async () => {
     await subject.setAllResources();
-    expect(resourceStore.setResources).toHaveBeenCalledWith(resourceRepository.findAll());
+    expect(resourceStore.setResources).toHaveBeenCalled();
   });
 
   it('should clear pending resource', () => {
@@ -69,10 +74,9 @@ describe('ResourceActions', () => {
     expect(resourceStore.setPendingResource.mock.calls[0][0].url).toEqual(pendingResource.url);
   });
 
-  it('should delete a resource and refresh page', async () => {
+  it('should delete a resource', async () => {
     await subject.delete(testResources[0].id!);
     expect(resourceRepository.delete).toHaveBeenCalledWith(testResources[0].id);
-    expect(resourceStore.setResources).toHaveBeenCalledWith(await resourceRepository.findAll());
   });
 
   it('should create a pending delete', () => {
@@ -99,7 +103,7 @@ describe('ResourceActions', () => {
 
   it('should update a resource', async () => {
     await subject.updateResource();
-    expect(resourceRepository.updateResource).toHaveBeenCalledWith(resourceStore.pendingEdit);
+    expect(await resourceRepository.updateResource).toHaveBeenCalledWith(resourceStore.pendingEdit);
   });
 
   it('should assign a category to a pending resource', () => {
@@ -107,5 +111,4 @@ describe('ResourceActions', () => {
     subject.setPendingResourceCategory(Category.Main);
     expect(resourceStore.setPendingResourceCategory).toHaveBeenCalledWith(Category.Main);
   });
-})
-;
+});

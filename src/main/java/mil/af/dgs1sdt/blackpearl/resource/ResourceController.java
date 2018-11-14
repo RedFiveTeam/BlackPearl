@@ -22,16 +22,16 @@ public class ResourceController {
     return resourceRepository.findAll();
   }
 
-  @GetMapping(path = "/{categoryID}")
+  @GetMapping(path = "/{accountID}")
   public @ResponseBody
-  Iterable<Resource> getAllResourcesByCategoryID(@PathVariable Long categoryID) {
-    return resourceRepository.getAllByCategoryID(categoryID);
+  Iterable<Resource> getAllResourcesAccount(@PathVariable String accountID) {
+    return resourceRepository.getAllResourcesByCategoryIDAndAccountID(accountID);
   }
 
   @PostMapping
   public @ResponseBody
   Resource create(@Valid @RequestBody ResourceJSON resourceJSON) {
-    Resource resource = new Resource(resourceJSON.getName(), resourceJSON.getUrl(), resourceJSON.getCategoryID());
+    Resource resource = new Resource(resourceJSON.getName(), resourceJSON.getUrl(), resourceJSON.getCategoryID(), resourceJSON.getAccountID());
     return this.resourceRepository.save(resource);
   }
 

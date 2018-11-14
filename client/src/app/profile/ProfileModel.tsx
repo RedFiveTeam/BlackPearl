@@ -1,20 +1,20 @@
 import { action, computed, observable } from 'mobx';
 
 export class ProfileModel {
-  @observable private _cardId: string = '';
+  @observable private _cardID: string = '';
   @observable private _name: string = '';
 
   constructor(
-    cardId: string = '',
+    cardID: string = '',
     name: string = ''
   ) {
-    this._cardId = cardId;
+    this._cardID = cardID;
     this._name = name;
   }
 
   @computed
-  get cardId(): string {
-    return this._cardId;
+  get cardID(): string {
+    return this._cardID;
   }
 
   @computed
@@ -28,7 +28,7 @@ export class ProfileModel {
   }
 
   @action.bound
-  set setCardId(value: string) {
-    this._cardId = value;
+  set setcardID(value: string) {
+    this._cardID = value;
   }
 }

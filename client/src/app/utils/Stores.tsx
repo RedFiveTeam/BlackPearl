@@ -39,5 +39,5 @@ export const stores = {
   resourceStore,
   timeStore,
   weatherStore,
-  informationStore
+  informationStore,
 };

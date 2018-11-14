@@ -12,6 +12,8 @@ import {
   StyledCoordinateConverterContainer
 } from '../component/widgets/coordinateConverter/CoordinateConverterContainer';
 import { StyledLoadingOverlay } from '../component/loading/LoadingOverlay';
+import { Category } from '../component/resource/ResourceModel';
+import { StyledCard } from '../component/card/Card';
 
 interface Props {
   resourceStore?: ResourceStore;
@@ -27,7 +29,7 @@ export class HomePage extends React.Component<Props> {
       >
         {
           this.props.resourceStore!.loading &&
-            <StyledLoadingOverlay/>
+          <StyledLoadingOverlay/>
         }
         {
           this.props.resourceStore!.hasPendingResource &&
@@ -46,6 +48,7 @@ export class HomePage extends React.Component<Props> {
         >
           <StyledCardContainer/>
           <div className="widgetSection">
+            <StyledCard className="myFavorites" category={Category.Favorites}/>
             <StyledAcronymContainer/>
             <StyledCoordinateConverterContainer/>
             <StyledWeatherContainer/>
@@ -57,6 +60,38 @@ export class HomePage extends React.Component<Props> {
 }
 
 export const StyledHomePage = inject('resourceStore')(styled(HomePage)`
+  .myFavorites {
+    height: 190px;
+    width: 338px;
+    margin-left: 10px;
+    background: #364958;
+    margin-bottom: 10px;
+    box-shadow: -1px 3px 3px rgba(0, 0, 0, .25);
+    border-radius: 10px;
+
+    .body {
+        max-height: calc(190px - 32px - 10px);
+        border-radius: 0px;
+        height: 130px;
+        width: 330px;
+    }
+    .resourceList {
+        max-height: 92px;
+    }
+    
+    .resource {
+      width: 320px;
+    }
+    .cardTitle {
+        box-shadow: none;
+    }
+    
+    .addResourceButton {
+      width: 320px;
+      margin-left: 5px;
+    }
+  }
+
   .cardsContainer {
     display: flex;
   }

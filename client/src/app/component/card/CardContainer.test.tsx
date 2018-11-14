@@ -8,14 +8,20 @@ import { StyledInformationContainer } from './information/InformationContainer';
 describe('CardContainer', () => {
   let subject: ShallowWrapper;
   let resourceActions: any;
+  let profileActions: any;
 
   beforeEach(() => {
     resourceActions = {
       setAllResources: jest.fn()
     };
 
+    profileActions = {
+      setProfile: jest.fn()
+    };
+
     subject = shallow(
       <CardContainer
+        profileActions={profileActions}
         resourceActions={resourceActions}
       />
     );
@@ -30,6 +36,10 @@ describe('CardContainer', () => {
 
   it('should put all resources in the ResourceStore', () => {
     expect(resourceActions.setAllResources).toHaveBeenCalled();
+  });
+
+  it('should set the profile', () => {
+    expect(profileActions.setProfile).toHaveBeenCalled();
   });
 
   it('should render an information card container', () => {

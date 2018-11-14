@@ -23,6 +23,7 @@ export class AddResourceButton extends React.Component<Props> {
           onClick={() => {
             this.props.resourceActions!.createPendingResource();
             this.props.resourceActions!.setPendingResourceCategory(this.props.category);
+            this.props.resourceActions!.setPendingResourceAccountID();
           }}
         >
           <div className="icon">

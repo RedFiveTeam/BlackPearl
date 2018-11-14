@@ -4,14 +4,14 @@ import { ProfileModel } from './ProfileModel';
 export class ProfileSerializer implements Serializer<ProfileModel> {
   serialize(item: ProfileModel): {} {
     return {
-      cardId: item.cardId,
+      cardID: item.cardID,
       name: item.name
     };
   }
 
   deserialize(item: any): ProfileModel {
     return new ProfileModel(
-      item.cardId,
+      item.cardID,
       item.name
     );
   }

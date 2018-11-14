@@ -13,6 +13,7 @@ describe('AddResourceButton', () => {
 
     resourceActions  = {
       createPendingResource: jest.fn(),
+      setPendingResourceAccountID: jest.fn(),
       setPendingResourceCategory: jest.fn()
     };
 
@@ -25,5 +26,6 @@ describe('AddResourceButton', () => {
     subject.find(StyledButton).simulate('click');
     expect(resourceActions.createPendingResource).toHaveBeenCalled();
     expect(resourceActions.setPendingResourceCategory).toHaveBeenCalledWith(Category.Main);
+    expect(resourceActions.setPendingResourceAccountID).toHaveBeenCalled();
   });
 });

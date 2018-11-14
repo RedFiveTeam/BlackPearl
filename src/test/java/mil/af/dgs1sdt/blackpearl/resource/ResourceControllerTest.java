@@ -17,7 +17,8 @@ public class ResourceControllerTest extends BaseIntegrationTest {
   private Resource resource2;
   private Resource resource3;
   private Resource resource4;
-
+  private Resource resource5;
+  private Resource resource6;
 
   @Before
   public void setUp() {
@@ -25,11 +26,15 @@ public class ResourceControllerTest extends BaseIntegrationTest {
     resource2 = new Resource("Yahoo", "https://www.yahoo.com", 2L);
     resource3 = new Resource("eBay", "https://www.ebay.com", 3L);
     resource4 = new Resource("notGoogle", "https://www.notgoogle.com", 1L);
+    resource5 = new Resource("Jordan's Google", "https://www.google.com", 1L, "JORDAN");
+    resource6 = new Resource("Jordan's Facebook", "https://www.facebook.com", 1L, "JORDAN");
 
     resourceRepository.save(resource1);
     resourceRepository.save(resource2);
     resourceRepository.save(resource3);
     resourceRepository.save(resource4);
+    resourceRepository.save(resource5);
+    resourceRepository.save(resource6);
   }
 
   @After
@@ -45,26 +50,13 @@ public class ResourceControllerTest extends BaseIntegrationTest {
       .get(ResourceController.URI)
       .then()
       .statusCode(200)
-      .body("url.size()", equalTo(4))
+      .body("url.size()", equalTo(6))
       .body("[0].url", equalTo(resource1.getUrl()))
       .body("[1].url", equalTo(resource2.getUrl()))
       .body("[2].url", equalTo(resource3.getUrl()))
-      .body("[3].url", equalTo(resource4.getUrl()));
-  }
-
-  @Test
-  public void getAllResourcesByCategoryID() {
-    given()
-      .port(port)
-      .when()
-      .get(ResourceController.URI + "/1")
-      .then()
-      .statusCode(200)
-      .body("url.size()", equalTo(2))
-      .body("[0].url", equalTo(resource1.getUrl()))
-      .body("[0].categoryID", equalTo(1))
-      .body("[1].url", equalTo(resource4.getUrl()))
-      .body("[1].categoryID", equalTo(1));
+      .body("[3].url", equalTo(resource4.getUrl()))
+      .body("[4].accountID", equalTo(resource5.getAccountID()))
+      .body("[5].accountID", equalTo(resource6.getAccountID()));
   }
 
   @Test

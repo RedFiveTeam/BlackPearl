@@ -24,11 +24,12 @@ public abstract class BaseIntegrationTest {
     @Autowired protected TimeRepository timeRepository;
     @Autowired protected AcronymRepository acronymRepository;
     @Autowired protected InformationRepository informationRepository;
+
     @LocalServerPort
     protected int port;
+
     @Autowired
     private JdbcTemplate template;
-
 
     public void tearDown() {
         template.execute("SET REFERENTIAL_INTEGRITY FALSE");

@@ -4,29 +4,27 @@ import { Stores } from '../../../utils/Stores';
 import { action } from 'mobx';
 import { ResourceRepository } from '../repositories/ResourceRepository';
 import { Category, ResourceModel } from '../ResourceModel';
+import { ProfileStore } from '../../../profile/ProfileStore';
 
 export class ResourceActions {
   private resourceRepository: ResourceRepository;
   private resourceStore: ResourceStore;
+  private profileStore: ProfileStore;
 
   constructor(stores: Partial<Stores>, repositories: Partial<Repositories>) {
     this.resourceStore = stores.resourceStore!;
     this.resourceRepository = repositories.resourceRepository!;
+    this.profileStore = stores.profileStore!;
   }
 
   @action.bound
   async setAllResources() {
-    this.resourceStore.setResources(await this.resourceRepository.findAll());
+    this.resourceStore.setResources(await this.resourceRepository.findAllByAccount(this.profileStore.profile.cardID));
   }
 
   @action.bound
   setResources(resources: ResourceModel[]) {
     this.resourceStore.setResources(resources);
-  }
-
-  @action.bound
-  async setResourcesInCategory(categoryID: number) {
-    this.resourceStore.setResources(await this.resourceRepository.findResourcesForCategory(categoryID));
   }
 
   @action.bound
@@ -65,6 +63,11 @@ export class ResourceActions {
   }
 
   @action.bound
+  setPendingResourceAccountID() {
+    this.resourceStore.setPendingResourceAccountID(this.profileStore.profile.cardID);
+  }
+
+  @action.bound
   async delete(resourceId: number) {
     await this.resourceStore.performLoading(async () => {
       await this.resourceRepository.delete(resourceId);
@@ -90,6 +93,7 @@ export class ResourceActions {
     resource.setName(title);
     resource.setUrl(url);
     resource.setCategoryId(this.resourceStore!.pendingResource!.categoryID!);
+    resource.setAccountId(this.profileStore!.profile.cardID);
 
     this.resourceStore.setPendingResource(resource);
   }

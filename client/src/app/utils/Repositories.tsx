@@ -35,7 +35,7 @@ export const WebRepositories: Repositories = Object.freeze({
   resourceRepository: new WebResourceRepository(client),
   timeRepository: new WebTimeRepository(client),
   weatherRepository: new WebWeatherRepository(client),
-  informationRepository: new WebInformationRepository(client)
+  informationRepository: new WebInformationRepository(client),
 });
 
 export const StubRepositories: Repositories = {
@@ -44,5 +44,5 @@ export const StubRepositories: Repositories = {
   resourceRepository: new StubResourceRepository(),
   timeRepository: new StubTimeRepository(),
   weatherRepository: new StubWeatherRepository(),
-  informationRepository: new StubInformationRepository()
+  informationRepository: new StubInformationRepository(),
 };

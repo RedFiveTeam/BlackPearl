@@ -52,6 +52,10 @@ describe('HomePage', () => {
     expect(subject.find(StyledCardContainer).exists()).toBeTruthy();
   });
 
+  it('should have a my favorites card', () => {
+    expect(subject.find('.myFavorites').exists()).toBeTruthy();
+  });
+
   it('should have a weather container', () => {
     expect(subject.find(StyledWeatherContainer).exists()).toBeTruthy();
   });

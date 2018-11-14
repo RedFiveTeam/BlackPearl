@@ -28,5 +28,5 @@ export const actions = {
   resourceActions,
   timeActions,
   weatherActions,
-  informationActions
+  informationActions,
 };

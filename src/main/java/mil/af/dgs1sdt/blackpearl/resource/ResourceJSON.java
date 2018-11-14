@@ -21,6 +21,8 @@ public class ResourceJSON {
     @NotNull(message = emptyFieldMessage)
     private Long categoryID;
 
+    private String accountID;
+
     public ResourceJSON(
             String name,
             String url,
@@ -29,5 +31,17 @@ public class ResourceJSON {
         this.name = name;
         this.url = url;
         this.categoryID = categoryID;
+    }
+
+    public ResourceJSON(
+      String name,
+      String url,
+      Long categoryID,
+      String accountID
+    ) {
+      this.name = name;
+      this.url = url;
+      this.categoryID = categoryID;
+      this.accountID = accountID;
     }
 }
