@@ -22,12 +22,12 @@ public class ResourceControllerTest extends BaseIntegrationTest {
 
   @Before
   public void setUp() {
-    resource1 = new Resource("Googerbhjwrle", "https://www.gowqeqweogle.com", 1L);
-    resource2 = new Resource("Yahoo", "https://www.yahoo.com", 2L);
-    resource3 = new Resource("eBay", "https://www.ebay.com", 3L);
-    resource4 = new Resource("notGoogle", "https://www.notgoogle.com", 1L);
-    resource5 = new Resource("Jordan's Google", "https://www.google.com", 1L, "JORDAN");
-    resource6 = new Resource("Jordan's Facebook", "https://www.facebook.com", 1L, "JORDAN");
+    resource1 = new Resource("Googerbhjwrle", "https://www.gowqeqweogle.com", 1L, "Guest", 0L);
+    resource2 = new Resource("Yahoo", "https://www.yahoo.com", 2L, "Guest", 1L);
+    resource3 = new Resource("eBay", "https://www.ebay.com", 3L, "Guest", 2L);
+    resource4 = new Resource("notGoogle", "https://www.notgoogle.com", 1L, "Guest", 3L);
+    resource5 = new Resource("Jordan's Google", "https://www.google.com", 1L, "JORDAN", 0L);
+    resource6 = new Resource("Jordan's Facebook", "https://www.facebook.com", 1L, "JORDAN", 1L);
 
     resourceRepository.save(resource1);
     resourceRepository.save(resource2);
@@ -106,5 +106,32 @@ public class ResourceControllerTest extends BaseIntegrationTest {
       .then()
       .statusCode(200)
       .body("url", equalTo("https://www.google.com"));
+  }
+
+  @Test
+  public void updatePassedTest() throws Exception {
+    resource1.setPosition(3L);
+    resource2.setPosition(2L);
+    resource3.setPosition(1L);
+    resource4.setPosition(0L);
+
+    Resource[] resources = {resource1, resource2, resource3, resource4};
+
+    final String json = objectMapper.writeValueAsString(resources);
+
+    given()
+      .port(port)
+      .contentType("application/json")
+      .body(json)
+      .when()
+      .put(ResourceController.URI)
+      .then()
+      .statusCode(200)
+      .body("[0].position", equalTo(3))
+      .body("[1].position", equalTo(2))
+      .body("[2].position", equalTo(1))
+      .body("[3].position", equalTo(0));
+
+
   }
 }

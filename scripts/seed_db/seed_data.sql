@@ -1,16 +1,19 @@
-INSERT INTO resource (url, name, categoryID, accountID) VALUES
-    ("https://www.google.com", "Google", 1, null),
-    ("https://www.yahoo.com", "Yahoo", 1, null),
-    ("https://www.ebay.com", "eBay", 1, null),
-    ("https://www.amazon.com", "Amazon", 1, null),
-    ("https://www.youtube.com", "YouTube", 2, null),
-    ("https://www.reddit.com", "Reddit", 3, null),
-    ("https://www.google.com", "Guest's Google", 0, "Guest"),
-    ("https://www.facebook.com", "Guest's Facebook", 0, "Guest"),
-    ("https://www.google.com", "Jordan's Google", 0, "JORDAN"),
-    ("https://www.facebook.com", "Jordan's Facebook", 0, "JORDAN"),
-    ("https://www.google.com", "Yoda's Google", 0, "YODA"),
-    ("https://www.facebook.com", "Yoda's Google", 0, "YODA");
+INSERT INTO resource (url, name, categoryID, accountID, position) VALUES
+    ("https://www.google.com", "Google", 1, null, null),
+    ("https://www.yahoo.com", "Yahoo", 1, null, null),
+    ("https://www.ebay.com", "eBay", 1, null, null),
+    ("https://www.amazon.com", "Amazon", 1, null, null),
+    ("https://www.youtube.com", "YouTube", 2, null, null),
+    ("https://www.reddit.com", "Reddit", 3, null, null),
+    ("https://www.google.com", "Guest's Google", 0, "Guest", null),
+    ("https://www.facebook.com", "Guest's Facebook", 0, "Guest", null),
+    ("https://www.google.com", "Jordan's Google", 0, "JORDAN", null),
+    ("https://www.facebook.com", "Jordan's Facebook", 0, "JORDAN", null),
+    ("https://www.google.com", "Yoda's Google", 0, "YODA", null),
+    ("https://www.facebook.com", "Yoda's Google", 0, "YODA", null),
+    ("https://www.fav1.com", "Fav 1", 0, "Guest", 0),
+    ("https://www.fav2.com", "Fav 2", 0, "Guest", 1),
+    ("https://www.fav3.com", "Fav 3", 0, "Guest", 2);
 
 INSERT INTO timezone (zone, name, position) VALUES
     ("America/New_York", "LANGLEY", 1),

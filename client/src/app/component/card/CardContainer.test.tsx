@@ -9,11 +9,16 @@ import { StyledOperationContainer } from './operation/OperationContainer';
 describe('CardContainer', () => {
   let subject: ShallowWrapper;
   let resourceActions: any;
+  let resourceStore: any;
   let profileActions: any;
 
   beforeEach(() => {
     resourceActions = {
       setAllResources: jest.fn()
+    };
+
+    resourceStore = {
+      returnResourcesInCategory: jest.fn()
     };
 
     profileActions = {
@@ -24,6 +29,7 @@ describe('CardContainer', () => {
       <CardContainer
         profileActions={profileActions}
         resourceActions={resourceActions}
+        resourceStore={resourceStore}
       />
     );
   });
@@ -33,6 +39,12 @@ describe('CardContainer', () => {
     expect(subject.find(StyledCard).at(0).prop('category')).toBe(Category.Main);
     expect(subject.find(StyledCard).at(1).prop('category')).toBe(Category.SituationalAwareness);
     expect(subject.find(StyledCard).at(2).prop('category')).toBe(Category.TargetResearch);
+  });
+
+  it('should pass the resources to each card based on category', () => {
+    expect(resourceStore.returnResourcesInCategory).toHaveBeenCalledWith(Category.Main);
+    expect(resourceStore.returnResourcesInCategory).toHaveBeenCalledWith(Category.SituationalAwareness);
+    expect(resourceStore.returnResourcesInCategory).toHaveBeenCalledWith(Category.TargetResearch);
   });
 
   it('should put all resources in the ResourceStore', () => {

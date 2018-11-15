@@ -1,40 +1,63 @@
 import * as React from 'react';
-import { shallow, ShallowWrapper } from 'enzyme';
-import { ResourceStore } from './stores/ResourceStore';
+import { mount, ReactWrapper, shallow, ShallowWrapper } from 'enzyme';
 import { Category, ResourceModel } from './ResourceModel';
 import { ResourceContainer } from './ResourceContainer';
+import { Provider } from 'mobx-react';
 
 describe('ResourceContainer', () => {
-  let subject: ShallowWrapper;
-  let resourceStore: ResourceStore;
+  let subject: ReactWrapper;
+  let resourceStore: any;
   let resourceActions: any;
+  let profileStore: any;
+
+  resourceStore = {};
+
+  profileStore = {};
+
+  resourceActions = {
+    updateGivenResources: jest.fn()
+  };
 
   beforeEach(() => {
-    resourceStore = new ResourceStore();
-
-    resourceActions = {
-      setResourcesInCategory: jest.fn()
-    };
-
-    subject = shallow(
-      <ResourceContainer
-        resourceStore={resourceStore}
-        resourceActions={resourceActions}
-        category={Category.Main}
-      />
+    subject = mount(
+      <Provider resourceStore={resourceStore} resourceActions={resourceActions} profileStore={profileStore}>
+        <ResourceContainer
+          category={Category.Main}
+          resourceActions={resourceActions}
+          resources={[
+            new ResourceModel(1, 'https://www.google.com', 'Google', Category.Main),
+            new ResourceModel(2, 'https://www.yahoo.com', 'Yahoo', Category.Main),
+          ]}
+        />
+      </Provider>
     );
 
   });
 
-  it('should render links in a category from those stored in ResourceStore', () => {
-    const resources = [
-      new ResourceModel(1, 'https://www.google.com', 'Google', Category.Main),
-      new ResourceModel(2, 'https://www.yahoo.com', 'Yahoo', Category.Main),
-      new ResourceModel(3, 'https://www.ebay.com', 'eBay', Category.SituationalAwareness)
-    ];
+  it('should render resources based on the props', () => {
+    expect(subject.find('.resource').length).toEqual(2);
+  });
 
-    resourceStore.setResources(resources);
+  it('should update resources when reordered', async () => {
+    let shallowSubject: ShallowWrapper;
+    shallowSubject = shallow(
+        <ResourceContainer
+          category={Category.Main}
+          resourceActions={resourceActions}
+          resources={[
+            new ResourceModel(1, 'https://www.google.com', 'Google', Category.Main),
+            new ResourceModel(2, 'https://www.yahoo.com', 'Yahoo', Category.Main),
+          ]}
+        />
+    );
 
-    expect(subject.find('.resource').length).toBe(2);
+    let result = {
+      destination: { index: 1 },
+      source: { index: 1 }
+    };
+
+    await (shallowSubject.instance() as ResourceContainer).onDragEnd(result);
+
+    expect(resourceActions.updateGivenResources).toHaveBeenCalled();
   });
 });

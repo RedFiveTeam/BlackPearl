@@ -20,19 +20,22 @@ export class ResourceModel {
   @observable private _name: string = '';
   @observable private _categoryID: number | null = null;
   @observable private _accountID: string = '';
+  @observable private _position: number | null = 0;
 
   constructor(
     id: number | null = null,
     url: string = '',
     name: string = '',
     categoryID: number = 1,
-    accountID: string = ''
+    accountID: string = '',
+    position: number = 0
   ) {
     this._id = id;
     this._url = url;
     this._name = name;
     this._categoryID = categoryID;
     this._accountID = accountID;
+    this._position = position;
   }
 
   @computed
@@ -60,6 +63,11 @@ export class ResourceModel {
     return this._accountID;
   }
 
+  @computed
+  get position(): number | null {
+    return this._position;
+  }
+
   @action.bound
   setId(value: number | null) {
     this._id = value;
@@ -83,5 +91,10 @@ export class ResourceModel {
   @action.bound
   setAccountId(value: string) {
     this._accountID = value;
+  }
+
+  @action.bound
+  setPosition(value: number) {
+    this._position = value;
   }
 }

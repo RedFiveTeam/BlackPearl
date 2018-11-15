@@ -48,7 +48,11 @@ export class HomePage extends React.Component<Props> {
         >
           <StyledCardContainer/>
           <div className="widgetSection">
-            <StyledCard className="myFavorites" category={Category.Favorites}/>
+            <StyledCard
+              className="myFavorites"
+              category={Category.Favorites}
+              resources={this.props.resourceStore!.returnResourcesInCategory(Category.Favorites)}
+            />
             <StyledAcronymContainer/>
             <StyledCoordinateConverterContainer/>
             <StyledWeatherContainer/>

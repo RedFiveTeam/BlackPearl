@@ -8,10 +8,12 @@ import { StyledInformationContainer } from './information/InformationContainer';
 import classNames = require('classnames');
 import { StyledOperationContainer } from './operation/OperationContainer';
 import { ProfileActions } from '../../profile/ProfileActions';
+import { ResourceStore } from '../resource/stores/ResourceStore';
 
 interface Props {
   className?: string;
   resourceActions?: ResourceActions;
+  resourceStore?: ResourceStore;
   profileActions?: ProfileActions;
 }
 
@@ -25,9 +27,18 @@ export class CardContainer extends React.Component<Props> {
   render() {
     return (
       <div className={classNames('cardContainer', this.props.className)}>
-        <StyledCard category={Category.Main}/>
-        <StyledCard category={Category.SituationalAwareness}/>
-        <StyledCard category={Category.TargetResearch}/>
+        <StyledCard
+          category={Category.Main}
+          resources={this.props.resourceStore!.returnResourcesInCategory(Category.Main)}
+        />
+        <StyledCard
+          category={Category.SituationalAwareness}
+          resources={this.props.resourceStore!.returnResourcesInCategory(Category.SituationalAwareness)}
+        />
+        <StyledCard
+          category={Category.TargetResearch}
+          resources={this.props.resourceStore!.returnResourcesInCategory(Category.TargetResearch)}
+        />
         <StyledInformationContainer/>
         <StyledOperationContainer/>
       </div>
@@ -35,7 +46,7 @@ export class CardContainer extends React.Component<Props> {
   }
 }
 
-export const StyledCardContainer = inject('resourceActions', 'profileActions')(styled(CardContainer)`
+export const StyledCardContainer = inject('resourceActions', 'profileActions', 'resourceStore')(styled(CardContainer)`
   display: flex;
   height: 955px;
   max-height: 955px;

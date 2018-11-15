@@ -116,4 +116,9 @@ export class ResourceActions {
       });
     }
   }
+
+  @action.bound
+  async updateGivenResources(resources: ResourceModel[]) {
+    await this.resourceRepository.updateGivenResources(resources);
+  }
 }
