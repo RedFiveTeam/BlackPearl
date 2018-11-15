@@ -3,71 +3,10 @@ let homeAssert = require('assert');
 
 Feature('Home Page');
 
-Scenario('should allow the user to add, edit and delete a resource', async (I) => {
-  I.haveHeader('Authorization', 'Basic Sk9SREFOOjE=');
-  let name = 'TestPage' + Date.now();
-
-  //create
-  I.amOnPage('/');
-  I.click('Add Resource');
-  I.fillField('.titleField', name);
-  I.fillField('.urlField', 'https://www.testpage.com');
-  I.click('SAVE', '.modal');
-  I.waitForText(name, 10);
-
-  //edit
-  I.amOnPage('/');
-  I.waitForElement('.threeDotButton' + `.${name}`, 10);
-  I.click('.threeDotButton' + `.${name}`);
-  I.click('.editButton');
-  I.fillField('.pendingEditTitle', name);
-  I.fillField('.pendingEditUrl', 'https://www.google.com');
-  I.click('SAVE');
-  I.wait(1);
-  I.waitForText(name, 10);
-  const href = await I.grabAttributeFrom('.resource:nth-of-type(5) > div > a', 'href');
-  homeAssert.strictEqual('https://www.google.com', href);
-  I.amOnPage('/');
-
-  //delete
-  I.waitForElement('.threeDotButton' + `.${name}`, 10);
-  I.click('.threeDotButton' + `.${name}`);
-  I.click('.deleteButton');
-  I.see(name);
-  I.click('DELETE');
-  I.wait(1);
-  I.dontSee(name);
-});
-
 Scenario('should see an ATO day', (I) => {
   I.haveHeader('Authorization', 'Basic Sk9SREFOOjE=');
   I.amOnPage('/');
   I.see("ATO ", ".atoDay");
-});
-
-Scenario('should validate user resource input', async (I) => {
-  //empty
-  I.haveHeader('Authorization', 'Basic Sk9SREFOOjE=');
-  I.amOnPage('/');
-  I.click('Add Resource');
-  I.click('SAVE', '.modal');
-  I.waitForText('Please enter a title', 10);
-  I.waitForText('Please enter an address', 10);
-  I.click('CANCEL', '.modal');
-  //tooLong
-  I.click('Add Resource');
-  let superLongTitle = 'This string is waaaaaaay too long to possible be a title. what am i even doing????? Whyyyyyyyy';
-  I.fillField('.titleField', superLongTitle);
-  let title = await I.grabValueFrom('.titleField');
-  homeAssert.strictEqual(title.length, 64);
-  let validTitle = "This is a pretty decent title";
-  I.fillField('.titleField', validTitle);
-  title = await I.grabValueFrom('.titleField');
-  homeAssert.strictEqual(title, validTitle);
-  //invalid url
-  I.fillField('.urlField', 'sometrash.com');
-  I.click('SAVE', '.modal');
-  I.waitForText('Please enter a valid address (https://www...)');
 });
 
 Scenario('should render six clocks', async function (I) {
@@ -130,10 +69,63 @@ Scenario('should see a general information', (I) => {
   I.see('TSVOIP', '.information');
 });
 
-Scenario('should see a current operations card', (I) => {
+Scenario('should allow the user to add, edit and delete a resource', async (I) => {
+  I.haveHeader('Authorization', 'Basic Sk9SREFOOjE=');
+  let name = 'TestPage' + Date.now();
+
+  //create
+  I.amOnPage('/');
+  I.click('Add Resource');
+  I.fillField('.titleField', name);
+  I.fillField('.urlField', 'https://www.testpage.com');
+  I.click('SAVE', '.modal');
+  I.waitForText(name, 10);
+
+  //edit
+  I.amOnPage('/');
+  I.waitForElement('.threeDotButton' + `.${name}`, 10);
+  I.click('.threeDotButton' + `.${name}`);
+  I.click('.editButton');
+  I.fillField('.pendingEditTitle', name);
+  I.fillField('.pendingEditUrl', 'https://www.google.com');
+  I.click('SAVE');
+  I.wait(1);
+  I.waitForText(name, 10);
+  const href = await I.grabAttributeFrom('.resource:nth-of-type(5) > div > a', 'href');
+  homeAssert.strictEqual('https://www.google.com', href);
+  I.amOnPage('/');
+
+  //delete
+  I.waitForElement('.threeDotButton' + `.${name}`, 10);
+  I.click('.threeDotButton' + `.${name}`);
+  I.click('.deleteButton');
+  I.see(name);
+  I.click('DELETE');
+  I.wait(1);
+  I.dontSee(name);
+});
+
+Scenario('should validate user resource input', async (I) => {
+  //empty
   I.haveHeader('Authorization', 'Basic Sk9SREFOOjE=');
   I.amOnPage('/');
-  I.waitForElement('.operationCardTitle', 10);
-  I.see('OP OTTERBALL', '.operation');
-  I.see('OP TORTUGA', '.operation');
+  I.click('Add Resource');
+  I.click('SAVE', '.modal');
+  I.waitForText('Please enter a title', 10);
+  I.waitForText('Please enter an address', 10);
+  I.click('CANCEL', '.modal');
+  //tooLong
+  I.click('Add Resource');
+  let superLongTitle = 'This string is waaaaaaay too long to possible be a title. what am i even doing????? Whyyyyyyyy';
+  I.fillField('.titleField', superLongTitle);
+  let title = await I.grabValueFrom('.titleField');
+  homeAssert.strictEqual(title.length, 64);
+  let validTitle = "This is a pretty decent title";
+  I.fillField('.titleField', validTitle);
+  title = await I.grabValueFrom('.titleField');
+  homeAssert.strictEqual(title, validTitle);
+  //invalid url
+  I.fillField('.urlField', 'sometrash.com');
+  I.click('SAVE', '.modal');
+  I.waitForText('Please enter a valid address (https://www...)');
 });

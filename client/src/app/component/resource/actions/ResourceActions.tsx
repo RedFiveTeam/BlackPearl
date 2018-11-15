@@ -88,6 +88,14 @@ export class ResourceActions {
   }
 
   @action.bound
+  async saveFavorite(resource: ResourceModel) {
+    await this.resourceStore.performLoading(async () => {
+      await this.resourceRepository.saveResource(resource);
+      await this.setAllResources();
+    });
+  }
+
+  @action.bound
   updatePendingResource(title: string, url: string) {
     let resource = new ResourceModel();
     resource.setName(title);

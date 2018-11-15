@@ -77,6 +77,7 @@ export const StyledHomePage = inject('resourceStore')(styled(HomePage)`
     }
     .resourceList {
         max-height: 92px;
+        overflow-x: hidden;
     }
     
     .resource {

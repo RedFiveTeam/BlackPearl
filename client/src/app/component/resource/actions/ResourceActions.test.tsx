@@ -111,4 +111,10 @@ describe('ResourceActions', () => {
     subject.setPendingResourceCategory(Category.Main);
     expect(resourceStore.setPendingResourceCategory).toHaveBeenCalledWith(Category.Main);
   });
+
+  it('should save a favorite resource', async () => {
+    let resource = new ResourceModel(null, 'https://www.favorite.com', 'favorite', 0, 'GUEST');
+    await subject.saveFavorite(resource);
+    expect(resourceRepository.saveResource).toHaveBeenCalledWith(resource);
+  });
 });

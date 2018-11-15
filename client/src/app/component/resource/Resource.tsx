@@ -56,7 +56,7 @@ export const StyledResource = inject('resourceStore')(styled(Resource)`
    position: relative;
    padding: 7px;
    margin: -1px;
-   width: 223px;
+   width: 183px;
   }
   
   .title {
