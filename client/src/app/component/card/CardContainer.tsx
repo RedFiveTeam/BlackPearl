@@ -6,6 +6,7 @@ import { Category } from '../resource/ResourceModel';
 import { ResourceActions } from '../resource/actions/ResourceActions';
 import { StyledInformationContainer } from './information/InformationContainer';
 import classNames = require('classnames');
+import { StyledOperationContainer } from './operation/OperationContainer';
 import { ProfileActions } from '../../profile/ProfileActions';
 
 interface Props {
@@ -28,6 +29,7 @@ export class CardContainer extends React.Component<Props> {
         <StyledCard category={Category.SituationalAwareness}/>
         <StyledCard category={Category.TargetResearch}/>
         <StyledInformationContainer/>
+        <StyledOperationContainer/>
       </div>
     );
   }

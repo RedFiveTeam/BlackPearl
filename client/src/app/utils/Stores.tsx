@@ -7,6 +7,7 @@ import { CoordinateConverterStore } from '../component/widgets/coordinateConvert
 import { LoadingStore } from '../component/loading/stores/LoadingStore';
 import { ProfileStore } from '../profile/ProfileStore';
 import { InformationStore } from '../component/card/information/InformationStore';
+import { OperationStore } from '../component/card/operation/OperationStore';
 
 const adminStore = new AdminStore();
 const acronymStore = new AcronymStore();
@@ -17,6 +18,7 @@ const resourceStore = new ResourceStore();
 const timeStore = new TimeStore();
 const weatherStore = new WeatherStore();
 const informationStore = new InformationStore();
+const operationStore = new OperationStore();
 
 export interface Stores {
   adminStore: AdminStore;
@@ -28,6 +30,7 @@ export interface Stores {
   timeStore: TimeStore;
   weatherStore: WeatherStore;
   informationStore: InformationStore;
+  operationStore: OperationStore;
 }
 
 export const stores = {
@@ -40,4 +43,5 @@ export const stores = {
   timeStore,
   weatherStore,
   informationStore,
+  operationStore
 };

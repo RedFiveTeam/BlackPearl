@@ -129,3 +129,11 @@ Scenario('should see a general information', (I) => {
   I.see('SVOIP', '.information');
   I.see('TSVOIP', '.information');
 });
+
+Scenario('should see a current operations card', (I) => {
+  I.haveHeader('Authorization', 'Basic Sk9SREFOOjE=');
+  I.amOnPage('/');
+  I.waitForElement('.operationCardTitle', 10);
+  I.see('OP OTTERBALL', '.operation');
+  I.see('OP TORTUGA', '.operation');
+});

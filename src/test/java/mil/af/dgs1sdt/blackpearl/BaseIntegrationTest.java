@@ -3,6 +3,7 @@ package mil.af.dgs1sdt.blackpearl;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import mil.af.dgs1sdt.blackpearl.acronym.AcronymRepository;
 import mil.af.dgs1sdt.blackpearl.information.InformationRepository;
+import mil.af.dgs1sdt.blackpearl.operation.OperationRepository;
 import mil.af.dgs1sdt.blackpearl.resource.ResourceRepository;
 import mil.af.dgs1sdt.blackpearl.time.TimeRepository;
 import org.junit.runner.RunWith;
@@ -24,6 +25,7 @@ public abstract class BaseIntegrationTest {
     @Autowired protected TimeRepository timeRepository;
     @Autowired protected AcronymRepository acronymRepository;
     @Autowired protected InformationRepository informationRepository;
+    @Autowired protected OperationRepository operationRepository;
 
     @LocalServerPort
     protected int port;

@@ -35,6 +35,13 @@ INSERT INTO information (name, content) VALUES
     ("SVOIP", "302-574-0375(0376)"),
     ("TSVOIP", "984-4971");
 
+INSERT INTO operation (title, description) VALUES
+    ("OP OTTERBALL", "Operation Otterball is fun"),
+    ("OP HALLOWEENTOWN", "It is pretty scary!"),
+    ("OP HAPPY FEET", "Dance dance dance!"),
+    ("OP DAYWALKER", "RUN!"),
+    ("OP TORTUGA", "WHERE'S THE BEER!?!");
+
 INSERT INTO acronym (acronym, definition) VALUES
     ("A&P", "analysis and production"),
     ("A-1", "director of manpower, personnel, and services"),

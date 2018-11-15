@@ -38,7 +38,6 @@ export class Resource extends React.Component<Props> {
 export const StyledResource = inject('resourceStore')(styled(Resource)`
   width: 335px;
   height: 37px;
-  font-size: 14px;
   border: none;
   border-top: 1px solid grey;
   background: #EAEAEA;

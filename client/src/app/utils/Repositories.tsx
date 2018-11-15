@@ -17,6 +17,9 @@ import { StubProfileRepository } from '../profile/StubProfileRepository';
 import { InformationRepository } from '../component/card/information/repositories/InformationRepository';
 import { WebInformationRepository } from '../component/card/information/repositories/WebInformationRepository';
 import { StubInformationRepository } from '../component/card/information/repositories/StubInformationRepository';
+import { OperationRepository } from '../component/card/operation/repositories/OperationRepository';
+import { WebOperationRepository } from '../component/card/operation/repositories/WebOperationRepository';
+import { StubOperationRepository } from '../component/card/operation/repositories/StubOperationRepository';
 
 export interface Repositories {
   acronymRepository: AcronymRepository;
@@ -25,6 +28,7 @@ export interface Repositories {
   timeRepository: TimeRepository;
   weatherRepository: WeatherRepository;
   informationRepository: InformationRepository;
+  operationRepository: OperationRepository;
 }
 
 const client = new HTTPClient();
@@ -36,6 +40,7 @@ export const WebRepositories: Repositories = Object.freeze({
   timeRepository: new WebTimeRepository(client),
   weatherRepository: new WebWeatherRepository(client),
   informationRepository: new WebInformationRepository(client),
+  operationRepository: new WebOperationRepository(client)
 });
 
 export const StubRepositories: Repositories = {
@@ -45,4 +50,5 @@ export const StubRepositories: Repositories = {
   timeRepository: new StubTimeRepository(),
   weatherRepository: new StubWeatherRepository(),
   informationRepository: new StubInformationRepository(),
+  operationRepository: new StubOperationRepository()
 };
