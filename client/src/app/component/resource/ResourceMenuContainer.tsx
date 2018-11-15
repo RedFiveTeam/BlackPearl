@@ -69,11 +69,11 @@ export class ResourceMenuContainer extends React.Component<Props> {
         className={this.props.className}
       >
         {
-          resourceMenuStore.menuVisible &&
+          (resourceMenuStore.menuVisible && this.props.resource.categoryID !== 0) &&
           <StyledFavoriteButton onClick={this.favorite}/>
         }
         {
-          resourceMenuStore.menuVisible &&
+          resourceMenuStore.menuVisible && this.props.resource.categoryID! > 0 &&
           <BorderIcon/>
         }
         {

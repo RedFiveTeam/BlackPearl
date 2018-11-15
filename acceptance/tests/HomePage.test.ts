@@ -96,7 +96,6 @@ Scenario('should allow the user to add, edit and delete a resource', async (I) =
   I.amOnPage('/');
 
   //delete
-  I.waitForElement('.threeDotButton' + `.${name}`, 10);
   I.click('.threeDotButton' + `.${name}`);
   I.click('.deleteButton');
   I.see(name);
