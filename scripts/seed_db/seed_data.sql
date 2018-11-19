@@ -46,6 +46,10 @@ INSERT INTO operation (title, description, address) VALUES
     ("OP DAYWALKER",	"RUN!",	"https://www.opfour.com"),
     ("OP TORTUGA",	"WHERE'S THE BEER!?!",	"https://www.opfive.com");
 
+INSERT INTO account (cardID, name, role) VALUES
+    ("JORDAN", "JORDAN CROSS", 1),
+    ("YODA", "MASTER YODA", 1);
+
 INSERT INTO acronym (acronym, definition) VALUES
     ("A&P", "analysis and production"),
     ("A-1", "director of manpower, personnel, and services"),

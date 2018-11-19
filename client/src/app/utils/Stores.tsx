@@ -8,6 +8,7 @@ import { LoadingStore } from '../component/loading/stores/LoadingStore';
 import { ProfileStore } from '../profile/ProfileStore';
 import { InformationStore } from '../component/card/information/InformationStore';
 import { OperationStore } from '../component/card/operation/OperationStore';
+import { MetricsStore } from '../page/stores/MetricsStore';
 
 const adminStore = new AdminStore();
 const acronymStore = new AcronymStore();
@@ -19,6 +20,7 @@ const timeStore = new TimeStore();
 const weatherStore = new WeatherStore();
 const informationStore = new InformationStore();
 const operationStore = new OperationStore();
+const metricsStore = new MetricsStore();
 
 export interface Stores {
   adminStore: AdminStore;
@@ -31,6 +33,7 @@ export interface Stores {
   weatherStore: WeatherStore;
   informationStore: InformationStore;
   operationStore: OperationStore;
+  metricsStore: MetricsStore;
 }
 
 export const stores = {
@@ -43,5 +46,6 @@ export const stores = {
   timeStore,
   weatherStore,
   informationStore,
-  operationStore
+  operationStore,
+  metricsStore,
 };
