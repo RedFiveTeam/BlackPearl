@@ -15,4 +15,10 @@ export class WebAcronymRepository implements AcronymRepository {
       return this.acronymSerializer.deserialize(obj);
     });
   }
+
+  async saveAcronym(acronym: AcronymModel): Promise<AcronymModel> {
+    const body = JSON.stringify(this.acronymSerializer.serialize(acronym));
+    const json = await this.client.postJSON('/api/acronyms', body);
+    return this.acronymSerializer.deserialize(json);
+  }
 }

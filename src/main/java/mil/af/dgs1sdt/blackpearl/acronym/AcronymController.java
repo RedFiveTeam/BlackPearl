@@ -2,21 +2,28 @@ package mil.af.dgs1sdt.blackpearl.acronym;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 @Controller
 @RequestMapping(AcronymController.URI)
 public class AcronymController {
-    public static final String URI = "/api/acronyms";
+  public static final String URI = "/api/acronyms";
 
-    @Autowired
-    AcronymRepository acronymRepository;
+  @Autowired
+  AcronymRepository acronymRepository;
 
-    @GetMapping
-    public @ResponseBody
-    Iterable<Acronym> getAllAcronyms() {
-        return acronymRepository.findAll();
-    }
+  @GetMapping
+  public @ResponseBody
+  Iterable<Acronym> getAllAcronyms() {
+    return acronymRepository.findAll();
+  }
+
+  @PostMapping
+  public @ResponseBody
+  Acronym create(@Valid @RequestBody AcronymJSON acronymJSON) {
+    Acronym acronym = new Acronym(acronymJSON.getAcronym(), acronymJSON.getDefinition());
+    return this.acronymRepository.save(acronym);
+  }
 }

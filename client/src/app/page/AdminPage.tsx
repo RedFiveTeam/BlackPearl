@@ -3,8 +3,8 @@ import { inject, observer } from 'mobx-react';
 import styled from 'styled-components';
 import { AdminStore } from './stores/AdminStore';
 import { AdminActions } from './actions/AdminActions';
-import moment = require('moment-timezone');
 import { InformationModel } from '../component/card/information/InformationModel';
+import moment = require('moment-timezone');
 
 interface Props {
   adminStore?: AdminStore;
@@ -14,8 +14,26 @@ interface Props {
 
 @observer
 export class AdminPage extends React.Component<Props> {
+  state = {acronym: '', definition: ''};
+  
   async componentDidMount() {
     await this.props.adminActions!.initializeStores();
+  }
+
+  onAcronymFieldChange = (e: any) => {
+    this.setState({acronym: e.target.value});
+  };
+
+  onDefinitionFieldChange = (e: any) => {
+    this.setState({definition: e.target.value});
+  };
+
+  async onAddAcronymButtonClick() {
+    await this.props.adminStore!.performLoading(async () => {
+      this.props.adminActions!.updatePendingAcronym(this.state.acronym, this.state.definition);
+      await this.props.adminActions!.addAcronym();
+      this.setState({acronym: '', definition: ''});
+    });
   }
 
   generateTimezoneRows() {
@@ -108,7 +126,36 @@ export class AdminPage extends React.Component<Props> {
           this.props.adminStore!.information &&
           this.generateInformationRows()
         }
-        <button onClick={this.props.adminActions!.submitChanges}>Save</button>
+        <div
+          className="addAcronym"
+        >
+          <span>Acronym:</span>
+          <input
+            value={this.state.acronym}
+            className="acronym"
+            onChange={(e) => this.onAcronymFieldChange(e)}
+          />
+          <span>Definition:</span>
+          <input
+            value={this.state.definition}
+            className="acronymDefinition"
+            onChange={(e) => this.onDefinitionFieldChange(e)}
+          />
+          <button
+            className="addAcronymButton"
+            onClick={async () => {
+              await this.onAddAcronymButtonClick();
+            }}
+          >
+            Add
+          </button>
+        </div>
+        <button
+          className="saveAll"
+          onClick={this.props.adminActions!.submitChanges}
+        >
+          Save
+        </button>
       </div>
     );
   }
@@ -133,6 +180,10 @@ export const StyledAdminPage = inject('adminStore', 'adminActions')(styled(Admin
   
   .information input {
     width: 100%;
+  }
+  
+  .acronymDefinition {
+  width: 440px;
   }
 
 `);

@@ -4,18 +4,25 @@ import { CardContainer } from './CardContainer';
 import { StyledCard } from './Card';
 import { Category } from '../resource/ResourceModel';
 import { StyledInformationContainer } from './information/InformationContainer';
+import { StyledOperationContainer } from './operation/OperationContainer';
 
 describe('CardContainer', () => {
   let subject: ShallowWrapper;
   let resourceActions: any;
+  let profileActions: any;
 
   beforeEach(() => {
     resourceActions = {
       setAllResources: jest.fn()
     };
 
+    profileActions = {
+      setProfile: jest.fn()
+    };
+
     subject = shallow(
       <CardContainer
+        profileActions={profileActions}
         resourceActions={resourceActions}
       />
     );
@@ -32,8 +39,16 @@ describe('CardContainer', () => {
     expect(resourceActions.setAllResources).toHaveBeenCalled();
   });
 
+  it('should set the profile', () => {
+    expect(profileActions.setProfile).toHaveBeenCalled();
+  });
+
   it('should render an information card container', () => {
     expect(subject.find(StyledInformationContainer).exists).toBeTruthy();
+  });
+
+  it('should render a operations container', () => {
+    expect(subject.find(StyledOperationContainer).exists()).toBeTruthy();
   });
 
 });

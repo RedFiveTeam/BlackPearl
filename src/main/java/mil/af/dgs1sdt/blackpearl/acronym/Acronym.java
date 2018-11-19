@@ -19,4 +19,9 @@ public class Acronym {
     private Long id;
     private String acronym;
     private String definition;
+
+    public Acronym(String acronym, String definition) {
+      this.acronym = acronym;
+      this.definition = definition;
+    }
 }

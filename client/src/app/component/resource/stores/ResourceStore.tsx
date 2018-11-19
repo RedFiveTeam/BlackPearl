@@ -24,6 +24,11 @@ export class ResourceStore extends LoadingStore {
   }
 
   @action.bound
+  setPendingResourceAccountID(accountID: string) {
+    this._pendingResource!.setAccountId(accountID);
+  }
+
+  @action.bound
   setPendingDelete(resource: ResourceModel | null) {
     this._pendingDelete = resource;
   }

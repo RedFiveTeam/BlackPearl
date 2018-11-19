@@ -7,6 +7,7 @@ import { ResourceModel } from './ResourceModel';
 import { StyledResourceMenuContainer } from './ResourceMenuContainer';
 import classNames = require('classnames');
 import { ResourceMenuStore } from './stores/ResourceMenuStore';
+import { FavoriteIcon } from '../../icon/FavoriteIcon';
 
 interface Props {
   resource: ResourceModel;
@@ -21,7 +22,7 @@ export class Resource extends React.Component<Props> {
       <div className={classNames(this.props.className, 'resource')}>
         <div>
           <a href={this.props.resource.url} target="_blank" title={this.props.resource.name}>
-            <span className="icon"><PearlIcon/></span>
+            <span className="icon">{this.props.resource.categoryID === 0 ? <FavoriteIcon/> : <PearlIcon/>}</span>
             <span className="title">{this.props.resource.name}</span>
           </a>
         </div>
@@ -37,7 +38,6 @@ export class Resource extends React.Component<Props> {
 export const StyledResource = inject('resourceStore')(styled(Resource)`
   width: 335px;
   height: 37px;
-  font-size: 14px;
   border: none;
   border-top: 1px solid grey;
   background: #EAEAEA;
@@ -56,7 +56,7 @@ export const StyledResource = inject('resourceStore')(styled(Resource)`
    position: relative;
    padding: 7px;
    margin: -1px;
-   width: 223px;
+   width: 183px;
   }
   
   .title {

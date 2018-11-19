@@ -1,10 +1,16 @@
-INSERT INTO resource (url, name, categoryID) VALUES
-    ("https://www.google.com", "Google", 1),
-    ("https://www.yahoo.com", "Yahoo", 1),
-    ("https://www.ebay.com", "eBay", 1),
-    ("https://www.amazon.com", "Amazon", 1),
-    ("https://www.youtube.com", "YouTube", 2),
-    ("https://www.reddit.com", "Reddit", 3);
+INSERT INTO resource (url, name, categoryID, accountID) VALUES
+    ("https://www.google.com", "Google", 1, null),
+    ("https://www.yahoo.com", "Yahoo", 1, null),
+    ("https://www.ebay.com", "eBay", 1, null),
+    ("https://www.amazon.com", "Amazon", 1, null),
+    ("https://www.youtube.com", "YouTube", 2, null),
+    ("https://www.reddit.com", "Reddit", 3, null),
+    ("https://www.google.com", "Guest's Google", 0, "Guest"),
+    ("https://www.facebook.com", "Guest's Facebook", 0, "Guest"),
+    ("https://www.google.com", "Jordan's Google", 0, "JORDAN"),
+    ("https://www.facebook.com", "Jordan's Facebook", 0, "JORDAN"),
+    ("https://www.google.com", "Yoda's Google", 0, "YODA"),
+    ("https://www.facebook.com", "Yoda's Google", 0, "YODA");
 
 INSERT INTO timezone (zone, name, position) VALUES
     ("America/New_York", "LANGLEY", 1),
@@ -28,6 +34,13 @@ INSERT INTO information (name, content) VALUES
     ("DSN", "575-1410"),
     ("SVOIP", "302-574-0375(0376)"),
     ("TSVOIP", "984-4971");
+
+INSERT INTO operation (title, description) VALUES
+    ("OP OTTERBALL", "Operation Otterball is fun"),
+    ("OP HALLOWEENTOWN", "It is pretty scary!"),
+    ("OP HAPPY FEET", "Dance dance dance!"),
+    ("OP DAYWALKER", "RUN!"),
+    ("OP TORTUGA", "WHERE'S THE BEER!?!");
 
 INSERT INTO acronym (acronym, definition) VALUES
     ("A&P", "analysis and production"),

@@ -11,32 +11,44 @@ import { AcronymRepository } from '../component/widgets/acronym/repositories/Acr
 import { WebWeatherRepository } from '../component/widgets/weather/repositories/WebWeatherRepository';
 import { StubWeatherRepository } from '../component/widgets/weather/repositories/StubWeatherRepository';
 import { WeatherRepository } from '../component/widgets/weather/repositories/WeatherRepository';
+import { ProfileRepository } from '../profile/ProfileRepository';
+import { WebProfileRepository } from '../profile/WebProfileRepository';
+import { StubProfileRepository } from '../profile/StubProfileRepository';
 import { InformationRepository } from '../component/card/information/repositories/InformationRepository';
 import { WebInformationRepository } from '../component/card/information/repositories/WebInformationRepository';
 import { StubInformationRepository } from '../component/card/information/repositories/StubInformationRepository';
+import { OperationRepository } from '../component/card/operation/repositories/OperationRepository';
+import { WebOperationRepository } from '../component/card/operation/repositories/WebOperationRepository';
+import { StubOperationRepository } from '../component/card/operation/repositories/StubOperationRepository';
 
 export interface Repositories {
   acronymRepository: AcronymRepository;
+  profileRepository: ProfileRepository;
   resourceRepository: ResourceRepository;
   timeRepository: TimeRepository;
   weatherRepository: WeatherRepository;
   informationRepository: InformationRepository;
+  operationRepository: OperationRepository;
 }
 
 const client = new HTTPClient();
 
 export const WebRepositories: Repositories = Object.freeze({
   acronymRepository: new WebAcronymRepository(client),
+  profileRepository: new WebProfileRepository(client),
   resourceRepository: new WebResourceRepository(client),
   timeRepository: new WebTimeRepository(client),
   weatherRepository: new WebWeatherRepository(client),
-  informationRepository: new WebInformationRepository(client)
+  informationRepository: new WebInformationRepository(client),
+  operationRepository: new WebOperationRepository(client)
 });
 
 export const StubRepositories: Repositories = {
   acronymRepository: new StubAcronymRepository(),
+  profileRepository: new StubProfileRepository(),
   resourceRepository: new StubResourceRepository(),
   timeRepository: new StubTimeRepository(),
   weatherRepository: new StubWeatherRepository(),
-  informationRepository: new StubInformationRepository()
+  informationRepository: new StubInformationRepository(),
+  operationRepository: new StubOperationRepository()
 };

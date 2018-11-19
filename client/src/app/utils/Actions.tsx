@@ -8,22 +8,28 @@ import { WeatherActions } from '../component/widgets/weather/actions/WeatherActi
 import {
   CoordinateConverterActions
 } from '../component/widgets/coordinateConverter/actions/CoordinateConverterActions';
+import { ProfileActions } from '../profile/ProfileActions';
 import { InformationActions } from '../component/card/information/actions/InformationActions';
+import { OperationActions } from '../component/card/operation/actions/OperationActions';
 
 const adminActions = new AdminActions(stores, WebRepositories);
 const acronymActions = new AcronymActions(stores, WebRepositories);
 const coordinateConverterActions = new CoordinateConverterActions(stores);
+const profileActions = new ProfileActions(stores, WebRepositories);
 const resourceActions = new ResourceActions(stores, WebRepositories);
 const timeActions = new TimeActions(stores, WebRepositories);
 const weatherActions = new WeatherActions(stores, WebRepositories);
 const informationActions = new InformationActions(stores, WebRepositories);
+const operationActions = new OperationActions(stores, WebRepositories);
 
 export const actions = {
   acronymActions,
   adminActions,
   coordinateConverterActions,
+  profileActions,
   resourceActions,
   timeActions,
   weatherActions,
-  informationActions
+  informationActions,
+  operationActions
 };

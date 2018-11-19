@@ -1,5 +1,7 @@
 #! /bin/bash
 
+# This is for local acceptance and is no longer used.
+
 set -e
 
 if [[ "${@}" == *"--help"* ]]; then

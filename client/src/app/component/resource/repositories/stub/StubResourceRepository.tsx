@@ -2,19 +2,20 @@ import { ResourceRepository } from '../ResourceRepository';
 import { ResourceModel } from '../../ResourceModel';
 
 export class StubResourceRepository implements ResourceRepository {
+
   findAll(): Promise<ResourceModel[]> {
     return Promise.resolve([
-      new ResourceModel(1, 'https://www.google.com', 'Google', 1),
-      new ResourceModel(2, 'https://www.yahoo.com', 'Yahoo', 1),
-      new ResourceModel(3, 'https://www.ebay.com', 'eBay', 2)
+      new ResourceModel(1, 'https://www.google.com', 'Google', 1, 'GUEST'),
+      new ResourceModel(2, 'https://www.yahoo.com', 'Yahoo', 1, 'GUEST'),
+      new ResourceModel(3, 'https://www.ebay.com', 'eBay', 2, 'GUEST')
     ]);
   }
 
-  findResourcesForCategory(categoryID: number): Promise<ResourceModel[]> {
+  findAllByAccount(accountID: string): Promise<ResourceModel[]> {
     return Promise.resolve([
-      new ResourceModel(1, 'https://www.google.com', 'Google', categoryID),
-      new ResourceModel(2, 'https://www.yahoo.com', 'Yahoo', categoryID),
-      new ResourceModel(3, 'https://www.123.com', '123', categoryID)
+      new ResourceModel(1, 'https://www.google.com', 'Google', 1, 'GUEST'),
+      new ResourceModel(2, 'https://www.yahoo.com', 'Yahoo', 1, 'GUEST'),
+      new ResourceModel(3, 'https://www.ebay.com', 'eBay', 2, 'GUEST')
     ]);
   }
 
@@ -33,4 +34,5 @@ export class StubResourceRepository implements ResourceRepository {
     resource.setUrl('https://www.editresource.com');
     return Promise.resolve(resource);
   }
+
 }

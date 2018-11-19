@@ -6,15 +6,19 @@ import { Category } from '../resource/ResourceModel';
 import { ResourceActions } from '../resource/actions/ResourceActions';
 import { StyledInformationContainer } from './information/InformationContainer';
 import classNames = require('classnames');
+import { StyledOperationContainer } from './operation/OperationContainer';
+import { ProfileActions } from '../../profile/ProfileActions';
 
 interface Props {
   className?: string;
   resourceActions?: ResourceActions;
+  profileActions?: ProfileActions;
 }
 
 @observer
 export class CardContainer extends React.Component<Props> {
   async componentDidMount() {
+    await this.props.profileActions!.setProfile();
     await this.props.resourceActions!.setAllResources();
   }
 
@@ -25,12 +29,13 @@ export class CardContainer extends React.Component<Props> {
         <StyledCard category={Category.SituationalAwareness}/>
         <StyledCard category={Category.TargetResearch}/>
         <StyledInformationContainer/>
+        <StyledOperationContainer/>
       </div>
     );
   }
 }
 
-export const StyledCardContainer = inject('resourceActions')(styled(CardContainer)`
+export const StyledCardContainer = inject('resourceActions', 'profileActions')(styled(CardContainer)`
   display: flex;
   height: 955px;
   max-height: 955px;

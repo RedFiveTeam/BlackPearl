@@ -1,0 +1,7 @@
+CREATE TABLE account (
+    id INT (11) NOT NULL AUTO_INCREMENT,
+    cardID VARCHAR(128) UNIQUE NOT NULL,
+    name VARCHAR (128) NOT NULL,
+    role INT(11) NOT NULL,
+    PRIMARY KEY (id)
+);
