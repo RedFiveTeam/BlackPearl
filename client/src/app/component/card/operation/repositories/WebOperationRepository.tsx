@@ -15,4 +15,10 @@ export class WebOperationRepository implements OperationRepository {
       return this.operationSerializer.deserialize(obj);
     });
   }
+
+  async saveOperation(operation: OperationModel): Promise<OperationModel> {
+    const body = JSON.stringify(this.operationSerializer.serialize(operation));
+    const json = await this.client.postJSON('api/operations', body);
+    return this.operationSerializer.deserialize(json);
+  }
 }

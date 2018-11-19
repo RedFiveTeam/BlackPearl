@@ -3,6 +3,7 @@ import { OperationStore } from '../OperationStore';
 import { Repositories } from '../../../../utils/Repositories';
 import { Stores } from '../../../../utils/Stores';
 import { action } from 'mobx';
+import { OperationModel } from '../OperationModel';
 
 export class OperationActions {
   private operationStore: OperationStore;
@@ -16,5 +17,36 @@ export class OperationActions {
   @action.bound
   async setupOperations() {
     this.operationStore.setOperations(await this.operationRepository.findAll());
+  }
+
+  @action.bound
+  createPendingOperation() {
+    this.operationStore.setPendingOperation(new OperationModel());
+  }
+
+  @action.bound
+  clearPendingOperation() {
+    this.operationStore.setPendingOperation(null);
+  }
+
+  @action.bound
+  async saveOperation() {
+    if (this.operationStore.pendingOperation != null) {
+      await this.operationStore.performLoading(async () => {
+        await this.operationRepository.saveOperation(this.operationStore.pendingOperation!);
+        this.clearPendingOperation();
+        await this.setupOperations();
+      });
+    }
+  }
+
+  @action.bound
+  updatePendingOperation(title: string, description: string, address: string) {
+    let operation = new OperationModel();
+    operation.setTitle(title);
+    operation.setDescription(description);
+    operation.setAddress(address);
+
+    this.operationStore.setPendingOperation(operation);
   }
 }

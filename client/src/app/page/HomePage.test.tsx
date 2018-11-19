@@ -11,14 +11,19 @@ import {
   StyledCoordinateConverterContainer
 } from '../component/widgets/coordinateConverter/CoordinateConverterContainer';
 import { StyledLoadingOverlay } from '../component/loading/LoadingOverlay';
+import { OperationStore } from '../component/card/operation/OperationStore';
+import { OperationModel } from '../component/card/operation/OperationModel';
+import { StyledAddOperationPopup } from '../component/popup/AddOperationPopup';
 
 describe('HomePage', () => {
   let subject: ShallowWrapper;
   let resourceStore: ResourceStore;
+  let operationStore: OperationStore;
   let returnResourcesInCategorySpy: jest.Mock;
 
   beforeEach(() => {
     resourceStore = new ResourceStore();
+    operationStore = new OperationStore();
 
     returnResourcesInCategorySpy = jest.fn();
 
@@ -27,6 +32,7 @@ describe('HomePage', () => {
     subject = shallow(
       <HomePage
         resourceStore={resourceStore}
+        operationStore={operationStore}
       />
     );
   });
@@ -76,5 +82,11 @@ describe('HomePage', () => {
   it('should render the loading overlay', () => {
     resourceStore.setLoading(true);
     expect(subject.find(StyledLoadingOverlay).exists()).toBeTruthy();
+  });
+
+  it('should hide and show an add operation popup', () => {
+    expect(subject.find(StyledAddOperationPopup).exists()).toBeFalsy();
+    operationStore.setPendingOperation(new OperationModel(0, '', '', ''));
+    expect(subject.find(StyledAddOperationPopup).exists()).toBeTruthy();
   });
 });

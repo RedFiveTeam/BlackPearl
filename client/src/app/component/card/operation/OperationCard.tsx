@@ -3,6 +3,7 @@ import { inject, observer } from 'mobx-react';
 import styled from 'styled-components';
 import { OperationStore } from './OperationStore';
 import { StyledOperation } from './Operation';
+import { StyledAddOperationButton } from '../../button/AddOperationButton';
 
 interface Props {
   className?: string;
@@ -20,6 +21,7 @@ export class OperationCard extends React.Component<Props> {
           className="operationCardTitle"
         >
           Current Operations
+          <StyledAddOperationButton/>
         </div>
         <div
           className="operationList"
@@ -31,6 +33,7 @@ export class OperationCard extends React.Component<Props> {
                   key={index}
                   title={obj.title}
                   description={obj.description}
+                  address={obj.address}
                 />
               );
             })
@@ -61,6 +64,8 @@ padding-left: 6px;
 }
 
 .operationList {
+  max-height: 331px;
+  overflow-y: auto;
   border-radius: 0px 0px 10px 10px;
   background-color: #EAEAEA;
   height: 330px;
@@ -74,5 +79,14 @@ padding-left: 6px;
 
 .operationList :last-child {
   border-radius: 2px 2px 5px 5px;
+}
+
+.addOperationButton {
+  background: none;
+  border: none;
+  display: inline-flex;
+  position: absolute;
+  right: 8px;
+  top: 7px;
 }
 `);

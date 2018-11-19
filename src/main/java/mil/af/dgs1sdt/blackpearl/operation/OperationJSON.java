@@ -20,8 +20,12 @@ public class OperationJSON {
   @NotNull(message = emptyFieldMessage)
   private String description;
 
+  @NotNull(message = emptyFieldMessage)
+  private String address;
+
   public OperationJSON(String title, String description) {
     this.title = title;
     this.description = description;
+    this.address = address;
   }
 }

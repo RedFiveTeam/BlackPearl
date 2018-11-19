@@ -38,12 +38,12 @@ INSERT INTO information (name, content) VALUES
     ("SVOIP", "302-574-0375(0376)"),
     ("TSVOIP", "984-4971");
 
-INSERT INTO operation (title, description) VALUES
-    ("OP OTTERBALL", "Operation Otterball is fun"),
-    ("OP HALLOWEENTOWN", "It is pretty scary!"),
-    ("OP HAPPY FEET", "Dance dance dance!"),
-    ("OP DAYWALKER", "RUN!"),
-    ("OP TORTUGA", "WHERE'S THE BEER!?!");
+INSERT INTO operation (title, description, address) VALUES
+    ("OP OTTERBALL",	"Operation Otterball is fun",	"https://www.opone.com"),
+    ("OP HALLOWEENTOWN",	"It is pretty scary!",	"https://www.optwo.com"),
+    ("OP HAPPY FEET",	"Dance dance dance!",	"https://www.opthree.com"),
+    ("OP DAYWALKER",	"RUN!",	"https://www.opfour.com"),
+    ("OP TORTUGA",	"WHERE'S THE BEER!?!",	"https://www.opfive.com");
 
 INSERT INTO acronym (acronym, definition) VALUES
     ("A&P", "analysis and production"),

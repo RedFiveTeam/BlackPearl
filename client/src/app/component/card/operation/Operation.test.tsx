@@ -10,6 +10,7 @@ describe('Operation', () => {
       <Operation
         title="My Operation"
         description="This is my Operation!"
+        address="https://www.thisismyop.com"
       />
     );
   });
@@ -22,4 +23,7 @@ describe('Operation', () => {
     expect(subject.find('.description').text()).toBe('This is my Operation!');
   });
 
+  it('should render and address', () => {
+    expect(subject.find('.address').prop('href')).toBe('https://www.thisismyop.com');
+  });
 });

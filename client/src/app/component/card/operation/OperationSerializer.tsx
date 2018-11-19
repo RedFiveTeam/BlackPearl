@@ -6,7 +6,8 @@ export class OperationSerializer implements Serializer<OperationModel> {
     return {
       id: item.id,
       title: item.title,
-      description: item.description
+      description: item.description,
+      address: item.address
     };
   }
 
@@ -14,7 +15,8 @@ export class OperationSerializer implements Serializer<OperationModel> {
     return new OperationModel(
       item.id,
       item.title,
-      item.description
+      item.description,
+      item.address
     );
   }
 }

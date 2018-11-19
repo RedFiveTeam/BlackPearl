@@ -18,9 +18,11 @@ public class Operation {
   private Long id;
   private String title;
   private String description;
+  private String address;
 
-  public Operation(String title, String description) {
+  public Operation(String title, String description, String address) {
     this.title = title;
     this.description = description;
+    this.address = address;
   }
 }

@@ -14,9 +14,12 @@ import {
 import { StyledLoadingOverlay } from '../component/loading/LoadingOverlay';
 import { Category } from '../component/resource/ResourceModel';
 import { StyledCard } from '../component/card/Card';
+import { OperationStore } from '../component/card/operation/OperationStore';
+import { StyledAddOperationPopup } from '../component/popup/AddOperationPopup';
 
 interface Props {
   resourceStore?: ResourceStore;
+  operationStore?: OperationStore;
   className?: string;
 }
 
@@ -27,6 +30,10 @@ export class HomePage extends React.Component<Props> {
       <div
         className={this.props.className}
       >
+        {
+          this.props.operationStore!.hasPendingOperation &&
+          <StyledAddOperationPopup/>
+        }
         {
           this.props.resourceStore!.loading &&
           <StyledLoadingOverlay/>
@@ -63,7 +70,7 @@ export class HomePage extends React.Component<Props> {
   }
 }
 
-export const StyledHomePage = inject('resourceStore')(styled(HomePage)`
+export const StyledHomePage = inject('resourceStore', 'operationStore')(styled(HomePage)`
   .myFavorites {
     height: 190px;
     width: 338px;
