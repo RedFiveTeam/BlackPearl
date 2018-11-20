@@ -47,5 +47,5 @@ export const stores = {
   weatherStore,
   informationStore,
   operationStore,
-  metricsStore,
+  metricsStore
 };

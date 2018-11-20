@@ -2,6 +2,9 @@ package mil.af.dgs1sdt.blackpearl.resource;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import mil.af.dgs1sdt.blackpearl.BaseIntegrationTest;
+import mil.af.dgs1sdt.blackpearl.resource.blame.Blame;
+import mil.af.dgs1sdt.blackpearl.resource.blame.BlameController;
+import mil.af.dgs1sdt.blackpearl.resource.blame.BlameRepository;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -13,6 +16,9 @@ import static org.hamcrest.Matchers.equalTo;
 public class ResourceControllerTest extends BaseIntegrationTest {
   @Autowired
   private ResourceRepository resourceRepository;
+  @Autowired
+  private BlameRepository blameRepository;
+
   private Resource resource1;
   private Resource resource2;
   private Resource resource3;
@@ -35,6 +41,8 @@ public class ResourceControllerTest extends BaseIntegrationTest {
     resourceRepository.save(resource4);
     resourceRepository.save(resource5);
     resourceRepository.save(resource6);
+
+    // blameRepository.save(new Blame("ADD", "Google", "USER", 1235523523L));
   }
 
   @After
@@ -77,6 +85,15 @@ public class ResourceControllerTest extends BaseIntegrationTest {
       .body("url", equalTo("https://www.test.com"))
       .body("name", equalTo("Test"))
       .body("categoryID", equalTo(1));
+
+    given()
+      .port(port)
+      .when()
+      .get(BlameController.URI)
+      .then()
+      .statusCode(200)
+      .body("action.size()", equalTo(1))
+      .body("[0].action", equalTo("ADD"));
   }
 
   @Test
@@ -89,6 +106,15 @@ public class ResourceControllerTest extends BaseIntegrationTest {
       .delete(ResourceController.URI)
       .then()
       .statusCode(204);
+
+    given()
+      .port(port)
+      .when()
+      .get(BlameController.URI)
+      .then()
+      .statusCode(200)
+      .body("action.size()", equalTo(1))
+      .body("[0].action", equalTo("DELETE"));
   }
 
   @Test
@@ -106,6 +132,15 @@ public class ResourceControllerTest extends BaseIntegrationTest {
       .then()
       .statusCode(200)
       .body("url", equalTo("https://www.google.com"));
+
+    given()
+      .port(port)
+      .when()
+      .get(BlameController.URI)
+      .then()
+      .statusCode(200)
+      .body("action.size()", equalTo(1))
+      .body("[0].action", equalTo("EDIT"));
   }
 
   @Test

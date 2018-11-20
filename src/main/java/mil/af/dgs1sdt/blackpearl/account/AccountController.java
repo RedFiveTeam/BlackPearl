@@ -22,6 +22,6 @@ public class AccountController {
   public @ResponseBody
   Account getProfile() {
     Account test = accountRepository.findOneByCardID(SecurityContextHolder.getContext().getAuthentication().getName());
-    return test != null ? test : new Account("Guest", "Guest", 1L);
+    return test != null ? test : new Account("GUEST.GUEST.GUEST.0123456789", "Guest", 1L);
   }
 }

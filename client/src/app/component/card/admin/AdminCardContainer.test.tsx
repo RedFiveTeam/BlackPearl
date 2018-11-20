@@ -6,6 +6,7 @@ import { StyledWeatherTab } from './tabs/WeatherTab';
 import { StyledGeneralInfoTab } from './tabs/GeneralInfoTab';
 import { StyledAcronymTab } from './tabs/AcronymTab';
 import { AdminStore } from '../../../page/stores/AdminStore';
+import { StyledBlameTab } from './tabs/BlameTab';
 
 describe('AdminCardContainer', () => {
   let subject: ShallowWrapper;
@@ -31,7 +32,7 @@ describe('AdminCardContainer', () => {
 
   it('should contain a button for each tab', () => {
     expect(subject.find('.selectors').exists()).toBeTruthy();
-    expect(subject.find('.tabSelector').length).toBe(4);
+    expect(subject.find('.tabSelector').length).toBe(5);
   });
 
   it('should contain an area to render the tab contents', () => {
@@ -69,6 +70,8 @@ describe('AdminCardContainer', () => {
     expect(subject.find(StyledGeneralInfoTab).exists()).toBeTruthy();
     adminStore.setCurrentTab('Acronyms');
     expect(subject.find(StyledAcronymTab).exists()).toBeTruthy();
+    adminStore.setCurrentTab('Recent Changes');
+    expect(subject.find(StyledBlameTab).exists()).toBeTruthy();
   });
 
   it('should have a save button', () => {

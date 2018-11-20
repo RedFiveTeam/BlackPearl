@@ -7,6 +7,7 @@ import { WeatherRepository } from '../../component/widgets/weather/repositories/
 import { InformationRepository } from '../../component/card/information/repositories/InformationRepository';
 import { AcronymRepository } from '../../component/widgets/acronym/repositories/AcronymRepository';
 import { AcronymModel } from '../../component/widgets/acronym/AcronymModel';
+import { BlameRepository } from '../../component/resource/blame/repositories/BlameRepository';
 
 export class AdminActions {
   private adminStore: AdminStore;
@@ -14,6 +15,7 @@ export class AdminActions {
   private timeRepository: TimeRepository;
   private weatherRepository: WeatherRepository;
   private informationRepository: InformationRepository;
+  private blameRepository: BlameRepository;
 
   constructor(stores: Partial<Stores>, repositories: Partial<Repositories>) {
     this.adminStore = stores.adminStore!;
@@ -21,6 +23,7 @@ export class AdminActions {
     this.timeRepository = repositories.timeRepository!;
     this.weatherRepository = repositories.weatherRepository!;
     this.informationRepository = repositories.informationRepository!;
+    this.blameRepository = repositories.blameRepository!;
   }
 
   @action.bound
@@ -29,7 +32,8 @@ export class AdminActions {
       this.acronymRepository,
       this.informationRepository,
       this.timeRepository,
-      this.weatherRepository
+      this.weatherRepository,
+      this.blameRepository
     );
   }
 

@@ -23,6 +23,9 @@ import { StubOperationRepository } from '../component/card/operation/repositorie
 import { UserRepository } from '../component/user/UserRepository';
 import { WebUserRepository } from '../component/user/WebUserRepository';
 import { StubUserRepository } from '../component/user/StubUserRepository';
+import { BlameRepository } from '../component/resource/blame/repositories/BlameRepository';
+import { WebBlameRepository } from '../component/resource/blame/repositories/WebBlameRepository';
+import { StubBlameRepository } from '../component/resource/blame/repositories/StubBlameRepository';
 
 export interface Repositories {
   acronymRepository: AcronymRepository;
@@ -33,6 +36,7 @@ export interface Repositories {
   informationRepository: InformationRepository;
   operationRepository: OperationRepository;
   userRepository: UserRepository;
+  blameRepository: BlameRepository;
 }
 
 const client = new HTTPClient();
@@ -46,6 +50,7 @@ export const WebRepositories: Repositories = Object.freeze({
   informationRepository: new WebInformationRepository(client),
   operationRepository: new WebOperationRepository(client),
   userRepository: new WebUserRepository(client),
+  blameRepository: new WebBlameRepository(client)
 });
 
 export const StubRepositories: Repositories = {
@@ -56,5 +61,6 @@ export const StubRepositories: Repositories = {
   weatherRepository: new StubWeatherRepository(),
   informationRepository: new StubInformationRepository(),
   operationRepository: new StubOperationRepository(),
-  userRepository: new StubUserRepository()
+  userRepository: new StubUserRepository(),
+  blameRepository: new StubBlameRepository()
 };

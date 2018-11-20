@@ -5,15 +5,23 @@ INSERT INTO resource (url, name, categoryID, accountID, position) VALUES
     ("https://www.amazon.com", "Amazon", 1, null, null),
     ("https://www.youtube.com", "YouTube", 2, null, null),
     ("https://www.reddit.com", "Reddit", 3, null, null),
-    ("https://www.google.com", "Guest's Google", 0, "Guest", null),
-    ("https://www.facebook.com", "Guest's Facebook", 0, "Guest", null),
-    ("https://www.google.com", "Jordan's Google", 0, "JORDAN", null),
-    ("https://www.facebook.com", "Jordan's Facebook", 0, "JORDAN", null),
-    ("https://www.google.com", "Yoda's Google", 0, "YODA", null),
-    ("https://www.facebook.com", "Yoda's Google", 0, "YODA", null),
+    ("https://www.google.com", "Guest's Google", 0, "GUEST.GUEST.GUEST.0123456789", null),
+    ("https://www.facebook.com", "Guest's Facebook", 0, "GUEST.GUEST.GUEST.0123456789", null),
+    ("https://www.google.com", "Jordan's Google", 0, "CROSS.JORDAN.MIDDLE.0123456789", null),
+    ("https://www.facebook.com", "Jordan's Facebook", 0, "CROSS.JORDAN.MIDDLE.0123456789", null),
+    ("https://www.google.com", "Yoda's Google", 0, "YODA.MASTER.MIDDLE.0123456789", null),
+    ("https://www.facebook.com", "Yoda's Google", 0, "YODA.MASTER.MIDDLE.0123456789", null),
     ("https://www.fav1.com", "Fav 1", 0, "Guest", 0),
     ("https://www.fav2.com", "Fav 2", 0, "Guest", 1),
     ("https://www.fav3.com", "Fav 3", 0, "Guest", 2);
+
+INSERT INTO blame (action, name, user, time) VALUES
+    ("ADD", "Google", "CROSS.JORDAN.MIDDLE.0123456789", 1542736493),
+    ("EDIT", "Facebook", "CROSS.JORDAN.MIDDLE.0123456789", 1542738493),
+    ("DELETE", "Some Super Long Title of a Website", "CROSS.JORDAN.MIDDLE.0123456789", 1542738293),
+    ("DELETE", "eBay", "YODA.MASTER.MIDDLE.0123456789", 1542728493),
+    ("EDIT", "Myspace", "YODA.MASTER.MIDDLE.0123456789", 1542738393),
+    ("ADD", "Some Super Long Title of a Website", "YODA.MASTER.MIDDLE.0123456789", 1542736493);
 
 INSERT INTO timezone (zone, name, position) VALUES
     ("America/New_York", "LANGLEY", 1),
@@ -47,8 +55,8 @@ INSERT INTO operation (title, description, address) VALUES
     ("OP TORTUGA",	"WHERE'S THE BEER!?!",	"https://www.opfive.com");
 
 INSERT INTO account (cardID, name, role) VALUES
-    ("JORDAN", "JORDAN CROSS", 1),
-    ("YODA", "MASTER YODA", 1);
+    ("CROSS.JORDAN.MIDDLE.0123456789", "JORDAN CROSS", 1),
+    ("YODA.MASTER.MIDDLE.0123456789", "MASTER YODA", 1);
 
 INSERT INTO acronym (acronym, definition) VALUES
     ("A&P", "analysis and production"),

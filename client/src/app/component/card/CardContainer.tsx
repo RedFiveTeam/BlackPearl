@@ -48,7 +48,6 @@ export class CardContainer extends React.Component<Props> {
 
 export const StyledCardContainer = inject('resourceActions', 'profileActions', 'resourceStore')(styled(CardContainer)`
   display: flex;
-  height: 955px;
   max-height: 955px;
   position: relative;
 `);

@@ -7,6 +7,8 @@ import { InformationRepository } from '../../component/card/information/reposito
 import { StubInformationRepository } from '../../component/card/information/repositories/StubInformationRepository';
 import { AcronymRepository } from '../../component/widgets/acronym/repositories/AcronymRepository';
 import { StubAcronymRepository } from '../../component/widgets/acronym/repositories/StubAcronymRepository';
+import { StubBlameRepository } from '../../component/resource/blame/repositories/StubBlameRepository';
+import { BlameRepository } from '../../component/resource/blame/repositories/BlameRepository';
 
 describe('AdminStore', () => {
   let subject: AdminStore;
@@ -14,14 +16,16 @@ describe('AdminStore', () => {
   let timeRepository: TimeRepository;
   let weatherRepository: WeatherRepository;
   let informationRepository: InformationRepository;
+  let blameRepository: BlameRepository;
 
   beforeEach(async () => {
     acronymRepository = new StubAcronymRepository();
     timeRepository = new StubTimeRepository();
     weatherRepository = new StubWeatherRepository();
     informationRepository = new StubInformationRepository();
+    blameRepository = new StubBlameRepository();
     subject = new AdminStore();
-    await subject.hydrate(acronymRepository, informationRepository, timeRepository, weatherRepository);
+    await subject.hydrate(acronymRepository, informationRepository, timeRepository, weatherRepository, blameRepository);
   });
 
   it('should hydrate with all timezones', async () => {
@@ -35,6 +39,10 @@ describe('AdminStore', () => {
   it('should hydrate with all the general information', async () => {
     expect(subject.information[0].name).toBe('Phone Number');
     expect(subject.information[0].content).toBe('123-456-7890');
+  });
+
+  it('should hydrate with all the blame information', () => {
+    expect(subject.blames[0].action).toBe('ADD');
   });
 
   it('should update the timezone zone from action', () => {

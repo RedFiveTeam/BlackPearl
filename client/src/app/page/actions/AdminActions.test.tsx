@@ -10,6 +10,8 @@ import { StubInformationRepository } from '../../component/card/information/repo
 import { AcronymRepository } from '../../component/widgets/acronym/repositories/AcronymRepository';
 import { StubAcronymRepository } from '../../component/widgets/acronym/repositories/StubAcronymRepository';
 import { AcronymModel } from '../../component/widgets/acronym/AcronymModel';
+import { BlameRepository } from '../../component/resource/blame/repositories/BlameRepository';
+import { StubBlameRepository } from '../../component/resource/blame/repositories/StubBlameRepository';
 
 describe('AdminActions', () => {
   let subject: AdminActions;
@@ -18,6 +20,7 @@ describe('AdminActions', () => {
   let timeRepository: TimeRepository;
   let weatherRepository: WeatherRepository;
   let informationRepository: InformationRepository;
+  let blameRepository: BlameRepository;
   let updateSpy: Mock;
   let saveSpy: Mock;
 
@@ -35,6 +38,7 @@ describe('AdminActions', () => {
     timeRepository = new StubTimeRepository();
     weatherRepository = new StubWeatherRepository();
     informationRepository = new StubInformationRepository();
+    blameRepository = new StubBlameRepository();
     acronymRepository.saveAcronym = saveSpy;
     timeRepository.update = updateSpy;
     weatherRepository.update = updateSpy;
@@ -44,7 +48,8 @@ describe('AdminActions', () => {
       acronymRepository,
       timeRepository,
       weatherRepository,
-      informationRepository
+      informationRepository,
+      blameRepository
     } as any);
   });
 
@@ -54,7 +59,8 @@ describe('AdminActions', () => {
       acronymRepository,
       timeRepository,
       weatherRepository,
-      informationRepository);
+      informationRepository,
+      blameRepository);
   });
 
   it('should use the repository to send timezones change requests', async () => {

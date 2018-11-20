@@ -7,6 +7,7 @@ import { AdminActions } from '../../../page/actions/AdminActions';
 import { StyledWeatherTab } from './tabs/WeatherTab';
 import { StyledGeneralInfoTab } from './tabs/GeneralInfoTab';
 import { StyledAcronymTab } from './tabs/AcronymTab';
+import { StyledBlameTab } from './tabs/BlameTab';
 
 interface Props {
   className?: string;
@@ -45,7 +46,8 @@ export class AdminCardContainer extends React.Component<Props> {
           <div data-tab="Time Zones" className="tabSelector selected" onClick={this.changeTab}>Time Zones</div>
           <div data-tab="Weather" className="tabSelector" onClick={this.changeTab}>Weather</div>
           <div data-tab="General Info" className="tabSelector" onClick={this.changeTab}>General Info</div>
-          <div data-tab="Acronyms" className="tabSelector acronyms" onClick={this.changeTab}>Acronyms</div>
+          <div data-tab="Acronyms" className="tabSelector" onClick={this.changeTab}>Acronyms</div>
+          <div data-tab="Recent Changes" className="tabSelector" onClick={this.changeTab}>Recent Changes</div>
           <button
             className="saveAll"
             onClick={this.props.adminActions!.submitChanges}
@@ -71,6 +73,10 @@ export class AdminCardContainer extends React.Component<Props> {
           {
             this.props.adminStore!.currentTab === 'Acronyms' &&
             <StyledAcronymTab/>
+          }
+          {
+            this.props.adminStore!.currentTab === 'Recent Changes' &&
+            <StyledBlameTab/>
           }
         </div>
       </div>
