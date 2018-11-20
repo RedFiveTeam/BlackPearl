@@ -16,6 +16,7 @@ import { Category } from '../component/resource/ResourceModel';
 import { StyledCard } from '../component/card/Card';
 import { OperationStore } from '../component/card/operation/OperationStore';
 import { StyledAddOperationPopup } from '../component/popup/AddOperationPopup';
+import { StyledTimeContainer } from '../component/widgets/time/TimeContainer';
 
 interface Props {
   resourceStore?: ResourceStore;
@@ -55,6 +56,7 @@ export class HomePage extends React.Component<Props> {
         >
           <StyledCardContainer/>
           <div className="widgetSection">
+            <StyledTimeContainer/>
             <StyledCard
               className="myFavorites"
               category={Category.Favorites}
@@ -109,6 +111,9 @@ export const StyledHomePage = inject('resourceStore', 'operationStore')(styled(H
   }
   
   .widgetSection {
+    position: fixed;
     display: block;
+    top: 1px;
+    left: 1090px;
   }
 `);

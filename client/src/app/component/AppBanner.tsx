@@ -2,7 +2,6 @@ import * as React from 'react';
 import { inject, observer } from 'mobx-react';
 import styled from 'styled-components';
 import { BlackPearlShipIcon } from '../icon/BlackPearlShipIcon';
-import { StyledTimeContainer } from './widgets/time/TimeContainer';
 import { ProfileActions } from '../profile/ProfileActions';
 import { ProfileStore } from '../profile/ProfileStore';
 
@@ -38,7 +37,6 @@ export class AppBanner extends React.Component<Props> {
             }
             <img src={Person}/>
           </div>
-          <StyledTimeContainer/>
         </div>
       </div>
     );

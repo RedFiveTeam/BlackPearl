@@ -12,11 +12,16 @@ interface Props {
 export class ATODay extends React.Component<Props> {
   render() {
     return (
-      <span className={this.props.className + ' atoDay'}>
+      <div className={this.props.className + ' atoDay'}>
           {this.props.timeStore!.atoDay}
-      </span>
+      </div>
     );
   }
 }
 
-export const StyledATODay = inject('timeStore')(styled(ATODay)``);
+export const StyledATODay = inject('timeStore')(styled(ATODay)`
+width: 360px;
+height: 68px;
+margin-bottom: 17px;
+text-align: center;
+`);

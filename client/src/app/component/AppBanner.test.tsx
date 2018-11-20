@@ -2,7 +2,6 @@ import * as React from 'react';
 import { shallow, ShallowWrapper } from 'enzyme';
 import { AppBanner } from './AppBanner';
 import { BlackPearlShipIcon } from '../icon/BlackPearlShipIcon';
-import { StyledTimeContainer } from './widgets/time/TimeContainer';
 import { ProfileModel } from '../profile/ProfileModel';
 
 describe('AppBanner', () => {
@@ -34,9 +33,5 @@ describe('AppBanner', () => {
 
   it('should display an information banner', () => {
     expect(subject.find('.informationBanner').exists()).toBeTruthy();
-  });
-
-  it('should display a time container', () => {
-    expect(subject.find(StyledTimeContainer).exists()).toBeTruthy();
   });
 });

@@ -14,6 +14,7 @@ import { StyledLoadingOverlay } from '../component/loading/LoadingOverlay';
 import { OperationStore } from '../component/card/operation/OperationStore';
 import { OperationModel } from '../component/card/operation/OperationModel';
 import { StyledAddOperationPopup } from '../component/popup/AddOperationPopup';
+import { StyledTimeContainer } from '../component/widgets/time/TimeContainer';
 
 describe('HomePage', () => {
   let subject: ShallowWrapper;
@@ -88,5 +89,9 @@ describe('HomePage', () => {
     expect(subject.find(StyledAddOperationPopup).exists()).toBeFalsy();
     operationStore.setPendingOperation(new OperationModel(0, '', '', ''));
     expect(subject.find(StyledAddOperationPopup).exists()).toBeTruthy();
+  });
+
+  it('should display a time container', () => {
+    expect(subject.find(StyledTimeContainer).exists()).toBeTruthy();
   });
 });
