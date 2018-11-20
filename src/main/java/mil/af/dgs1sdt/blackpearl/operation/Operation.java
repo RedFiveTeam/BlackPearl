@@ -25,4 +25,12 @@ public class Operation {
     this.description = description;
     this.address = address;
   }
+
+  public Operation update(OperationJSON json) {
+    this.setId(json.getId());
+    this.setTitle(json.getTitle());
+    this.setDescription(json.getDescription());
+    this.setAddress(json.getAddress());
+    return this;
+  }
 }

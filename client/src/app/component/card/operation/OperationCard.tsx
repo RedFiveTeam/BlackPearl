@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { inject, observer } from 'mobx-react';
 import styled from 'styled-components';
-import { OperationStore } from './OperationStore';
+import { OperationStore } from './stores/OperationStore';
 import { StyledOperation } from './Operation';
 import { StyledAddOperationButton } from '../../button/AddOperationButton';
 
@@ -31,9 +31,7 @@ export class OperationCard extends React.Component<Props> {
               return (
                 <StyledOperation
                   key={index}
-                  title={obj.title}
-                  description={obj.description}
-                  address={obj.address}
+                  operation={obj}
                 />
               );
             })
@@ -83,10 +81,17 @@ padding-left: 6px;
 
 .addOperationButton {
   background: none;
-  border: none;
+  border: none; 
   display: inline-flex;
+  height: 22px;
+  width: 27px
   position: absolute;
-  right: 8px;
-  top: 7px;
+  right: 7px;
+  top: 6px;
+  
+}
+
+.addOperationButton:hover {
+  cursor: pointer;
 }
 `);

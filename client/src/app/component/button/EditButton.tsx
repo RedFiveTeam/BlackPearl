@@ -29,7 +29,7 @@ export class EditButton extends React.Component<Props> {
 export const StyledEditButton = inject('resourceActions')(styled(EditButton)`
   
   .editButton {
-    height: 37px;
+    height: 62px;
     border: none;
     background: none;
     cursor: pointer;

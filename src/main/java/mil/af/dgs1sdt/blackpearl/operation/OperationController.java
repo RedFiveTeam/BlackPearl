@@ -30,4 +30,11 @@ public class OperationController {
     );
     return this.operationRepository.save(operation);
   }
+
+  @PutMapping(path = "/{id}")
+  public @ResponseBody
+  Operation update(@Valid @RequestBody OperationJSON json) {
+    final Operation operation = operationRepository.getOne(json.getId());
+    return operationRepository.save(operation.update(json));
+  }
 }

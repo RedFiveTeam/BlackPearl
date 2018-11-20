@@ -74,4 +74,24 @@ public class OperationControllerTest extends BaseIntegrationTest {
       .body("address", equalTo("https://www.opsix.com"));
   }
 
+  @Test
+  public void updateTest() throws Exception {
+    op5.setTitle("New Updated Title");
+    op5.setDescription("New Updated Description");
+    op5.setAddress("New Updated Address");
+
+    final String json = objectMapper.writeValueAsString(op5);
+    given()
+      .port(port)
+      .contentType("application/json")
+      .body(json)
+      .when()
+      .put(OperationController.URI + "/5")
+      .then()
+      .statusCode(200)
+      .body("title", equalTo("New Updated Title"))
+      .body("description", equalTo("New Updated Description"))
+      .body("address", equalTo("New Updated Address"));
+  }
+
 }

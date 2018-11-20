@@ -5,10 +5,10 @@ import { StyledCard } from './Card';
 import { Category } from '../resource/ResourceModel';
 import { ResourceActions } from '../resource/actions/ResourceActions';
 import { StyledInformationContainer } from './information/InformationContainer';
-import classNames = require('classnames');
 import { StyledOperationContainer } from './operation/OperationContainer';
 import { ProfileActions } from '../../profile/ProfileActions';
 import { ResourceStore } from '../resource/stores/ResourceStore';
+import classNames = require('classnames');
 
 interface Props {
   className?: string;
@@ -46,7 +46,14 @@ export class CardContainer extends React.Component<Props> {
   }
 }
 
-export const StyledCardContainer = inject('resourceActions', 'profileActions', 'resourceStore')(styled(CardContainer)`
+export const StyledCardContainer =
+  inject(
+    'resourceActions',
+    'profileActions',
+    'resourceStore',
+  )
+  (styled(CardContainer)`
+
   display: flex;
   max-height: 955px;
   position: relative;

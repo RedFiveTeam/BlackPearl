@@ -32,4 +32,5 @@ export class AddOperationButton extends React.Component<Props> {
   }
 }
 
-export const StyledAddOperationButton = inject('operationActions')(styled(AddOperationButton)``);
+export const StyledAddOperationButton = inject('operationActions')(styled(AddOperationButton)`
+`);

@@ -14,10 +14,11 @@ import {
 import { StyledLoadingOverlay } from '../component/loading/LoadingOverlay';
 import { Category } from '../component/resource/ResourceModel';
 import { StyledCard } from '../component/card/Card';
-import { OperationStore } from '../component/card/operation/OperationStore';
+import { OperationStore } from '../component/card/operation/stores/OperationStore';
 import { StyledAddOperationPopup } from '../component/popup/AddOperationPopup';
+import { StyledEditOperationPopup } from '../component/popup/EditOperationPopup';
 import { StyledTimeContainer } from '../component/widgets/time/TimeContainer';
-import { Slide, toast, ToastContainer } from 'react-toastify';
+import { Slide, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 interface Props {
@@ -28,8 +29,6 @@ interface Props {
 
 @observer
 export class HomePage extends React.Component<Props> {
-  notify = () => toast('Wow.');
-
   render() {
     return (
       <div
@@ -38,6 +37,10 @@ export class HomePage extends React.Component<Props> {
         {
           this.props.operationStore!.hasPendingOperation &&
           <StyledAddOperationPopup/>
+        }
+        {
+          this.props.operationStore!.hasPendingEdit &&
+            <StyledEditOperationPopup/>
         }
         {
           this.props.resourceStore!.loading &&

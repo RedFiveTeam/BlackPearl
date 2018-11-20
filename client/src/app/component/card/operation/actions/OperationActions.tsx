@@ -1,5 +1,5 @@
 import { OperationRepository } from '../repositories/OperationRepository';
-import { OperationStore } from '../OperationStore';
+import { OperationStore } from '../stores/OperationStore';
 import { Repositories } from '../../../../utils/Repositories';
 import { Stores } from '../../../../utils/Stores';
 import { action } from 'mobx';
@@ -31,6 +31,16 @@ export class OperationActions {
   }
 
   @action.bound
+  createPendingEdit(operation: OperationModel) {
+    this.operationStore.setPendingEdit(operation);
+  }
+
+  @action.bound
+  clearPendingEdit() {
+    this.operationStore.setPendingEdit(null);
+  }
+
+  @action.bound
   async saveOperation() {
     if (this.operationStore.pendingOperation != null) {
       await this.operationStore.performLoading(async () => {
@@ -50,5 +60,16 @@ export class OperationActions {
     operation.setAddress(address);
 
     this.operationStore.setPendingOperation(operation);
+  }
+
+  @action.bound
+  async updateOperation() {
+    if (this.operationStore.pendingEdit != null) {
+      await this.operationStore.performLoading(async () => {
+        await this.operationRepository.updateOperation(this.operationStore.pendingEdit!);
+        this.clearPendingEdit();
+        await this.setupOperations();
+      });
+    }
   }
 }

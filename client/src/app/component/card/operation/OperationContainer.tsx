@@ -30,5 +30,4 @@ export const StyledOperationContainer = inject('operationActions')(styled(Operat
 position: absolute;
 top: 782px;
 padding-bottom: 10px;
-display: none;
 `);

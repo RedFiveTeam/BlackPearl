@@ -21,4 +21,10 @@ export class WebOperationRepository implements OperationRepository {
     const json = await this.client.postJSON('api/operations', body);
     return this.operationSerializer.deserialize(json);
   }
+
+  async updateOperation(operation: OperationModel): Promise<OperationModel> {
+    const body = JSON.stringify(this.operationSerializer.serialize(operation));
+    const json = await this.client.putJSON('/api/operations/' + operation.id, body);
+    return Promise.resolve(json);
+  }
 }

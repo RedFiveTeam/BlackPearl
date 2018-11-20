@@ -16,12 +16,15 @@ describe('OperationActions', () => {
       setPendingOperation: jest.fn(),
       clearPendingOperation: jest.fn(),
       pendingOperation: jest.fn(),
+      pendingEdit: jest.fn(),
+      setPendingEdit: jest.fn(),
       performLoading: async (fun: any) => { await fun(); }
     };
 
     operationRepository = new StubOperationRepository();
 
     operationRepository.saveOperation = jest.fn();
+    operationRepository.updateOperation = jest.fn();
 
     subject = new OperationActions({operationStore} as any, {operationRepository} as any);
   });
@@ -56,5 +59,16 @@ describe('OperationActions', () => {
     expect(operationStore.setPendingOperation.mock.calls[0][0].title).toEqual(pendingOperation.title);
     expect(operationStore.setPendingOperation.mock.calls[0][0].description).toEqual(pendingOperation.description);
     expect(operationStore.setPendingOperation.mock.calls[0][0].address).toEqual(pendingOperation.address);
+  });
+
+  it('should update an operation', async () => {
+    await subject.updateOperation();
+    expect(await operationRepository.updateOperation).toHaveBeenCalledWith(operationStore.pendingEdit);
+  });
+
+  it('should create a pending edit', () => {
+    let pendingEdit = new OperationModel(null, 'new edit', 'very new edit', 'https://www.newestedit.com');
+    subject.createPendingEdit(pendingEdit);
+    expect(operationStore.setPendingEdit).toHaveBeenCalledWith(pendingEdit);
   });
 });

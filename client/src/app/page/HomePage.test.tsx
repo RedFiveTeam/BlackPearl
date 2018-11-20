@@ -11,7 +11,7 @@ import {
   StyledCoordinateConverterContainer
 } from '../component/widgets/coordinateConverter/CoordinateConverterContainer';
 import { StyledLoadingOverlay } from '../component/loading/LoadingOverlay';
-import { OperationStore } from '../component/card/operation/OperationStore';
+import { OperationStore } from '../component/card/operation/stores/OperationStore';
 import { OperationModel } from '../component/card/operation/OperationModel';
 import { StyledAddOperationPopup } from '../component/popup/AddOperationPopup';
 import { StyledTimeContainer } from '../component/widgets/time/TimeContainer';

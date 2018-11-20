@@ -15,4 +15,11 @@ export class StubOperationRepository implements OperationRepository {
     operation.setAddress('https://www.newtestop.com');
     return Promise.resolve(operation);
   }
+
+  updateOperation(operation: OperationModel): Promise<OperationModel> {
+    operation.setTitle('New Edit Test Op');
+    operation.setDescription('New Edit Test Description');
+    operation.setAddress('https://www.newedit.com');
+    return Promise.resolve(operation);
+  }
 }

@@ -7,7 +7,7 @@ import { CoordinateConverterStore } from '../component/widgets/coordinateConvert
 import { LoadingStore } from '../component/loading/stores/LoadingStore';
 import { ProfileStore } from '../profile/ProfileStore';
 import { InformationStore } from '../component/card/information/InformationStore';
-import { OperationStore } from '../component/card/operation/OperationStore';
+import { OperationStore } from '../component/card/operation/stores/OperationStore';
 import { MetricsStore } from '../page/stores/MetricsStore';
 
 const adminStore = new AdminStore();

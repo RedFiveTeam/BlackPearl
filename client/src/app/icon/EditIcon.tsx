@@ -6,7 +6,7 @@ export const EditIcon = () => {
   const pathC = 'M12.2648 0.912354L13.9528 2.44801L12.832 3.73915L11.144 2.2035L12.2648 0.912354Z';
 
   return (
-    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="16" viewBox="0 0 14 16" fill="none">
+    <svg xmlns="http://www.w3.org/2000/svg" width="17" height="20" viewBox="0 0 14 16" fill="none">
       <path
         d={pathA}
         fill="#636363"
