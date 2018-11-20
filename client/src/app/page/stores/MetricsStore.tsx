@@ -1,6 +1,6 @@
 import { computed, observable } from 'mobx';
-import { UserModel } from '../../component/user/UserModel';
-import { UserRepository } from '../../component/user/UserRepository';
+import { UserModel } from '../../component/metrics/user/UserModel';
+import { UserRepository } from '../../component/metrics/user/UserRepository';
 
 export class MetricsStore {
   @observable private _users: UserModel[];

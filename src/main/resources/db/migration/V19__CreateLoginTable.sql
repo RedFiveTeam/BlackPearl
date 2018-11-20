@@ -1,0 +1,10 @@
+CREATE TABLE login (
+  id INT (11) NOT NULL AUTO_INCREMENT,
+  userID INT NOT NULL,
+  time DATETIME(3) NOT NULL,
+  PRIMARY KEY (id),
+  FOREIGN KEY (userID) REFERENCES account(id)
+);
+
+INSERT INTO account (cardID, name, role) VALUES
+  ('GUEST.GUEST.GUEST.0123456789', 'GUEST', 1);

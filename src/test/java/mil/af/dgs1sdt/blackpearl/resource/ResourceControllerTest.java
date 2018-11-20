@@ -166,7 +166,5 @@ public class ResourceControllerTest extends BaseIntegrationTest {
       .body("[1].position", equalTo(2))
       .body("[2].position", equalTo(1))
       .body("[3].position", equalTo(0));
-
-
   }
 }

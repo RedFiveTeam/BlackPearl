@@ -20,12 +20,15 @@ import { StubInformationRepository } from '../component/card/information/reposit
 import { OperationRepository } from '../component/card/operation/repositories/OperationRepository';
 import { WebOperationRepository } from '../component/card/operation/repositories/WebOperationRepository';
 import { StubOperationRepository } from '../component/card/operation/repositories/StubOperationRepository';
-import { UserRepository } from '../component/user/UserRepository';
-import { WebUserRepository } from '../component/user/WebUserRepository';
-import { StubUserRepository } from '../component/user/StubUserRepository';
+import { UserRepository } from '../component/metrics/user/UserRepository';
+import { LoginRepository } from '../component/metrics/login/LoginRepository.tsx';
+import { WebLoginRepository } from '../component/metrics/login/WebLoginRepository';
+import { StubLoginRepository } from '../component/metrics/login/StubLoginRepository';
 import { BlameRepository } from '../component/resource/blame/repositories/BlameRepository';
 import { WebBlameRepository } from '../component/resource/blame/repositories/WebBlameRepository';
 import { StubBlameRepository } from '../component/resource/blame/repositories/StubBlameRepository';
+import { WebUserRepository } from '../component/metrics/user/WebUserRepository';
+import { StubUserRepository } from '../component/metrics/user/StubUserRepository';
 
 export interface Repositories {
   acronymRepository: AcronymRepository;
@@ -36,6 +39,7 @@ export interface Repositories {
   informationRepository: InformationRepository;
   operationRepository: OperationRepository;
   userRepository: UserRepository;
+  loginRepository: LoginRepository;
   blameRepository: BlameRepository;
 }
 
@@ -50,6 +54,7 @@ export const WebRepositories: Repositories = Object.freeze({
   informationRepository: new WebInformationRepository(client),
   operationRepository: new WebOperationRepository(client),
   userRepository: new WebUserRepository(client),
+  loginRepository: new WebLoginRepository(client),
   blameRepository: new WebBlameRepository(client)
 });
 
@@ -62,5 +67,6 @@ export const StubRepositories: Repositories = {
   informationRepository: new StubInformationRepository(),
   operationRepository: new StubOperationRepository(),
   userRepository: new StubUserRepository(),
+  loginRepository: new StubLoginRepository(),
   blameRepository: new StubBlameRepository()
 };

@@ -1,6 +1,6 @@
 import { MetricsActions } from './MetricsActions.tsx';
-import { StubUserRepository } from '../../component/user/StubUserRepository';
-import { UserRepository } from '../../component/user/UserRepository';
+import { StubUserRepository } from '../../component/metrics/user/StubUserRepository';
+import { UserRepository } from '../../component/metrics/user/UserRepository';
 
 describe('MetricsActions', () => {
   let subject: MetricsActions;

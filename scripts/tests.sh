@@ -73,6 +73,7 @@ function unitTests {
 # Utilities
 
 function cleanup {
+    showBanner "Cleanup"
     if [ -f ${BASE_DIR}/tmp/blackPearl.pid ]; then
         cat ${BASE_DIR}/tmp/blackPearl.pid | xargs kill -9
         rm ${BASE_DIR}/tmp/blackPearl.pid
@@ -85,6 +86,7 @@ function cleanup {
 trap cleanup EXIT
 
 function jarBuild {
+    showBanner "Build JAR"
     ${BASE_DIR}/scripts/build_jar.sh --no-replace
 }
 
@@ -106,9 +108,9 @@ function setup {
 }
 
 function showBanner {
-    echo "============================="
-    echo "  ${1}"
-    echo "============================="
+    echo "======================================================"
+    echo "  ${1} ($(date))"
+    echo "======================================================"
 }
 
 function testConnection {

@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -21,7 +20,8 @@ public class AccountController {
   @GetMapping
   public @ResponseBody
   Account getProfile() {
-    Account test = accountRepository.findOneByCardID(SecurityContextHolder.getContext().getAuthentication().getName());
-    return test != null ? test : new Account("GUEST.GUEST.GUEST.0123456789", "Guest", 1L);
+    Account account = accountRepository.findOneByCardID(SecurityContextHolder.getContext().getAuthentication().getName());
+    Account guest = accountRepository.findOneByCardID("GUEST.GUEST.GUEST.0123456789");
+    return account != null ? account : guest;
   }
 }

@@ -1,9 +1,9 @@
 import { MetricsStore } from './MetricsStore';
-import { UserModel } from '../../component/user/UserModel';
+import { UserModel } from '../../component/metrics/user/UserModel';
 
 describe('MetricsStore', () => {
   let subject: MetricsStore;
-  let users = [new UserModel(1, 'u1'), new UserModel(2, 'u2'), new UserModel(3, 'u3')];
+  let users = [new UserModel(1, 'u1', 'card1'), new UserModel(2, 'u2', 'card2'), new UserModel(3, 'u3', 'card3')];
 
   let userRepository: any;
 

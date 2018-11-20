@@ -26,9 +26,9 @@ pushd ${BASE_DIR}
             TARGET="muhj"
         fi
 
-        echo "====================="
-        echo "JAR Target: ${TARGET}"
-        echo "====================="
+        echo "======================================================"
+        echo "JAR Target: ${TARGET} ($(date))"
+        echo "======================================================"
 
         mvn package -DskipTests -P${TARGET}
     fi

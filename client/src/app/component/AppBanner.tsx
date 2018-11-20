@@ -18,6 +18,7 @@ export class AppBanner extends React.Component<Props> {
 
   async componentDidMount() {
     await this.props.profileActions!.setProfile();
+    await this.props.profileActions!.addLogin();
   }
 
   render() {

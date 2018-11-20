@@ -11,9 +11,9 @@ INSERT INTO resource (url, name, categoryID, accountID, position) VALUES
     ("https://www.facebook.com", "Jordan's Facebook", 0, "CROSS.JORDAN.MIDDLE.0123456789", null),
     ("https://www.google.com", "Yoda's Google", 0, "YODA.MASTER.MIDDLE.0123456789", null),
     ("https://www.facebook.com", "Yoda's Google", 0, "YODA.MASTER.MIDDLE.0123456789", null),
-    ("https://www.fav1.com", "Fav 1", 0, "Guest", 0),
-    ("https://www.fav2.com", "Fav 2", 0, "Guest", 1),
-    ("https://www.fav3.com", "Fav 3", 0, "Guest", 2);
+    ("https://www.fav1.com", "Fav 1", 0, "GUEST.GUEST.GUEST.0123456789", 0),
+    ("https://www.fav2.com", "Fav 2", 0, "GUEST.GUEST.GUEST.0123456789", 1),
+    ("https://www.fav3.com", "Fav 3", 0, "GUEST.GUEST.GUEST.0123456789", 2);
 
 INSERT INTO blame (action, name, user, time) VALUES
     ("ADD", "Google", "CROSS.JORDAN.MIDDLE.0123456789", 1542736493),
@@ -55,6 +55,7 @@ INSERT INTO operation (title, description, address) VALUES
     ("OP TORTUGA",	"WHERE'S THE BEER!?!",	"https://www.opfive.com");
 
 INSERT INTO account (cardID, name, role) VALUES
+    ("GUEST.GUEST.GUEST.0123456789", "Guest", 1),
     ("CROSS.JORDAN.MIDDLE.0123456789", "JORDAN CROSS", 1),
     ("YODA.MASTER.MIDDLE.0123456789", "MASTER YODA", 1);
 
