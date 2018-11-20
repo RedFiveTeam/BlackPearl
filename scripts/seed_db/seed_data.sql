@@ -36,7 +36,8 @@ INSERT INTO information (name, content) VALUES
     ("NAVCENT", "chat.ior.navy.smil.mil"),
     ("DSN", "575-1410"),
     ("SVOIP", "302-574-0375(0376)"),
-    ("TSVOIP", "984-4971");
+    ("TSVOIP", "984-4971"),
+    ("Call Out Format", "| Number | Age | Gender | Clothing | Activity | From | To |");
 
 INSERT INTO operation (title, description, address) VALUES
     ("OP OTTERBALL",	"Operation Otterball is fun",	"https://www.opone.com"),

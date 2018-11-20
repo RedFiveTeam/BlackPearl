@@ -26,6 +26,8 @@ Scenario('should allow admin to change a time zone', async (I) => {
 Scenario('should allow admin to change a weather data', async (I) => {
   I.haveHeader('Authorization', 'Basic Sk9SREFOOjE=');
   I.amOnPage('/admin');
+  I.waitForElement('.tabSelector', 10);
+  I.click('.tabSelector:nth-of-type(2)');
   I.waitForElement('.weatherURL', 10);
   I.clearField('.weather > div:first-of-type > input:nth-of-type(2)');
   I.fillField('.weather > div:first-of-type > input:nth-of-type(2)', 'http://superweather.com');
@@ -42,6 +44,8 @@ Scenario('should allow admin to change a weather data', async (I) => {
 Scenario('should allow admin to change general information', async (I) => {
   I.haveHeader('Authorization', 'Basic Sk9SREFOOjE=');
   I.amOnPage('/admin');
+  I.waitForElement('.tabSelector', 10);
+  I.click('.tabSelector:nth-of-type(3)');
   I.waitForElement('.information', 10);
   I.clearField('.information:first-of-type > td > input');
   I.fillField('.information:first-of-type > td > input', 'www.com');
@@ -54,6 +58,8 @@ Scenario('should allow admin to change general information', async (I) => {
 Scenario('should allow admin to add an acronym', async (I) => {
   I.haveHeader('Authorization', 'Basic Sk9SREFOOjE=');
   I.amOnPage('/admin');
+  I.waitForElement('.tabSelector', 10);
+  I.click('.tabSelector:nth-of-type(4)');
   I.waitForElement('.acronym', 10);
   I.fillField('.acronym', 'WAT');
   I.fillField('.acronymDefinition', 'Wombats Are Tasty');

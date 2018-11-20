@@ -15,6 +15,7 @@ export class AdminStore extends LoadingStore {
   @observable private _information: InformationModel[];
   @observable private _timezones: TimezoneModel[];
   @observable private _weather: WeatherModel[];
+  @observable private _currentTab: string;
 
   async hydrate(
     acronymRepository: AcronymRepository,
@@ -22,6 +23,7 @@ export class AdminStore extends LoadingStore {
     timeRepository: TimeRepository,
     weatherRepository: WeatherRepository
   ) {
+    this._currentTab = 'Time Zones';
     this._acronym = await acronymRepository.findAll();
     this._information = await informationRepository.findAll();
     this._timezones = await timeRepository.getTimezones();
@@ -73,6 +75,11 @@ export class AdminStore extends LoadingStore {
     }
   }
 
+  @action.bound
+  setCurrentTab(tab: string) {
+    this._currentTab = tab;
+  }
+
   @computed
   get acronym() {
     return this._acronym;
@@ -96,5 +103,10 @@ export class AdminStore extends LoadingStore {
   @computed
   get information() {
     return this._information;
+  }
+
+  @computed
+  get currentTab() {
+    return this._currentTab;
   }
 }
