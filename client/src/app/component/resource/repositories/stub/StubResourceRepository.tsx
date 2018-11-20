@@ -35,4 +35,8 @@ export class StubResourceRepository implements ResourceRepository {
     return Promise.resolve(resource);
   }
 
+  updateGivenResources(resource: ResourceModel[]): Promise<void> {
+    return Promise.resolve();
+  }
+
 }

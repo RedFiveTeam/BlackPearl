@@ -39,4 +39,14 @@ export class WebResourceRepository implements ResourceRepository {
     const json = await this.client.putJSON('/api/resources/' + resource.id, body);
     return Promise.resolve(json);
   }
+
+  async updateGivenResources(resources: ResourceModel[]): Promise<void> {
+    await this.client.putJSON(
+      '/api/resources',
+      JSON.stringify(resources.map((res) => {
+        return this.resourceSerializer.serialize(res);
+      }))
+    );
+    return;
+  }
 }

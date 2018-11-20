@@ -8,7 +8,8 @@ export class ResourceSerializer implements Serializer<ResourceModel> {
       name: item.name,
       url: item.url,
       categoryID: item.categoryID,
-      accountID: item.accountID
+      accountID: item.accountID,
+      position: item.position
     };
   }
 
@@ -18,7 +19,8 @@ export class ResourceSerializer implements Serializer<ResourceModel> {
       item.url,
       item.name,
       item.categoryID,
-      item.accountID
+      item.accountID,
+      item.position
     );
   }
 }

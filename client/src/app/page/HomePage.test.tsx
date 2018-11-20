@@ -3,7 +3,7 @@ import { shallow, ShallowWrapper } from 'enzyme';
 import { HomePage } from './HomePage';
 import { StyledAddResourcePopup } from '../component/popup/AddResourcePopup';
 import { ResourceStore } from '../component/resource/stores/ResourceStore';
-import { ResourceModel } from '../component/resource/ResourceModel';
+import { Category, ResourceModel } from '../component/resource/ResourceModel';
 import { StyledCardContainer } from '../component/card/CardContainer';
 import { StyledAcronymContainer } from '../component/widgets/acronym/AcronymContainer';
 import { StyledWeatherContainer } from '../component/widgets/weather/WeatherContainer';
@@ -15,9 +15,14 @@ import { StyledLoadingOverlay } from '../component/loading/LoadingOverlay';
 describe('HomePage', () => {
   let subject: ShallowWrapper;
   let resourceStore: ResourceStore;
+  let returnResourcesInCategorySpy: jest.Mock;
 
   beforeEach(() => {
     resourceStore = new ResourceStore();
+
+    returnResourcesInCategorySpy = jest.fn();
+
+    resourceStore.returnResourcesInCategory = returnResourcesInCategorySpy;
 
     subject = shallow(
       <HomePage
@@ -54,6 +59,10 @@ describe('HomePage', () => {
 
   it('should have a my favorites card', () => {
     expect(subject.find('.myFavorites').exists()).toBeTruthy();
+  });
+
+  it('should pass the favorite resources to the favorites card', () => {
+    expect(resourceStore.returnResourcesInCategory).toHaveBeenCalledWith(Category.Favorites);
   });
 
   it('should have a weather container', () => {

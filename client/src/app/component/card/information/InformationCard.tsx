@@ -20,26 +20,27 @@ export class InformationCard extends React.Component<Props> {
     return (
       <div className={this.props.className}>
         <div className="cardTitle">
-        General Info
+          General Info
         </div>
         <div className="cardContent">
           <div className="table">
             <table className="information">
+              <tbody>
               <tr>
-                  <td>
-                    <span className="title no">Image Server:</span>
-                    <span className="imageServer">{this.props.imageServer}</span>
-                  </td>
+                <td>
+                  <span className="title no">Image Server:</span>
+                  <span className="imageServer">{this.props.imageServer}</span>
+                </td>
                 <td colSpan={2}>
-                    <span className="title">Call Out Format:</span>
-                    <span className="callOutFormat">{this.props.callOutFormat}</span>
+                  <span className="title">Call Out Format:</span>
+                  <span className="callOutFormat">{this.props.callOutFormat}</span>
                 </td>
               </tr>
               <tr>
-                  <td>
-                    <span className="title no">Image Server (JWICS):</span>
-                    <span className="imageServerJWICS">{this.props.imageServerJWICS}</span>
-                  </td>
+                <td>
+                  <span className="title no">Image Server (JWICS):</span>
+                  <span className="imageServerJWICS">{this.props.imageServerJWICS}</span>
+                </td>
                 <td>
                   <span className="title">AUAB:</span>
                   <span className="auabServer">{this.props.auabServer}</span>
@@ -53,16 +54,17 @@ export class InformationCard extends React.Component<Props> {
                 <td>
                   <span className="title">DSN:</span>
                   <span className="dsnNumber">{this.props.dsnNumber}</span>
-                 </td>
+                </td>
                 <td>
                   <span className="title">SVOIP:</span>
                   <span className="svoipNumber">{this.props.svoipNumber}</span>
                 </td>
-                  <td>
-                    <span className="title">TSVOIP:</span>
-                    <span className="tsvoipNumber">{this.props.tsvoipNumber}</span>
-                  </td>
+                <td>
+                  <span className="title">TSVOIP:</span>
+                  <span className="tsvoipNumber">{this.props.tsvoipNumber}</span>
+                </td>
               </tr>
+              </tbody>
             </table>
           </div>
         </div>
@@ -71,6 +73,7 @@ export class InformationCard extends React.Component<Props> {
   }
 
 }
+
 export const StyledInformationCard = styled(InformationCard)`
 
     position: absolute;

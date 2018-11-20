@@ -32,6 +32,7 @@ describe('ResourceActions', () => {
     resourceRepository.delete = jest.fn();
     resourceRepository.updateResource = jest.fn();
     resourceRepository.saveResource = jest.fn();
+    resourceRepository.updateGivenResources = jest.fn();
 
     testResources = [
       new ResourceModel(1, 'https://www.google.com', 'Google', 1),
@@ -72,6 +73,16 @@ describe('ResourceActions', () => {
     subject.updatePendingResource(pendingResource.name, pendingResource.url);
     expect(resourceStore.setPendingResource.mock.calls[0][0].name).toEqual(pendingResource.name);
     expect(resourceStore.setPendingResource.mock.calls[0][0].url).toEqual(pendingResource.url);
+  });
+
+  it('should update multiple resources at once', () => {
+    let resources = [
+      new ResourceModel(1, 'https://www.test.com', 'Test', 0, 'Bob', 0),
+      new ResourceModel(2, 'https://www.test2.com', 'Test2', 0, 'Bob', 1)
+    ];
+
+    subject.updateGivenResources(resources);
+    expect(resourceRepository.updateGivenResources).toHaveBeenCalledWith(resources);
   });
 
   it('should delete a resource', async () => {
