@@ -8,9 +8,11 @@ import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.Date;
 import java.util.List;
 
 import static io.restassured.RestAssured.given;
+import static org.hamcrest.Matchers.equalTo;
 import static org.junit.Assert.assertEquals;
 
 public class LoginControllerTest extends BaseIntegrationTest {
@@ -21,15 +23,16 @@ public class LoginControllerTest extends BaseIntegrationTest {
 
   @Before
   public void setUp() {
-
+    accountRepository.save(new Account("card1", "name1", 1L));
   }
 
   @After
-  public void tearDown() { super.tearDown();}
+  public void tearDown() {
+    super.tearDown();
+  }
 
   @Test
   public void postNewLoginTest() throws Exception {
-    accountRepository.save(new Account("card1", "name1", 1L));
 
     LoginJSON loginJSON = new LoginJSON("card1", "2018-11-20T20:53:12.268Z");
     List<Login> savedLogins;
@@ -50,5 +53,19 @@ public class LoginControllerTest extends BaseIntegrationTest {
 
     savedLogins = loginRepository.findAll();
     assertEquals(1, savedLogins.size());
+  }
+
+  @Test
+  public void selectTest() {
+    loginRepository.save(new Login(accountRepository.findAll().get(0), new Date()));
+
+    given()
+      .port(port)
+      .contentType("application/json")
+      .when()
+      .get(LoginController.URI)
+      .then()
+      .statusCode(200)
+      .body("size()", equalTo(1));
   }
 }

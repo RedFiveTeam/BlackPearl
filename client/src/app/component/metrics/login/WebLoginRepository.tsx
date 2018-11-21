@@ -19,4 +19,11 @@ export class WebLoginRepository implements LoginRepository {
     const json = await this.client.postJSON('/api/login', JSON.stringify(body));
     return this.loginSerializer.deserialize(json);
   }
+
+  async findAll(): Promise<LoginModel[]> {
+    const json = await this.client.getJSON('/api/login');
+    return json.map((obj: any) => {
+      return this.loginSerializer.deserialize(obj);
+    });
+  }
 }

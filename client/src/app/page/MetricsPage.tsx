@@ -20,6 +20,24 @@ export class MetricsPage extends React.Component<Props> {
     return (
       <div className="metrics">
         <h1 className="users">Total user accounts: {this.props.metricsStore!.userCount}</h1>
+        <table className="login-table">
+          <tr className="login-header">
+            <th>ID</th>
+            <th>Name</th>
+            <th>Time</th>
+          </tr>
+          {
+            this.props.metricsStore!.logins.map((login, index) => {
+              return (
+                <tr key={index}>
+                  <td>{login.user.id}</td>
+                  <td>{login.user.name}</td>
+                  <td>{login.time.toISOString()}</td>
+                </tr>
+              );
+            })
+          }
+        </table>
       </div>
     );
   }

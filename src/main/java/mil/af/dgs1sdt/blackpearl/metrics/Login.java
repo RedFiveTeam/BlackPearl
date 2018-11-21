@@ -3,25 +3,29 @@ package mil.af.dgs1sdt.blackpearl.metrics;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import mil.af.dgs1sdt.blackpearl.account.Account;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Date;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
+@Entity(name = "Login")
 @Data
+@Table(name = "login")
 public class Login {
   @Id
   @GeneratedValue
   private Long id;
-  private Long userID;
+
+  @ManyToOne
+  @JoinColumn(name = "userID")
+  private Account account;
+
   private Date time;
 
-  public Login(Long userId, Date time) {
-    this.userID = userId;
+  public Login(Account account, Date time) {
+    this.account = account;
     this.time = time;
   }
 }

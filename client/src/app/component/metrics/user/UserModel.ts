@@ -1,7 +1,7 @@
 export class UserModel {
   constructor(
-    private _id: number = -1,
-    private _name: string = '',
+    private _id: number,
+    private _name: string,
     private _cardId: string,
   ) {
   }

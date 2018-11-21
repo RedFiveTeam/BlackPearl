@@ -1,5 +1,7 @@
 import { Serializer } from '../../../utils/serializer';
 import { LoginModel } from './LoginModel';
+import { UserModel } from '../user/UserModel';
+import * as moment from 'moment';
 
 export class LoginSerializer implements Serializer<LoginModel> {
   serialize(item: LoginModel): {} {
@@ -11,8 +13,8 @@ export class LoginSerializer implements Serializer<LoginModel> {
 
   deserialize(item: any): LoginModel {
     return new LoginModel(
-      item.user,
-      item.time
+      new UserModel(item.account.id, item.account.name, item.account.cardID),
+      moment(item.time)
     );
   }
 }

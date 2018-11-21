@@ -14,7 +14,7 @@ import java.util.Collection;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
+@Entity(name = "Account")
 @Data
 public class Account implements UserDetails {
   @Id
