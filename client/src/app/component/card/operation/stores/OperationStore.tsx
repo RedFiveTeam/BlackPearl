@@ -6,6 +6,7 @@ export class OperationStore extends LoadingStore {
   @observable private _operations: OperationModel[] = [];
   @observable private _pendingOperation: OperationModel | null = null;
   @observable private _pendingEdit: OperationModel | null = null;
+  @observable private _pendingDelete: OperationModel | null = null;
 
   @action.bound
   setOperations(operations: OperationModel[]) {
@@ -20,6 +21,11 @@ export class OperationStore extends LoadingStore {
   @action.bound
   setPendingEdit(operation: OperationModel | null) {
     this._pendingEdit = operation;
+  }
+
+  @action.bound
+  setPendingDelete(operation: OperationModel| null) {
+    this._pendingDelete = operation;
   }
 
   @computed
@@ -43,7 +49,17 @@ export class OperationStore extends LoadingStore {
   }
 
   @computed
+  get hasPendingDelete() {
+    return this._pendingDelete !== null;
+  }
+
+  @computed
   get pendingEdit() {
     return this._pendingEdit;
+  }
+
+  @computed
+  get pendingDelete() {
+    return this._pendingDelete;
   }
 }

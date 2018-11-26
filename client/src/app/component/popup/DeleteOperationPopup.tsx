@@ -1,37 +1,40 @@
 import * as React from 'react';
 import { inject, observer } from 'mobx-react';
 import styled from 'styled-components';
-import { ResourceActions } from '../resource/actions/ResourceActions';
 import { StyledPopupModal } from './PopupModal';
-import { ResourceStore } from '../resource/stores/ResourceStore';
+import { OperationStore } from '../card/operation/stores/OperationStore';
+import { OperationActions } from '../card/operation/actions/OperationActions';
 
 interface Props {
   className?: string;
-  resourceActions?: ResourceActions;
-  resourceStore?: ResourceStore;
+  operationActions?: OperationActions;
+  operationStore?: OperationStore;
+  
 }
 
 @observer
-export class RemoveResourcePopup extends React.Component<Props> {
+export class DeleteOperationPopup extends React.Component<Props> {
   onClick = async () => {
-    await this.props.resourceActions!.delete(this.props.resourceStore!.pendingDelete!.id!);
+    await this.props.operationActions!.deleteOperation(this.props.operationStore!.pendingDelete!.id!);
   };
 
   render() {
     return (
-      <div className={this.props.className}>
+      <div
+        className={this.props.className}
+      >
         <StyledPopupModal
           className="deletePopup"
-          title="Are you sure you want to delete this resource?"
+          title="Are you sure you want to delete this operation?"
           onCancel={() => {
-            this.props.resourceActions!.clearPendingDelete();
+            this.props.operationActions!.clearPendingDelete();
           }}
         >
           <output
             className="pendingDeleteTitle"
-            title={this.props.resourceStore!.pendingDelete!.name}
+            title={this.props.operationStore!.pendingDelete!.title}
           >
-            {this.props.resourceStore!.pendingDelete!.name}
+            {this.props.operationStore!.pendingDelete!.title}
           </output>
           <button
             className="confirmButton"
@@ -45,7 +48,7 @@ export class RemoveResourcePopup extends React.Component<Props> {
   }
 }
 
-export const StyledRemoveResourcePopup = inject('resourceActions', 'resourceStore')(styled(RemoveResourcePopup)`
+export const StyledDeleteOperationPopup = inject('operationActions', 'operationStore')(styled(DeleteOperationPopup)`
   .modal {
   width: 514px;
   height: 190px;
@@ -107,5 +110,4 @@ export const StyledRemoveResourcePopup = inject('resourceActions', 'resourceStor
     color: #844646;
     border-radius: 3px;
   }
-
 `);

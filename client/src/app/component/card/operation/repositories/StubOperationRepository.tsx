@@ -22,4 +22,8 @@ export class StubOperationRepository implements OperationRepository {
     operation.setAddress('https://www.newedit.com');
     return Promise.resolve(operation);
   }
+
+  deleteOperation(operationId: number): Promise<void> {
+    return Promise.resolve();
+  }
 }

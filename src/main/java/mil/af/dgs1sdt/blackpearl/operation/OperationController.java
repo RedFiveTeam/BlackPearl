@@ -1,6 +1,7 @@
 package mil.af.dgs1sdt.blackpearl.operation;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -36,5 +37,12 @@ public class OperationController {
   Operation update(@Valid @RequestBody OperationJSON json) {
     final Operation operation = operationRepository.getOne(json.getId());
     return operationRepository.save(operation.update(json));
+  }
+
+  @DeleteMapping
+  public ResponseEntity<Void> delete(@Valid @RequestBody String operationId) {
+    Long id = Long.valueOf(operationId);
+    operationRepository.deleteById(id);
+    return ResponseEntity.noContent().build();
   }
 }

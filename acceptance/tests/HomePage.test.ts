@@ -76,6 +76,45 @@ Scenario('should allow users to convert coordinates', async (I) => {
   homeAssert.strictEqual(latLongValue, '371152N 0760416W');
 });
 
+Scenario('should allow the user to add, edit and delete an operation', async (I) => {
+  I.haveHeader('Authorization', 'Basic Q1JPU1MuSk9SREFOLk1JRERMRS4wMTIzNDU2Nzg5OjE=');
+  let name = 'TestOp' + Date.now();
+
+  //create
+  I.amOnPage('/');
+  I.click('.addOperationButton');
+  I.fillField('.titleField', name);
+  I.fillField('.descriptionField', 'This is my Op');
+  I.fillField('.addressField', 'https://www.google.com');
+  I.click('SAVE', '.modal');
+  I.waitForText('Operation Added', 10);
+  I.waitForText(name, 10);
+
+  //edit
+  I.amOnPage('/');
+  I.waitForElement('.threeDotButton' + `.${name}`, 10);
+  I.click('.threeDotButton' + `.${name}`);
+  I.click('.editButton');
+  I.fillField('.pendingEditTitle', name);
+  I.fillField('.pendingEditDescription', 'This is my newly revised Op');
+  I.fillField('.pendingEditAddress', 'https://www.mynewop.com');
+  I.click('SAVE');
+  I.waitForText('Operation Edit Complete', 10);
+  I.waitForText(name, 10);
+  I.waitForText('This is my newly revised Op', 10);
+  const href = await I.grabAttributeFrom('.operation:nth-of-type(6) > a', 'href');
+  homeAssert.strictEqual('https://www.mynewop.com', href);
+
+  //delete
+  I.amOnPage('/');
+  I.click('.threeDotButton' + `.${name}`);
+  I.click('.deleteButton');
+  I.see(name);
+  I.click('DELETE');
+  I.waitForText('Operation Deleted', 10);
+  I.dontSee(name);
+});
+
 Scenario('should allow the user to add, edit and delete a resource', async (I) => {
   I.haveHeader('Authorization', 'Basic Q1JPU1MuSk9SREFOLk1JRERMRS4wMTIzNDU2Nzg5OjE=');
   let name = 'TestPage' + Date.now();
@@ -86,7 +125,7 @@ Scenario('should allow the user to add, edit and delete a resource', async (I) =
   I.fillField('.titleField', name);
   I.fillField('.urlField', 'https://www.testpage.com');
   I.click('SAVE', '.modal');
-  I.waitForElement('.customToast', 10);
+  I.waitForText('Resource Link Added', 10);
   I.waitForText(name, 10);
 
   //edit
@@ -97,18 +136,18 @@ Scenario('should allow the user to add, edit and delete a resource', async (I) =
   I.fillField('.pendingEditTitle', name);
   I.fillField('.pendingEditUrl', 'https://www.google.com');
   I.click('SAVE');
-  I.waitForElement('.customToast', 10);
+  I.waitForText('Resource Edit Complete', 10);
   I.waitForText(name, 10);
-  const href = await I.grabAttributeFrom('.resource:nth-of-type(5) > div > a', 'href');
+  const href = await I.grabAttributeFrom('.resource:nth-of-type(5) > a', 'href');
   homeAssert.strictEqual('https://www.google.com', href);
-  I.amOnPage('/');
 
   //delete
+  I.amOnPage('/');
   I.click('.threeDotButton' + `.${name}`);
   I.click('.deleteButton');
   I.see(name);
-  I.click('DELETE');
-  I.waitForElement('.customToast', 10);
+  I.click('.confirmButton');
+  I.waitForText('Resource Link Deleted', 10);
   I.dontSee(name);
 });
 
@@ -121,9 +160,9 @@ Scenario('should validate user resource input', async (I) => {
   I.waitForText('Please enter a title', 10);
   I.waitForText('Please enter an address', 10);
   I.click('CANCEL', '.modal');
-  //tooLong
+  //too long
   I.click('Add Resource');
-  let superLongTitle = 'This string is waaaaaaay too long to possible be a title. what am i even doing????? Whyyyyyyyy';
+  let superLongTitle = 'This string is waaaaaaay too long to possibly be a title. what am i even doing????? Whyyyyyyyy';
   I.fillField('.titleField', superLongTitle);
   let title = await I.grabValueFrom('.titleField');
   homeAssert.strictEqual(title.length, 64);

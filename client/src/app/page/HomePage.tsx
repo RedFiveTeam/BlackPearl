@@ -20,6 +20,7 @@ import { StyledEditOperationPopup } from '../component/popup/EditOperationPopup'
 import { StyledTimeContainer } from '../component/widgets/time/TimeContainer';
 import { Slide, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { StyledDeleteOperationPopup } from '../component/popup/DeleteOperationPopup';
 
 interface Props {
   resourceStore?: ResourceStore;
@@ -35,12 +36,16 @@ export class HomePage extends React.Component<Props> {
         className={this.props.className}
       >
         {
+          this.props.operationStore!.hasPendingDelete &&
+          <StyledDeleteOperationPopup/>
+        }
+        {
           this.props.operationStore!.hasPendingOperation &&
           <StyledAddOperationPopup/>
         }
         {
           this.props.operationStore!.hasPendingEdit &&
-            <StyledEditOperationPopup/>
+          <StyledEditOperationPopup/>
         }
         {
           this.props.resourceStore!.loading &&

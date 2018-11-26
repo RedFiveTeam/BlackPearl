@@ -41,6 +41,16 @@ export class OperationActions {
   }
 
   @action.bound
+  createPendingDelete(operation: OperationModel) {
+    this.operationStore.setPendingDelete(operation);
+  }
+
+  @action.bound
+  clearPendingDelete() {
+    this.operationStore.setPendingDelete(null);
+  }
+
+  @action.bound
   async saveOperation() {
     if (this.operationStore.pendingOperation != null) {
       await this.operationStore.performLoading(async () => {
@@ -69,7 +79,18 @@ export class OperationActions {
         await this.operationRepository.updateOperation(this.operationStore.pendingEdit!);
         this.clearPendingEdit();
         await this.setupOperations();
+        toast.success('Operation Edit Complete');
       });
     }
   }
+
+  @action.bound
+  async deleteOperation(operationId: number) {
+      await this.operationStore.performLoading(async () => {
+        await this.operationRepository.deleteOperation(operationId);
+        this.clearPendingDelete();
+        await this.setupOperations();
+        toast.success('Operation Deleted');
+      });
+    }
 }

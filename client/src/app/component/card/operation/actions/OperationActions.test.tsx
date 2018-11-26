@@ -18,6 +18,8 @@ describe('OperationActions', () => {
       pendingOperation: jest.fn(),
       pendingEdit: jest.fn(),
       setPendingEdit: jest.fn(),
+      setPendingDelete: jest.fn(),
+      clearPendingDelete: jest.fn()
       performLoading: async (fun: any) => { await fun(); }
     };
 
@@ -25,6 +27,7 @@ describe('OperationActions', () => {
 
     operationRepository.saveOperation = jest.fn();
     operationRepository.updateOperation = jest.fn();
+    operationRepository.deleteOperation = jest.fn();
 
     subject = new OperationActions({operationStore} as any, {operationRepository} as any);
   });
@@ -70,5 +73,17 @@ describe('OperationActions', () => {
     let pendingEdit = new OperationModel(null, 'new edit', 'very new edit', 'https://www.newestedit.com');
     subject.createPendingEdit(pendingEdit);
     expect(operationStore.setPendingEdit).toHaveBeenCalledWith(pendingEdit);
+  });
+
+  it('should create a pending delete', () => {
+    let pendingDelete = new OperationModel(1, 'op', 'my op', 'https://www.op.com');
+    subject.createPendingDelete(pendingDelete);
+    expect(operationStore.setPendingDelete).toHaveBeenCalledWith(pendingDelete);
+  });
+
+  it('should delete an operation', async () => {
+    let pendingDelete = new OperationModel(1, 'op', 'my op', 'https://www.op.com');
+    await subject.deleteOperation(pendingDelete.id!);
+    expect(await operationRepository.deleteOperation).toHaveBeenCalledWith(pendingDelete.id!);
   });
 });

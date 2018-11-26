@@ -6,6 +6,8 @@ import { StyledEditButton } from '../../button/EditButton';
 import { OperationMenuStore } from './stores/OperationMenuStore';
 import { OperationActions } from './actions/OperationActions';
 import { OperationModel } from './OperationModel';
+import { BorderIcon } from '../../../icon/BorderIcon';
+import { StyledDeleteButton } from '../../button/DeleteButton';
 
 interface Props {
   className?: string;
@@ -30,6 +32,11 @@ export class OperationMenuContainer extends React.Component<Props> {
     this.props.operationMenuStore.menuVisibilityOff();
   };
 
+  deleteClick = async () => {
+    await this.props.operationActions!.createPendingDelete(this.props.operation);
+    this.props.operationMenuStore.menuVisibilityOff();
+  };
+
   editClick = async () => {
     await this.props.operationActions!.createPendingEdit(this.props.operation);
     this.props.operationMenuStore.menuVisibilityOff();
@@ -47,9 +54,15 @@ export class OperationMenuContainer extends React.Component<Props> {
       >
         {
           this.props.operationMenuStore.menuVisible &&
-          <StyledEditButton
-            onClick={this.editClick}
-          />
+          <div>
+              <StyledEditButton
+                  onClick={this.editClick}
+              />
+              <BorderIcon/>
+              <StyledDeleteButton
+                  onClick={this.deleteClick}
+              />
+          </div>
         }
         <StyledThreeDotButton
           className={this.props.operation.title}
@@ -61,9 +74,29 @@ export class OperationMenuContainer extends React.Component<Props> {
 }
 
 export const StyledOperationMenuContainer = inject('operationActions')(styled(OperationMenuContainer)`
-  width: 85px;
+  width: 120px;
   float: right;
   display: flex;
   justify-content: flex-end;
   align-self: baseline;
+  
+  div {
+    display: flex;
+    align-items: center;
+  }
+  
+  svg {
+    filter: drop-shadow(-1px 1px 1px rgba(0,0,0,0.25));
+  }
+  
+  .deleteButton {
+    padding-top: 5px;
+    margin-left: 5px;
+    margin-right: 10px;
+  }
+  
+  .editButton {
+    margin-right: 5px;
+    padding-top: 5px;
+  }
 `);

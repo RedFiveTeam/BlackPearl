@@ -199,6 +199,7 @@ export const StyledEditResourcePopup = inject(
     outline: 0px;
     color: #FFFFFF;
     border: solid #65768B;
+    border-radius: 3px;
   }
   
   .cancelButton {
@@ -208,6 +209,7 @@ export const StyledEditResourcePopup = inject(
     border: solid #65768B;
     background: #FFFFFF;
     color: #65768B;
+    border-radius: 3px;
   }
 
 `);

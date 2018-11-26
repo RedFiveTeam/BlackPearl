@@ -136,6 +136,7 @@ export const StyledAddOperationPopup = inject('operationActions')(styled(AddOper
     background: #FFFFFF;
     border: solid #65768B;
     color: #65768B;
+    border-radius: 3px;
   }
 
 `);

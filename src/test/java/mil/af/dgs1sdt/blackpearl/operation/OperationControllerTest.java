@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.equalTo;
 
-
 public class OperationControllerTest extends BaseIntegrationTest {
   @Autowired private OperationRepository operationRepository;
   private Operation op1;
@@ -21,11 +20,11 @@ public class OperationControllerTest extends BaseIntegrationTest {
 
   @Before
   public void setUp() {
-    op1 = new Operation(1L, "OP ONE", "This is Operation One", "https://www.opone.com");
-    op2 = new Operation(2L, "OP TWO", "This is Operation Two", "https://www.optwo.com");
-    op3 = new Operation(3L, "OP THREE", "This is Operation Three", "https://www.opthree.com");
-    op4 = new Operation(4L, "OP FOUR", "This is Operation Four", "https://www.opfour.com");
-    op5 = new Operation(5L, "OP FIVE", "This is Operation Five", "https://www.opfive.com");
+    op1 = new Operation("OP ONE", "This is Operation One", "https://www.opone.com");
+    op2 = new Operation("OP TWO", "This is Operation Two", "https://www.optwo.com");
+    op3 = new Operation("OP THREE", "This is Operation Three", "https://www.opthree.com");
+    op4 = new Operation("OP FOUR", "This is Operation Four", "https://www.opfour.com");
+    op5 = new Operation("OP FIVE", "This is Operation Five", "https://www.opfive.com");
 
     operationRepository.save(op1);
     operationRepository.save(op2);
@@ -86,7 +85,7 @@ public class OperationControllerTest extends BaseIntegrationTest {
       .contentType("application/json")
       .body(json)
       .when()
-      .put(OperationController.URI + "/5")
+      .put(OperationController.URI + "/" + op5.getId())
       .then()
       .statusCode(200)
       .body("title", equalTo("New Updated Title"))
@@ -94,4 +93,15 @@ public class OperationControllerTest extends BaseIntegrationTest {
       .body("address", equalTo("New Updated Address"));
   }
 
+  @Test
+  public void deleteTest() {
+    given()
+      .port(port)
+      .contentType("application/json")
+      .body(op1.getId())
+      .when()
+      .delete(OperationController.URI)
+      .then()
+      .statusCode(204);
+  }
 }

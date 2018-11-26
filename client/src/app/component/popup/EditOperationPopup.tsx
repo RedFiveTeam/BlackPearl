@@ -137,12 +137,12 @@ export const StyledEditOperationPopup = inject('operationActions', 'operationSto
   }
   
   .cancelButton {
-    border-radius: 3px;
     position: absolute;
     right: 15%;
     bottom: 22px;
     background: #FFFFFF;
     border: solid #65768B;
     color: #65768B;
+    border-radius: 3px;
   }
 `);

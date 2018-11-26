@@ -20,12 +20,10 @@ export class Resource extends React.Component<Props> {
   render() {
     return (
       <div className={classNames(this.props.className, 'resource')}>
-        <div>
-          <a href={this.props.resource.url} target="_blank" title={this.props.resource.name}>
-            <span className="icon">{this.props.resource.categoryID === 0 ? <FavoriteIcon/> : <PearlIcon/>}</span>
-            <span className="title">{this.props.resource.name}</span>
-          </a>
-        </div>
+        <a className="resourceLink" href={this.props.resource.url} target="_blank" title={this.props.resource.name}>
+          <span className="icon">{this.props.resource.categoryID === 0 ? <FavoriteIcon/> : <PearlIcon/>}</span>
+          <span className="title">{this.props.resource.name}</span>
+        </a>
         <StyledResourceMenuContainer
           resource={this.props.resource}
           resourceMenuStore={new ResourceMenuStore()}
@@ -48,6 +46,10 @@ export const StyledResource = inject('resourceStore')(styled(Resource)`
   vertical-align: middle;
   line-height: 27px;
   overflow: hidden;
+  
+  .resourceLink {
+      width: 190px;
+  }
   
   a {
    text-decoration: none;

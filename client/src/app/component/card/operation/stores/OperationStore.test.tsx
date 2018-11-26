@@ -25,4 +25,13 @@ describe('OperationStore', () => {
     subject.setPendingEdit(new OperationModel(1, 'New Test Op', 'Test Op Description', 'Test Op Address'));
     expect(subject.hasPendingEdit).toBeTruthy();
   });
+
+  it('should hide pending delete popup by default', () => {
+    expect(subject.hasPendingDelete).toBeFalsy();
+  });
+
+  it('should show a pending delete popup', () => {
+    subject.setPendingDelete(new OperationModel(1, 'New Test Op', 'Test Op Description', 'Test Op Address'));
+    expect(subject.hasPendingDelete).toBeTruthy();
+  });
 });

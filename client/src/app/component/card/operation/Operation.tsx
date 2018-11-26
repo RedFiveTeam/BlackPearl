@@ -67,10 +67,11 @@ export const StyledOperation = inject('operationStore')(styled(Operation)`
     margin-left: 16px;
     overflow: hidden;
     text-overflow: ellipsis;
+    text-decoration: underline;
   }
 
   .description {
-    width: 700px;
+    width: 675px;
     white-space: normal;
     color: #474747;
   }

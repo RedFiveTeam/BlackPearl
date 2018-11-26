@@ -27,4 +27,9 @@ export class WebOperationRepository implements OperationRepository {
     const json = await this.client.putJSON('/api/operations/' + operation.id, body);
     return Promise.resolve(json);
   }
+
+  async deleteOperation(operationId: number): Promise<void> {
+    const json = await this.client.delete('/api/operations', JSON.stringify(operationId));
+    return Promise.resolve(json);
+  }
 }
