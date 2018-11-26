@@ -10,6 +10,7 @@ export class InformationStore extends LoadingStore {
   @observable private _dsnNumber: string = '';
   @observable private _svoipNumber: string = '';
   @observable private _tsvoipNumber: string = '';
+  @observable private _jwicsServer: string = '';
 
   @action.bound
   setImageServer(value: string) {
@@ -51,6 +52,11 @@ export class InformationStore extends LoadingStore {
     this._tsvoipNumber = value;
   }
 
+  @action.bound
+  setJwicsServer(value: string) {
+    this._jwicsServer = value;
+  }
+
   @computed
   get imageServer(): string {
     return this._imageServer;
@@ -89,5 +95,10 @@ export class InformationStore extends LoadingStore {
   @computed
   get tsvoipNumber(): string {
     return this._tsvoipNumber;
+  }
+
+  @computed
+  get jwicsServer(): string {
+    return this._jwicsServer;
   }
 }

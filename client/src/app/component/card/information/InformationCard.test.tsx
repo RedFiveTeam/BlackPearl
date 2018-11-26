@@ -16,6 +16,7 @@ describe('InformationCard', () => {
         dsnNumber="123-4567"
         svoipNumber="123-456-7890(1234)"
         tsvoipNumber="123-1234"
+        jwicsServer="irc://blackpearlisthegreatest"
       />
     );
   });
@@ -25,9 +26,9 @@ describe('InformationCard', () => {
   });
 
   it('should render a table with 3 rows and 8 cells', () => {
-    expect(subject.find('table').exists()).toBeTruthy();
-    expect(subject.find('tr').length).toBe(3);
-    expect(subject.find('td').length).toBe(8);
+    expect(subject.find('.table').exists()).toBeTruthy();
+    expect(subject.find('.row').length).toBe(3);
+    expect(subject.find('.d').length).toBe(9);
   });
 
   it('should have the proper information in the proper places', () => {
@@ -39,6 +40,7 @@ describe('InformationCard', () => {
     expect(subject.find('.dsnNumber').text()).toBe('123-4567');
     expect(subject.find('.svoipNumber').text()).toBe('123-456-7890(1234)');
     expect(subject.find('.tsvoipNumber').text()).toBe('123-1234');
+    expect(subject.find('.jwicsServer').text()).toBe('irc://blackpearlisthegreatest');
   });
 
 });

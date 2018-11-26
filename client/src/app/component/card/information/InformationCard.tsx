@@ -12,6 +12,7 @@ interface Props {
   dsnNumber: string;
   svoipNumber: string;
   tsvoipNumber: string;
+  jwicsServer: string;
 }
 
 @observer
@@ -24,48 +25,50 @@ export class InformationCard extends React.Component<Props> {
         </div>
         <div className="cardContent">
           <div className="table">
-            <table className="information">
-              <tbody>
-              <tr>
-                <td>
+            <div className="information">
+              <div className="row">
+                <div className="d">
                   <span className="title no">Image Server:</span>
                   <span className="imageServer">{this.props.imageServer}</span>
-                </td>
-                <td colSpan={2}>
-                  <span className="title">Call Out Format:</span>
-                  <span className="callOutFormat">{this.props.callOutFormat}</span>
-                </td>
-              </tr>
-              <tr>
-                <td>
+                </div>
+                <div className="d">
                   <span className="title no">Image Server (JWICS):</span>
                   <span className="imageServerJWICS">{this.props.imageServerJWICS}</span>
-                </td>
-                <td>
+                </div>
+                <div className="d">
+                  <span className="title">Call Out Format:</span>
+                  <span className="callOutFormat">{this.props.callOutFormat}</span>
+                </div>
+              </div>
+              <div className="row">
+                <div className="d">
+                  <span className="title">JWICS:</span>
+                  <span className="jwicsServer">{this.props.jwicsServer}</span>
+                </div>
+                <div className="d">
                   <span className="title">AUAB:</span>
                   <span className="auabServer">{this.props.auabServer}</span>
-                </td>
-                <td>
+                </div>
+                <div className="d">
                   <span className="title">NAVCENT:</span>
                   <span className="navcentServer">{this.props.navcentServer}</span>
-                </td>
-              </tr>
-              <tr>
-                <td>
+                </div>
+              </div>
+              <div className="row">
+                <div className="d">
                   <span className="title">DSN:</span>
                   <span className="dsnNumber">{this.props.dsnNumber}</span>
-                </td>
-                <td>
+                </div>
+                <div className="d">
                   <span className="title">SVOIP:</span>
                   <span className="svoipNumber">{this.props.svoipNumber}</span>
-                </td>
-                <td>
+                </div>
+                <div className="d">
                   <span className="title">TSVOIP:</span>
                   <span className="tsvoipNumber">{this.props.tsvoipNumber}</span>
-                </td>
-              </tr>
-              </tbody>
-            </table>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -113,27 +116,58 @@ export const StyledInformationCard = styled(InformationCard)`
       color: #000000;
     }
     
-    table, td {
+    .table, .d {
       background-color: #FFF;
-      border: 2px solid #EAEAEA;
-      border-collapse: collapse;
+      border: 1px solid #EAEAEA;
     }
     
-    table {
-      font-size: 18px;
-      table-layout: fixed;
+    .d {
+      display: table-cell;
+      height: 36px;
+      vertical-align: middle;
+    }
+    
+    .table {
+      font-size: 14px;
       width: 100%;
       height: 100%;
+      background: #EAEAEA;
+    }
+    
+    .row {
+      margin-left: 8px;
+      margin-right: 6px;
+    }
+    
+    .row:nth-child(1) {
+      
+      div:nth-child(1) {
+        width: 241px;
+      }
+      
+      div:nth-child(2) {
+        width: 307px;
+      }
+      
+      div:nth-child(3) {
+        width: 508px;
+      }
     }
     
     span {
       margin-left: 8px;
     }
     
+    .row:nth-child(n+2) > div {
+      width: 352px;
+    }
+    
     span:not(.no) {
       margin-right: 15px;
     }
     
-    
+    .information {
+      margin-top: 5px;
+    }
 
 `;

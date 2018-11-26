@@ -45,7 +45,8 @@ INSERT INTO information (name, content) VALUES
     ("DSN", "575-1410"),
     ("SVOIP", "302-574-0375(0376)"),
     ("TSVOIP", "984-4971"),
-    ("Call Out Format", "| Number | Age | Gender | Clothing | Activity | From | To |");
+    ("Call Out Format", "| Number | Age | Gender | Clothing | Activity | From | To |"),
+    ("JWICS", "irc://blackpearlisthegreatest");
 
 INSERT INTO operation (title, description, address) VALUES
     ("OP OTTERBALL",	"Operation Otterball is fun",	"https://www.opone.com"),

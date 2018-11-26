@@ -95,6 +95,7 @@ export class ResourceActions {
     await this.resourceStore.performLoading(async () => {
       await this.resourceRepository.saveResource(resource);
       await this.setAllResources();
+      toast.success('Resource Added to Favorites');
     });
   }
 

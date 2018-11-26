@@ -40,5 +40,8 @@ export class InformationActions {
     this.informationStore.setTsvoipNumber(info.filter(i => i.name === 'TSVOIP').map(i => {
       return i.content;
     })[0]);
+    this.informationStore.setJwicsServer(info.filter(i => i.name === 'JWICS').map(i => {
+      return i.content;
+    })[0]);
   }
 }

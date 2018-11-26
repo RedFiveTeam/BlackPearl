@@ -41,7 +41,6 @@ export class LoadingStore {
   @action.bound
   async performLoading(actionTo: () => Promise<void>) {
     try {
-      console.log(actionTo);
       this.setLoading(true);
       await actionTo();
     } finally {
