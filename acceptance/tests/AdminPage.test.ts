@@ -13,7 +13,7 @@ Scenario('should allow admin to change a time zone', async (I) => {
   I.fillField('.timezoneRow:first-of-type > input', 'accTest');
   I.selectOption('.timezoneRow:first-of-type > select', 'America/Tortola');
   I.click('Save');
-  I.wait(2);
+  I.waitForElement('.customToast');
   I.amOnPage('/');
   I.waitForText('accTest', 10);
 
@@ -32,7 +32,7 @@ Scenario('should allow admin to change general information', async (I) => {
   I.clearField('.information:first-of-type > td > input');
   I.fillField('.information:first-of-type > td > input', 'www.com');
   I.click('Save');
-  I.wait(2);
+  I.waitForElement('.customToast');
   I.amOnPage('/');
   I.waitForText('www.com', 10);
 });
@@ -63,7 +63,7 @@ Scenario('should allow admin to change a weather data', async (I) => {
   I.clearField('.weather > div:first-of-type > input:first-of-type');
   I.fillField('.weather > div:first-of-type > input:first-of-type', 'SUP');
   I.click('Save');
-  I.wait(2);
+  I.waitForElement('.customToast');
   I.amOnPage('/');
   I.waitForText('SUP', 10);
   const url = await I.grabAttributeFrom('.weatherURL:first-of-type', 'href');

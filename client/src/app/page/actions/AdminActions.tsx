@@ -8,6 +8,7 @@ import { InformationRepository } from '../../component/card/information/reposito
 import { AcronymRepository } from '../../component/widgets/acronym/repositories/AcronymRepository';
 import { AcronymModel } from '../../component/widgets/acronym/AcronymModel';
 import { BlameRepository } from '../../component/resource/blame/repositories/BlameRepository';
+import { toast } from 'react-toastify';
 
 export class AdminActions {
   private adminStore: AdminStore;
@@ -42,6 +43,7 @@ export class AdminActions {
     await this.timeRepository.update(this.adminStore.timezones);
     await this.weatherRepository.update(this.adminStore.weather);
     await this.informationRepository.update(this.adminStore.information);
+    toast.success('All Changes Saved');
   }
 
   @action.bound
