@@ -5,7 +5,7 @@ const moment = require('moment-timezone');
 Feature('Admin Page');
 
 Scenario('should allow admin to change a time zone', async (I) => {
-  I.haveHeader('Authorization', 'Basic Sk9SREFOOjE=');
+  I.haveHeader('Authorization', 'Basic Q1JPU1MuSk9SREFOLk1JRERMRS4wMTIzNDU2Nzg5OjE=');
   I.amOnPage('/admin');
   I.waitForElement('input', 10);
 
@@ -23,8 +23,37 @@ Scenario('should allow admin to change a time zone', async (I) => {
   adminAssert.strictEqual(actualTime, expectedTime);
 });
 
+Scenario('should allow admin to change general information', async (I) => {
+  I.haveHeader('Authorization', 'Basic Q1JPU1MuSk9SREFOLk1JRERMRS4wMTIzNDU2Nzg5OjE=');
+  I.amOnPage('/admin');
+  I.waitForElement('.tabSelector', 10);
+  I.click('.tabSelector:nth-of-type(3)');
+  I.waitForElement('.information', 10);
+  I.clearField('.information:first-of-type > td > input');
+  I.fillField('.information:first-of-type > td > input', 'www.com');
+  I.click('Save');
+  I.wait(2);
+  I.amOnPage('/');
+  I.waitForText('www.com', 10);
+});
+
+Scenario('should allow admin to add an acronym', async (I) => {
+  I.haveHeader('Authorization', 'Basic Q1JPU1MuSk9SREFOLk1JRERMRS4wMTIzNDU2Nzg5OjE=');
+  I.amOnPage('/admin');
+  I.waitForElement('.tabSelector', 10);
+  I.click('.tabSelector:nth-of-type(4)');
+  I.waitForElement('.acronym', 10);
+  I.fillField('.acronym', 'WAT');
+  I.fillField('.acronymDefinition', 'Wombats Are Tasty');
+  I.click('.addAcronymButton');
+  I.wait(2);
+  I.amOnPage('/');
+  I.fillField('.acronymSearch', 'WAT');
+  I.waitForText('Wombats Are Tasty', 10);
+});
+
 Scenario('should allow admin to change a weather data', async (I) => {
-  I.haveHeader('Authorization', 'Basic Sk9SREFOOjE=');
+  I.haveHeader('Authorization', 'Basic Q1JPU1MuSk9SREFOLk1JRERMRS4wMTIzNDU2Nzg5OjE=');
   I.amOnPage('/admin');
   I.waitForElement('.tabSelector', 10);
   I.click('.tabSelector:nth-of-type(2)');
@@ -39,33 +68,4 @@ Scenario('should allow admin to change a weather data', async (I) => {
   I.waitForText('SUP', 10);
   const url = await I.grabAttributeFrom('.weatherURL:first-of-type', 'href');
   adminAssert.strictEqual(url, 'http://superweather.com');
-});
-
-Scenario('should allow admin to change general information', async (I) => {
-  I.haveHeader('Authorization', 'Basic Sk9SREFOOjE=');
-  I.amOnPage('/admin');
-  I.waitForElement('.tabSelector', 10);
-  I.click('.tabSelector:nth-of-type(3)');
-  I.waitForElement('.information', 10);
-  I.clearField('.information:first-of-type > td > input');
-  I.fillField('.information:first-of-type > td > input', 'www.com');
-  I.click('Save');
-  I.wait(2);
-  I.amOnPage('/');
-  I.waitForText('www.com', 10);
-});
-
-Scenario('should allow admin to add an acronym', async (I) => {
-  I.haveHeader('Authorization', 'Basic Sk9SREFOOjE=');
-  I.amOnPage('/admin');
-  I.waitForElement('.tabSelector', 10);
-  I.click('.tabSelector:nth-of-type(4)');
-  I.waitForElement('.acronym', 10);
-  I.fillField('.acronym', 'WAT');
-  I.fillField('.acronymDefinition', 'Wombats Are Tasty');
-  I.click('.addAcronymButton');
-  I.wait(2);
-  I.amOnPage('/');
-  I.fillField('.acronymSearch', 'WAT');
-  I.waitForText('Wombats Are Tasty', 10);
 });

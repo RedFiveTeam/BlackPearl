@@ -44,9 +44,13 @@ function acceptanceTests {
 
     pushd ${BASE_DIR}/acceptance
         yarn install
-        yarn codeceptjs run -o "{ \"helpers\": {\"Nightmare\": {\"url\": \"${REACT_APP_HOST}\"}}}" ${SPECIFIC_TESTS}
+        if [[ "${BLACKPEARL_CI}" && "$(lsb_release -crid | grep -i 'Ubuntu')" ]]; then
+            xvfb-run yarn codeceptjs run -o "{ \"helpers\": {\"Nightmare\": {\"url\": \"${REACT_APP_HOST}\"}}}" ${SPECIFIC_TESTS}
+        else
+            yarn codeceptjs run -o "{ \"helpers\": {\"Nightmare\": {\"url\": \"${REACT_APP_HOST}\"}}}" ${SPECIFIC_TESTS}
+        fi
 
-        if [ "${?}" == "1" ]; then
+        if [[ "${?}" == "1" ]]; then
             echo "Acceptance Tests Failed... Exiting"
             exit 1
         fi
@@ -59,7 +63,7 @@ function unitTests {
     pushd ${BASE_DIR}
         result=$(mvn test | grep -E "\[INFO\]|\[ERROR\]")
         echo "${result}"
-        if [ $(echo ${result} | grep "\[ERROR\]" | wc -l) -gt 0 ]; then
+        if [[ $(echo ${result} | grep "\[ERROR\]" | wc -l) -gt 0 ]]; then
             exit 1
         fi
     popd

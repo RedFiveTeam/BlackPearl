@@ -4,13 +4,13 @@ let homeAssert = require('assert');
 Feature('Home Page');
 
 Scenario('should see an ATO day', (I) => {
-  I.haveHeader('Authorization', 'Basic Sk9SREFOOjE=');
+  I.haveHeader('Authorization', 'Basic Q1JPU1MuSk9SREFOLk1JRERMRS4wMTIzNDU2Nzg5OjE=');
   I.amOnPage('/');
   I.see("ATO ", ".atoDay");
 });
 
 Scenario('should render six clocks', async function (I) {
-  I.haveHeader('Authorization', 'Basic Sk9SREFOOjE=');
+  I.haveHeader('Authorization', 'Basic Q1JPU1MuSk9SREFOLk1JRERMRS4wMTIzNDU2Nzg5OjE=');
   I.amOnPage('/');
   I.waitForElement('.clock', 10);
   const clockCount = await I.grabNumberOfVisibleElements('.clock');
@@ -18,7 +18,7 @@ Scenario('should render six clocks', async function (I) {
 });
 
 Scenario('should render three unique cards', (I) => {
-  I.haveHeader('Authorization', 'Basic Sk9SREFOOjE=');
+  I.haveHeader('Authorization', 'Basic Q1JPU1MuSk9SREFOLk1JRERMRS4wMTIzNDU2Nzg5OjE=');
   I.amOnPage('/');
   I.see("Main", ".cardTitle");
   I.see("Situational Awareness", ".cardTitle");
@@ -29,26 +29,14 @@ Scenario('should render three unique cards', (I) => {
 });
 
 Scenario('should display a list of acronyms', (I) => {
-  I.haveHeader('Authorization', 'Basic Sk9SREFOOjE=');
+  I.haveHeader('Authorization', 'Basic Q1JPU1MuSk9SREFOLk1JRERMRS4wMTIzNDU2Nzg5OjE=');
   I.amOnPage('/');
   I.fillField('.acronymSearch', 'AAM');
   I.waitForText("AAM - air-to-air missile", 10, ".acronym");
 });
 
-Scenario('should allow users to convert coordinates', async (I) => {
-  I.haveHeader('Authorization', 'Basic Sk9SREFOOjE=');
-  I.amOnPage('/');
-  I.waitForElement('.latLongInput', 10);
-  I.fillField('.latLongInput', '37° 8\'1.97"N 76° 6\'30.23"W');
-  let mgrsValue = await I.grabValueFrom('.mgrsInput');
-  homeAssert.strictEqual(mgrsValue, '18SVG0155110299');
-  I.fillField('.mgrsInput', '18SVG0493917349');
-  let latLongValue = await I.grabValueFrom('.latLongInput');
-  homeAssert.strictEqual(latLongValue, '371152N 0760416W');
-});
-
 Scenario('should see 4 weather links', async (I) => {
-  I.haveHeader('Authorization', 'Basic Sk9SREFOOjE=');
+  I.haveHeader('Authorization', 'Basic Q1JPU1MuSk9SREFOLk1JRERMRS4wMTIzNDU2Nzg5OjE=');
   I.amOnPage('/');
   I.waitForElement('.weatherURL', 10);
   let weatherCount = await I.grabNumberOfVisibleElements('.weatherURL');
@@ -56,7 +44,7 @@ Scenario('should see 4 weather links', async (I) => {
 });
 
 Scenario('should see a general information', (I) => {
-  I.haveHeader('Authorization', 'Basic Sk9SREFOOjE=');
+  I.haveHeader('Authorization', 'Basic Q1JPU1MuSk9SREFOLk1JRERMRS4wMTIzNDU2Nzg5OjE=');
   I.amOnPage('/');
   I.waitForElement('.information', 10);
   I.see('Image Server', '.information');
@@ -69,8 +57,20 @@ Scenario('should see a general information', (I) => {
   I.see('TSVOIP', '.information');
 });
 
+Scenario('should allow users to convert coordinates', async (I) => {
+  I.haveHeader('Authorization', 'Basic Q1JPU1MuSk9SREFOLk1JRERMRS4wMTIzNDU2Nzg5OjE=');
+  I.amOnPage('/');
+  I.waitForElement('.latLongInput', 10);
+  I.fillField('.latLongInput', '37° 8\'1.97"N 76° 6\'30.23"W');
+  let mgrsValue = await I.grabValueFrom('.mgrsInput');
+  homeAssert.strictEqual(mgrsValue, '18SVG0155110299');
+  I.fillField('.mgrsInput', '18SVG0493917349');
+  let latLongValue = await I.grabValueFrom('.latLongInput');
+  homeAssert.strictEqual(latLongValue, '371152N 0760416W');
+});
+
 Scenario('should allow the user to add, edit and delete a resource', async (I) => {
-  I.haveHeader('Authorization', 'Basic Sk9SREFOOjE=');
+  I.haveHeader('Authorization', 'Basic Q1JPU1MuSk9SREFOLk1JRERMRS4wMTIzNDU2Nzg5OjE=');
   let name = 'TestPage' + Date.now();
 
   //create
@@ -106,7 +106,7 @@ Scenario('should allow the user to add, edit and delete a resource', async (I) =
 
 Scenario('should validate user resource input', async (I) => {
   //empty
-  I.haveHeader('Authorization', 'Basic Sk9SREFOOjE=');
+  I.haveHeader('Authorization', 'Basic Q1JPU1MuSk9SREFOLk1JRERMRS4wMTIzNDU2Nzg5OjE=');
   I.amOnPage('/');
   I.click('Add Resource');
   I.click('SAVE', '.modal');
