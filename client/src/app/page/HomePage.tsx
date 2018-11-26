@@ -17,6 +17,8 @@ import { StyledCard } from '../component/card/Card';
 import { OperationStore } from '../component/card/operation/OperationStore';
 import { StyledAddOperationPopup } from '../component/popup/AddOperationPopup';
 import { StyledTimeContainer } from '../component/widgets/time/TimeContainer';
+import { Slide, toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 interface Props {
   resourceStore?: ResourceStore;
@@ -26,6 +28,8 @@ interface Props {
 
 @observer
 export class HomePage extends React.Component<Props> {
+  notify = () => toast('Wow.');
+
   render() {
     return (
       <div
@@ -51,6 +55,14 @@ export class HomePage extends React.Component<Props> {
           this.props.resourceStore!.hasPendingDelete &&
           <StyledRemoveResourcePopup/>
         }
+        <ToastContainer
+          toastClassName="customToast"
+          position="top-center"
+          hideProgressBar={true}
+          closeOnClick={true}
+          transition={Slide}
+          autoClose={5000}
+        />
         <div
           className="cardsContainer"
         >
@@ -103,6 +115,27 @@ export const StyledHomePage = inject('resourceStore', 'operationStore')(styled(H
     .addResourceButton {
       width: 320px;
       margin-left: 5px;
+    }
+  }
+  
+  .customToast {
+    width: 520px;
+    height: 64px;
+    border-radius: 10px;
+    background: black;
+    color: white;
+    font-family: Amaranth;
+    font-size: 24px;
+    
+    button {
+      position: relative;
+      top: 6px;
+      font-size: 30px;
+      margin-right: 15px;
+    }
+    
+    .Toastify__toast-body {
+      margin-left: 20px;
     }
   }
 

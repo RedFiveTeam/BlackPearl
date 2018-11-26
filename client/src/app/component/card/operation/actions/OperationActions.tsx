@@ -4,6 +4,7 @@ import { Repositories } from '../../../../utils/Repositories';
 import { Stores } from '../../../../utils/Stores';
 import { action } from 'mobx';
 import { OperationModel } from '../OperationModel';
+import { toast } from 'react-toastify';
 
 export class OperationActions {
   private operationStore: OperationStore;
@@ -36,6 +37,7 @@ export class OperationActions {
         await this.operationRepository.saveOperation(this.operationStore.pendingOperation!);
         this.clearPendingOperation();
         await this.setupOperations();
+        toast.success('Operation Added');
       });
     }
   }

@@ -5,6 +5,7 @@ import { action } from 'mobx';
 import { ResourceRepository } from '../repositories/ResourceRepository';
 import { Category, ResourceModel } from '../ResourceModel';
 import { ProfileStore } from '../../../profile/ProfileStore';
+import { toast } from 'react-toastify';
 
 export class ResourceActions {
   private resourceRepository: ResourceRepository;
@@ -73,6 +74,7 @@ export class ResourceActions {
       await this.resourceRepository.delete(resourceId);
       await this.clearPendingDelete();
       await this.setAllResources();
+      toast.success('Resource Link Deleted');
     });
   }
 
@@ -83,6 +85,7 @@ export class ResourceActions {
         await this.resourceRepository.saveResource(this.resourceStore.pendingResource!);
         this.clearPendingResource();
         await this.setAllResources();
+        toast.success('Resource Link Added');
       });
     }
   }
@@ -113,6 +116,7 @@ export class ResourceActions {
         await this.resourceRepository.updateResource(this.resourceStore.pendingEdit!);
         this.clearPendingEdit();
         await this.setAllResources();
+        toast.success('Resource Edit Complete');
       });
     }
   }

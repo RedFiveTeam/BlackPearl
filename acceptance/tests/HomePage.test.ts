@@ -79,6 +79,7 @@ Scenario('should allow the user to add, edit and delete a resource', async (I) =
   I.fillField('.titleField', name);
   I.fillField('.urlField', 'https://www.testpage.com');
   I.click('SAVE', '.modal');
+  I.waitForElement('.customToast', 10);
   I.waitForText(name, 10);
 
   //edit
@@ -89,7 +90,7 @@ Scenario('should allow the user to add, edit and delete a resource', async (I) =
   I.fillField('.pendingEditTitle', name);
   I.fillField('.pendingEditUrl', 'https://www.google.com');
   I.click('SAVE');
-  I.wait(1);
+  I.waitForElement('.customToast', 10);
   I.waitForText(name, 10);
   const href = await I.grabAttributeFrom('.resource:nth-of-type(5) > div > a', 'href');
   homeAssert.strictEqual('https://www.google.com', href);
@@ -100,7 +101,7 @@ Scenario('should allow the user to add, edit and delete a resource', async (I) =
   I.click('.deleteButton');
   I.see(name);
   I.click('DELETE');
-  I.wait(1);
+  I.waitForElement('.customToast', 10);
   I.dontSee(name);
 });
 
