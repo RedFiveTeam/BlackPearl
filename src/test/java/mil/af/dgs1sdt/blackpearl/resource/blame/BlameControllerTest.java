@@ -15,16 +15,19 @@ public class BlameControllerTest extends BaseIntegrationTest {
   private Blame blame1;
   private Blame blame2;
   private Blame blame3;
+  private Blame blame4;
 
   @Before
   public void setUp() {
     blame1 = new Blame("ADD", "Google", "JORDAN CROSS", 1542738000L);
     blame2 = new Blame("EDIT", "Google", "JORDAN CROSS", 1542733000L);
     blame3 = new Blame("DELETE", "Google", "JORDAN CROSS", 1542736000L);
+    blame4 = new Blame("ADD", "Google", "JORDAN CROSS", 1540231698L);
 
     blameRepository.save(blame1);
     blameRepository.save(blame2);
     blameRepository.save(blame3);
+    blameRepository.save(blame4);
   }
 
   @After
