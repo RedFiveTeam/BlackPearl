@@ -46,7 +46,7 @@ Scenario('should allow admin to add an acronym', async (I) => {
   I.fillField('.acronym', 'WAT');
   I.fillField('.acronymDefinition', 'Wombats Are Tasty');
   I.click('.addAcronymButton');
-  I.wait(2);
+  I.waitForElement('.customToast');
   I.amOnPage('/');
   I.fillField('.acronymSearch', 'WAT');
   I.waitForText('Wombats Are Tasty', 10);

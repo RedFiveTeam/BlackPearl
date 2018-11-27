@@ -51,8 +51,8 @@ export class AdminActions {
     let acronym = new AcronymModel();
     acronym.setAcronym(acronymTitle);
     acronym.setDefinition(definition);
-
     this.adminStore.setPendingAcronym(acronym);
+    toast.success('Acronym Added');
   }
 
   @action.bound

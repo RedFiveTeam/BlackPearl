@@ -17,6 +17,13 @@ Scenario('should render six clocks', async function (I) {
   homeAssert.strictEqual(clockCount, 6);
 });
 
+Scenario('should see a toast when clicking element in general info card', (I) => {
+  I.haveHeader('Authorization', 'Basic Q1JPU1MuSk9SREFOLk1JRERMRS4wMTIzNDU2Nzg5OjE=');
+  I.amOnPage('/');
+  I.click('.row:first-of-type > div:first-of-type');
+  I.waitForElement('.customToast', 10);
+});
+
 Scenario('should render three unique cards', (I) => {
   I.haveHeader('Authorization', 'Basic Q1JPU1MuSk9SREFOLk1JRERMRS4wMTIzNDU2Nzg5OjE=');
   I.amOnPage('/');
