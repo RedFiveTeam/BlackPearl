@@ -23,6 +23,8 @@ interface Props {
 export class ResourceMenuContainer extends React.Component<Props> {
   node: any = this.node;
 
+  state = {backgroundColor: 'rgba(0, 0, 0, 0)', zIndex: 0};
+
   componentDidMount() {
     this.props.resourceMenuStore.hydrate();
     document.addEventListener('click', this.handleClick, false);
@@ -33,16 +35,19 @@ export class ResourceMenuContainer extends React.Component<Props> {
       return;
     }
     this.props.resourceMenuStore.menuVisibilityOff();
+    this.updateStyle();
   };
 
   edit = async () => {
     await this.props.resourceActions!.createPendingEdit(this.props.resource);
     this.props.resourceMenuStore.menuVisibilityOff();
+    this.updateStyle();
   };
 
   delete = async () => {
     await this.props.resourceActions!.createPendingDelete(this.props.resource);
     this.props.resourceMenuStore.menuVisibilityOff();
+    this.updateStyle();
   };
 
   favorite = async () => {
@@ -50,15 +55,24 @@ export class ResourceMenuContainer extends React.Component<Props> {
     res.setAccountId(this.props.profileStore!.profile.cardID);
     res.setCategoryId(0);
     await this.props.resourceActions!.saveFavorite(res);
+    this.updateStyle();
+  };
+
+  updateStyle = () => {
+    if (this.props.resourceMenuStore.menuVisible) {
+      this.setState({
+        backgroundColor:
+          'linear-gradient(90deg, rgba(0,0,0,0) 0%, rgba(200,200,200, .95) 5%, rgba(200,200,200, .95) 100%)',
+        zIndex: 2
+      });
+    } else {
+      this.setState({backgroundColor: 'rgba(0, 0, 0, 0)', zIndex: 0});
+    }
   };
 
   threeDot = () => {
     this.props.resourceMenuStore.toggleMenuVisibility();
-    /*
-    tried to get the a tag to dynamically change size
-    let a = document.querySelector('.resource > div > a') as HTMLElement;
-    this.props.resourceMenuStore.menuVisible ? this.target.style.width = '183px' : this.target.style.width = '295px';
-    */
+    this.updateStyle();
   };
 
   render() {
@@ -66,7 +80,8 @@ export class ResourceMenuContainer extends React.Component<Props> {
     return (
       <div
         ref={node => this.node = node}
-        className={this.props.className}
+        className={this.props.className + ' resourceMenu'}
+        style={{background: this.state.backgroundColor, zIndex: this.state.zIndex}}
       >
         {
           (resourceMenuStore.menuVisible && this.props.resource.categoryID !== 0) &&
@@ -98,10 +113,13 @@ export class ResourceMenuContainer extends React.Component<Props> {
 }
 
 export const StyledResourceMenuContainer = inject('resourceActions', 'profileStore')(styled(ResourceMenuContainer)`
+  position: absolute;
+  height: 37px;
   width: 150px;
   display: flex;
   align-items: center;
   justify-content: flex-end;
+  right: 0px;
   
   svg {
     padding-left: 7px;

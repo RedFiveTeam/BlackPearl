@@ -46,19 +46,17 @@ export const StyledResource = inject('resourceStore')(styled(Resource)`
   vertical-align: middle;
   line-height: 27px;
   overflow: hidden;
+  position: relative;
   
   .resourceLink {
-      width: 190px;
-  }
-  
-  a {
-   text-decoration: none;
-   color: black;
-   display: inline-flex;
-   position: relative;
-   padding: 7px;
-   margin: -1px;
-   width: 183px;
+    width: 90%;
+    text-decoration: none;
+    color: black;
+    display: inline-flex;
+    position: relative;
+    padding: 7px;
+    margin: -1px;
+    z-index: 1;
   }
   
   .title {

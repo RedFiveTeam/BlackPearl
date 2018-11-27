@@ -101,6 +101,10 @@ export const StyledHomePage = inject('resourceStore', 'operationStore')(styled(H
     margin-bottom: 10px;
     box-shadow: -1px 3px 3px rgba(0, 0, 0, .25);
     border-radius: 10px;
+    
+    .resourceMenu {
+      width: 105px;
+    }
 
     .body {
         max-height: calc(282px - 32px - 10px);
