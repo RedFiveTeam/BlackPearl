@@ -126,4 +126,14 @@ export class ResourceActions {
   async updateGivenResources(resources: ResourceModel[]) {
     await this.resourceRepository.updateGivenResources(resources);
   }
+
+  @action.bound
+  checkDuplicates(title: string): boolean {
+    for (let r of this.resourceStore.resources) {
+      if (r.name.toLowerCase() === title.toLowerCase()) {
+        return true;
+      }
+    }
+    return false;
+  }
 }

@@ -42,6 +42,12 @@ export class AddResourcePopup extends React.Component<Props, State> {
       this.setState({titleCSS: {'border': 'solid 2px #A40000'}});
     }
 
+    if (this.props.resourceActions!.checkDuplicates(this.state.title)) {
+      survivedEverything = false;
+      this.setState({titleError: 'Resource already exists'});
+      this.setState({titleCSS: {'border': 'solid 2px #A40000'}});
+    }
+
     if (this.state.url === '') {
       survivedEverything = false;
       this.setState({urlError: 'Please enter an address'});

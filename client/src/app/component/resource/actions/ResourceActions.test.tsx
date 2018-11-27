@@ -20,6 +20,9 @@ describe('ResourceActions', () => {
       setPendingResourceCategory: jest.fn(),
       pendingResource: ResourceModel,
       pendingEdit: ResourceModel,
+      resources: [
+        new ResourceModel(1, 'http://www.test.com', 'TestResource', 1, 'Guest', 0)
+      ],
       performLoading: async (fun: any) => { await fun(); }
     };
 
@@ -127,5 +130,10 @@ describe('ResourceActions', () => {
     let resource = new ResourceModel(null, 'https://www.favorite.com', 'favorite', 0, 'GUEST');
     await subject.saveFavorite(resource);
     expect(resourceRepository.saveResource).toHaveBeenCalledWith(resource);
+  });
+
+  it('should check for duplicate titles in resources', () => {
+    expect(subject.checkDuplicates('TestResource')).toBe(true);
+    expect(subject.checkDuplicates('Doesnt Exist')).toBe(false);
   });
 });
