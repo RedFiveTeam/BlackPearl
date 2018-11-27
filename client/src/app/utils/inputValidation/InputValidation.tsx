@@ -11,12 +11,24 @@ export class InputValidation {
     return regex.exec(url) !== null;
   }
 
-  isResourceValid(url: string): boolean {
+  isValidResource(url: string): boolean {
+    return this.isHostnameValid(url) || this.isURLValid(url) || this.isLocal(url);
+  }
+
+  isInternetResource(url: string): boolean {
     return this.isHostnameValid(url) || this.isURLValid(url);
   }
 
-  isMGRSValid(mgrs: string) {
+  isMGRSValid(mgrs: string): boolean {
     const regex = /^\d{1,2}[A-z]{3}\d{8}(?:\d{2})?$/;
     return regex.exec(mgrs) !== null;
+  }
+
+  isLocal(path: string): boolean {
+    const regexStr = ['^(?:file:[\\/\\\\]{2}|[A-z]:[\\/\\\\]|[\\/\\\\]{2}[-A-z0-9@:%._\\-\\+~#=]{2,256})',
+      '(?:[A-z0-9@:%._\\-\\+~#=\\/\\\\]*)',
+      '(?:[^\\/\\\\]*.*\\.[A-z0-9]{2,4})?$'].join('');
+    const regex = new RegExp(regexStr);
+    return regex.exec(path) !== null;
   }
 }

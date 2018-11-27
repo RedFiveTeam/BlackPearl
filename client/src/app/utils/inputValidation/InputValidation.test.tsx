@@ -24,9 +24,9 @@ describe('InputValidation', () => {
   });
 
   it('should only pass valid resource urls', () => {
-    expect(subject.isResourceValid('http://muhj-fs-dgs1:9090/test')).toBeTruthy();
-    expect(subject.isResourceValid('http://www.google.com')).toBeTruthy();
-    expect(subject.isResourceValid('javascript:alert("lul");')).toBeFalsy();
+    expect(subject.isValidResource('http://muhj-fs-dgs1:9090/test')).toBeTruthy();
+    expect(subject.isValidResource('http://www.google.com')).toBeTruthy();
+    expect(subject.isValidResource('javascript:alert("lul");')).toBeFalsy();
   });
 
   it('should only pass valid mgrs', () => {
@@ -34,5 +34,16 @@ describe('InputValidation', () => {
     expect(subject.isMGRSValid('18SUG74081064')).toBeTruthy();
     expect(subject.isMGRSValid('18SUG7408106474')).toBeTruthy();
     expect(subject.isMGRSValid('18SUG740810647')).toBeFalsy();
+  });
+
+  it('should pass when the path is local', () => {
+    expect(subject.isLocal('Y:/This/Is/A/Folder/')).toBeTruthy();
+    expect(subject.isLocal('Y:\\This\\Is\\A\\Folder\\')).toBeTruthy();
+    expect(subject.isLocal('\\\\abc-de-abc1\\This\\Is\\A\\Folder\\')).toBeTruthy();
+    expect(subject.isLocal('//abc-de-abc1/This/Is/A/Folder/')).toBeTruthy();
+    expect(subject.isLocal('Y:/This/Is/Not/A/Folder.txt')).toBeTruthy();
+    expect(subject.isLocal('//abc-de-abc1/This/Is/Not/A/Folder.txt')).toBeTruthy();
+    expect(subject.isLocal('file://C:/This/Is/Not/A/Folder.txt')).toBeTruthy();
+    expect(subject.isLocal('file:///lfi-fs-dhs1/This/Is/Not/A/Folder.txt')).toBeTruthy();
   });
 });

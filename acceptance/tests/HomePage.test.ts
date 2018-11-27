@@ -115,6 +115,33 @@ Scenario('should allow the user to add, edit and delete an operation', async (I)
   I.dontSee(name);
 });
 
+Scenario('should allow the user to add a local resource', async (I) => {
+  I.haveHeader('Authorization', 'Basic Q1JPU1MuSk9SREFOLk1JRERMRS4wMTIzNDU2Nzg5OjE=');
+  let name = 'TestPage' + Date.now();
+
+  //create
+  I.amOnPage('/');
+  I.click('Add Resource');
+  I.fillField('.titleField', name);
+  I.fillField('.urlField', 'Y:/TestFile.txt');
+  I.click('SAVE', '.modal');
+  I.waitForText('Resource Link Added', 10);
+  I.waitForText(name, 10);
+
+  //click
+  I.click(name);
+  I.waitForText('Local Path Copied to Clipboard', 10);
+
+  //delete
+  I.amOnPage('/');
+  I.click('.threeDotButton' + `.${name}`);
+  I.click('.deleteButton');
+  I.see(name);
+  I.click('.confirmButton');
+  I.waitForText('Resource Link Deleted', 10);
+  I.dontSee(name);
+});
+
 Scenario('should allow the user to add, edit and delete a resource', async (I) => {
   I.haveHeader('Authorization', 'Basic Q1JPU1MuSk9SREFOLk1JRERMRS4wMTIzNDU2Nzg5OjE=');
   let name = 'TestPage' + Date.now();
@@ -138,7 +165,7 @@ Scenario('should allow the user to add, edit and delete a resource', async (I) =
   I.click('SAVE');
   I.waitForText('Resource Edit Complete', 10);
   I.waitForText(name, 10);
-  const href = await I.grabAttributeFrom('.resource:nth-of-type(5) > a', 'href');
+  const href = await I.grabAttributeFrom('.resource:nth-of-type(5) > .resourceLink', 'href');
   homeAssert.strictEqual('https://www.google.com', href);
 
   //delete

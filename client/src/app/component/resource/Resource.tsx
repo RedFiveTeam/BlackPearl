@@ -8,6 +8,9 @@ import { StyledResourceMenuContainer } from './ResourceMenuContainer';
 import classNames = require('classnames');
 import { ResourceMenuStore } from './stores/ResourceMenuStore';
 import { FavoriteIcon } from '../../icon/FavoriteIcon';
+import { action, observable } from 'mobx';
+import { InputValidation } from '../../utils/inputValidation/InputValidation';
+import { toast } from 'react-toastify';
 
 interface Props {
   resource: ResourceModel;
@@ -17,10 +20,57 @@ interface Props {
 
 @observer
 export class Resource extends React.Component<Props> {
+  valid = new InputValidation();
+  @observable state = { isLocal: false };
+  inputProps = {};
+
+  @action.bound
+  launchResource() {
+    if (this.state.isLocal) {
+      let selected = null;
+      let el = document.createElement('textarea');
+      el.value = this.props.resource.url;
+      el.setAttribute('readonly', '');
+      el.style.position = 'absolute';
+      el.style.left = '-9999px';
+      document.body.appendChild(el);
+      if (document.getSelection().rangeCount > 0) {
+        selected = document.getSelection().getRangeAt(0);
+      }
+      el.select();
+      document.execCommand('copy');
+      document.body.removeChild(el);
+      if (selected) {
+        document.getSelection().removeAllRanges();
+        document.getSelection().addRange(selected);
+      }
+      toast.success('Local Path Copied to Clipboard');
+    }
+  }
+
+  componentDidMount() {
+    this.setState({isLocal: !this.valid.isInternetResource(this.props.resource.url)});
+    this.inputProps = !this.valid.isInternetResource(this.props.resource.url) ?
+      {} :
+      {href: this.props.resource.url, target: '_blank'};
+  }
+
+  componentWillReceiveProps(newProps: Props) {
+    this.setState({isLocal: !this.valid.isInternetResource(newProps.resource.url)});
+    this.inputProps = !this.valid.isInternetResource(this.props.resource.url) ?
+      {} :
+      {href: newProps.resource.url, target: '_blank'};
+  }
+
   render() {
     return (
       <div className={classNames(this.props.className, 'resource')}>
-        <a className="resourceLink" href={this.props.resource.url} target="_blank" title={this.props.resource.name}>
+        <a
+          className="resourceLink"
+          onClick={this.launchResource}
+          {...this.inputProps}
+          title={this.props.resource.name}
+        >
           <span className="icon">{this.props.resource.categoryID === 0 ? <FavoriteIcon/> : <PearlIcon/>}</span>
           <span className="title">{this.props.resource.name}</span>
         </a>
@@ -57,6 +107,7 @@ export const StyledResource = inject('resourceStore')(styled(Resource)`
     padding: 7px;
     margin: -1px;
     z-index: 1;
+    cursor: pointer;
   }
   
   .title {
