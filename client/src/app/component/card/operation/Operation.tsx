@@ -77,10 +77,10 @@ export const StyledOperation = inject('operationStore')(styled(Operation)`
   }
 
   a {
-  height: 100%;
-  align-items: center;
-  text-decoration: none;
-  color: #000000;
-  display: flex;
+    height: 100%;
+    align-items: center;
+    text-decoration: none;
+    color: #000000;
+    display: flex;
   }
 `);

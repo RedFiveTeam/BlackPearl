@@ -21,7 +21,7 @@ interface Props {
 export class InformationCard extends React.Component<Props> {
 
   copyToClipboard(e: any) {
-    let text = e.target.querySelector('span:nth-child(2)').innerHTML;
+    let text = e.target.querySelector('span:nth-child(2)').innerHTML.replace(/\([A-z]*\)/, '');
     let selected = null;
     let el = document.createElement('textarea');
     el.value = text;
@@ -82,13 +82,9 @@ export class InformationCard extends React.Component<Props> {
                 </div>
                 <div
                   className="d"
-                  onClick={this.copyToClipboard}
-                  onMouseOver={this.showCopy}
-                  onMouseLeave={this.hideCopy}
                 >
                   <span className="title no">Call Out Format:</span>
                   <span className="callOutFormat">{this.props.callOutFormat}</span>
-                  <CopyIcon/>
                 </div>
               </div>
               <div className="row">
