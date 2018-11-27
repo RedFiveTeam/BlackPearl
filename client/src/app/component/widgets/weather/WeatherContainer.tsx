@@ -3,7 +3,6 @@ import { inject, observer } from 'mobx-react';
 import styled from 'styled-components';
 import { WeatherStore } from './WeatherStore';
 import { WeatherActions } from './actions/WeatherActions';
-import { WeatherIcon } from '../../../icon/WeatherIcon';
 
 interface Props {
   className?: string;
@@ -22,7 +21,11 @@ export class WeatherContainer extends React.Component<Props> {
       <div
         className={this.props.className}
       >
-        <WeatherIcon/>
+        <div
+          className="title"
+        >
+          Weather
+        </div>
         {
           this.props.weatherStore!.weather.map((w, index) => {
             return (
@@ -32,7 +35,7 @@ export class WeatherContainer extends React.Component<Props> {
                 className={'weatherURL weather' + index}
                 href={w.url}
               >
-                <span key={index} className="weatherLabel">{w.label}</span>
+                <div key={index} className="weatherLabel">{w.label}</div>
               </a>
             );
           })
@@ -44,59 +47,47 @@ export class WeatherContainer extends React.Component<Props> {
 
 export const StyledWeatherContainer = inject('weatherStore', 'weatherActions')(styled(WeatherContainer)`
 width: 350px;
-height: 241px;
+height: 141px;
 background: #364958;
-border-radius: 10px;
-margin-top: 8px;
-margin-left: 8px;
-text-align: center;
 font-family: Amaranth;
-font-size: 24px;
 color: #FFFFFF;
 box-shadow: -1px 3px 3px rgba(0, 0, 0, .25);
-position: relative;
+border-radius: 10px;
 display: flex;
+flex-wrap: wrap;
+margin-left: 8px;
+margin-top: 10px;
+justify-content: space-evenly;
 
-  svg {
-    position: absolute;
-    align-self: center;
-    left: 71px;
-  }
-  
-  .weatherURL {
-    width: 175px;
-    height: 118px;
-    line-height: 118px;
-    position: absolute;
-    font-family: Amaranth;
-    font-size: 48px;
-    color: #CFCECE;
-    font-weight: 800;
-    text-decoration: none;
-  }
-  
-  .weatherLabel {
-    text-shadow: rgba(0,0,0,0.3) -1px 4px 12px;
-  }
-  
-  .weather0 {
-    border-right: solid #959595 5px;
-    border-bottom: solid #959595 5px;
-  }
-  
-  .weather1 {
-    left: 50%;
-    border-bottom: solid #959595 5px;
-  }
-  
-  .weather2 {
-    top: 51%;
-    border-right: solid #959595 5px;
-  }
-  
-  .weather3 {
-    top: 51%;
-    left: 50%;
-  }
+a {
+  height: 40px;
+}
+
+.title {
+  font-family: Amaranth;
+  font-size: 24px;
+  text-align: center;
+  line-height: 24px;
+  height: 24px;
+  width: 100%;
+  padding-top: 8px;
+}
+
+.weatherURL {
+  text-decoration: none;
+}
+
+.weatherLabel {
+  width: 158px;
+  height: 40px;
+  font-family: Amaranth;
+  font-size: 24px;
+  line-height: 40px;
+  text-align: center;
+  color: #FFFFFF;
+  background: rgba(141, 141, 141, 0.5);
+  border-radius: 10px;
+  box-shadow: -1px 3px 3px rgba(0, 0, 0, .4);
+}
 
 `);

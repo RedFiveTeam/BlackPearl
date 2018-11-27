@@ -94,7 +94,7 @@ export class HomePage extends React.Component<Props> {
 
 export const StyledHomePage = inject('resourceStore', 'operationStore')(styled(HomePage)`
   .myFavorites {
-    height: 190px;
+    height: 282px;
     width: 338px;
     margin-left: 10px;
     background: #364958;
@@ -103,13 +103,14 @@ export const StyledHomePage = inject('resourceStore', 'operationStore')(styled(H
     border-radius: 10px;
 
     .body {
-        max-height: calc(190px - 32px - 10px);
+        max-height: calc(282px - 32px - 10px);
         border-radius: 0px;
-        height: 130px;
+        height: 222px;
         width: 330px;
     }
+    
     .resourceList {
-        max-height: 92px;
+        max-height: 184px;
         overflow-x: hidden;
     }
     
