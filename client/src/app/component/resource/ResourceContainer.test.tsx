@@ -22,11 +22,11 @@ describe('ResourceContainer', () => {
     subject = mount(
       <Provider resourceStore={resourceStore} resourceActions={resourceActions} profileStore={profileStore}>
         <ResourceContainer
-          category={Category.Main}
+          category={Category.FMV_Main}
           resourceActions={resourceActions}
           resources={[
-            new ResourceModel(1, 'https://www.google.com', 'Google', Category.Main),
-            new ResourceModel(2, 'https://www.yahoo.com', 'Yahoo', Category.Main),
+            new ResourceModel(1, 'https://www.google.com', 'Google', Category.FMV_Main),
+            new ResourceModel(2, 'https://www.yahoo.com', 'Yahoo', Category.FMV_Main),
           ]}
         />
       </Provider>
@@ -42,11 +42,11 @@ describe('ResourceContainer', () => {
     let shallowSubject: ShallowWrapper;
     shallowSubject = shallow(
         <ResourceContainer
-          category={Category.Main}
+          category={Category.FMV_Main}
           resourceActions={resourceActions}
           resources={[
-            new ResourceModel(1, 'https://www.google.com', 'Google', Category.Main),
-            new ResourceModel(2, 'https://www.yahoo.com', 'Yahoo', Category.Main),
+            new ResourceModel(1, 'https://www.google.com', 'Google', Category.FMV_Main),
+            new ResourceModel(2, 'https://www.yahoo.com', 'Yahoo', Category.FMV_Main),
           ]}
         />
     );

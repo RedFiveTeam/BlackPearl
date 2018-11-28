@@ -76,6 +76,29 @@ Scenario('should allow users to convert coordinates', async (I) => {
   homeAssert.strictEqual(latLongValue, '371152N 0760416W');
 });
 
+Scenario('should allow the user to change tabs and see specialty resources', (I) => {
+  I.haveHeader('Authorization', 'Basic Q1JPU1MuSk9SREFOLk1JRERMRS4wMTIzNDU2Nzg5OjE=');
+  I.amOnPage('/');
+  I.see('FMV Amazon');
+  I.see('FMV YouTube');
+  I.see('FMV Reddit');
+
+  I.click('.tab:nth-of-type(2) > div', '.tabContainer');
+  I.see('HA Amazon');
+  I.see('HA YouTube');
+  I.see('HA Reddit');
+
+  I.click('.tab:nth-of-type(3) > div', '.tabContainer');
+  I.see('Fusion Amazon');
+  I.see('Fusion YouTube');
+  I.see('Fusion Reddit');
+
+  I.click('.tab:nth-of-type(4) > div', '.tabContainer');
+  I.see('MOC Amazon');
+  I.see('MOC YouTube');
+  I.see('MOC Reddit');
+});
+
 Scenario('should allow the user to add, edit and delete an operation', async (I) => {
   I.haveHeader('Authorization', 'Basic Q1JPU1MuSk9SREFOLk1JRERMRS4wMTIzNDU2Nzg5OjE=');
   let name = 'TestOp' + Date.now();

@@ -122,8 +122,8 @@ describe('ResourceActions', () => {
 
   it('should assign a category to a pending resource', () => {
     subject.createPendingResource();
-    subject.setPendingResourceCategory(Category.Main);
-    expect(resourceStore.setPendingResourceCategory).toHaveBeenCalledWith(Category.Main);
+    subject.setPendingResourceCategory(Category.FMV_Main);
+    expect(resourceStore.setPendingResourceCategory).toHaveBeenCalledWith(Category.FMV_Main);
   });
 
   it('should save a favorite resource', async () => {

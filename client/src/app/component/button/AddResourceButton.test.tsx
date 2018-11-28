@@ -17,7 +17,7 @@ describe('AddResourceButton', () => {
       setPendingResourceCategory: jest.fn()
     };
 
-    category = Category.Main;
+    category = Category.FMV_Main;
 
     subject = mount(<StyledAddResourceButton resourceActions={resourceActions} category={category} />);
   });
@@ -25,7 +25,7 @@ describe('AddResourceButton', () => {
   it('should display resource popup', () => {
     subject.find(StyledButton).simulate('click');
     expect(resourceActions.createPendingResource).toHaveBeenCalled();
-    expect(resourceActions.setPendingResourceCategory).toHaveBeenCalledWith(Category.Main);
+    expect(resourceActions.setPendingResourceCategory).toHaveBeenCalledWith(Category.FMV_Main);
     expect(resourceActions.setPendingResourceAccountID).toHaveBeenCalled();
   });
 });

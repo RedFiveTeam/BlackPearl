@@ -41,5 +41,5 @@ export class InformationContainer extends React.Component<Props> {
 export const StyledInformationContainer = inject('informationStore', 'informationActions')
 (styled(InformationContainer)`
 position: absolute;
-top: 613px;
+top: 620px;
 `);

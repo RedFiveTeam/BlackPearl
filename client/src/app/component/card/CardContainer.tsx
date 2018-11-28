@@ -2,13 +2,13 @@ import * as React from 'react';
 import { inject, observer } from 'mobx-react';
 import styled from 'styled-components';
 import { StyledCard } from './Card';
-import { Category } from '../resource/ResourceModel';
 import { ResourceActions } from '../resource/actions/ResourceActions';
 import { StyledInformationContainer } from './information/InformationContainer';
 import { StyledOperationContainer } from './operation/OperationContainer';
 import { ProfileActions } from '../../profile/ProfileActions';
 import { ResourceStore } from '../resource/stores/ResourceStore';
 import classNames = require('classnames');
+import { StyledTabContainer } from './TabContainer';
 
 interface Props {
   className?: string;
@@ -27,34 +27,41 @@ export class CardContainer extends React.Component<Props> {
   render() {
     return (
       <div className={classNames('cardContainer', this.props.className)}>
-        <StyledCard
-          category={Category.Main}
-          resources={this.props.resourceStore!.returnResourcesInCategory(Category.Main)}
-        />
-        <StyledCard
-          category={Category.SituationalAwareness}
-          resources={this.props.resourceStore!.returnResourcesInCategory(Category.SituationalAwareness)}
-        />
-        <StyledCard
-          category={Category.TargetResearch}
-          resources={this.props.resourceStore!.returnResourcesInCategory(Category.TargetResearch)}
-        />
-        <StyledInformationContainer/>
-        <StyledOperationContainer/>
+        <StyledTabContainer/>
+        <div
+          className="cardBody"
+        >
+          <StyledCard
+            category={this.props.resourceStore!.activeTab * 3 - 2}
+            resources={this.props.resourceStore!.returnResourcesInCategory(this.props.resourceStore!.activeTab * 3 - 2)}
+          />
+          <StyledCard
+            category={this.props.resourceStore!.activeTab * 3 - 1}
+            resources={this.props.resourceStore!.returnResourcesInCategory(this.props.resourceStore!.activeTab * 3 - 1)}
+          />
+          <StyledCard
+            category={this.props.resourceStore!.activeTab * 3}
+            resources={this.props.resourceStore!.returnResourcesInCategory(this.props.resourceStore!.activeTab * 3)}
+          />
+          <StyledInformationContainer/>
+          <StyledOperationContainer/>
+        </div>
       </div>
     );
   }
 }
 
-export const StyledCardContainer =
-  inject(
-    'resourceActions',
-    'profileActions',
-    'resourceStore',
-  )
-  (styled(CardContainer)`
-
-  display: flex;
-  max-height: 955px;
-  position: relative;
+export const StyledCardContainer = inject('resourceActions', 'profileActions', 'resourceStore')(styled(CardContainer)`
+  margin-top: 5px;
+  
+  .cardBody {
+    display: flex;
+    padding-top: 6px;
+    padding-right: 8px;
+    height: 1175px;
+    margin-bottom: 10px;
+    position: relative;
+    box-shadow: 0px 0px 10px 4px rgba(0,0,0,0.25);
+    border-radius: 0 4px 4px 0;
+  }
 `);

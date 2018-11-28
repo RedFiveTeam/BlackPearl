@@ -30,6 +30,10 @@ export class ResourceMenuContainer extends React.Component<Props> {
     document.addEventListener('click', this.handleClick, false);
   }
 
+  componentWillUnmount() {
+    document.removeEventListener('click', this.handleClick);
+  }
+
   handleClick = (e: any) => {
     if (this.node && this.node.contains(e.target)) {
       return;

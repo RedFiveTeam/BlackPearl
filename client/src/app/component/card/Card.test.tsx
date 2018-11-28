@@ -11,7 +11,7 @@ describe('Card', () => {
   beforeEach(() => {
     subject = shallow(
       <Card
-        category={Category.Main}
+        category={Category.FMV_Main}
         resources={[
           new ResourceModel(1, 'https://www.test.com', 'Test', 1, 'Bob')
         ]}
@@ -32,6 +32,6 @@ describe('Card', () => {
   });
 
   it('should have a className equal to its category', () => {
-    expect(subject.find('.category' + Category.Main).exists()).toBeTruthy();
+    expect(subject.find('.category' + Category.FMV_Main).exists()).toBeTruthy();
   });
 });

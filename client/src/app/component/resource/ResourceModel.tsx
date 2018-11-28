@@ -2,16 +2,34 @@ import { action, computed, observable } from 'mobx';
 
 export enum Category {
   Favorites = 0,
-  Main = 1,
-  SituationalAwareness = 2,
-  TargetResearch = 3,
+  FMV_Main = 1,
+  FMV_SituationalAwareness = 2,
+  FMV_TargetResearch = 3,
+  HighAlt_Main = 4,
+  HighAlt_SituationalAwareness = 5,
+  HighAlt_TargetResearch = 6,
+  Fusion_Main = 7,
+  Fusion_SituationalAwareness = 8,
+  Fusion_TargetResearch = 9,
+  MOC_Main = 10,
+  MOC_SituationalAwareness = 11,
+  MOC_TargetResearch = 12
 }
 
 export enum CategoryName {
   Favorites = 'My Favorites',
-  Main = 'Main',
-  SituationalAwareness = 'Situational Awareness',
-  TargetResearch = 'Target Research'
+  FMV_Main = 'Main',
+  FMV_SituationalAwareness = 'Situational Awareness',
+  FMV_TargetResearch = 'Target Research',
+  HighAlt_Main = 'Main',
+  HighAlt_SituationalAwareness = 'Situational Awareness',
+  HighAlt_TargetResearch = 'Target Research',
+  Fusion_Main = 'Main',
+  Fusion_SituationalAwareness = 'Situational Awareness',
+  Fusion_TargetResearch = 'Target Research',
+  MOC_Main = 'Main',
+  MOC_SituationalAwareness = 'Situational Awareness',
+  MOC_TargetResearch = 'Target Research',
 }
 
 export class ResourceModel {

@@ -25,7 +25,7 @@ export const StyledLoadingOverlay = styled(withTheme(LoadingOverlay))`
     bottom: 0px;
     right: 0px;
     position: fixed;
-    z-index: 3;
+    z-index: 100;
     
   .ball-scale-ripple-multiple {
     position: absolute;

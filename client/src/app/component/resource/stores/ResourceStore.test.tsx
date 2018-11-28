@@ -20,13 +20,13 @@ describe('ResourceStore', () => {
   it('should categorize resources', () => {
     let resources: ResourceModel[];
     resources = [
-      new ResourceModel(1, 'https://www.google.com', 'Google', Category.Main),
-      new ResourceModel(2, 'https://www.yahoo.com', 'Yahoo', Category.Main),
-      new ResourceModel(3, 'https://www.ebay.com', 'eBay', Category.SituationalAwareness)
+      new ResourceModel(1, 'https://www.google.com', 'Google', Category.FMV_Main),
+      new ResourceModel(2, 'https://www.yahoo.com', 'Yahoo', Category.FMV_Main),
+      new ResourceModel(3, 'https://www.ebay.com', 'eBay', Category.FMV_SituationalAwareness)
     ];
     subject.setResources(resources);
-    expect(subject.returnResourcesInCategory(Category.Main)).toEqual([resources[0], resources[1]]);
-    expect(subject.returnResourcesInCategory(Category.SituationalAwareness)).toEqual([resources[2]]);
+    expect(subject.returnResourcesInCategory(Category.FMV_Main)).toEqual([resources[0], resources[1]]);
+    expect(subject.returnResourcesInCategory(Category.FMV_SituationalAwareness)).toEqual([resources[2]]);
   });
 
   it('should hide pending delete popup by default', () => {

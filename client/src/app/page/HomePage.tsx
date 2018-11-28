@@ -93,6 +93,7 @@ export class HomePage extends React.Component<Props> {
 }
 
 export const StyledHomePage = inject('resourceStore', 'operationStore')(styled(HomePage)`
+  margin-left: -8px;
   .myFavorites {
     height: 282px;
     width: 338px;

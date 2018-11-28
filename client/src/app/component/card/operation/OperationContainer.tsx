@@ -28,6 +28,6 @@ export class OperationContainer extends React.Component<Props> {
 
 export const StyledOperationContainer = inject('operationActions')(styled(OperationContainer)`
 position: absolute;
-top: 782px;
+top: 791px;
 padding-bottom: 10px;
 `);

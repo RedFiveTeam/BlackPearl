@@ -18,7 +18,8 @@ describe('CardContainer', () => {
     };
 
     resourceStore = {
-      returnResourcesInCategory: jest.fn()
+      returnResourcesInCategory: jest.fn(),
+      activeTab: 1
     };
 
     profileActions = {
@@ -36,15 +37,32 @@ describe('CardContainer', () => {
 
   it('should have a card for each card category', () => {
     expect(subject.find(StyledCard).length).toBe(3);
-    expect(subject.find(StyledCard).at(0).prop('category')).toBe(Category.Main);
-    expect(subject.find(StyledCard).at(1).prop('category')).toBe(Category.SituationalAwareness);
-    expect(subject.find(StyledCard).at(2).prop('category')).toBe(Category.TargetResearch);
+    expect(subject.find(StyledCard).at(0).prop('category')).toBe(Category.FMV_Main);
+    expect(subject.find(StyledCard).at(1).prop('category')).toBe(Category.FMV_SituationalAwareness);
+    expect(subject.find(StyledCard).at(2).prop('category')).toBe(Category.FMV_TargetResearch);
   });
 
   it('should pass the resources to each card based on category', () => {
-    expect(resourceStore.returnResourcesInCategory).toHaveBeenCalledWith(Category.Main);
-    expect(resourceStore.returnResourcesInCategory).toHaveBeenCalledWith(Category.SituationalAwareness);
-    expect(resourceStore.returnResourcesInCategory).toHaveBeenCalledWith(Category.TargetResearch);
+    expect(resourceStore.returnResourcesInCategory).toHaveBeenCalledWith(Category.FMV_Main);
+    expect(resourceStore.returnResourcesInCategory).toHaveBeenCalledWith(Category.FMV_SituationalAwareness);
+    expect(resourceStore.returnResourcesInCategory).toHaveBeenCalledWith(Category.FMV_TargetResearch);
+  });
+
+  it('should have a card for each card category after the tab has changed', () => {
+    resourceStore.activeTab = 2;
+    subject.setProps({resourceStore: resourceStore});
+    expect(subject.find(StyledCard).length).toBe(3);
+    expect(subject.find(StyledCard).at(0).prop('category')).toBe(Category.HighAlt_Main);
+    expect(subject.find(StyledCard).at(1).prop('category')).toBe(Category.HighAlt_SituationalAwareness);
+    expect(subject.find(StyledCard).at(2).prop('category')).toBe(Category.HighAlt_TargetResearch);
+  });
+
+  it('should pass the resources to each card based on category after the tab has changed', () => {
+    resourceStore.activeTab = 2;
+    subject.setProps({resourceStore: resourceStore});
+    expect(resourceStore.returnResourcesInCategory).toHaveBeenCalledWith(Category.HighAlt_Main);
+    expect(resourceStore.returnResourcesInCategory).toHaveBeenCalledWith(Category.HighAlt_SituationalAwareness);
+    expect(resourceStore.returnResourcesInCategory).toHaveBeenCalledWith(Category.HighAlt_TargetResearch);
   });
 
   it('should put all resources in the ResourceStore', () => {
@@ -63,4 +81,7 @@ describe('CardContainer', () => {
     expect(subject.find(StyledOperationContainer).exists()).toBeTruthy();
   });
 
+  it('should have a body for the contents to go into', () => {
+    expect(subject.find('.cardBody').exists()).toBeTruthy();
+  });
 });

@@ -115,6 +115,7 @@ export const StyledResource = inject('resourceStore')(styled(Resource)`
     text-overflow: ellipsis;
     overflow: hidden;
     margin-top: -1px;
+    white-space: nowrap;
   }
   
   #borderIcon {
