@@ -130,7 +130,8 @@ export class ResourceActions {
   @action.bound
   checkDuplicates(title: string): boolean {
     for (let r of this.resourceStore.resources) {
-      if (r.name.toLowerCase() === title.toLowerCase()) {
+      if (r.name.toLowerCase() === title.toLowerCase() &&
+        r.categoryID === this.resourceStore.pendingResource!.categoryID) {
         return true;
       }
     }

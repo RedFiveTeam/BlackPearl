@@ -18,7 +18,7 @@ describe('ResourceActions', () => {
       setPendingDelete: jest.fn(),
       setPendingEdit: jest.fn(),
       setPendingResourceCategory: jest.fn(),
-      pendingResource: ResourceModel,
+      pendingResource: new ResourceModel(1, 'http://www.test.com', 'TestResource', 1, 'Guest', 0),
       pendingEdit: ResourceModel,
       resources: [
         new ResourceModel(1, 'http://www.test.com', 'TestResource', 1, 'Guest', 0)
@@ -133,6 +133,7 @@ describe('ResourceActions', () => {
   });
 
   it('should check for duplicate titles in resources', () => {
+
     expect(subject.checkDuplicates('TestResource')).toBe(true);
     expect(subject.checkDuplicates('Doesnt Exist')).toBe(false);
   });
