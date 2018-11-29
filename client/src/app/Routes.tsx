@@ -4,6 +4,7 @@ import { StyledHomePage } from './page/HomePage';
 import { observer } from 'mobx-react';
 import { StyledAdminPage } from './page/AdminPage';
 import { StyledGiffordPage } from './page/GiffordPage';
+import { StyledMetricsPage } from './page/MetricsPage';
 
 @observer
 export class Routes extends React.Component {
@@ -14,6 +15,7 @@ export class Routes extends React.Component {
         <Route path="/admin" render={() => <StyledAdminPage/>}/>
         <Route path="/poopdeck" render={() => <StyledAdminPage/>}/>
         <Route path="/gifford" render={() => <StyledGiffordPage/>}/>
+        <Route path="/metrics" render={() => <StyledMetricsPage/>}/>
       </Switch>
     );
   }

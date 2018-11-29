@@ -1,3 +1,4 @@
+import * as Cookie from 'js-cookie';
 import * as urljoin from 'url-join';
 
 export class ErrorResponse {
@@ -10,11 +11,17 @@ export class UnauthorizedErrorResponse extends ErrorResponse {
 }
 
 export class HTTPClient {
+  private authorization = Cookie.get('Authorization') || '';
   constructor(private baseURL: string = '/') {
   }
 
   async getJSON(path: string) {
-    const resp = await fetch(urljoin(this.baseURL, path));
+    const resp = await fetch(
+      urljoin(this.baseURL, path),
+      {
+        credentials: 'include',
+      }
+    );
     return await resp.json();
   }
 
@@ -23,7 +30,10 @@ export class HTTPClient {
       urljoin(this.baseURL, path),
       {
         method: 'POST',
-        headers: [['Content-Type', 'application/json']],
+        headers: [
+          ['Content-Type', 'application/json'],
+        ],
+        credentials: 'include',
         body: body,
       }
     );
@@ -38,7 +48,10 @@ export class HTTPClient {
       {
         method: 'PUT',
         body: body,
-        headers: [['Content-Type', 'application/json']],
+        headers: [
+          ['Content-Type', 'application/json'],
+        ],
+        credentials: 'include',
       }
     );
     const json = await resp.json();
@@ -47,14 +60,26 @@ export class HTTPClient {
   }
 
   async put(path: string) {
-    const resp = await fetch(urljoin(this.baseURL, path), {method: 'PUT'});
+    const resp = await fetch(
+      urljoin(this.baseURL, path),
+      {
+        method: 'PUT',
+        credentials: 'include',
+      }
+    );
     const json = await resp.json();
     this.handleErrors(resp.status, json);
     return json;
   }
 
   async deleteJSON(path: string) {
-    const resp = await fetch(urljoin(this.baseURL, path), {method: 'DELETE'});
+    const resp = await fetch(
+      urljoin(this.baseURL, path),
+      {
+        method: 'DELETE',
+        credentials: 'include',
+      }
+    );
     return await resp.json();
   }
 
@@ -64,7 +89,10 @@ export class HTTPClient {
       {
         method: 'DELETE',
         body: body ? body : null,
-        headers: [['Content-Type', 'application/json']],
+        headers: [
+          ['Content-Type', 'application/json'],
+        ],
+        credentials: 'include',
       }
     );
 
@@ -81,7 +109,10 @@ export class HTTPClient {
       urljoin(this.baseURL, path),
       {
         method: 'POST',
-        body: formData
+        body: formData,
+        headers: [
+          ['Authorization', this.authorization]
+        ]
       }
     );
   }

@@ -2,7 +2,7 @@ import * as React from 'react';
 import { shallow, ShallowWrapper } from 'enzyme';
 import { Card } from './Card';
 import { StyledAddResourceButton } from '../button/AddResourceButton';
-import { Category } from '../resource/ResourceModel';
+import { Category, ResourceModel } from '../resource/ResourceModel';
 import { StyledResourceContainer } from '../resource/ResourceContainer';
 
 describe('Card', () => {
@@ -10,11 +10,16 @@ describe('Card', () => {
 
   beforeEach(() => {
     subject = shallow(
-      <Card category={Category.Main}/>
+      <Card
+        category={Category.FMV_Main}
+        resources={[
+          new ResourceModel(1, 'https://www.test.com', 'Test', 1, 'Bob')
+        ]}
+      />
     );
   });
 
-  it('should render a resource list', () => {
+  it('should render a resource list with a list of resources', () => {
     expect(subject.find(StyledResourceContainer).exists()).toBeTruthy();
   });
 
@@ -27,6 +32,6 @@ describe('Card', () => {
   });
 
   it('should have a className equal to its category', () => {
-    expect(subject.find('.category' + Category.Main).exists()).toBeTruthy();
+    expect(subject.find('.category' + Category.FMV_Main).exists()).toBeTruthy();
   });
 });

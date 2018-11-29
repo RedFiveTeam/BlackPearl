@@ -44,7 +44,7 @@ export const StyledPopupModal = styled(PopupModal)`
   bottom: 0px;
   right: 0px;
   position: fixed;
-  z-index: 1;
+  z-index: 75;
   text-align: center;
   font-family: Amaranth;
   

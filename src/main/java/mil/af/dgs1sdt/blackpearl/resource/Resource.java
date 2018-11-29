@@ -20,18 +20,14 @@ public class Resource {
     private String name;
     private Long categoryID;
     private String accountID;
+    private Long position;
 
-    public Resource(String name, String url, Long categoryID) {
-        this.name = name;
-        this.url = url;
-        this.categoryID = categoryID;
-    }
-
-    public Resource(String name, String url, Long categoryID, String accountID) {
+    public Resource(String name, String url, Long categoryID, String accountID, Long position) {
       this.name = name;
       this.url = url;
       this.categoryID = categoryID;
       this.accountID = accountID;
+      this.position = position;
     }
 
     public Resource update(ResourceJSON json) {
@@ -39,6 +35,7 @@ public class Resource {
         this.setName(json.getName());
         this.setUrl(json.getUrl());
         this.setAccountID(json.getAccountID());
+        this.setPosition(json.getPosition());
         return this;
     }
 
@@ -48,7 +45,8 @@ public class Resource {
                 json.getUrl(),
                 json.getName(),
                 json.getCategoryID(),
-                json.getAccountID()
+                json.getAccountID(),
+                json.getPosition()
         );
     }
 }

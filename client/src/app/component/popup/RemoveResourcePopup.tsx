@@ -95,6 +95,7 @@ export const StyledRemoveResourcePopup = inject('resourceActions', 'resourceStor
     outline: 0px;
     border: solid #844646;
     color: #FFFFFF;
+    border-radius: 3px;
   }
   
   .cancelButton {
@@ -104,6 +105,7 @@ export const StyledRemoveResourcePopup = inject('resourceActions', 'resourceStor
     background: white;
     border: solid #844646;
     color: #844646;
+    border-radius: 3px;
   }
 
 `);

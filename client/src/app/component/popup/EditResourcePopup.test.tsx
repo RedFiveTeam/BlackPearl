@@ -7,6 +7,7 @@ describe('EditResourcePopup', () => {
   let subject: ReactWrapper;
   let resourceStore: any;
   let resourceActions: any;
+  let profileStore: any;
 
   beforeEach(() => {
     resourceActions = {
@@ -14,11 +15,21 @@ describe('EditResourcePopup', () => {
       updateResource: jest.fn()
     };
 
+    profileStore = {
+      profile: {accountID: 'GUEST.GUEST.GUEST.0123456789'}
+    };
+
     resourceStore = {
       pendingEdit: new ResourceModel(1, 'https://www.editMe.com', 'Edit Me')
     };
 
-    subject = mount(<StyledEditResourcePopup resourceActions={resourceActions} resourceStore={resourceStore}/>);
+    subject = mount(
+      <StyledEditResourcePopup
+        resourceActions={resourceActions}
+        resourceStore={resourceStore}
+        profileStore={profileStore}
+      />
+    );
   });
 
   it('should close the popup when cancel is clicked', () => {

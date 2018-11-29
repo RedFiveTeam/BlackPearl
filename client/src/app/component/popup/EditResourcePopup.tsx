@@ -6,11 +6,13 @@ import { StyledPopupModal } from './PopupModal';
 import { ResourceStore } from '../resource/stores/ResourceStore';
 import { InputValidation } from '../../utils/inputValidation/InputValidation';
 import { CSSProperties } from 'react';
+import { ProfileStore } from '../../profile/ProfileStore';
 
 interface Props {
   className?: string;
   resourceActions?: ResourceActions;
   resourceStore?: ResourceStore;
+  profileStore?: ProfileStore;
 }
 
 interface State  {
@@ -56,7 +58,7 @@ export class EditResourcePopup extends React.Component<Props, State> {
       survivedEverything = false;
       this.setState({urlError: 'Please enter an address'});
       this.setState({urlCSS: {'border': 'solid 2px #A40000'}});
-    } else if (!valid.isResourceValid(this.state.url)) {
+    } else if (!valid.isValidResource(this.state.url)) {
       survivedEverything = false;
       this.setState({urlError: 'Please enter a valid address (https://www...)'});
       this.setState({urlCSS: {'border': 'solid 2px #A40000'}});
@@ -65,6 +67,7 @@ export class EditResourcePopup extends React.Component<Props, State> {
     if (survivedEverything) {
       this.props.resourceStore!.pendingEdit!.setUrl(this.state.url);
       this.props.resourceStore!.pendingEdit!.setName(this.state.title);
+      this.props.resourceStore!.pendingEdit!.setAccountId(this.props.profileStore!.profile.cardID);
       await this.props.resourceActions!.updateResource();
     }
   }
@@ -116,7 +119,11 @@ export class EditResourcePopup extends React.Component<Props, State> {
   }
 }
 
-export const StyledEditResourcePopup = inject('resourceActions', 'resourceStore')(styled(EditResourcePopup)`
+export const StyledEditResourcePopup = inject(
+  'resourceActions',
+  'resourceStore',
+  'profileStore'
+)(styled(EditResourcePopup)`
   .modal {
     width: 514px;
     height: 250px;
@@ -192,6 +199,7 @@ export const StyledEditResourcePopup = inject('resourceActions', 'resourceStore'
     outline: 0px;
     color: #FFFFFF;
     border: solid #65768B;
+    border-radius: 3px;
   }
   
   .cancelButton {
@@ -201,6 +209,7 @@ export const StyledEditResourcePopup = inject('resourceActions', 'resourceStore'
     border: solid #65768B;
     background: #FFFFFF;
     color: #65768B;
+    border-radius: 3px;
   }
 
 `);

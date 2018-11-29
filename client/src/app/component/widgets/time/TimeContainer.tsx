@@ -38,7 +38,7 @@ export class TimeContainer extends React.Component<Props> {
 }
 
 export const StyledTimeContainer = inject('timeStore', 'timeActions')(styled(TimeContainer)`
-  display: flex;
+  display: block;
   
   .timeBanner {
       background: #EAEAEA;
@@ -57,7 +57,6 @@ export const StyledTimeContainer = inject('timeStore', 'timeActions')(styled(Tim
   }
   
   .atoDay {
-    position: absolute;
     right: 124px;
     height: 46px;
     font-size: 36px;

@@ -2,7 +2,7 @@
 
 set -e
 
-# Main
+# FMV_Main
 function main {
     setup
 
@@ -44,9 +44,13 @@ function acceptanceTests {
 
     pushd ${BASE_DIR}/acceptance
         yarn install
-        yarn codeceptjs run -o "{ \"helpers\": {\"Nightmare\": {\"url\": \"${REACT_APP_HOST}\"}}}" ${SPECIFIC_TESTS}
+        if [[ "${BLACKPEARL_CI}" && "$(lsb_release -crid | grep -i 'Ubuntu')" ]]; then
+            xvfb-run yarn codeceptjs run -o "{ \"helpers\": {\"Nightmare\": {\"url\": \"${REACT_APP_HOST}\"}}}" ${SPECIFIC_TESTS}
+        else
+            yarn codeceptjs run -o "{ \"helpers\": {\"Nightmare\": {\"url\": \"${REACT_APP_HOST}\"}}}" ${SPECIFIC_TESTS}
+        fi
 
-        if [ "${?}" == "1" ]; then
+        if [[ "${?}" == "1" ]]; then
             echo "Acceptance Tests Failed... Exiting"
             exit 1
         fi
@@ -57,9 +61,9 @@ function unitTests {
     showBanner "Unit Tests"
 
     pushd ${BASE_DIR}
-        result=$(mvn test | grep -E "\[INFO\]|\[ERROR\]")
+        result=$(mvn test | grep -E "\[INFO\]|\[ERROR\]|Expected")
         echo "${result}"
-        if [ $(echo ${result} | grep "\[ERROR\]" | wc -l) -gt 0 ]; then
+        if [[ $(echo ${result} | grep "\[ERROR\]" | wc -l) -gt 0 ]]; then
             exit 1
         fi
     popd
@@ -73,6 +77,7 @@ function unitTests {
 # Utilities
 
 function cleanup {
+    showBanner "Cleanup"
     if [ -f ${BASE_DIR}/tmp/blackPearl.pid ]; then
         cat ${BASE_DIR}/tmp/blackPearl.pid | xargs kill -9
         rm ${BASE_DIR}/tmp/blackPearl.pid
@@ -85,6 +90,7 @@ function cleanup {
 trap cleanup EXIT
 
 function jarBuild {
+    showBanner "Build JAR"
     ${BASE_DIR}/scripts/build_jar.sh --no-replace
 }
 
@@ -106,9 +112,9 @@ function setup {
 }
 
 function showBanner {
-    echo "============================="
-    echo "  ${1}"
-    echo "============================="
+    echo "======================================================"
+    echo "  ${1} ($(date))"
+    echo "======================================================"
 }
 
 function testConnection {

@@ -42,11 +42,17 @@ export class AddResourcePopup extends React.Component<Props, State> {
       this.setState({titleCSS: {'border': 'solid 2px #A40000'}});
     }
 
+    if (this.props.resourceActions!.checkDuplicates(this.state.title)) {
+      survivedEverything = false;
+      this.setState({titleError: 'Resource already exists'});
+      this.setState({titleCSS: {'border': 'solid 2px #A40000'}});
+    }
+
     if (this.state.url === '') {
       survivedEverything = false;
       this.setState({urlError: 'Please enter an address'});
       this.setState({urlCSS: {'border': 'solid 2px #A40000'}});
-    } else if (!inputValidation.isResourceValid(this.state.url)) {
+    } else if (!inputValidation.isValidResource(this.state.url)) {
       survivedEverything = false;
       this.setState({urlError: 'Please enter a valid address (https://www...)'});
       this.setState({urlCSS: {'border': 'solid 2px #A40000'}});
@@ -174,6 +180,7 @@ export const StyledAddResourcePopup = inject('resourceActions')(styled(AddResour
     outline: 0px;
     border: solid #65768B;
     color: #FFFFFF;
+    border-radius: 3px;
   }
     
   .cancelButton {
@@ -183,5 +190,6 @@ export const StyledAddResourcePopup = inject('resourceActions')(styled(AddResour
     background: #FFFFFF;
     border: solid #65768B;
     color: #65768B;
+    border-radius: 3px;
   }
 `);

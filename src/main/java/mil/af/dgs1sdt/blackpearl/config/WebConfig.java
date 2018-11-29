@@ -13,5 +13,6 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addViewController("/admin").setViewName("/index.html");
         registry.addViewController("/poopdeck").setViewName("/index.html");
         registry.addViewController("/gifford").setViewName("/index.html");
+        registry.addViewController("/metrics").setViewName("/index.html");
     }
 }

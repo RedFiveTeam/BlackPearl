@@ -1,5 +1,5 @@
 {
-  "devDependencies": {
-    "@types/js-cookie": "^2.2.0"
+  "dependencies": {
+    "react-toastify": "^4.4.3"
   }
 }

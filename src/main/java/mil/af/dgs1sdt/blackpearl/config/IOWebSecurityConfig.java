@@ -23,10 +23,10 @@ public class IOWebSecurityConfig extends SharedWebSecurityConfig {
   @Autowired
   public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
     auth.inMemoryAuthentication()
-      .withUser("YODA").password(passwordEncoder().encode("1"))
+      .withUser("YODA.MASTER.MIDDLE.0123456789").password(passwordEncoder().encode("1"))
       .authorities("ROLE_USER")
       .and()
-      .withUser("JORDAN").password(passwordEncoder().encode("1"))
+      .withUser("CROSS.JORDAN.MIDDLE.0123456789").password(passwordEncoder().encode("1"))
       .authorities("ROLE_USER");
 
     auth.eraseCredentials(false);

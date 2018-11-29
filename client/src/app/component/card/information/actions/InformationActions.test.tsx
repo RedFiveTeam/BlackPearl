@@ -18,7 +18,8 @@ describe('InformationActions', () => {
       setNavcentServer: jest.fn(),
       setDsnNumber: jest.fn(),
       setSvoipNumber: jest.fn(),
-      setTsvoipNumber: jest.fn()
+      setTsvoipNumber: jest.fn(),
+      setJwicsServer: jest.fn()
     };
 
     subject = new InformationActions({informationStore} as any, {informationRepository} as any);
@@ -34,6 +35,7 @@ describe('InformationActions', () => {
     expect(informationStore.setDsnNumber).toHaveBeenCalled();
     expect(informationStore.setSvoipNumber).toHaveBeenCalled();
     expect(informationStore.setTsvoipNumber).toHaveBeenCalled();
+    expect(informationStore.setJwicsServer).toHaveBeenCalled();
   });
 
 });

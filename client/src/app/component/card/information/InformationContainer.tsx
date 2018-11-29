@@ -31,6 +31,7 @@ export class InformationContainer extends React.Component<Props> {
           dsnNumber={this.props.informationStore!.dsnNumber}
           svoipNumber={this.props.informationStore!.svoipNumber}
           tsvoipNumber={this.props.informationStore!.tsvoipNumber}
+          jwicsServer={this.props.informationStore!.jwicsServer}
         />
       </div>
     );
@@ -40,5 +41,5 @@ export class InformationContainer extends React.Component<Props> {
 export const StyledInformationContainer = inject('informationStore', 'informationActions')
 (styled(InformationContainer)`
 position: absolute;
-top: 613px;
+top: 620px;
 `);

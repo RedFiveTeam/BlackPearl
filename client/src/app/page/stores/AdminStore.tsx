@@ -8,6 +8,8 @@ import { InformationRepository } from '../../component/card/information/reposito
 import { AcronymModel } from '../../component/widgets/acronym/AcronymModel';
 import { AcronymRepository } from '../../component/widgets/acronym/repositories/AcronymRepository';
 import { LoadingStore } from '../../component/loading/stores/LoadingStore';
+import { BlameModel } from '../../component/resource/blame/BlameModel';
+import { BlameRepository } from '../../component/resource/blame/repositories/BlameRepository';
 
 export class AdminStore extends LoadingStore {
   @observable private _acronym: AcronymModel[];
@@ -15,17 +17,22 @@ export class AdminStore extends LoadingStore {
   @observable private _information: InformationModel[];
   @observable private _timezones: TimezoneModel[];
   @observable private _weather: WeatherModel[];
+  @observable private _currentTab: string;
+  @observable private _blames: BlameModel[];
 
   async hydrate(
     acronymRepository: AcronymRepository,
     informationRepository: InformationRepository,
     timeRepository: TimeRepository,
-    weatherRepository: WeatherRepository
+    weatherRepository: WeatherRepository,
+    blameRepository: BlameRepository
   ) {
+    this._currentTab = 'Time Zones';
     this._acronym = await acronymRepository.findAll();
     this._information = await informationRepository.findAll();
     this._timezones = await timeRepository.getTimezones();
     this._weather = await weatherRepository.getWeather();
+    this._blames = await blameRepository.findAll();
   }
 
   @action.bound
@@ -73,6 +80,16 @@ export class AdminStore extends LoadingStore {
     }
   }
 
+  @action.bound
+  setCurrentTab(tab: string) {
+    this._currentTab = tab;
+  }
+
+  @action.bound
+  setBlames(blames: BlameModel[]) {
+    this._blames = blames;
+  }
+
   @computed
   get acronym() {
     return this._acronym;
@@ -96,5 +113,15 @@ export class AdminStore extends LoadingStore {
   @computed
   get information() {
     return this._information;
+  }
+
+  @computed
+  get currentTab() {
+    return this._currentTab;
+  }
+
+  @computed
+  get blames() {
+    return this._blames;
   }
 }

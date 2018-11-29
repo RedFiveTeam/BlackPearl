@@ -1,16 +1,36 @@
-INSERT INTO resource (url, name, categoryID, accountID) VALUES
-    ("https://www.google.com", "Google", 1, null),
-    ("https://www.yahoo.com", "Yahoo", 1, null),
-    ("https://www.ebay.com", "eBay", 1, null),
-    ("https://www.amazon.com", "Amazon", 1, null),
-    ("https://www.youtube.com", "YouTube", 2, null),
-    ("https://www.reddit.com", "Reddit", 3, null),
-    ("https://www.google.com", "Guest's Google", 0, "Guest"),
-    ("https://www.facebook.com", "Guest's Facebook", 0, "Guest"),
-    ("https://www.google.com", "Jordan's Google", 0, "JORDAN"),
-    ("https://www.facebook.com", "Jordan's Facebook", 0, "JORDAN"),
-    ("https://www.google.com", "Yoda's Google", 0, "YODA"),
-    ("https://www.facebook.com", "Yoda's Google", 0, "YODA");
+INSERT INTO resource (url, name, categoryID, accountID, position) VALUES
+    ("https://www.google.com", "Google", 1, null, null),
+    ("https://www.yahoo.com", "Yahoo", 1, null, null),
+    ("https://www.ebay.com", "eBay", 1, null, null),
+    ("https://www.amazon.com", "FMV Amazon", 1, null, null),
+    ("https://www.youtube.com", "FMV YouTube", 2, null, null),
+    ("https://www.reddit.com", "FMV Reddit", 3, null, null),
+    ("https://www.amazon.com", "HA Amazon", 4, null, null),
+    ("https://www.youtube.com", "HA YouTube", 5, null, null),
+    ("https://www.reddit.com", "HA Reddit", 6, null, null),
+    ("https://www.amazon.com", "Fusion Amazon", 7, null, null),
+    ("https://www.youtube.com", "Fusion YouTube", 8, null, null),
+    ("https://www.reddit.com", "Fusion Reddit", 9, null, null),
+    ("https://www.amazon.com", "MOC Amazon", 10, null, null),
+    ("https://www.youtube.com", "MOC YouTube", 11, null, null),
+    ("https://www.reddit.com", "MOC Reddit", 12, null, null),
+    ("https://www.google.com", "Guest's Google", 0, "GUEST.GUEST.GUEST.0123456789", null),
+    ("https://www.facebook.com", "Guest's Facebook", 0, "GUEST.GUEST.GUEST.0123456789", null),
+    ("https://www.google.com", "Jordan's Google", 0, "CROSS.JORDAN.MIDDLE.0123456789", null),
+    ("https://www.facebook.com", "Jordan's Facebook", 0, "CROSS.JORDAN.MIDDLE.0123456789", null),
+    ("https://www.google.com", "Yoda's Google", 0, "YODA.MASTER.MIDDLE.0123456789", null),
+    ("https://www.facebook.com", "Yoda's Google", 0, "YODA.MASTER.MIDDLE.0123456789", null),
+    ("https://www.fav1.com", "Fav 1", 0, "GUEST.GUEST.GUEST.0123456789", 0),
+    ("https://www.fav2.com", "Fav 2", 0, "GUEST.GUEST.GUEST.0123456789", 1),
+    ("https://www.fav3.com", "Fav 3", 0, "GUEST.GUEST.GUEST.0123456789", 2);
+
+INSERT INTO blame (action, name, user, time) VALUES
+    ("ADD", "Google", "CROSS.JORDAN.MIDDLE.0123456789", 1542736493),
+    ("EDIT", "Facebook", "CROSS.JORDAN.MIDDLE.0123456789", 1542738493),
+    ("DELETE", "Some Super Long Title of a Website", "CROSS.JORDAN.MIDDLE.0123456789", 1542738293),
+    ("DELETE", "eBay", "YODA.MASTER.MIDDLE.0123456789", 1542728493),
+    ("EDIT", "Myspace", "YODA.MASTER.MIDDLE.0123456789", 1542738393),
+    ("ADD", "Some Super Long Title of a Website", "YODA.MASTER.MIDDLE.0123456789", 1542736493);
 
 INSERT INTO timezone (zone, name, position) VALUES
     ("America/New_York", "LANGLEY", 1),
@@ -33,14 +53,21 @@ INSERT INTO information (name, content) VALUES
     ("NAVCENT", "chat.ior.navy.smil.mil"),
     ("DSN", "575-1410"),
     ("SVOIP", "302-574-0375(0376)"),
-    ("TSVOIP", "984-4971");
+    ("TSVOIP", "984-4971"),
+    ("Call Out Format", "| Number | Age | Gender | Clothing | Activity | From | To |"),
+    ("JWICS", "irc://blackpearlisthegreatest");
 
-INSERT INTO operation (title, description) VALUES
-    ("OP OTTERBALL", "Operation Otterball is fun"),
-    ("OP HALLOWEENTOWN", "It is pretty scary!"),
-    ("OP HAPPY FEET", "Dance dance dance!"),
-    ("OP DAYWALKER", "RUN!"),
-    ("OP TORTUGA", "WHERE'S THE BEER!?!");
+INSERT INTO operation (title, description, address) VALUES
+    ("OP OTTERBALL",	"Operation Otterball is fun",	"https://www.opone.com"),
+    ("OP HALLOWEENTOWN",	"It is pretty scary!",	"https://www.optwo.com"),
+    ("OP HAPPY FEET",	"Dance dance dance!",	"https://www.opthree.com"),
+    ("OP DAYWALKER",	"RUN!",	"https://www.opfour.com"),
+    ("OP TORTUGA",	"WHERE'S THE BEER!?!",	"https://www.opfive.com");
+
+INSERT INTO account (cardID, name, role) VALUES
+    ("GUEST.GUEST.GUEST.0123456789", "Guest", 1),
+    ("CROSS.JORDAN.MIDDLE.0123456789", "JORDAN CROSS", 1),
+    ("YODA.MASTER.MIDDLE.0123456789", "MASTER YODA", 1);
 
 INSERT INTO acronym (acronym, definition) VALUES
     ("A&P", "analysis and production"),

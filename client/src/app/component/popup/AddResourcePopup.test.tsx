@@ -10,7 +10,8 @@ describe('AddResourcePopup', () => {
     resourceActions = {
       saveResource: jest.fn(),
       clearPendingResource: jest.fn(),
-      updatePendingResource: jest.fn()
+      updatePendingResource: jest.fn(),
+      checkDuplicates: () => { return false; }
     };
 
     subject = mount(<StyledAddResourcePopup resourceActions={resourceActions}/>);
@@ -35,7 +36,7 @@ describe('AddResourcePopup', () => {
 
   it('should save pending resource with information', () => {
     subject.find('.urlField').simulate('change', {target: {value: 'https://www.google.com'}});
-    subject.find('.titleField').simulate('change', {target: {value: 'Google'}});
+    subject.find('.titleField').simulate('change', {target: {value: 'NewGoogle'}});
     subject.find('.saveButton').simulate('click');
     expect(resourceActions.saveResource).toHaveBeenCalled();
   });

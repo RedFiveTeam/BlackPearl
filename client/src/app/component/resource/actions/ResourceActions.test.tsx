@@ -20,6 +20,9 @@ describe('ResourceActions', () => {
       setPendingResourceCategory: jest.fn(),
       pendingResource: ResourceModel,
       pendingEdit: ResourceModel,
+      resources: [
+        new ResourceModel(1, 'http://www.test.com', 'TestResource', 1, 'Guest', 0)
+      ],
       performLoading: async (fun: any) => { await fun(); }
     };
 
@@ -32,6 +35,7 @@ describe('ResourceActions', () => {
     resourceRepository.delete = jest.fn();
     resourceRepository.updateResource = jest.fn();
     resourceRepository.saveResource = jest.fn();
+    resourceRepository.updateGivenResources = jest.fn();
 
     testResources = [
       new ResourceModel(1, 'https://www.google.com', 'Google', 1),
@@ -74,6 +78,16 @@ describe('ResourceActions', () => {
     expect(resourceStore.setPendingResource.mock.calls[0][0].url).toEqual(pendingResource.url);
   });
 
+  it('should update multiple resources at once', () => {
+    let resources = [
+      new ResourceModel(1, 'https://www.test.com', 'Test', 0, 'Bob', 0),
+      new ResourceModel(2, 'https://www.test2.com', 'Test2', 0, 'Bob', 1)
+    ];
+
+    subject.updateGivenResources(resources);
+    expect(resourceRepository.updateGivenResources).toHaveBeenCalledWith(resources);
+  });
+
   it('should delete a resource', async () => {
     await subject.delete(testResources[0].id!);
     expect(resourceRepository.delete).toHaveBeenCalledWith(testResources[0].id);
@@ -108,13 +122,18 @@ describe('ResourceActions', () => {
 
   it('should assign a category to a pending resource', () => {
     subject.createPendingResource();
-    subject.setPendingResourceCategory(Category.Main);
-    expect(resourceStore.setPendingResourceCategory).toHaveBeenCalledWith(Category.Main);
+    subject.setPendingResourceCategory(Category.FMV_Main);
+    expect(resourceStore.setPendingResourceCategory).toHaveBeenCalledWith(Category.FMV_Main);
   });
 
   it('should save a favorite resource', async () => {
     let resource = new ResourceModel(null, 'https://www.favorite.com', 'favorite', 0, 'GUEST');
     await subject.saveFavorite(resource);
     expect(resourceRepository.saveResource).toHaveBeenCalledWith(resource);
+  });
+
+  it('should check for duplicate titles in resources', () => {
+    expect(subject.checkDuplicates('TestResource')).toBe(true);
+    expect(subject.checkDuplicates('Doesnt Exist')).toBe(false);
   });
 });

@@ -7,6 +7,12 @@ export class ResourceStore extends LoadingStore {
   @observable private _pendingResource: ResourceModel | null = null;
   @observable private _pendingDelete: ResourceModel | null = null;
   @observable private _pendingEdit: ResourceModel | null = null;
+  @observable private _activeTab: number = 1;
+
+  @action.bound
+  setActiveTab(tab: number) {
+    this._activeTab = tab;
+  }
 
   @action.bound
   setResources(resources: ResourceModel[]) {
@@ -36,6 +42,11 @@ export class ResourceStore extends LoadingStore {
   @action.bound
   setPendingEdit(resource: ResourceModel | null) {
     this._pendingEdit = resource;
+  }
+
+  @computed
+  get activeTab() {
+    return this._activeTab;
   }
 
   @computed

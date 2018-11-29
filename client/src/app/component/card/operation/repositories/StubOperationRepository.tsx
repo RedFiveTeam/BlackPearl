@@ -8,4 +8,22 @@ export class StubOperationRepository implements OperationRepository {
       new OperationModel(2, 'Operation Two', 'This is Operation Two')
     ]);
   }
+
+  saveOperation(operation: OperationModel): Promise<OperationModel> {
+    operation.setTitle('Test Op');
+    operation.setDescription('New Testing Operation');
+    operation.setAddress('https://www.newtestop.com');
+    return Promise.resolve(operation);
+  }
+
+  updateOperation(operation: OperationModel): Promise<OperationModel> {
+    operation.setTitle('New Edit Test Op');
+    operation.setDescription('New Edit Test Description');
+    operation.setAddress('https://www.newedit.com');
+    return Promise.resolve(operation);
+  }
+
+  deleteOperation(operationId: number): Promise<void> {
+    return Promise.resolve();
+  }
 }

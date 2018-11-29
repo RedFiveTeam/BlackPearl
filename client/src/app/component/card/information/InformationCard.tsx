@@ -1,6 +1,8 @@
 import { observer } from 'mobx-react';
 import * as React from 'react';
 import styled from 'styled-components';
+import { CopyIcon } from '../../../icon/CopyIcon';
+import { toast } from 'react-toastify';
 
 interface Props {
   className?: string;
@@ -12,58 +14,144 @@ interface Props {
   dsnNumber: string;
   svoipNumber: string;
   tsvoipNumber: string;
+  jwicsServer: string;
 }
 
 @observer
 export class InformationCard extends React.Component<Props> {
+
+  copyToClipboard(e: any) {
+    let text = e.target.querySelector('span:nth-child(2)').innerHTML.replace(/\([A-z]*\)/, '');
+    let selected = null;
+    let el = document.createElement('textarea');
+    el.value = text;
+    el.setAttribute('readonly', '');
+    el.style.position = 'absolute';
+    el.style.left = '-9999px';
+    document.body.appendChild(el);
+    if (document.getSelection().rangeCount > 0) {
+      selected = document.getSelection().getRangeAt(0);
+    }
+    el.select();
+    document.execCommand('copy');
+    document.body.removeChild(el);
+    if (selected) {
+      document.getSelection().removeAllRanges();
+      document.getSelection().addRange(selected);
+    }
+    toast.success('Information Copied to Clipboard');
+  }
+
+  showCopy(e: any) {
+    (e.target.querySelector('svg') as HTMLElement).style.setProperty('display', 'inline-block');
+  }
+
+  hideCopy(e: any) {
+    (e.target.querySelector('svg') as HTMLElement).style.setProperty('display', 'none');
+  }
+
   render() {
     return (
       <div className={this.props.className}>
         <div className="cardTitle">
-        General Info
+          General Info
         </div>
         <div className="cardContent">
           <div className="table">
-            <table className="information">
-              <tr>
-                  <td>
-                    <span className="title no">Image Server:</span>
-                    <span className="imageServer">{this.props.imageServer}</span>
-                  </td>
-                <td colSpan={2}>
-                    <span className="title">Call Out Format:</span>
-                    <span className="callOutFormat">{this.props.callOutFormat}</span>
-                </td>
-              </tr>
-              <tr>
-                  <td>
-                    <span className="title no">Image Server (JWICS):</span>
-                    <span className="imageServerJWICS">{this.props.imageServerJWICS}</span>
-                  </td>
-                <td>
+            <div className="information">
+              <div className="row">
+                <div
+                  className="d"
+                  onClick={this.copyToClipboard}
+                  onMouseOver={this.showCopy}
+                  onMouseLeave={this.hideCopy}
+                >
+                  <span className="title no">Image Server:</span>
+                  <span className="imageServer">{this.props.imageServer}</span>
+                  <CopyIcon/>
+                </div>
+                <div
+                  className="d"
+                  onClick={this.copyToClipboard}
+                  onMouseOver={this.showCopy}
+                  onMouseLeave={this.hideCopy}
+                >
+                  <span className="title no">Image Server (JWICS):</span>
+                  <span className="imageServerJWICS">{this.props.imageServerJWICS}</span>
+                  <CopyIcon/>
+                </div>
+                <div
+                  className="d"
+                >
+                  <span className="title no">Call Out Format:</span>
+                  <span className="callOutFormat">{this.props.callOutFormat}</span>
+                </div>
+              </div>
+              <div className="row">
+                <div
+                  className="d"
+                  onClick={this.copyToClipboard}
+                  onMouseOver={this.showCopy}
+                  onMouseLeave={this.hideCopy}
+                >
+                  <span className="title">JWICS:</span>
+                  <span className="jwicsServer">{this.props.jwicsServer}</span>
+                  <CopyIcon/>
+                </div>
+                <div
+                  className="d"
+                  onClick={this.copyToClipboard}
+                  onMouseOver={this.showCopy}
+                  onMouseLeave={this.hideCopy}
+                >
                   <span className="title">AUAB:</span>
                   <span className="auabServer">{this.props.auabServer}</span>
-                </td>
-                <td>
+                  <CopyIcon/>
+                </div>
+                <div
+                  className="d"
+                  onClick={this.copyToClipboard}
+                  onMouseOver={this.showCopy}
+                  onMouseLeave={this.hideCopy}
+                >
                   <span className="title">NAVCENT:</span>
                   <span className="navcentServer">{this.props.navcentServer}</span>
-                </td>
-              </tr>
-              <tr>
-                <td>
+                  <CopyIcon/>
+                </div>
+              </div>
+              <div className="row">
+                <div
+                  className="d"
+                  onClick={this.copyToClipboard}
+                  onMouseOver={this.showCopy}
+                  onMouseLeave={this.hideCopy}
+                >
                   <span className="title">DSN:</span>
                   <span className="dsnNumber">{this.props.dsnNumber}</span>
-                 </td>
-                <td>
+                  <CopyIcon/>
+                </div>
+                <div
+                  className="d"
+                  onClick={this.copyToClipboard}
+                  onMouseOver={this.showCopy}
+                  onMouseLeave={this.hideCopy}
+                >
                   <span className="title">SVOIP:</span>
                   <span className="svoipNumber">{this.props.svoipNumber}</span>
-                </td>
-                  <td>
-                    <span className="title">TSVOIP:</span>
-                    <span className="tsvoipNumber">{this.props.tsvoipNumber}</span>
-                  </td>
-              </tr>
-            </table>
+                  <CopyIcon/>
+                </div>
+                <div
+                  className="d"
+                  onClick={this.copyToClipboard}
+                  onMouseOver={this.showCopy}
+                  onMouseLeave={this.hideCopy}
+                >
+                  <span className="title">TSVOIP:</span>
+                  <span className="tsvoipNumber">{this.props.tsvoipNumber}</span>
+                  <CopyIcon/>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -71,6 +159,7 @@ export class InformationCard extends React.Component<Props> {
   }
 
 }
+
 export const StyledInformationCard = styled(InformationCard)`
 
     position: absolute;
@@ -93,7 +182,7 @@ export const StyledInformationCard = styled(InformationCard)`
     .cardContent {
       background-color: #EAEAEA
       height: 124px;
-      width: 1078px;
+      width: 1076px;
       border-radius: 0px 0px 10px 10px;
       box-shadow: -1px 3px 3px rgba(0,0,0,.25);
     }
@@ -110,27 +199,91 @@ export const StyledInformationCard = styled(InformationCard)`
       color: #000000;
     }
     
-    table, td {
+    .table, .d {
       background-color: #FFF;
-      border: 2px solid #EAEAEA;
-      border-collapse: collapse;
+      border: 1px solid #EAEAEA;
     }
     
-    table {
-      font-size: 18px;
-      table-layout: fixed;
+    .d {
+      display: table-cell;
+      height: 36px;
+      vertical-align: middle;
+      cursor: pointer;
+    }
+    
+    .d > svg {
+      display: none;
+      pointer-events: none;
+    }
+    
+    .show {
+      display: block;
+    }
+    
+    .table {
+      font-size: 14px;
       width: 100%;
       height: 100%;
+      background: #EAEAEA;
+    }
+    
+    //.row {
+    //  margin-left: 8px;
+    //  margin-right: 6px;
+    //}
+    //
+    .row:nth-child(1) {
+      
+      div:nth-child(1) {
+        width: 268px;
+        svg {
+          position: absolute;
+        }
+      }
+      
+      div:nth-child(2) {
+        width: 307px;
+        svg {
+          position: absolute;
+        }
+      }
+      
+      div:nth-child(3) {
+        width: 484px;
+        svg {
+          position: absolute;
+          right: 7px;
+        }
+      }
     }
     
     span {
       margin-left: 8px;
+      pointer-events: none;
+    }
+    
+    .row:nth-child(n+2) > div {
+      width: 353px;
     }
     
     span:not(.no) {
       margin-right: 15px;
     }
     
-    
+    .information {
+      //margin-top: 5px;
+      border: 5px solid #EAEAEA;
+      border-radius: 10px;
+    }
 
+    svg { 
+      width: 16px;
+      height: 16px;
+      float: right;
+      margin-right: 10px;
+    }
+    
+    .imageServer {
+      margin-right: 0px;
+    }
 `;
