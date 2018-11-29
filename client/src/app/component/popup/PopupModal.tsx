@@ -4,7 +4,7 @@ import styled from 'styled-components';
 
 interface Props {
   className?: string;
-  onCancel: () => void;
+  onCancel?: () => void;
   title: string;
   body?: any;
   children?: any;
@@ -25,12 +25,15 @@ export class PopupModal extends React.Component<Props> {
           <div className="body">
             {this.props.children}
           </div>
-          <button
-            className="cancelButton"
-            onClick={this.props.onCancel}
-          >
-            CANCEL
-          </button>
+          {
+            this.props.onCancel &&
+            <button
+              className="cancelButton"
+              onClick={this.props.onCancel}
+            >
+              CANCEL
+            </button>
+          }
         </div>
       </div>
     );
@@ -62,22 +65,22 @@ export const StyledPopupModal = styled(PopupModal)`
   }
   
   .title {
-  font-size: 24px;
-  margin: 0px;
-  padding-top: 4%;
-  padding-bottom: 2%;
+    font-size: 24px;
+    margin: 0px;
+    padding-top: 4%;
+    padding-bottom: 2%;
   }
   
   .cancelButton {
-  background: #C4C4C4;
-  font-family: Amaranth;
-  width: 157px;
-  height: 49px;
-  font-size: 24px;
-  outline: 0px;
+    background: #C4C4C4;
+    font-family: Amaranth;
+    width: 157px;
+    height: 49px;
+    font-size: 24px;
+    outline: 0px;
   }
   
   .cancelButton:hover {
-  cursor: pointer;
+    cursor: pointer;
   }
 `;

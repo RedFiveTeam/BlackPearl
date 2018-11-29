@@ -23,7 +23,7 @@ public class AccountService implements UserDetailsService {
     if (account == null) {
       String[] nameSplit = cardId.split("\\.");
       String name = nameSplit[1] + " " + nameSplit[0];
-      account = accountRepository.save(new Account(cardId, name, 1L));
+      account = accountRepository.save(new Account(cardId, name, 1L, 1L));
     }
     return account;
   }

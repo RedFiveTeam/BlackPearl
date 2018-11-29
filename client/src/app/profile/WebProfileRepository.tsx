@@ -13,4 +13,9 @@ export class WebProfileRepository implements ProfileRepository {
     const json = await this.client.getJSON('/api/account');
     return this.profileSerializer.deserialize(json);
   }
+
+  async updateProfile(profile: ProfileModel): Promise<void> {
+    const body = JSON.stringify(this.profileSerializer.serialize(profile));
+    await this.client.putJSON('/api/account/' + profile.id, body);
+  }
 }

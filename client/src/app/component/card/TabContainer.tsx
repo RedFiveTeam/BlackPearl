@@ -3,6 +3,7 @@ import { inject, observer } from 'mobx-react';
 import styled from 'styled-components';
 import { ResourceStore } from '../resource/stores/ResourceStore';
 import { ProfileStore } from '../../profile/ProfileStore';
+import { ProfileActions } from '../../profile/ProfileActions';
 
 const Person = require('../../icon/Person.png');
 
@@ -10,6 +11,7 @@ interface Props {
   className?: string;
   resourceStore?: ResourceStore;
   profileStore?: ProfileStore;
+  profileActions?: ProfileActions;
 }
 
 export enum Tab {
@@ -28,13 +30,19 @@ export enum TabName {
 
 @observer
 export class TabContainer extends React.Component<Props> {
-  componentDidMount() {
-    this.makeItSelected(Tab.FMV);
+  async componentWillReceiveProps(props: any) {
+    if (this.props.profileStore!.profile.specialty === null) {
+      await this.clickTab(1);
+    }
+    await this.clickTab(this.props.profileStore!.profile.specialty!);
   }
 
-  clickTab = (tab: number) => {
+  clickTab = async (tab: number) => {
     this.props.resourceStore!.setActiveTab(tab);
     this.makeItSelected(tab);
+    if (tab !== this.props.profileStore!.profile.specialty) {
+      await this.props.profileActions!.changeDefaultTab(tab);
+    }
   };
 
   makeItSelected = (tab: number) => {

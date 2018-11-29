@@ -27,6 +27,8 @@ Scenario('should see a toast when clicking element in general info card', (I) =>
 Scenario('should render three unique cards', (I) => {
   I.haveHeader('Authorization', 'Basic Q1JPU1MuSk9SREFOLk1JRERMRS4wMTIzNDU2Nzg5OjE=');
   I.amOnPage('/');
+  I.click('.tab:nth-of-type(1) > div', '.tabContainer');
+  I.waitForText("Main", 10);
   I.see("Main", ".cardTitle");
   I.see("Situational Awareness", ".cardTitle");
   I.see("Target Research", ".cardTitle");
@@ -79,6 +81,7 @@ Scenario('should allow users to convert coordinates', async (I) => {
 Scenario('should allow the user to change tabs and see specialty resources', (I) => {
   I.haveHeader('Authorization', 'Basic Q1JPU1MuSk9SREFOLk1JRERMRS4wMTIzNDU2Nzg5OjE=');
   I.amOnPage('/');
+  I.click('.tab:nth-of-type(1) > div', '.tabContainer');
   I.see('FMV Amazon');
   I.see('FMV YouTube');
   I.see('FMV Reddit');
@@ -171,6 +174,7 @@ Scenario('should allow the user to add, edit and delete a resource', async (I) =
 
   //create
   I.amOnPage('/');
+  I.click('.tab:nth-of-type(1) > div', '.tabContainer');
   I.click('Add Resource');
   I.fillField('.titleField', name);
   I.fillField('.urlField', 'https://www.testpage.com');
@@ -180,6 +184,7 @@ Scenario('should allow the user to add, edit and delete a resource', async (I) =
 
   //edit
   I.amOnPage('/');
+  I.click('.tab:nth-of-type(1) > div', '.tabContainer');
   I.waitForElement('.threeDotButton' + `.${name}`, 10);
   I.click('.threeDotButton' + `.${name}`);
   I.click('.editButton');
@@ -193,6 +198,7 @@ Scenario('should allow the user to add, edit and delete a resource', async (I) =
 
   //delete
   I.amOnPage('/');
+  I.click('.tab:nth-of-type(1) > div', '.tabContainer');
   I.click('.threeDotButton' + `.${name}`);
   I.click('.deleteButton');
   I.see(name);

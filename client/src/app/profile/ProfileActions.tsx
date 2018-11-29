@@ -26,4 +26,14 @@ export class ProfileActions {
   async addLogin() {
     await this.loginRepository.addLogin(this.profileStore.profile);
   }
+
+  @action.bound
+  async updateProfile() {
+    await this.profileRepository.updateProfile(this.profileStore.profile);
+  }
+
+  async changeDefaultTab(tab: number) {
+    this.profileStore.profile.setSpecialty(tab);
+    await this.updateProfile();
+  }
 }

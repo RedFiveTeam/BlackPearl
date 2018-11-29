@@ -27,7 +27,7 @@ export class CardContainer extends React.Component<Props> {
   render() {
     return (
       <div className={classNames('cardContainer', this.props.className)}>
-        <StyledTabContainer/>
+        <StyledTabContainer profileActions={this.props.profileActions}/>
         <div
           className="cardBody"
         >

@@ -26,4 +26,8 @@ export class WebLoginRepository implements LoginRepository {
       return this.loginSerializer.deserialize(obj);
     });
   }
+
+  async updateProfile(profile: ProfileModel): Promise<void> {
+    await this.client.putJSON('/api/login', JSON.stringify(profile));
+  }
 }
