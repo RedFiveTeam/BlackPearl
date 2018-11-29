@@ -41,9 +41,11 @@ describe('InputValidation', () => {
     expect(subject.isLocal('Y:\\This\\Is\\A\\Folder\\')).toBeTruthy();
     expect(subject.isLocal('\\\\abc-de-abc1\\This\\Is\\A\\Folder\\')).toBeTruthy();
     expect(subject.isLocal('//abc-de-abc1/This/Is/A/Folder/')).toBeTruthy();
+    expect(subject.isLocal('//abc-de-abc1/This/Is/A/Folder with a space/')).toBeTruthy();
     expect(subject.isLocal('Y:/This/Is/Not/A/Folder.txt')).toBeTruthy();
     expect(subject.isLocal('//abc-de-abc1/This/Is/Not/A/Folder.txt')).toBeTruthy();
     expect(subject.isLocal('file://C:/This/Is/Not/A/Folder.txt')).toBeTruthy();
     expect(subject.isLocal('file:///lfi-fs-dhs1/This/Is/Not/A/Folder.txt')).toBeTruthy();
+    expect(subject.isLocal('file:///lfi-fs-dhs1/This/Is/Not/A/Folder with a space.txt')).toBeTruthy();
   });
 });
