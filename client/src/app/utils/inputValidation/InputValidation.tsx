@@ -25,8 +25,8 @@ export class InputValidation {
   }
 
   isLocal(path: string): boolean {
-    const regexStr = ['^(?:file:[\\/\\\\]{2}|[A-z]:[\\/\\\\]|[\\/\\\\]{2}[-A-z0-9@:%._\\-\\+~#=]{2,256})',
-      '(?:[A-z0-9@:%._\\-\\+~#=\\/\\\\]*)',
+    const regexStr = ['^(?:file:[\\/\\\\]{2}|[A-z]:[\\/\\\\]|[\\/\\\\]{2}[-A-z0-9@:%.\_\\-\\+~#=]{2,256})',
+      '(?:[A-z0-9@:%._\\-\\+\\s~#=\\/\\\\]*)',
       '(?:[^\\/\\\\]*.*\\.[A-z0-9]{2,4})?$'].join('');
     const regex = new RegExp(regexStr);
     return regex.exec(path) !== null;
