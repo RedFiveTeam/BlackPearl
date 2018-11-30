@@ -19,7 +19,8 @@ describe('MetricsPage', () => {
     loginTime = moment('2018-08-22T00:00:00.000Z').utc();
 
     metricsActions = {
-      initializeStores: initSpy
+      initializeStores: initSpy,
+      exportLogins: jest.fn()
     };
 
     metricsStore = {
@@ -38,6 +39,7 @@ describe('MetricsPage', () => {
       />
     );
   });
+
   it('should display a title', () => {
     expect(subject.find('.users').text()).toContain('Total user accounts:');
   });
@@ -46,24 +48,12 @@ describe('MetricsPage', () => {
     expect(subject.find('.users').text()).toContain('2');
   });
 
-  it('should display a login table with headers and 3 rows', () => {
-    expect(subject.find('table').exists()).toBeTruthy();
-    expect(subject.find('tr').length).toBe(4);
+  it('should display the number of logins', () => {
+    expect(subject.find('.logins').text()).toBe('Total logins: 3');
   });
 
-  it('should display table headers', () => {
-    const row = subject.find('tr').at(0);
-    expect(row.find('th').length).toBe(3);
-    expect(row.find('th').at(0).text()).toBe('ID');
-    expect(row.find('th').at(1).text()).toBe('Name');
-    expect(row.find('th').at(2).text()).toEqual('Time');
-  });
-
-  it('should display login information in each row', () => {
-    const row = subject.find('tr').at(1);
-    expect(row.find('td').length).toBe(3);
-    expect(row.find('td').at(0).text()).toBe('1');
-    expect(row.find('td').at(1).text()).toBe('name1');
-    expect(row.find('td').at(2).text()).toEqual('2018-08-22T00:00:00.000Z');
+  it('should export user logins as a text file', () => {
+    subject.find('.exportLoginsButton').simulate('click');
+    expect(metricsActions.exportLogins).toHaveBeenCalled();
   });
 });

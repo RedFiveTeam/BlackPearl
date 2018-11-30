@@ -11,7 +11,7 @@ import {
 import { ProfileActions } from '../profile/ProfileActions';
 import { InformationActions } from '../component/card/information/actions/InformationActions';
 import { OperationActions } from '../component/card/operation/actions/OperationActions';
-import { MetricsActions } from '../page/actions/MetricsActions.tsx';
+import { MetricsActions } from '../page/actions/MetricsActions';
 
 const adminActions = new AdminActions(stores, WebRepositories);
 const acronymActions = new AcronymActions(stores, WebRepositories);

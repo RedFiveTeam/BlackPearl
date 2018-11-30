@@ -2,7 +2,7 @@ import * as React from 'react';
 import { inject, observer } from 'mobx-react';
 import styled from 'styled-components';
 import { MetricsStore } from './stores/MetricsStore';
-import { MetricsActions } from './actions/MetricsActions.tsx';
+import { MetricsActions } from './actions/MetricsActions';
 
 interface Props {
   metricsActions?: MetricsActions;
@@ -20,24 +20,8 @@ export class MetricsPage extends React.Component<Props> {
     return (
       <div className="metrics">
         <h1 className="users">Total user accounts: {this.props.metricsStore!.userCount}</h1>
-        <table className="login-table">
-          <tr className="login-header">
-            <th>ID</th>
-            <th>Name</th>
-            <th>Time</th>
-          </tr>
-          {
-            this.props.metricsStore!.logins.map((login, index) => {
-              return (
-                <tr key={index}>
-                  <td>{login.user.id}</td>
-                  <td>{login.user.name}</td>
-                  <td>{login.time.toISOString()}</td>
-                </tr>
-              );
-            })
-          }
-        </table>
+        <h1 className="logins">Total logins: {this.props.metricsStore!.logins.length}</h1>
+        <button onClick={this.props.metricsActions!.exportLogins} className="exportLoginsButton">Export Logins</button>
       </div>
     );
   }
