@@ -1,6 +1,7 @@
 import { ResourceModel } from '../ResourceModel';
 import { action, computed, observable } from 'mobx';
 import { LoadingStore } from '../../loading/stores/LoadingStore';
+import { ClickModel } from '../ClickModel';
 
 export class ResourceStore extends LoadingStore {
   @observable private _resources: ResourceModel[] = [];
@@ -8,6 +9,7 @@ export class ResourceStore extends LoadingStore {
   @observable private _pendingDelete: ResourceModel | null = null;
   @observable private _pendingEdit: ResourceModel | null = null;
   @observable private _activeTab: number = 1;
+  @observable private _clicks: {} = {};
 
   @action.bound
   setActiveTab(tab: number) {
@@ -42,6 +44,25 @@ export class ResourceStore extends LoadingStore {
   @action.bound
   setPendingEdit(resource: ResourceModel | null) {
     this._pendingEdit = resource;
+  }
+
+  @action.bound
+  setClicks(clicks: ClickModel[]) {
+    clicks.forEach((c: ClickModel) => {
+      this.resources.filter((r) => r.categoryID !== 0)
+        .filter((r) => r.id === c.resourceID)
+        .map((r) => r.setPosition(r.position! + c.clicks));
+    });
+    this.sortResourcesByPositionDesc();
+  }
+
+  @action.bound
+  sortResourcesByPositionDesc() {
+    this.setResources(
+      this.resources.filter((r) => r.categoryID !== 0).slice().sort((a, b) => {
+        return b.position! - a.position!;
+      }).concat(this.resources.filter((r) => r.categoryID === 0))
+    );
   }
 
   @computed
@@ -88,5 +109,10 @@ export class ResourceStore extends LoadingStore {
   @computed
   get pendingEdit() {
     return this._pendingEdit;
+  }
+
+  @computed
+  get clicks() {
+    return this._clicks;
   }
 }

@@ -1,5 +1,6 @@
 import { ResourceStore } from './ResourceStore';
 import { Category, ResourceModel } from '../ResourceModel';
+import { ClickModel } from '../ClickModel';
 
 describe('ResourceStore', () => {
   let subject: ResourceStore;
@@ -45,5 +46,33 @@ describe('ResourceStore', () => {
   it('should show a pending edit popup', () => {
     subject.setPendingEdit(new ResourceModel(1, 'https://www.test1.com', 'Test1'));
     expect(subject.hasPendingEdit).toBeTruthy();
+  });
+
+  it('should sum clicks with the same id', () => {
+    let resources: ResourceModel[];
+    resources = [
+      new ResourceModel(1, 'https://www.google.com', 'Google', Category.FMV_Main),
+      new ResourceModel(2, 'https://www.yahoo.com', 'Yahoo', Category.FMV_Main),
+      new ResourceModel(3, 'https://www.ebay.com', 'eBay', Category.FMV_SituationalAwareness)
+    ];
+    subject.setResources(resources);
+
+    let clicks = [
+      new ClickModel(2, 10),
+      new ClickModel(2, 10),
+      new ClickModel(1, 15),
+      new ClickModel(2, 10),
+      new ClickModel(3, 10),
+      new ClickModel(2, 10)
+    ];
+    subject.setClicks(clicks);
+
+    expect(subject.resources[0].position).toBe(40);
+    expect(subject.resources[1].position).toBe(15);
+    expect(subject.resources[2].position).toBe(10);
+
+    expect(subject.resources[0].id).toBe(2);
+    expect(subject.resources[1].id).toBe(1);
+    expect(subject.resources[2].id).toBe(3);
   });
 });

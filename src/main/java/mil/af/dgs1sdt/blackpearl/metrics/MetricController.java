@@ -11,28 +11,28 @@ import javax.xml.bind.DatatypeConverter;
 import java.util.Date;
 
 @Controller
-@RequestMapping(LoginController.URI)
-public class LoginController {
-  public static final String URI = "/api/login";
+@RequestMapping(MetricController.URI)
+public class MetricController {
+  public static final String URI = "/api/metrics";
 
   @Autowired
-  LoginRepository loginRepository;
+  MetricRepository metricRepository;
 
   @Autowired
   AccountRepository accountRepository;
 
   @PostMapping
   public @ResponseBody
-  Login create(@Valid @RequestBody LoginJSON loginJSON) {
-    Account account = accountRepository.findOneByCardID(loginJSON.getCardId());
-    Date time = DatatypeConverter.parseDateTime(loginJSON.getTime()).getTime();
-    Login login = new Login(account, time);
-    return this.loginRepository.save(login);
+  Metric create(@Valid @RequestBody MetricJSON metricJSON) {
+    Account account = accountRepository.findOneByCardID(metricJSON.getCardId());
+    Date time = DatatypeConverter.parseDateTime(metricJSON.getTime()).getTime();
+    Metric metric = new Metric(account, time);
+    return this.metricRepository.save(metric);
   }
 
   @GetMapping
   public @ResponseBody
-  Iterable<Login> getAllLogins() {
-    return loginRepository.findAll();
+  Iterable<Metric> getAllLogins() {
+    return metricRepository.findAll();
   }
 }

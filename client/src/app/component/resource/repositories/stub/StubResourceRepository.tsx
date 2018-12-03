@@ -1,5 +1,6 @@
 import { ResourceRepository } from '../ResourceRepository';
 import { ResourceModel } from '../../ResourceModel';
+import { ClickModel } from '../../ClickModel';
 
 export class StubResourceRepository implements ResourceRepository {
 
@@ -39,4 +40,16 @@ export class StubResourceRepository implements ResourceRepository {
     return Promise.resolve();
   }
 
+  getAllClicks(): Promise<ClickModel[]> {
+    return Promise.resolve([
+      new ClickModel(1, 12),
+      new ClickModel(1, 26),
+      new ClickModel(2, 5),
+      new ClickModel(1, 8)
+    ]);
+  }
+
+  updateClicks(id: number): Promise<void> {
+    return Promise.resolve();
+  }
 }

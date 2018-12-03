@@ -2,7 +2,7 @@ import * as React from 'react';
 import { shallow, ShallowWrapper } from 'enzyme';
 import { MetricsPage } from './MetricsPage';
 import Mock = jest.Mock;
-import { LoginModel } from '../component/metrics/login/LoginModel';
+import { MetricModel } from '../component/metrics/metric/MetricModel';
 import { UserModel } from '../component/metrics/user/UserModel';
 import * as moment from 'moment';
 import { Moment } from 'moment';
@@ -26,9 +26,9 @@ describe('MetricsPage', () => {
     metricsStore = {
       userCount: 2,
       logins: [
-        new LoginModel(new UserModel(1, 'name1', 'card1'), loginTime),
-        new LoginModel(new UserModel(2, 'name2', 'card2'), loginTime),
-        new LoginModel(new UserModel(3, 'name3', 'card3'), loginTime),
+        new MetricModel(new UserModel(1, 'name1', 'card1'), loginTime),
+        new MetricModel(new UserModel(2, 'name2', 'card2'), loginTime),
+        new MetricModel(new UserModel(3, 'name3', 'card3'), loginTime),
       ]
     };
 

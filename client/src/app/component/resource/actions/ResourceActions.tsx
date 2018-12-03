@@ -19,8 +19,19 @@ export class ResourceActions {
   }
 
   @action.bound
+  async updateClicks(id: number) {
+    await this.resourceRepository.updateClicks(id);
+  }
+
+  @action.bound
+  async getClicks() {
+    this.resourceStore.setClicks(await this.resourceRepository.getAllClicks());
+  }
+
+  @action.bound
   async setAllResources() {
     this.resourceStore.setResources(await this.resourceRepository.findAllByAccount(this.profileStore.profile.cardID));
+    await this.getClicks();
   }
 
   @action.bound

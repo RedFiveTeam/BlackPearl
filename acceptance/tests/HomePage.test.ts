@@ -231,3 +231,45 @@ Scenario('should validate user resource input', async (I) => {
   I.click('SAVE', '.modal');
   I.waitForText('Please enter a valid address (https://www...)');
 });
+
+Scenario('should order by most clicked', async (I) => {
+  I.haveHeader('Authorization', 'Basic Q1JPU1MuSk9SREFOLk1JRERMRS4wMTIzNDU2Nzg5OjE=');
+  let name = 'TestPage' + Date.now();
+
+  //create
+  I.amOnPage('/');
+  I.click('.tab:nth-of-type(1) > div', '.tabContainer');
+  I.click('Add Resource');
+  I.fillField('.titleField', name);
+  I.fillField('.urlField', 'Y:/Resource1');
+  I.click('SAVE', '.modal');
+  I.waitForText('Resource Link Added', 10);
+  I.waitForText(name, 10);
+
+  //create
+  I.click('Add Resource');
+  I.fillField('.titleField', name + '2');
+  I.fillField('.urlField', 'Y:/Resource2');
+  I.click('SAVE', '.modal');
+  I.waitForText('Resource Link Added', 10);
+  I.waitForText(name + '2', 10);
+
+  I.click(name + '2');
+  I.click(name + '2');
+  I.click(name + '2');
+
+  I.refreshPage();
+  I.wait(2);
+  let title = await I.grabAttributeFrom('.resource:last-of-type > a', 'href');
+  homeAssert.strictEqual(title, 'Y:/Resource1');
+
+  //delete
+  I.click('.threeDotButton' + `.${name}`);
+  I.click('.deleteButton');
+  I.click('.confirmButton');
+  I.click('.threeDotButton' + `.${name + '2'}`);
+  I.click('.deleteButton');
+  I.click('.confirmButton');
+  I.dontSee(name);
+  I.dontSee(name + '2');
+});

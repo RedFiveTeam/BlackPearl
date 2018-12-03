@@ -1,24 +1,24 @@
-import { LoginRepository } from './LoginRepository.tsx';
 import { ProfileModel } from '../../../profile/ProfileModel';
-import { LoginModel } from './LoginModel';
+import { MetricModel } from './MetricModel';
 import { UserModel } from '../user/UserModel';
 import * as moment from 'moment';
+import { MetricRepository } from './MetricRepository';
 
-export class StubLoginRepository implements LoginRepository {
-  addLogin(profile: ProfileModel): Promise<LoginModel> {
-    return Promise.resolve(new LoginModel(
+export class StubMetricRepository implements MetricRepository {
+  addLogin(profile: ProfileModel): Promise<MetricModel> {
+    return Promise.resolve(new MetricModel(
       new UserModel(1, 'user1', 'card1'),
       moment('2018-11-11 11:11:11')
     ));
   }
 
-  findAll(): Promise<LoginModel[]> {
+  findAll(): Promise<MetricModel[]> {
     return Promise.resolve([
-      new LoginModel(
+      new MetricModel(
         new UserModel(1, 'u1', 'card1'),
         moment('2018-08-22T00:00:00.000Z').utc()
       ),
-      new LoginModel(
+      new MetricModel(
         new UserModel(2, 'u2', 'card2'),
         moment('2018-08-22T00:00:00.000Z').utc()
       )

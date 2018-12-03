@@ -1,20 +1,20 @@
 import { computed, observable } from 'mobx';
 import { UserModel } from '../../component/metrics/user/UserModel';
 import { UserRepository } from '../../component/metrics/user/UserRepository';
-import { LoginModel } from '../../component/metrics/login/LoginModel';
-import { LoginRepository } from '../../component/metrics/login/LoginRepository.tsx';
+import { MetricModel } from '../../component/metrics/metric/MetricModel';
+import { MetricRepository } from '../../component/metrics/metric/MetricRepository';
 import moment = require('moment-timezone');
 
 export class MetricsStore {
   @observable private _users: UserModel[];
-  @observable private _logins: LoginModel[];
+  @observable private _logins: MetricModel[];
 
   async hydrate(
     userRepository: UserRepository,
-    loginRepository: LoginRepository
+    metricRepository: MetricRepository
   ) {
     this._users = await userRepository.findAll();
-    this._logins = await loginRepository.findAll();
+    this._logins = await metricRepository.findAll();
   }
 
   @computed
@@ -25,7 +25,7 @@ export class MetricsStore {
   @computed
   get logins() {
     return this._logins ? this._logins : [
-      new LoginModel(new UserModel(1, 'loading', 'loading'), moment())
+      new MetricModel(new UserModel(1, 'loading', 'loading'), moment())
     ];
   }
 }

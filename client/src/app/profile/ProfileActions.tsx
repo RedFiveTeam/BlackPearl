@@ -3,17 +3,17 @@ import { ProfileRepository } from './ProfileRepository';
 import { Repositories } from '../utils/Repositories';
 import { Stores } from '../utils/Stores';
 import { action } from 'mobx';
-import { LoginRepository } from '../component/metrics/login/LoginRepository.tsx';
+import { MetricRepository } from '../component/metrics/metric/MetricRepository';
 
 export class ProfileActions {
   private profileStore: ProfileStore;
   private profileRepository: ProfileRepository;
-  private loginRepository: LoginRepository;
+  private metricRepository: MetricRepository;
 
   constructor(stores: Partial<Stores>, repositories: Partial<Repositories>) {
     this.profileStore = stores.profileStore!;
     this.profileRepository = repositories.profileRepository!;
-    this.loginRepository = repositories.loginRepository!;
+    this.metricRepository = repositories.metricRepository!;
   }
 
   @action.bound
@@ -24,7 +24,7 @@ export class ProfileActions {
 
   @action.bound
   async addLogin() {
-    await this.loginRepository.addLogin(this.profileStore.profile);
+    await this.metricRepository.addLogin(this.profileStore.profile);
   }
 
   @action.bound

@@ -23,7 +23,9 @@ describe('ResourceActions', () => {
       resources: [
         new ResourceModel(1, 'http://www.test.com', 'TestResource', 1, 'Guest', 0)
       ],
-      performLoading: async (fun: any) => { await fun(); }
+      performLoading: async (fun: any) => { await fun(); },
+      getAllClicks: jest.fn(),
+      setClicks: jest.fn()
     };
 
     profileStore = {
@@ -36,6 +38,7 @@ describe('ResourceActions', () => {
     resourceRepository.updateResource = jest.fn();
     resourceRepository.saveResource = jest.fn();
     resourceRepository.updateGivenResources = jest.fn();
+    resourceRepository.updateClicks = jest.fn();
 
     testResources = [
       new ResourceModel(1, 'https://www.google.com', 'Google', 1),

@@ -5,7 +5,7 @@ import lombok.Data;
 
 @AllArgsConstructor
 @Data
-public class LoginJSON {
+public class MetricJSON {
   private String cardId;
   private String time;
 }

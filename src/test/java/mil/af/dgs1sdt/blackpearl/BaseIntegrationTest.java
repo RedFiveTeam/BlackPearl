@@ -6,6 +6,7 @@ import mil.af.dgs1sdt.blackpearl.information.InformationRepository;
 import mil.af.dgs1sdt.blackpearl.operation.OperationRepository;
 import mil.af.dgs1sdt.blackpearl.resource.ResourceRepository;
 import mil.af.dgs1sdt.blackpearl.resource.blame.BlameRepository;
+import mil.af.dgs1sdt.blackpearl.resource.click.ClickRepository;
 import mil.af.dgs1sdt.blackpearl.time.TimeRepository;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,7 @@ public abstract class BaseIntegrationTest {
     @Autowired protected InformationRepository informationRepository;
     @Autowired protected OperationRepository operationRepository;
     @Autowired protected BlameRepository blameRepository;
+    @Autowired protected ClickRepository clickRepository;
 
     @LocalServerPort
     protected int port;

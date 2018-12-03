@@ -8,6 +8,7 @@
       "show": false,
       "openDevTools": true,
       "restart": true,
+      "alwaysOnTop": false,
       "height": 1080,
       "width": 1920,
       "switches": {

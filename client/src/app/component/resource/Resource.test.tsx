@@ -56,7 +56,7 @@ describe('Resource', () => {
     );
 
     expect(subject.find('.title').text()).toBe(resource2.name);
-    expect(subject.find('a').prop('href')).toBeFalsy();
+    expect(subject.find('a').prop('href')).toBe('Y:/MyFolder/MyFile.txt');
     expect(subject.find(FolderIcon).exists()).toBeTruthy();
   });
 

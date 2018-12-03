@@ -15,9 +15,9 @@ import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.equalTo;
 import static org.junit.Assert.assertEquals;
 
-public class LoginControllerTest extends BaseIntegrationTest {
+public class MetricControllerTest extends BaseIntegrationTest {
   @Autowired
-  LoginRepository loginRepository;
+  MetricRepository metricRepository;
   @Autowired
   AccountRepository accountRepository;
 
@@ -34,36 +34,36 @@ public class LoginControllerTest extends BaseIntegrationTest {
   @Test
   public void postNewLoginTest() throws Exception {
 
-    LoginJSON loginJSON = new LoginJSON("card1", "2018-11-20T20:53:12.268Z");
-    List<Login> savedLogins;
+    MetricJSON metricJSON = new MetricJSON("card1", "2018-11-20T20:53:12.268Z");
+    List<Metric> savedMetrics;
 
-    savedLogins = loginRepository.findAll();
-    assertEquals(0, savedLogins.size());
+    savedMetrics = metricRepository.findAll();
+    assertEquals(0, savedMetrics.size());
 
-    final String json = objectMapper.writeValueAsString(loginJSON);
+    final String json = objectMapper.writeValueAsString(metricJSON);
 
     given()
       .port(port)
       .contentType("application/json")
       .body(json)
       .when()
-      .post(LoginController.URI)
+      .post(MetricController.URI)
       .then()
       .statusCode(200);
 
-    savedLogins = loginRepository.findAll();
-    assertEquals(1, savedLogins.size());
+    savedMetrics = metricRepository.findAll();
+    assertEquals(1, savedMetrics.size());
   }
 
   @Test
   public void selectTest() {
-    loginRepository.save(new Login(accountRepository.findAll().get(0), new Date()));
+    metricRepository.save(new Metric(accountRepository.findAll().get(0), new Date()));
 
     given()
       .port(port)
       .contentType("application/json")
       .when()
-      .get(LoginController.URI)
+      .get(MetricController.URI)
       .then()
       .statusCode(200)
       .body("size()", equalTo(1));

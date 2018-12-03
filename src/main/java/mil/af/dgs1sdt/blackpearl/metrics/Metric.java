@@ -10,10 +10,9 @@ import java.util.Date;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity(name = "Login")
+@Entity
 @Data
-@Table(name = "login")
-public class Login {
+public class Metric {
   @Id
   @GeneratedValue
   private Long id;
@@ -24,7 +23,7 @@ public class Login {
 
   private Date time;
 
-  public Login(Account account, Date time) {
+  public Metric(Account account, Date time) {
     this.account = account;
     this.time = time;
   }

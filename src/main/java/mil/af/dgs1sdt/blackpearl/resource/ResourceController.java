@@ -2,6 +2,7 @@ package mil.af.dgs1sdt.blackpearl.resource;
 
 import mil.af.dgs1sdt.blackpearl.resource.blame.Blame;
 import mil.af.dgs1sdt.blackpearl.resource.blame.BlameRepository;
+import mil.af.dgs1sdt.blackpearl.resource.click.ClickRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -20,6 +21,9 @@ public class ResourceController {
 
   @Autowired
   ResourceRepository resourceRepository;
+
+  @Autowired
+  ClickRepository clickRepository;
 
   @Autowired
   BlameRepository blameRepository;
@@ -72,6 +76,7 @@ public class ResourceController {
     );
 
     this.blameRepository.save(blame);
+    this.clickRepository.getAllByResourceID(id).forEach((r) -> this.clickRepository.deleteById(r.getId()));
     resourceRepository.deleteById(id);
     return ResponseEntity.noContent().build();
   }

@@ -1,14 +1,14 @@
 import { ProfileActions } from './ProfileActions';
 import { StubProfileRepository } from './StubProfileRepository';
 import { ProfileRepository } from './ProfileRepository';
-import { LoginRepository } from '../component/metrics/login/LoginRepository.tsx';
-import { StubLoginRepository } from '../component/metrics/login/StubLoginRepository';
+import { StubMetricRepository } from '../component/metrics/metric/StubMetricRepository';
+import { MetricRepository } from '../component/metrics/metric/MetricRepository';
 
 describe('ProfileActions', () => {
   let subject: ProfileActions;
   let profileRepository: ProfileRepository;
   let profileStore: any;
-  let loginRepository: LoginRepository;
+  let metricRepository: MetricRepository;
 
   beforeEach(() => {
     profileStore = {
@@ -16,10 +16,10 @@ describe('ProfileActions', () => {
     };
 
     profileRepository = new StubProfileRepository();
-    loginRepository = new StubLoginRepository();
-    loginRepository.addLogin = jest.fn();
+    metricRepository = new StubMetricRepository();
+    metricRepository.addLogin = jest.fn();
 
-    subject = new ProfileActions({profileStore} as any, {profileRepository, loginRepository} as any);
+    subject = new ProfileActions({profileStore} as any, {profileRepository, metricRepository: metricRepository} as any);
   });
 
   it('should get the current account', async () => {
@@ -29,6 +29,6 @@ describe('ProfileActions', () => {
 
   it('should post a new metrics when it adds a login', async () => {
     await subject.addLogin();
-    expect(loginRepository.addLogin).toHaveBeenCalled();
+    expect(metricRepository.addLogin).toHaveBeenCalled();
   });
 });

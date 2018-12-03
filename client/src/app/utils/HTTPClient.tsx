@@ -12,6 +12,7 @@ export class UnauthorizedErrorResponse extends ErrorResponse {
 
 export class HTTPClient {
   private authorization = Cookie.get('Authorization') || '';
+
   constructor(private baseURL: string = '/') {
   }
 
@@ -51,6 +52,19 @@ export class HTTPClient {
         headers: [
           ['Content-Type', 'application/json'],
         ],
+        credentials: 'include',
+      }
+    );
+    const json = await resp.json();
+    this.handleErrors(resp.status, json);
+    return json;
+  }
+
+  async get(path: string) {
+    const resp = await fetch(
+      urljoin(this.baseURL, path),
+      {
+        method: 'GET',
         credentials: 'include',
       }
     );

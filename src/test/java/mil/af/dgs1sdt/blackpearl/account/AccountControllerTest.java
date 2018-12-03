@@ -39,7 +39,6 @@ public class AccountControllerTest extends BaseIntegrationTest {
       .when()
       .put(AccountController.URI + "/" + account.getId())
       .then()
-      .log().all()
       .statusCode(200)
       .body("specialty", equalTo(1));
   }
