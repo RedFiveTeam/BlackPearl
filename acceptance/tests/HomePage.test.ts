@@ -95,11 +95,6 @@ Scenario('should allow the user to change tabs and see specialty resources', (I)
   I.see('Fusion Amazon');
   I.see('Fusion YouTube');
   I.see('Fusion Reddit');
-
-  I.click('.tab:nth-of-type(4) > div', '.tabContainer');
-  I.see('MOC Amazon');
-  I.see('MOC YouTube');
-  I.see('MOC Reddit');
 });
 
 Scenario('should allow the user to add, edit and delete an operation', async (I) => {

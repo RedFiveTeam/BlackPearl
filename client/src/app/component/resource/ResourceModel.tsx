@@ -10,10 +10,7 @@ export enum Category {
   HighAlt_TargetResearch = 6,
   Fusion_Main = 7,
   Fusion_SituationalAwareness = 8,
-  Fusion_TargetResearch = 9,
-  MOC_Main = 10,
-  MOC_SituationalAwareness = 11,
-  MOC_TargetResearch = 12
+  Fusion_TargetResearch = 9
 }
 
 export enum CategoryName {
@@ -26,10 +23,11 @@ export enum CategoryName {
   HighAlt_TargetResearch = 'Target Research',
   Fusion_Main = 'Main',
   Fusion_SituationalAwareness = 'Situational Awareness',
-  Fusion_TargetResearch = 'Target Research',
-  MOC_Main = 'Main',
-  MOC_SituationalAwareness = 'Situational Awareness',
-  MOC_TargetResearch = 'Target Research',
+  Fusion_TargetResearch = 'Target Research'
+}
+
+export enum Sort {
+  MostClicked = 0
 }
 
 export class ResourceModel {

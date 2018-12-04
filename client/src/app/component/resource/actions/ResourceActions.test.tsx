@@ -25,7 +25,8 @@ describe('ResourceActions', () => {
       ],
       performLoading: async (fun: any) => { await fun(); },
       getAllClicks: jest.fn(),
-      setClicks: jest.fn()
+      setClicks: jest.fn(),
+      sortResourcesByPositionDesc: jest.fn()
     };
 
     profileStore = {
@@ -57,6 +58,8 @@ describe('ResourceActions', () => {
   it('should store every resource in store', async () => {
     await subject.setAllResources();
     expect(resourceStore.setResources).toHaveBeenCalled();
+    expect(resourceStore.setClicks).toHaveBeenCalled();
+    expect(resourceStore.sortResourcesByPositionDesc).toHaveBeenCalled();
   });
 
   it('should clear pending resource', () => {

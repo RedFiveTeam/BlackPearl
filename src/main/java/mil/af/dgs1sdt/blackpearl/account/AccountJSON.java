@@ -25,10 +25,14 @@ public class AccountJSON {
   @NotNull(message = emptyFieldMessage)
   private Long specialty;
 
-  public AccountJSON(String cardID, String name, Long role, Long specialty) {
+  @NotNull(message = emptyFieldMessage)
+  private Long sort;
+
+  public AccountJSON(String cardID, String name, Long role, Long specialty, Long sort) {
     this.cardID = cardID;
     this.name = name;
     this.role = role;
     this.specialty = specialty;
+    this.sort = sort;
   }
 }

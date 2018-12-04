@@ -48,7 +48,7 @@ describe('ResourceStore', () => {
     expect(subject.hasPendingEdit).toBeTruthy();
   });
 
-  it('should sum clicks with the same id', () => {
+  it('should sum clicks with the same id and sort them', () => {
     let resources: ResourceModel[];
     resources = [
       new ResourceModel(1, 'https://www.google.com', 'Google', Category.FMV_Main),
@@ -67,12 +67,14 @@ describe('ResourceStore', () => {
     ];
     subject.setClicks(clicks);
 
+    expect(subject.resources[0].position).toBe(15);
+    expect(subject.resources[1].position).toBe(40);
+    expect(subject.resources[2].position).toBe(10);
+
+    subject.sortResourcesByPositionDesc();
+
     expect(subject.resources[0].position).toBe(40);
     expect(subject.resources[1].position).toBe(15);
     expect(subject.resources[2].position).toBe(10);
-
-    expect(subject.resources[0].id).toBe(2);
-    expect(subject.resources[1].id).toBe(1);
-    expect(subject.resources[2].id).toBe(3);
   });
 });

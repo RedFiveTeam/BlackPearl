@@ -24,14 +24,15 @@ export class ResourceActions {
   }
 
   @action.bound
-  async getClicks() {
+  async setAllResources() {
+    this.resourceStore.setResources(await this.resourceRepository.findAllByAccount(this.profileStore.profile.cardID));
     this.resourceStore.setClicks(await this.resourceRepository.getAllClicks());
+    await this.sortResources();
   }
 
   @action.bound
-  async setAllResources() {
-    this.resourceStore.setResources(await this.resourceRepository.findAllByAccount(this.profileStore.profile.cardID));
-    await this.getClicks();
+  async sortResources() {
+    await this.resourceStore.sortResourcesByPositionDesc();
   }
 
   @action.bound

@@ -53,7 +53,6 @@ export class ResourceStore extends LoadingStore {
         .filter((r) => r.id === c.resourceID)
         .map((r) => r.setPosition(r.position! + c.clicks));
     });
-    this.sortResourcesByPositionDesc();
   }
 
   @action.bound

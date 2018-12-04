@@ -4,6 +4,8 @@ import styled from 'styled-components';
 import { ResourceStore } from '../resource/stores/ResourceStore';
 import { ProfileStore } from '../../profile/ProfileStore';
 import { ProfileActions } from '../../profile/ProfileActions';
+import { Sort } from '../resource/ResourceModel';
+import { DropdownIcon } from '../../icon/DropdownIcon';
 
 const Person = require('../../icon/Person.png');
 
@@ -17,15 +19,13 @@ interface Props {
 export enum Tab {
   FMV = 1,
   HighAlt = 2,
-  Fusion = 3,
-  MOC = 4
+  Fusion = 3
 }
 
 export enum TabName {
   FMV = 'FMV',
   HighAlt = 'High Alt',
-  Fusion = 'Fusion',
-  MOC = 'MOC'
+  Fusion = 'Fusion'
 }
 
 @observer
@@ -70,11 +70,22 @@ export class TabContainer extends React.Component<Props> {
           })
         }
         <div className="profileBanner">
-          {
-            this.props.profileStore!.profile &&
-            this.props.profileStore!.profile.name
-          }
-          <img className="personImage" src={Person}/>
+          <div className="sortSection">
+            Sort By:
+            <select
+              className="sortSelector"
+            >
+              <option value={Sort.MostClicked}>Most Clicked</option>
+            </select>
+            <DropdownIcon/>
+          </div>
+          <div className="profileSection">
+            {
+              this.props.profileStore!.profile &&
+              this.props.profileStore!.profile.name
+            }
+            <img className="personImage" src={Person}/>
+          </div>
         </div>
       </div>
     );
@@ -89,12 +100,45 @@ export const StyledTabContainer = inject('resourceStore', 'profileStore')(styled
   .profileBanner {
     align-items: center;
     position: absolute;
-    right: 0px;
+    right: 0;
     display: flex;
+    justify-content: space-between;
     font-size: 12px;
     color: white;
     font-family: Amaranth;
     z-index: 10;
+    width: 650px;
+  }
+  
+  .profileSection {
+    align-items: center;
+    display: flex;
+    color: white;
+  }
+  
+  .sortSection {
+    .dropIcon {
+      width: 10px;
+      height: 10px;
+      margin-left: -10px;
+    }
+  }
+    
+  .sortSelector {
+    position: relative;
+    -webkit-appearance: none;
+    margin-left: 5px;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-bottom: 1px solid #FFFFFF;
+    background: none;
+    color: #FFFFFF;
+    font-family: Amaranth;
+    border-radius: 0 0 0 0;
+    font-size: 12px;
+    outline: none;
+    width: 76px;
   }
   
   .tab {

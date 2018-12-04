@@ -30,6 +30,6 @@ public class AccountServiceTest {
 
     subject.getProfile("LastName.FirstName.MiddleName.123456789123");
 
-    verify(profileRepository).save(new Account("LastName.FirstName.MiddleName.123456789123", "FirstName LastName", 1L, 1L));
+    verify(profileRepository).save(new Account("LastName.FirstName.MiddleName.123456789123", "FirstName LastName", 1L, 1L, 0L));
   }
  }

@@ -25,11 +25,10 @@ describe('TabContainer', () => {
   });
 
   it('should render four tabs', () => {
-    expect(subject.find('.tab').length).toBe(4);
+    expect(subject.find('.tab').length).toBe(3);
     expect(subject.find('.tab1').text()).toBe('FMV');
     expect(subject.find('.tab2').text()).toBe('High Alt');
     expect(subject.find('.tab3').text()).toBe('Fusion');
-    expect(subject.find('.tab4').text()).toBe('MOC');
   });
 
   it('should change the active tab', () => {
@@ -39,5 +38,10 @@ describe('TabContainer', () => {
 
   it('should display an profile banner', () => {
     expect(subject.find('.profileBanner').exists()).toBeTruthy();
+  });
+
+  it('should display a sort by selector', () => {
+    expect(subject.find('.sortSelector').exists()).toBeTruthy();
+
   });
 });
