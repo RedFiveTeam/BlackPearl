@@ -4,10 +4,7 @@ import styled from 'styled-components';
 import { ResourceStore } from '../resource/stores/ResourceStore';
 import { ProfileStore } from '../../profile/ProfileStore';
 import { ProfileActions } from '../../profile/ProfileActions';
-import { Sort } from '../resource/ResourceModel';
-import { DropdownIcon } from '../../icon/DropdownIcon';
-
-const Person = require('../../icon/Person.png');
+import { StyledProfileContainer } from '../../profile/ProfileContainer';
 
 interface Props {
   className?: string;
@@ -69,24 +66,7 @@ export class TabContainer extends React.Component<Props> {
             );
           })
         }
-        <div className="profileBanner">
-          <div className="sortSection">
-            Sort By:
-            <select
-              className="sortSelector"
-            >
-              <option value={Sort.MostClicked}>Most Clicked</option>
-            </select>
-            <DropdownIcon/>
-          </div>
-          <div className="profileSection">
-            {
-              this.props.profileStore!.profile &&
-              this.props.profileStore!.profile.name
-            }
-            <img className="personImage" src={Person}/>
-          </div>
-        </div>
+        <StyledProfileContainer/>
       </div>
     );
   }
@@ -96,50 +76,6 @@ export const StyledTabContainer = inject('resourceStore', 'profileStore')(styled
   display: flex;
   padding-left: 10px;
   position: relative;
-  
-  .profileBanner {
-    align-items: center;
-    position: absolute;
-    right: 0;
-    display: flex;
-    justify-content: space-between;
-    font-size: 12px;
-    color: white;
-    font-family: Amaranth;
-    z-index: 10;
-    width: 650px;
-  }
-  
-  .profileSection {
-    align-items: center;
-    display: flex;
-    color: white;
-  }
-  
-  .sortSection {
-    .dropIcon {
-      width: 10px;
-      height: 10px;
-      margin-left: -10px;
-    }
-  }
-    
-  .sortSelector {
-    position: relative;
-    -webkit-appearance: none;
-    margin-left: 5px;
-    border-top: none;
-    border-left: none;
-    border-right: none;
-    border-bottom: 1px solid #FFFFFF;
-    background: none;
-    color: #FFFFFF;
-    font-family: Amaranth;
-    border-radius: 0 0 0 0;
-    font-size: 12px;
-    outline: none;
-    width: 76px;
-  }
   
   .tab {
     display: inline-block;
@@ -162,12 +98,5 @@ export const StyledTabContainer = inject('resourceStore', 'profileStore')(styled
     background: #AEA4BF;
     z-index: 2;
     box-shadow: -3px -4px 6px rgba(0,0,0,0.25), 3px -4px 6px rgba(0,0,0,0.25);
-  }
-    
-  .personImage {
-    width: 31px;
-    height: 31px;
-    margin-right: 4px;
-    margin-left: 10px;
   }
 `);

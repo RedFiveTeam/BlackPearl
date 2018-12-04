@@ -70,11 +70,50 @@ describe('ResourceStore', () => {
     expect(subject.resources[0].position).toBe(15);
     expect(subject.resources[1].position).toBe(40);
     expect(subject.resources[2].position).toBe(10);
+  });
 
+  it('should sort resources by position desc', () => {
+    let resources: ResourceModel[];
+    resources = [
+      new ResourceModel(1, 'https://www.google.com', 'Google', Category.FMV_Main, '', 20),
+      new ResourceModel(2, 'https://www.yahoo.com', 'Yahoo', Category.FMV_Main, '', 10),
+      new ResourceModel(3, 'https://www.ebay.com', 'eBay', Category.FMV_SituationalAwareness, '', 30)
+    ];
+    subject.setResources(resources);
     subject.sortResourcesByPositionDesc();
 
-    expect(subject.resources[0].position).toBe(40);
-    expect(subject.resources[1].position).toBe(15);
+    expect(subject.resources[0].position).toBe(30);
+    expect(subject.resources[1].position).toBe(20);
     expect(subject.resources[2].position).toBe(10);
+  });
+
+  it('should sort resources by id desc', () => {
+    let resources: ResourceModel[];
+    resources = [
+      new ResourceModel(1, 'https://www.google.com', 'Google', Category.FMV_Main, '', 20),
+      new ResourceModel(2, 'https://www.yahoo.com', 'Yahoo', Category.FMV_Main, '', 10),
+      new ResourceModel(3, 'https://www.ebay.com', 'eBay', Category.FMV_SituationalAwareness, '', 30)
+    ];
+    subject.setResources(resources);
+    subject.sortResourcesByIdDesc();
+
+    expect(subject.resources[0].id).toBe(3);
+    expect(subject.resources[1].id).toBe(2);
+    expect(subject.resources[2].id).toBe(1);
+  });
+
+  it('should sort resources by name desc', () => {
+    let resources: ResourceModel[];
+    resources = [
+      new ResourceModel(1, 'https://www.google.com', 'Google', Category.FMV_Main, '', 20),
+      new ResourceModel(2, 'https://www.yahoo.com', 'Yahoo', Category.FMV_Main, '', 10),
+      new ResourceModel(3, 'https://www.ebay.com', 'eBay', Category.FMV_SituationalAwareness, '', 30)
+    ];
+    subject.setResources(resources);
+    subject.sortResourcesByNameDesc();
+
+    expect(subject.resources[0].name).toBe('eBay');
+    expect(subject.resources[1].name).toBe('Google');
+    expect(subject.resources[2].name).toBe('Yahoo');
   });
 });

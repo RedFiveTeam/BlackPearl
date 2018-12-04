@@ -25,7 +25,6 @@ public class AccountJSON {
   @NotNull(message = emptyFieldMessage)
   private Long specialty;
 
-  @NotNull(message = emptyFieldMessage)
   private Long sort;
 
   public AccountJSON(String cardID, String name, Long role, Long specialty, Long sort) {

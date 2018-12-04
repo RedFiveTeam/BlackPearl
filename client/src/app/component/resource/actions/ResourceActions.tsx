@@ -3,7 +3,7 @@ import { Repositories } from '../../../utils/Repositories';
 import { Stores } from '../../../utils/Stores';
 import { action } from 'mobx';
 import { ResourceRepository } from '../repositories/ResourceRepository';
-import { Category, ResourceModel } from '../ResourceModel';
+import { Category, ResourceModel, Sort } from '../ResourceModel';
 import { ProfileStore } from '../../../profile/ProfileStore';
 import { toast } from 'react-toastify';
 
@@ -26,13 +26,25 @@ export class ResourceActions {
   @action.bound
   async setAllResources() {
     this.resourceStore.setResources(await this.resourceRepository.findAllByAccount(this.profileStore.profile.cardID));
-    this.resourceStore.setClicks(await this.resourceRepository.getAllClicks());
     await this.sortResources();
   }
 
   @action.bound
   async sortResources() {
-    await this.resourceStore.sortResourcesByPositionDesc();
+    switch (this.profileStore.profile.sort) {
+      case Sort.MostClicked:
+        this.resourceStore.setClicks(await this.resourceRepository.getAllClicks());
+        await this.resourceStore.sortResourcesByPositionDesc();
+        break;
+      case Sort.Newest:
+        await this.resourceStore.sortResourcesByIdDesc();
+        break;
+      case Sort.Alphabetical:
+        await this.resourceStore.sortResourcesByNameDesc();
+        break;
+      default:
+        break;
+    }
   }
 
   @action.bound

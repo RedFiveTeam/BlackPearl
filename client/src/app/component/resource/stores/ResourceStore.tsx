@@ -48,6 +48,7 @@ export class ResourceStore extends LoadingStore {
 
   @action.bound
   setClicks(clicks: ClickModel[]) {
+    this.resources.filter((r) => r.categoryID !== 0).map((r) => { r.setPosition(0); });
     clicks.forEach((c: ClickModel) => {
       this.resources.filter((r) => r.categoryID !== 0)
         .filter((r) => r.id === c.resourceID)
@@ -60,6 +61,26 @@ export class ResourceStore extends LoadingStore {
     this.setResources(
       this.resources.filter((r) => r.categoryID !== 0).slice().sort((a, b) => {
         return b.position! - a.position!;
+      }).concat(this.resources.filter((r) => r.categoryID === 0))
+    );
+  }
+
+  @action.bound
+  sortResourcesByIdDesc() {
+    this.setResources(
+      this.resources.filter((r) => r.categoryID !== 0).slice().sort((a, b) => {
+        return b.id! - a.id!;
+      }).concat(this.resources.filter((r) => r.categoryID === 0))
+    );
+  }
+
+  @action.bound
+  sortResourcesByNameDesc() {
+    this.setResources(
+      this.resources.filter((r) => r.categoryID !== 0).slice().sort((a, b) => {
+        let name1 = a.name!.toLowerCase();
+        let name2 = b.name!.toLowerCase();
+        return name1 < name2 ? -1 : (name1 > name2 ? 1 : 0);
       }).concat(this.resources.filter((r) => r.categoryID === 0))
     );
   }

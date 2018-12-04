@@ -36,4 +36,10 @@ export class ProfileActions {
     this.profileStore.profile.setSpecialty(tab);
     await this.updateProfile();
   }
+
+  @action.bound
+  async updateSort(sort: number) {
+    this.profileStore.profile.setSort(sort);
+    await this.profileRepository.updateProfile(this.profileStore.profile);
+  }
 }
