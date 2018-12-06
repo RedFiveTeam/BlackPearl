@@ -34,7 +34,7 @@ public class MetricControllerTest extends BaseIntegrationTest {
   @Test
   public void postNewLoginTest() throws Exception {
 
-    MetricJSON metricJSON = new MetricJSON("card1", "2018-11-20T20:53:12.268Z");
+    MetricJSON metricJSON = new MetricJSON("card1", 1542747192L, "VISIT", "Home");
     List<Metric> savedMetrics;
 
     savedMetrics = metricRepository.findAll();
@@ -57,7 +57,13 @@ public class MetricControllerTest extends BaseIntegrationTest {
 
   @Test
   public void selectTest() {
-    metricRepository.save(new Metric(accountRepository.findAll().get(0), new Date()));
+    metricRepository.save(new Metric(
+      accountRepository.findAll().get(0).getId(),
+      accountRepository.findAll().get(0).getCardID(),
+      new Date(),
+      "VISIT",
+      "Home"
+    ));
 
     given()
       .port(port)

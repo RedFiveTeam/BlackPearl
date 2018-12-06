@@ -5,13 +5,17 @@ import { StyledAdminCardContainer } from '../component/card/admin/AdminCardConta
 
 describe('AdminPage', () => {
   let subject: ShallowWrapper;
+  let metricActions: any;
 
   beforeEach(() => {
-    subject = shallow(<AdminPage/>);
+    metricActions = {
+      logMetric: jest.fn()
+    };
+
+    subject = shallow(<AdminPage metricActions={metricActions}/>);
   });
 
   it('should render an Admin Card Container', () => {
     expect(subject.find(StyledAdminCardContainer).exists()).toBeTruthy();
   });
-
 });

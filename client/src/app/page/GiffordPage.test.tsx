@@ -4,9 +4,14 @@ import { GiffordPage } from './GiffordPage';
 
 describe('GiffordPage', () => {
   let subject: ShallowWrapper;
+  let metricActions: any;
 
   beforeEach(() => {
-    subject = shallow(<GiffordPage/>);
+    metricActions = {
+      logMetric: jest.fn()
+    };
+
+    subject = shallow(<GiffordPage metricActions={metricActions}/>);
   });
 
   it('should say thank you', () => {

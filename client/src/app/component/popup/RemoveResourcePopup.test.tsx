@@ -7,8 +7,13 @@ describe('RemoveResourcePopup', () => {
   let subject: ReactWrapper;
   let resourceStore: any;
   let resourceActions: any;
+  let metricActions: any;
 
   beforeEach(() => {
+    metricActions = {
+      logMetrics: jest.fn()
+    };
+
     resourceActions = {
       clearPendingDelete: jest.fn(),
       delete: jest.fn()
@@ -18,7 +23,13 @@ describe('RemoveResourcePopup', () => {
       pendingDelete: new ResourceModel(1, 'deleteMe.com', 'Delete Me')
     };
 
-    subject = mount(<StyledRemoveResourcePopup resourceActions={resourceActions} resourceStore={resourceStore}/>);
+    subject = mount(
+      <StyledRemoveResourcePopup
+        resourceActions={resourceActions}
+        resourceStore={resourceStore}
+        metricActions={metricActions}
+      />
+    );
   });
 
   it('should close the popup when cancel is clicked', () => {

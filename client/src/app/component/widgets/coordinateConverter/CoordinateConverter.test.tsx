@@ -8,8 +8,13 @@ describe('CoordinateConverter', () => {
   let subject: ShallowWrapper;
   let mgrsFunction: any;
   let latLongFunction: any;
+  let metricActions: any;
 
   beforeEach(() => {
+    metricActions = {
+      logMetrics: jest.fn()
+    };
+
     mgrsFunction = jest.fn();
     latLongFunction = jest.fn();
 
@@ -19,6 +24,7 @@ describe('CoordinateConverter', () => {
         mgrsFunction={mgrsFunction}
         latLong={'123456N 1234567E'}
         latLongFunction={latLongFunction}
+        metricActions={metricActions}
       />
     );
   });

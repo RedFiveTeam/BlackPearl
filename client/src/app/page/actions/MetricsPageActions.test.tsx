@@ -1,11 +1,11 @@
 import { StubUserRepository } from '../../component/metrics/user/StubUserRepository';
 import { UserRepository } from '../../component/metrics/user/UserRepository';
 import { StubMetricRepository } from '../../component/metrics/metric/StubMetricRepository';
-import { MetricsActions } from './MetricsActions';
+import { MetricsPageActions } from './MetricsPageActions';
 import { MetricRepository } from '../../component/metrics/metric/MetricRepository';
 
-describe('MetricsActions', () => {
-  let subject: MetricsActions;
+describe('MetricsPageActions', () => {
+  let subject: MetricsPageActions;
   let userRepository: UserRepository;
   let metricRepository: MetricRepository;
   let metricsStore: any;
@@ -17,7 +17,7 @@ describe('MetricsActions', () => {
 
     userRepository = new StubUserRepository();
     metricRepository = new StubMetricRepository();
-    subject = new MetricsActions({metricsStore}, {userRepository, metricRepository: metricRepository});
+    subject = new MetricsPageActions({metricsStore}, {userRepository, metricRepository: metricRepository});
   });
 
   it('should hydrate the store on initialize', async () => {

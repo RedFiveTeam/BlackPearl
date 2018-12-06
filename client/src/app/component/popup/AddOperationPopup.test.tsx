@@ -5,15 +5,20 @@ import { StyledAddOperationPopup } from './AddOperationPopup';
 describe('AddOperationPopup', () => {
   let subject: ReactWrapper;
   let operationActions: any;
+  let metricActions: any;
 
   beforeEach(() => {
+    metricActions = {
+      logMetric: jest.fn()
+    };
+
     operationActions = {
       clearPendingOperation: jest.fn(),
       updatePendingOperation: jest.fn(),
       saveOperation: jest.fn()
     };
 
-    subject = mount(<StyledAddOperationPopup operationActions={operationActions}/>);
+    subject = mount(<StyledAddOperationPopup operationActions={operationActions} metricActions={metricActions}/>);
   });
 
   it('should render a title field', () => {

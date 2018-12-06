@@ -21,15 +21,22 @@ import { StyledTimeContainer } from '../component/widgets/time/TimeContainer';
 import { Slide, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { StyledDeleteOperationPopup } from '../component/popup/DeleteOperationPopup';
+import { LogableActions } from '../component/metrics/metric/MetricModel';
+import { MetricActions } from '../component/metrics/metric/MetricActions';
 
 interface Props {
   resourceStore?: ResourceStore;
   operationStore?: OperationStore;
+  metricActions?: MetricActions;
   className?: string;
 }
 
 @observer
 export class HomePage extends React.Component<Props> {
+  componentDidMount() {
+    this.props.metricActions!.logMetric(LogableActions.VISIT, 'Home');
+  }
+
   render() {
     return (
       <div
@@ -92,7 +99,7 @@ export class HomePage extends React.Component<Props> {
   }
 }
 
-export const StyledHomePage = inject('resourceStore', 'operationStore')(styled(HomePage)`
+export const StyledHomePage = inject('resourceStore', 'operationStore', 'metricActions')(styled(HomePage)`
   margin-left: -8px;
   .myFavorites {
     height: 282px;

@@ -1,7 +1,7 @@
 import { computed, observable } from 'mobx';
 import { UserModel } from '../../component/metrics/user/UserModel';
 import { UserRepository } from '../../component/metrics/user/UserRepository';
-import { MetricModel } from '../../component/metrics/metric/MetricModel';
+import { LogableActions, MetricModel } from '../../component/metrics/metric/MetricModel';
 import { MetricRepository } from '../../component/metrics/metric/MetricRepository';
 import moment = require('moment-timezone');
 
@@ -24,8 +24,7 @@ export class MetricsStore {
 
   @computed
   get logins() {
-    return this._logins ? this._logins : [
-      new MetricModel(new UserModel(1, 'loading', 'loading'), moment())
-    ];
+    return this._logins ? this._logins :
+      [ new MetricModel(null, 0, 'loading', moment().unix(), LogableActions.VISIT, 'none') ];
   }
 }

@@ -5,8 +5,9 @@ import { Stores } from '../../utils/Stores';
 import { action } from 'mobx';
 import { MetricRepository } from '../../component/metrics/metric/MetricRepository';
 import { MetricModel } from '../../component/metrics/metric/MetricModel';
+import * as moment from 'moment';
 
-export class MetricsActions {
+export class MetricsPageActions {
   private metricsStore: MetricsStore;
   private readonly userRepository: UserRepository;
   private readonly metricRepository: MetricRepository;
@@ -25,14 +26,20 @@ export class MetricsActions {
   @action.bound
   exportLogins() {
     const a = document.createElement('a');
+    const array = ['time,cardID,action,context\r\n'];
     const file = new Blob(
-      this.metricsStore.logins.map((l: MetricModel) => {
-        return l.user.id + ' | ' + l.user.name + ' | ' + l.time.toISOString() + '\r\n';
-      }),
+      array.concat(this.metricsStore.logins.reverse().map((l: MetricModel) => {
+        return moment(l.time).format('MMMM Do YYYY H:mm') + 'Z' +
+          ',' + l.cardID +
+          ',' + l.action +
+          ',' + l.context +
+          '\r\n';
+      })),
       {type: 'text/plain'}
     );
+
     a.href = URL.createObjectURL(file);
-    a.download = 'logins.txt';
+    a.download = 'logins.csv';
     a.click();
   }
 }

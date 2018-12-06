@@ -1,6 +1,9 @@
 package mil.af.dgs1sdt.blackpearl.resource.click;
 
+import mil.af.dgs1sdt.blackpearl.metrics.Metric;
+import mil.af.dgs1sdt.blackpearl.metrics.MetricRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 

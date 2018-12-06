@@ -1,27 +1,30 @@
-import { ProfileModel } from '../../../profile/ProfileModel';
-import { MetricModel } from './MetricModel';
-import { UserModel } from '../user/UserModel';
+import { LogableActions, MetricModel } from './MetricModel';
 import * as moment from 'moment';
 import { MetricRepository } from './MetricRepository';
 
 export class StubMetricRepository implements MetricRepository {
-  addLogin(profile: ProfileModel): Promise<MetricModel> {
-    return Promise.resolve(new MetricModel(
-      new UserModel(1, 'user1', 'card1'),
-      moment('2018-11-11 11:11:11')
-    ));
-  }
-
   findAll(): Promise<MetricModel[]> {
     return Promise.resolve([
       new MetricModel(
-        new UserModel(1, 'u1', 'card1'),
-        moment('2018-08-22T00:00:00.000Z').utc()
+        1,
+        0,
+        'GUEST.GUEST.GUEST.0123456789',
+        moment('2018-08-22T00:00:00.000Z').utc().unix(),
+        LogableActions.VISIT,
+        'Home'
       ),
       new MetricModel(
-        new UserModel(2, 'u2', 'card2'),
-        moment('2018-08-22T00:00:00.000Z').utc()
+        2,
+        0,
+        'GUEST.GUEST.GUEST.0123456789',
+        moment('2018-08-22T00:00:00.000Z').utc().unix(),
+        LogableActions.CLICK_RESOURCE,
+        'https://www.google.com'
       )
     ]);
+  }
+
+  logMetric(metric: MetricModel): Promise<void> {
+    return Promise.resolve();
   }
 }

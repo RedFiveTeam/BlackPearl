@@ -5,8 +5,13 @@ import { StyledAddResourcePopup } from './AddResourcePopup';
 describe('AddResourcePopup', () => {
   let subject: ReactWrapper;
   let resourceActions: any;
+  let metricActions: any;
 
   beforeEach(() => {
+    metricActions = {
+      logMetrics: jest.fn()
+    };
+
     resourceActions = {
       saveResource: jest.fn(),
       clearPendingResource: jest.fn(),
@@ -14,7 +19,7 @@ describe('AddResourcePopup', () => {
       checkDuplicates: () => { return false; }
     };
 
-    subject = mount(<StyledAddResourcePopup resourceActions={resourceActions}/>);
+    subject = mount(<StyledAddResourcePopup resourceActions={resourceActions} metricActions={metricActions}/>);
   });
 
   it('should close the popup when cancel is clicked', () => {

@@ -20,9 +20,13 @@ describe('HomePage', () => {
   let subject: ShallowWrapper;
   let resourceStore: ResourceStore;
   let operationStore: OperationStore;
+  let metricActions: any;
   let returnResourcesInCategorySpy: jest.Mock;
 
   beforeEach(() => {
+    metricActions = {
+      logMetric: jest.fn()
+    };
     resourceStore = new ResourceStore();
     operationStore = new OperationStore();
 
@@ -34,6 +38,7 @@ describe('HomePage', () => {
       <HomePage
         resourceStore={resourceStore}
         operationStore={operationStore}
+        metricActions={metricActions}
       />
     );
   });

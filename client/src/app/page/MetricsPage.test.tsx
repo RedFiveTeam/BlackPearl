@@ -2,40 +2,44 @@ import * as React from 'react';
 import { shallow, ShallowWrapper } from 'enzyme';
 import { MetricsPage } from './MetricsPage';
 import Mock = jest.Mock;
-import { MetricModel } from '../component/metrics/metric/MetricModel';
-import { UserModel } from '../component/metrics/user/UserModel';
+import { LogableActions, MetricModel } from '../component/metrics/metric/MetricModel';
 import * as moment from 'moment';
-import { Moment } from 'moment';
 
 describe('MetricsPage', () => {
   let subject: ShallowWrapper;
   let metricsStore: any;
-  let metricsActions: any;
+  let metricsPageActions: any;
+  let metricActions: any;
   let initSpy: Mock;
-  let loginTime: Moment;
+  let loginTime: number;
 
   beforeEach(() => {
     initSpy = jest.fn();
-    loginTime = moment('2018-08-22T00:00:00.000Z').utc();
+    loginTime = moment('2018-08-22T00:00:00.000Z').utc().unix();
 
-    metricsActions = {
+    metricsPageActions = {
       initializeStores: initSpy,
       exportLogins: jest.fn()
+    };
+
+    metricActions = {
+      logMetric: jest.fn()
     };
 
     metricsStore = {
       userCount: 2,
       logins: [
-        new MetricModel(new UserModel(1, 'name1', 'card1'), loginTime),
-        new MetricModel(new UserModel(2, 'name2', 'card2'), loginTime),
-        new MetricModel(new UserModel(3, 'name3', 'card3'), loginTime),
+        new MetricModel(1, 0, 'GUEST.GUEST.GUEST.0123456789', loginTime, LogableActions.VISIT, 'Home'),
+        new MetricModel(2, 0, 'GUEST.GUEST.GUEST.0123456789', loginTime, LogableActions.VISIT, 'Home'),
+        new MetricModel(3, 0, 'GUEST.GUEST.GUEST.0123456789', loginTime, LogableActions.VISIT, 'Home'),
       ]
     };
 
     subject = shallow(
       <MetricsPage
-        metricsActions={metricsActions}
+        metricsPageActions={metricsPageActions}
         metricsStore={metricsStore}
+        metricActions={metricActions}
       />
     );
   });
@@ -48,12 +52,16 @@ describe('MetricsPage', () => {
     expect(subject.find('.users').text()).toContain('2');
   });
 
-  it('should display the number of logins', () => {
-    expect(subject.find('.logins').text()).toBe('Total logins: 3');
+  it('should display the number of visits', () => {
+    expect(subject.find('.visits').text()).toBe('Total Visits: 3');
+  });
+
+  it('should display the most recent actions', () => {
+    expect(subject.find('.recentActions').exists()).toBeTruthy();
   });
 
   it('should export user logins as a text file', () => {
     subject.find('.exportLoginsButton').simulate('click');
-    expect(metricsActions.exportLogins).toHaveBeenCalled();
+    expect(metricsPageActions.exportLogins).toHaveBeenCalled();
   });
 });

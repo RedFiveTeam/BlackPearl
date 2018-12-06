@@ -17,14 +17,21 @@ public class Metric {
   @GeneratedValue
   private Long id;
 
-  @ManyToOne
-  @JoinColumn(name = "userID")
-  private Account account;
+  private Long userID;
+
+  private String cardID;
 
   private Date time;
 
-  public Metric(Account account, Date time) {
-    this.account = account;
+  private String action;
+
+  private String context;
+
+  public Metric(Long userID, String cardID, Date time, String action, String context) {
+    this.userID = userID;
+    this.cardID = cardID;
     this.time = time;
+    this.action = action;
+    this.context = context;
   }
 }

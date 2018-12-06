@@ -10,12 +10,15 @@ import { ResourceActions } from './actions/ResourceActions';
 import { ResourceMenuStore } from './stores/ResourceMenuStore';
 import { StyledFavoriteButton } from '../button/FavoriteButton';
 import { ProfileStore } from '../../profile/ProfileStore';
+import { MetricActions } from '../metrics/metric/MetricActions';
+import { LogableActions } from '../metrics/metric/MetricModel';
 
 interface Props {
   resource: ResourceModel;
   resourceMenuStore: ResourceMenuStore;
   resourceActions?: ResourceActions;
   profileStore?: ProfileStore;
+  metricActions?: MetricActions;
   className?: string;
 }
 
@@ -60,6 +63,7 @@ export class ResourceMenuContainer extends React.Component<Props> {
     res.setCategoryId(0);
     await this.props.resourceActions!.saveFavorite(res);
     this.updateStyle();
+    this.props.metricActions!.logMetric(LogableActions.ADD_FAVORITE, this.props.resource.name);
   };
 
   updateStyle = () => {
@@ -116,7 +120,8 @@ export class ResourceMenuContainer extends React.Component<Props> {
   }
 }
 
-export const StyledResourceMenuContainer = inject('resourceActions', 'profileStore')(styled(ResourceMenuContainer)`
+export const StyledResourceMenuContainer = inject('resourceActions', 'profileStore', 'metricActions')
+(styled(ResourceMenuContainer)`
   position: absolute;
   height: 37px;
   width: 150px;

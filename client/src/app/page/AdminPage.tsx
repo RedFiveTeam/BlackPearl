@@ -5,15 +5,22 @@ import { AdminStore } from './stores/AdminStore';
 import { AdminActions } from './actions/AdminActions';
 import { StyledAdminCardContainer } from '../component/card/admin/AdminCardContainer';
 import { Slide, ToastContainer } from 'react-toastify';
+import { MetricActions } from '../component/metrics/metric/MetricActions';
+import { LogableActions } from '../component/metrics/metric/MetricModel';
 
 interface Props {
   adminStore?: AdminStore;
   adminActions?: AdminActions;
+  metricActions?: MetricActions;
   className?: string;
 }
 
 @observer
 export class AdminPage extends React.Component<Props> {
+  componentDidMount() {
+    this.props.metricActions!.logMetric(LogableActions.VISIT, 'Admin');
+  }
+
   render() {
     return (
       <div
@@ -34,7 +41,7 @@ export class AdminPage extends React.Component<Props> {
   }
 }
 
-export const StyledAdminPage = inject('adminStore', 'adminActions')(styled(AdminPage)`
+export const StyledAdminPage = inject('adminStore', 'adminActions', 'metricActions')(styled(AdminPage)`
  .customToast {
     width: 520px;
     height: 64px;

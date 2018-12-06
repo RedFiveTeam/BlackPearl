@@ -4,17 +4,21 @@ import styled from 'styled-components';
 import { ResourceActions } from '../resource/actions/ResourceActions';
 import { StyledPopupModal } from './PopupModal';
 import { ResourceStore } from '../resource/stores/ResourceStore';
+import { MetricActions } from '../metrics/metric/MetricActions';
+import { LogableActions } from '../metrics/metric/MetricModel';
 
 interface Props {
   className?: string;
   resourceActions?: ResourceActions;
   resourceStore?: ResourceStore;
+  metricActions?: MetricActions;
 }
 
 @observer
 export class RemoveResourcePopup extends React.Component<Props> {
   onClick = async () => {
     await this.props.resourceActions!.delete(this.props.resourceStore!.pendingDelete!.id!);
+    this.props.metricActions!.logMetric(LogableActions.DELETE_RESOURCE, this.props.resourceStore!.pendingDelete!.name);
   };
 
   render() {
@@ -45,7 +49,8 @@ export class RemoveResourcePopup extends React.Component<Props> {
   }
 }
 
-export const StyledRemoveResourcePopup = inject('resourceActions', 'resourceStore')(styled(RemoveResourcePopup)`
+export const StyledRemoveResourcePopup = inject('resourceActions', 'resourceStore', 'metricActions')
+(styled(RemoveResourcePopup)`
   .modal {
   width: 514px;
   height: 190px;

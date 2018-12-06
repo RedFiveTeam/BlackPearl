@@ -4,18 +4,21 @@ import styled from 'styled-components';
 import { StyledPopupModal } from './PopupModal';
 import { OperationStore } from '../card/operation/stores/OperationStore';
 import { OperationActions } from '../card/operation/actions/OperationActions';
+import { MetricActions } from '../metrics/metric/MetricActions';
+import { LogableActions } from '../metrics/metric/MetricModel';
 
 interface Props {
   className?: string;
   operationActions?: OperationActions;
   operationStore?: OperationStore;
-  
+  metricActions?: MetricActions;
 }
 
 @observer
 export class DeleteOperationPopup extends React.Component<Props> {
   onClick = async () => {
     await this.props.operationActions!.deleteOperation(this.props.operationStore!.pendingDelete!.id!);
+    this.props.metricActions!.logMetric(LogableActions.DELETE_OP, this.props.operationStore!.pendingDelete!.title);
   };
 
   render() {
@@ -48,7 +51,8 @@ export class DeleteOperationPopup extends React.Component<Props> {
   }
 }
 
-export const StyledDeleteOperationPopup = inject('operationActions', 'operationStore')(styled(DeleteOperationPopup)`
+export const StyledDeleteOperationPopup = inject('operationActions', 'operationStore', 'metricActions')
+(styled(DeleteOperationPopup)`
   .modal {
   width: 514px;
   height: 190px;

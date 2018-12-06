@@ -16,8 +16,13 @@ describe('ResourceMenuContainer', () => {
   let resourceActions: any;
   let resourceMenuStore: ResourceMenuStore;
   let profileStore: ProfileStore;
+  let metricActions: any;
 
   beforeEach(() => {
+    metricActions = {
+      logMetrics: jest.fn()
+    };
+
     resource = new ResourceModel();
     resourceMenuStore = new ResourceMenuStore();
     profileStore = new ProfileStore();
@@ -36,6 +41,7 @@ describe('ResourceMenuContainer', () => {
         resourceMenuStore={resourceMenuStore}
         resourceActions={resourceActions}
         profileStore={profileStore}
+        metricActions={metricActions}
       />
     );
   });

@@ -1,20 +1,26 @@
 import { Serializer } from '../../../utils/serializer';
-import { MetricModel } from './MetricModel';
-import { UserModel } from '../user/UserModel';
-import * as moment from 'moment';
+import { LogableActions, MetricModel } from './MetricModel';
 
 export class MetricSerializer implements Serializer<MetricModel> {
   serialize(item: MetricModel): {} {
     return {
-      cardId: item.user.cardId,
-      time: item.time
+      id: item.id,
+      userID: item.userID,
+      cardID: item.cardID,
+      time: item.time,
+      action: LogableActions[item.action],
+      context: item.context
     };
   }
 
   deserialize(item: any): MetricModel {
     return new MetricModel(
-      new UserModel(item.account.id, item.account.name, item.account.cardID),
-      moment(item.time)
+      item.id,
+      item.userID,
+      item.cardID,
+      item.time,
+      item.action,
+      item.context
     );
   }
 }

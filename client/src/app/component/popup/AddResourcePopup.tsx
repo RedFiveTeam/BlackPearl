@@ -5,10 +5,13 @@ import { ResourceActions } from '../resource/actions/ResourceActions';
 import { inject } from 'mobx-react';
 import { CSSProperties } from 'react';
 import { InputValidation } from '../../utils/inputValidation/InputValidation';
+import { MetricActions } from '../metrics/metric/MetricActions';
+import { LogableActions } from '../metrics/metric/MetricModel';
 
 interface Props {
   className?: string;
   resourceActions?: ResourceActions;
+  metricActions?: MetricActions;
 }
 
 interface State {
@@ -64,6 +67,7 @@ export class AddResourcePopup extends React.Component<Props, State> {
         this.state.url
       );
       await this.props.resourceActions!.saveResource();
+      this.props.metricActions!.logMetric(LogableActions.ADD_RESOURCE, this.state.title);
     }
   }
 
@@ -114,7 +118,7 @@ export class AddResourcePopup extends React.Component<Props, State> {
   }
 }
 
-export const StyledAddResourcePopup = inject('resourceActions')(styled(AddResourcePopup)`
+export const StyledAddResourcePopup = inject('resourceActions', 'metricActions')(styled(AddResourcePopup)`
   .modal {
    width: 514px;
    height: 250px;

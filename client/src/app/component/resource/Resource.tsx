@@ -13,11 +13,14 @@ import { FolderIcon } from '../../icon/FolderIcon';
 import classNames = require('classnames');
 import { ResourceActions } from './actions/ResourceActions';
 import * as ReactDOM from 'react-dom';
+import { MetricActions } from '../metrics/metric/MetricActions';
+import { LogableActions } from '../metrics/metric/MetricModel';
 
 interface Props {
   resource: ResourceModel;
   resourceStore?: ResourceStore;
   resourceActions?: ResourceActions;
+  metricActions?: MetricActions;
   className?: string;
 }
 
@@ -50,6 +53,7 @@ export class Resource extends React.Component<Props> {
       }
       toast.success('Local Path Copied to Clipboard');
     }
+    this.props.metricActions!.logMetric(LogableActions.CLICK_RESOURCE, this.props.resource!.name);
   }
 
   componentDidMount() {
@@ -94,7 +98,7 @@ export class Resource extends React.Component<Props> {
   }
 }
 
-export const StyledResource = inject('resourceStore', 'resourceActions')(styled(Resource)`
+export const StyledResource = inject('resourceStore', 'resourceActions', 'metricActions')(styled(Resource)`
   width: 335px;
   height: 37px;
   border: none;

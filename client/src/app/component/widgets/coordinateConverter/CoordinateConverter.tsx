@@ -1,8 +1,11 @@
 import * as React from 'react';
-import { observer } from 'mobx-react';
+import { inject, observer } from 'mobx-react';
 import styled from 'styled-components';
 import { UpArrowIcon } from '../../../icon/UpArrowIcon';
 import { DownArrowIcon } from '../../../icon/DownArrowIcon';
+import { MetricActions } from '../../metrics/metric/MetricActions';
+import { LogableActions } from '../../metrics/metric/MetricModel';
+import { observable } from 'mobx';
 
 interface Props {
   className?: string;
@@ -10,10 +13,19 @@ interface Props {
   latLong: string;
   mgrsFunction: (e: any) => void;
   latLongFunction: (e: any) => void;
+  metricActions?: MetricActions;
 }
 
 @observer
 export class CoordinateConverter extends React.Component<Props> {
+  @observable latLong = this.props.latLong;
+  @observable mgrs = this.props.mgrs;
+
+  componentWillReceiveProps(newProps: Props) {
+    this.latLong = newProps.latLong;
+    this.mgrs = newProps.mgrs;
+  }
+
   render() {
     return (
       <div
@@ -23,14 +35,16 @@ export class CoordinateConverter extends React.Component<Props> {
         <input
           className="latLongInput"
           placeholder="Lat/Long"
-          value={this.props.latLong}
+          value={this.latLong}
+          onClick={() => this.props.metricActions!.logMetric(LogableActions.CLICK_COORD, 'LatLong')}
           onChange={this.props.latLongFunction}
         />
         <div className="iconContainer"><UpArrowIcon/><DownArrowIcon/></div>
         <input
           className="mgrsInput"
           placeholder="MGRS"
-          value={this.props.mgrs}
+          value={this.mgrs}
+          onClick={() => this.props.metricActions!.logMetric(LogableActions.CLICK_COORD, 'MGRS')}
           onChange={this.props.mgrsFunction}
         />
       </div>
@@ -38,7 +52,7 @@ export class CoordinateConverter extends React.Component<Props> {
   }
 }
 
-export const StyledCoordinateConverter = styled(CoordinateConverter)`
+export const StyledCoordinateConverter = inject('metricActions')(styled(CoordinateConverter)`
   font-family: Amaranth;
   text-align: center;
   font-size: 24px;
@@ -94,4 +108,4 @@ export const StyledCoordinateConverter = styled(CoordinateConverter)`
     border: none;
     outline: none;
   }
-`;
+`);
