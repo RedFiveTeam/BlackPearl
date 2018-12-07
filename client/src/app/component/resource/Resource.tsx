@@ -113,6 +113,10 @@ export const StyledResource = inject('resourceStore', 'resourceActions', 'metric
   overflow: hidden;
   position: relative;
   
+  :hover {
+    background: #E2E2E2;
+  }
+  
   .resourceLink {
     width: 90%;
     text-decoration: none;

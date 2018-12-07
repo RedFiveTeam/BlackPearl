@@ -69,6 +69,10 @@ export const StyledOperation = inject('operationStore', 'metricActions')(styled(
   display: flex;
   align-items: center;
   
+  :hover {
+    background: #F2F2F2;
+  }
+  
   .title {
     width: 250px;
     margin-left: 16px;

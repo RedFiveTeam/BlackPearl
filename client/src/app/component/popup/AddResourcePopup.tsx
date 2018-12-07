@@ -7,6 +7,7 @@ import { CSSProperties } from 'react';
 import { InputValidation } from '../../utils/inputValidation/InputValidation';
 import { MetricActions } from '../metrics/metric/MetricActions';
 import { LogableActions } from '../metrics/metric/MetricModel';
+import * as ReactDOM from 'react-dom';
 
 interface Props {
   className?: string;
@@ -25,6 +26,17 @@ interface State {
 
 export class AddResourcePopup extends React.Component<Props, State> {
   state = {title: '', url: '', urlError: '', titleError: '', urlCSS: {}, titleCSS: {}};
+
+  componentDidMount() {
+    const component = this;
+    ((ReactDOM.findDOMNode(this) as HTMLElement).querySelector('.titleField') as HTMLElement).focus();
+    (ReactDOM.findDOMNode(this) as HTMLElement).addEventListener('keypress', async (e) => {
+      const key = e.which || e.keyCode;
+      if (key === 13) {
+        await component.onSaveButtonClick();
+      }
+    });
+  }
 
   onTitleFieldChange = (e: any) => {
     this.setState({title: e.target.value});
@@ -108,7 +120,9 @@ export class AddResourcePopup extends React.Component<Props, State> {
           }
           <button
             className="saveButton"
-            onClick={async () => { await this.onSaveButtonClick(); }}
+            onClick={async () => {
+              await this.onSaveButtonClick();
+            }}
           >
             SAVE
           </button>

@@ -5,6 +5,7 @@ import { StyledPopupModal } from './PopupModal';
 import { OperationActions } from '../card/operation/actions/OperationActions';
 import { MetricActions } from '../metrics/metric/MetricActions';
 import { LogableActions } from '../metrics/metric/MetricModel';
+import * as ReactDOM from 'react-dom';
 
 interface Props {
   className?: string;
@@ -20,6 +21,17 @@ interface State {
 
 export class AddOperationPopup extends React.Component<Props, State> {
   state = {title: '', description: '', address: ''};
+
+  componentDidMount() {
+    const component = this;
+    ((ReactDOM.findDOMNode(this) as HTMLElement).querySelector('.titleField') as HTMLElement).focus();
+    (ReactDOM.findDOMNode(this) as HTMLElement).addEventListener('keypress', async (e) => {
+      const key = e.which || e.keyCode;
+      if (key === 13) {
+        await component.onSaveButtonClick();
+      }
+    });
+  }
 
   onTitleFieldChange = (e: any) => {
     this.setState({title: e.target.value});

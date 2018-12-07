@@ -6,6 +6,7 @@ import { OperationStore } from '../card/operation/stores/OperationStore';
 import { StyledPopupModal } from './PopupModal';
 import { MetricActions } from '../metrics/metric/MetricActions';
 import { LogableActions } from '../metrics/metric/MetricModel';
+import * as ReactDOM from 'react-dom';
 
 interface Props {
   className?: string;
@@ -27,6 +28,17 @@ export class EditOperationPopup extends React.Component<Props, State> {
     address: this.props.operationStore!.pendingEdit!.address,
     description: this.props.operationStore!.pendingEdit!.description
   };
+
+  componentDidMount() {
+    const component = this;
+    ((ReactDOM.findDOMNode(this) as HTMLElement).querySelector('.pendingEditTitle') as HTMLElement).focus();
+    (ReactDOM.findDOMNode(this) as HTMLElement).addEventListener('keypress', async (e) => {
+      const key = e.which || e.keyCode;
+      if (key === 13) {
+        await component.onSaveButtonClick();
+      }
+    });
+  }
 
   onTitleFieldChange = (e: any) => {
     this.setState({title: e.target.value});

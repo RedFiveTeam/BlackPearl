@@ -52,7 +52,7 @@ export class CardContainer extends React.Component<Props> {
 }
 
 export const StyledCardContainer = inject('resourceActions', 'profileActions', 'resourceStore')(styled(CardContainer)`
-  margin-top: 5px;
+  margin-top: 15px;
   
   .cardBody {
     display: flex;

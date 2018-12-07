@@ -200,7 +200,7 @@ export const StyledInformationCard = styled(InformationCard)`
     }
     
     .table, .d {
-      background-color: #FFF;
+      background-color: #FFFFFF;
       border: 1px solid #EAEAEA;
     }
     
@@ -226,14 +226,8 @@ export const StyledInformationCard = styled(InformationCard)`
       height: 100%;
       background: #EAEAEA;
     }
-    
-    //.row {
-    //  margin-left: 8px;
-    //  margin-right: 6px;
-    //}
-    //
+
     .row:nth-child(1) {
-      
       div:nth-child(1) {
         width: 268px;
         svg {
@@ -250,6 +244,7 @@ export const StyledInformationCard = styled(InformationCard)`
       
       div:nth-child(3) {
         width: 484px;
+        cursor: unset;
         svg {
           position: absolute;
           right: 7px;
