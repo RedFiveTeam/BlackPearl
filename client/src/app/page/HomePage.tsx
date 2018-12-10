@@ -12,7 +12,7 @@ import {
   StyledCoordinateConverterContainer
 } from '../component/widgets/coordinateConverter/CoordinateConverterContainer';
 import { StyledLoadingOverlay } from '../component/loading/LoadingOverlay';
-import { Category } from '../component/resource/ResourceModel';
+import { Category, ResourceModel } from '../component/resource/ResourceModel';
 import { StyledCard } from '../component/card/Card';
 import { OperationStore } from '../component/card/operation/stores/OperationStore';
 import { StyledAddOperationPopup } from '../component/popup/AddOperationPopup';
@@ -36,6 +36,19 @@ interface Props {
 export class HomePage extends React.Component<Props> {
   componentDidMount() {
     this.props.metricActions!.logMetric(LogableActions.VISIT, 'Home');
+    this.getQ();
+  }
+
+  getQ() {
+    let getParams = window.location.search;
+    let query = getParams.substr(getParams.indexOf('q=') + 2);
+    let search = getParams.substr(getParams.indexOf('s=') + 2, 1);
+
+    if (search === '1') {
+      this.props.resourceStore!.setFilter(query);
+    } else if (search === '0') {
+      this.props.resourceStore!.setPendingResource(new ResourceModel(null, '', decodeURIComponent(query)));
+    }
   }
 
   render() {

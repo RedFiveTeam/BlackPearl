@@ -43,10 +43,12 @@ export class TabContainer extends React.Component<Props> {
   }
 
   async componentWillReceiveProps(props: any) {
-    if (this.props.profileStore!.profile.specialty === null) {
-      await this.clickTab(1);
+    if (props.profileStore!.profile !== undefined) {
+      if (props.profileStore!.profile.specialty === null) {
+        await this.clickTab(1);
+      }
+      await this.clickTab(props.profileStore!.profile.specialty!);
     }
-    await this.clickTab(this.props.profileStore!.profile.specialty!);
   }
 
   clickTab = async (tab: number) => {

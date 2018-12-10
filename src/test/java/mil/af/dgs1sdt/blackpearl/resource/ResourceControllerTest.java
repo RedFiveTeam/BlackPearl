@@ -68,6 +68,16 @@ public class ResourceControllerTest extends BaseIntegrationTest {
   }
 
   @Test
+  public void goFunctionTest() {
+    given()
+      .port(port)
+      .when()
+      .get(ResourceController.URI + "/go?q=oo")
+      .then()
+      .statusCode(200);
+  }
+
+  @Test
   public void addResourceTest() throws JsonProcessingException {
     ResourceJSON resource = new ResourceJSON();
     resource.setName("Test");

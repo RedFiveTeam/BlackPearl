@@ -8,6 +8,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.view.RedirectView;
 
 import javax.validation.Valid;
 import java.time.Instant;
@@ -38,6 +40,21 @@ public class ResourceController {
   public @ResponseBody
   Iterable<Resource> getAllResourcesAccount(@PathVariable String accountID) {
     return resourceRepository.getAllResourcesByCategoryIDAndAccountID(accountID);
+  }
+
+  @RequestMapping(path = "/go")
+  public @ResponseBody
+  RedirectView goFunction(@RequestParam("q") String query) {
+    List<Resource> resources = resourceRepository.findAllByNameContains(query);
+    int search = 0;
+    if ( resources.size() > 1 ) {
+      search = 1;
+    }
+    String url = "/?s=" + search + "&q=" + query;
+    if (resources.size() == 1) {
+      url = resources.get(0).getUrl();
+    }
+    return new RedirectView(url);
   }
 
   @PostMapping
