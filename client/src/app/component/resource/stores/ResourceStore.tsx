@@ -5,11 +5,13 @@ import { ClickModel } from '../ClickModel';
 
 export class ResourceStore extends LoadingStore {
   @observable private _resources: ResourceModel[] = [];
+  @observable private _filteredResources: ResourceModel[] = [];
   @observable private _pendingResource: ResourceModel | null = null;
   @observable private _pendingDelete: ResourceModel | null = null;
   @observable private _pendingEdit: ResourceModel | null = null;
   @observable private _activeTab: number = 1;
   @observable private _clicks: {} = {};
+  @observable private _filter: string = '';
 
   @action.bound
   setActiveTab(tab: number) {
@@ -19,6 +21,14 @@ export class ResourceStore extends LoadingStore {
   @action.bound
   setResources(resources: ResourceModel[]) {
     this._resources = resources;
+    if (this._filter === '') {
+      this._filteredResources = [];
+    }
+  }
+
+  @action.bound
+  setFilteredResources(resources: ResourceModel[]) {
+    this._filteredResources = resources;
   }
 
   @action.bound
@@ -47,6 +57,11 @@ export class ResourceStore extends LoadingStore {
   }
 
   @action.bound
+  setFilter(value: string) {
+    this._filter = value;
+  }
+
+  @action.bound
   setClicks(clicks: ClickModel[]) {
     this.resources.filter((r) => r.categoryID !== 0).map((r) => { r.setPosition(0); });
     clicks.forEach((c: ClickModel) => {
@@ -58,8 +73,10 @@ export class ResourceStore extends LoadingStore {
 
   @action.bound
   sortResourcesByPositionDesc() {
-    this.setResources(
-      this.resources.filter((r) => r.categoryID !== 0).slice().sort((a, b) => {
+    const resources = this._filteredResources.length > 0 || this._filter.length > 0 ?
+      this._filteredResources : this._resources;
+    this.setFilteredResources(
+      resources.filter((r) => r.categoryID !== 0).slice().sort((a, b) => {
         return b.position! - a.position!;
       }).concat(this.resources.filter((r) => r.categoryID === 0))
     );
@@ -67,8 +84,10 @@ export class ResourceStore extends LoadingStore {
 
   @action.bound
   sortResourcesByIdDesc() {
-    this.setResources(
-      this.resources.filter((r) => r.categoryID !== 0).slice().sort((a, b) => {
+    const resources = this._filteredResources.length > 0 || this._filter.length > 0 ?
+      this._filteredResources : this._resources;
+    this.setFilteredResources(
+      resources.filter((r) => r.categoryID !== 0).slice().sort((a, b) => {
         return b.id! - a.id!;
       }).concat(this.resources.filter((r) => r.categoryID === 0))
     );
@@ -76,8 +95,10 @@ export class ResourceStore extends LoadingStore {
 
   @action.bound
   sortResourcesByNameDesc() {
-    this.setResources(
-      this.resources.filter((r) => r.categoryID !== 0).slice().sort((a, b) => {
+    const resources = this._filteredResources.length > 0 || this._filter.length > 0 ?
+      this._filteredResources : this._resources;
+    this.setFilteredResources(
+      resources.filter((r) => r.categoryID !== 0).slice().sort((a, b) => {
         let name1 = a.name!.toLowerCase();
         let name2 = b.name!.toLowerCase();
         return name1 < name2 ? -1 : (name1 > name2 ? 1 : 0);
@@ -115,8 +136,20 @@ export class ResourceStore extends LoadingStore {
     return this._pendingResource;
   }
 
+  @computed
+  get filteredResources() {
+    return this._filteredResources;
+  }
+
+  @computed
+  get filter() {
+    return this._filter;
+  }
+
   returnResourcesInCategory(categoryID: number) {
-    return this._resources.filter(r => r.categoryID === categoryID).map((obj: ResourceModel) => {
+    const resources = (this._filteredResources.length > 0 || this._filter.length > 0)  && categoryID > 0 ?
+      this._filteredResources : this._resources;
+    return resources.filter(r => r.categoryID === categoryID).map((obj: ResourceModel) => {
       return obj;
     });
   }

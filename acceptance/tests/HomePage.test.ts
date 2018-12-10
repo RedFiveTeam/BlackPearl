@@ -9,6 +9,14 @@ Scenario('should see an ATO day', (I) => {
   I.see("ATO ", ".atoDay");
 });
 
+Scenario('should be able to search resources', (I) => {
+  I.haveHeader('Authorization', 'Basic Q1JPU1MuSk9SREFOLk1JRERMRS4wMTIzNDU2Nzg5OjE=');
+  I.amOnPage('/');
+  I.fillField('.filterSection > input', 'Amazon');
+  I.dontSee('YouTube');
+  I.see(' Amazon');
+});
+
 Scenario('should render six clocks', async function (I) {
   I.haveHeader('Authorization', 'Basic Q1JPU1MuSk9SREFOLk1JRERMRS4wMTIzNDU2Nzg5OjE=');
   I.amOnPage('/');

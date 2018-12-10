@@ -7,6 +7,7 @@ import { ProfileStore } from './ProfileStore';
 import { ProfileActions } from './ProfileActions';
 import { observable } from 'mobx';
 import { ResourceActions } from '../component/resource/actions/ResourceActions';
+import { SearchIcon } from '../icon/SearchIcon';
 
 const Person = require('../icon/Person.png');
 
@@ -23,8 +24,10 @@ export class ProfileContainer extends React.Component<Props> {
 
   async sortSelected(e: any) {
     this.selectedState = parseInt(e.target.value, 10);
-    await this.props.profileActions!.updateSort(parseInt(e.target.value, 10));
-    await this.props.resourceActions!.sortResources();
+    if (e.target.value >= 0) {
+      await this.props.profileActions!.updateSort(parseInt(e.target.value, 10));
+      await this.props.resourceActions!.sortResources();
+    }
   }
 
   render() {
@@ -33,20 +36,38 @@ export class ProfileContainer extends React.Component<Props> {
         className={this.props.className}
       >
         <div className="profileBanner">
-          <div className="sortSection">
-            Sort By:
-            <select
-              className="sortSelector"
-              onChange={ async (e) => {
-                await this.sortSelected(e);
-              }}
-              value={this.props.profileStore!.profile ? this.props.profileStore!.profile.sort : 0}
-            >
-              <option value={Sort.MostClicked}>Most Clicked</option>
-              <option value={Sort.Newest}>Newest</option>
-              <option value={Sort.Alphabetical}>Alphabetical</option>
-            </select>
-            <DropdownIcon/>
+          <div className="searchSection">
+            <div className="filterSection">
+              <SearchIcon/>
+              <input
+                onChange={async (e) => {
+                  if (e.target.value === '') {
+                    (document.querySelector('.sortSelector') as HTMLSelectElement).value
+                      = this.props.profileStore!.profile.sort.toString();
+                  } else {
+                    (document.querySelector('.sortSelector') as HTMLSelectElement).value = '';
+                  }
+                  await this.props.resourceActions!.filterResources(e.target.value);
+                }}
+                placeholder="Search"
+              />
+            </div>
+            <div className="sortSection">
+              Sort By:
+              <select
+                className="sortSelector"
+                onChange={async (e) => {
+                  await this.sortSelected(e);
+                }}
+                value={this.props.profileStore!.profile ? this.props.profileStore!.profile.sort : 0}
+              >
+                <option value={Sort.None}/>
+                <option value={Sort.MostClicked}>Most Clicked</option>
+                <option value={Sort.Newest}>Newest</option>
+                <option value={Sort.Alphabetical}>Alphabetical</option>
+              </select>
+              <DropdownIcon/>
+            </div>
           </div>
           <div className="profileSection">
             {
@@ -82,7 +103,35 @@ export const StyledProfileContainer = inject('profileStore', 'profileActions', '
     color: white;
   }
   
+  .searchSection {
+    display: flex;
+    align-items: center;
+  }
+  
+  .filterSection {
+    display: flex;
+    height: 25px;
+    line-height: 25px;
+    width: 219px;
+    background: #FFFFFF;
+    border-radius: 20px;
+    padding-left: 2px;
+    padding-top: 1px;
+  }
+  
+  .filterSection > input {
+    height: 25px;
+    line-height: 25px;
+    font-size: 16px;
+    font-family: Amaranth;
+    width: 182px;
+    outline: none;
+    background: none;
+    border: none;
+  }
+  
   .sortSection {
+    margin-left: 20px;
     .dropIcon {
       width: 10px;
       height: 10px;

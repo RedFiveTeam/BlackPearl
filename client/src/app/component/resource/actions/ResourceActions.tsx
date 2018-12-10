@@ -6,6 +6,7 @@ import { ResourceRepository } from '../repositories/ResourceRepository';
 import { Category, ResourceModel, Sort } from '../ResourceModel';
 import { ProfileStore } from '../../../profile/ProfileStore';
 import { toast } from 'react-toastify';
+import * as fuzzysort from 'fuzzysort';
 
 export class ResourceActions {
   private resourceRepository: ResourceRepository;
@@ -26,6 +27,9 @@ export class ResourceActions {
   @action.bound
   async setAllResources() {
     this.resourceStore.setResources(await this.resourceRepository.findAllByAccount(this.profileStore.profile.cardID));
+    if (this.resourceStore.filter !== '') {
+      await this.filterResources(this.resourceStore.filter);
+    }
     await this.sortResources();
   }
 
@@ -160,5 +164,18 @@ export class ResourceActions {
       }
     }
     return false;
+  }
+
+  @action.bound
+  async filterResources(filter: string) {
+    const list = this.resourceStore.resources;
+    const opts = {
+      keys: ['name', 'url']
+    };
+    let results = fuzzysort.go(filter, list, opts);
+    const filteredResources = results.map((r) => { return r.obj; } );
+    this.resourceStore.setFilter(filter);
+    this.resourceStore.setFilteredResources(filteredResources);
+    await this.sortResources();
   }
 }

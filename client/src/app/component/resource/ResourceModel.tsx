@@ -29,7 +29,8 @@ export enum CategoryName {
 export enum Sort {
   MostClicked = 0,
   Newest = 1,
-  Alphabetical = 2
+  Alphabetical = 2,
+  None = 3
 }
 
 export class ResourceModel {

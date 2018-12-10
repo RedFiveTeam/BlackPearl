@@ -82,9 +82,10 @@ describe('ResourceStore', () => {
     subject.setResources(resources);
     subject.sortResourcesByPositionDesc();
 
-    expect(subject.resources[0].position).toBe(30);
-    expect(subject.resources[1].position).toBe(20);
-    expect(subject.resources[2].position).toBe(10);
+    expect(subject.filteredResources.length).toBe(3);
+    expect(subject.filteredResources[0].position).toBe(30);
+    expect(subject.filteredResources[1].position).toBe(20);
+    expect(subject.filteredResources[2].position).toBe(10);
   });
 
   it('should sort resources by id desc', () => {
@@ -97,9 +98,9 @@ describe('ResourceStore', () => {
     subject.setResources(resources);
     subject.sortResourcesByIdDesc();
 
-    expect(subject.resources[0].id).toBe(3);
-    expect(subject.resources[1].id).toBe(2);
-    expect(subject.resources[2].id).toBe(1);
+    expect(subject.filteredResources[0].id).toBe(3);
+    expect(subject.filteredResources[1].id).toBe(2);
+    expect(subject.filteredResources[2].id).toBe(1);
   });
 
   it('should sort resources by name desc', () => {
@@ -112,8 +113,8 @@ describe('ResourceStore', () => {
     subject.setResources(resources);
     subject.sortResourcesByNameDesc();
 
-    expect(subject.resources[0].name).toBe('eBay');
-    expect(subject.resources[1].name).toBe('Google');
-    expect(subject.resources[2].name).toBe('Yahoo');
+    expect(subject.filteredResources[0].name).toBe('eBay');
+    expect(subject.filteredResources[1].name).toBe('Google');
+    expect(subject.filteredResources[2].name).toBe('Yahoo');
   });
 });

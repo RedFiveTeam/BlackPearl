@@ -21,12 +21,17 @@ describe('ResourceActions', () => {
       pendingResource: new ResourceModel(1, 'http://www.test.com', 'TestResource', 1, 'Guest', 0),
       pendingEdit: ResourceModel,
       resources: [
-        new ResourceModel(1, 'http://www.test.com', 'TestResource', 1, 'Guest', 0)
+        new ResourceModel(1, 'http://www.test.com', 'TestResource', 1, 'Guest', 0),
+        new ResourceModel(2, 'https://www.google.com', 'Google', 1),
+        new ResourceModel(3, 'https://www.yahoo.com', 'Yahoo', 1),
+        new ResourceModel(4, 'https://www.ebay.com', 'eBay', 2)
       ],
       performLoading: async (fun: any) => { await fun(); },
       getAllClicks: jest.fn(),
       setClicks: jest.fn(),
-      sortResourcesByPositionDesc: jest.fn()
+      sortResourcesByPositionDesc: jest.fn(),
+      setFilteredResources: jest.fn(),
+      setFilter: jest.fn()
     };
 
     profileStore = {
@@ -139,8 +144,12 @@ describe('ResourceActions', () => {
   });
 
   it('should check for duplicate titles in resources', () => {
-
     expect(subject.checkDuplicates('TestResource')).toBe(true);
     expect(subject.checkDuplicates('Doesnt Exist')).toBe(false);
+  });
+
+  it('should filter the resources', async () => {
+    await subject.filterResources('eBay');
+    expect(resourceStore.setFilteredResources).toHaveBeenCalled();
   });
 });

@@ -17,8 +17,9 @@ interface Props {
 @observer
 export class DeleteOperationPopup extends React.Component<Props> {
   onClick = async () => {
+    const title = this.props.operationStore!.pendingDelete!.title;
     await this.props.operationActions!.deleteOperation(this.props.operationStore!.pendingDelete!.id!);
-    this.props.metricActions!.logMetric(LogableActions.DELETE_OP, this.props.operationStore!.pendingDelete!.title);
+    this.props.metricActions!.logMetric(LogableActions.DELETE_OP, title);
   };
 
   render() {

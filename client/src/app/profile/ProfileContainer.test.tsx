@@ -37,9 +37,13 @@ describe('ProfileContainer', () => {
     expect(subject.find('.sortSelector').exists()).toBeTruthy();
   });
 
+  it('should display a filter section', () => {
+    expect(subject.find('.filterSection').exists()).toBeTruthy();
+  });
+
   it('should save the sort option', async () => {
-    subject.find('select').simulate('change', {target: {value: 'Newest'}});
+    subject.find('select').simulate('change', {target: {value: 2}});
     await expect(profileActions.updateSort).toHaveBeenCalled();
-    expect(resourceActions.sortResources).toHaveBeenCalled();
+    await expect(resourceActions.sortResources).toHaveBeenCalled();
   });
 });
