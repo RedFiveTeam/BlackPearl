@@ -2,7 +2,6 @@
 <OpenSearchDescription xmlns="http://a9.com/-/spec/opensearch/1.1/">
     <ShortName>Black Pearl</ShortName>
     <Description>DGS-1 Crew Webpage</Description>
-    <Tags></Tags>
-    <Contact></Contact>
+    <ShortName>Black Pearl</ShortName>
     <Url type="text/html" template="https://localhost:8080/api/resources/go?q={searchTerms}"/>
 </OpenSearchDescription>
