@@ -60,7 +60,7 @@ export const StyledAcronymContainer = inject('acronymStore', 'acronymActions', '
   background: #364958;
   width: 350px;
   min-width: 350px;
-  height: 164px;
+  height: 175px;
   border-radius: 10px;
   margin-left: 8px;
   box-shadow: -1px 3px 3px rgba(0, 0, 0, .25);
@@ -87,7 +87,7 @@ export const StyledAcronymContainer = inject('acronymStore', 'acronymActions', '
   }
 
   .acronymList {
-  height: 55px;
+  height: 66px;
   width: 324px;
   overflow: auto;
   font-size: 13px;

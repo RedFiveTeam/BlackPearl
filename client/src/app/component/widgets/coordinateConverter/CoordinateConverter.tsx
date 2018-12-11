@@ -72,6 +72,7 @@ export const StyledCoordinateConverter = inject('metricActions')(styled(Coordina
   }
   
   .latLongInput {
+    font-family: Amaranth;
     ::placeholder {
        color: #15191C;
        opacity: .25;
@@ -93,6 +94,7 @@ export const StyledCoordinateConverter = inject('metricActions')(styled(Coordina
   }
   
   .mgrsInput {
+    font-family: Amaranth;
      ::placeholder {
        color: #15191C;
        opacity: .25;

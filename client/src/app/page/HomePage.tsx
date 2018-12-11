@@ -23,6 +23,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { StyledDeleteOperationPopup } from '../component/popup/DeleteOperationPopup';
 import { LogableActions } from '../component/metrics/metric/MetricModel';
 import { MetricActions } from '../component/metrics/metric/MetricActions';
+import { StyledProfileContainer } from '../profile/ProfileContainer';
 
 interface Props {
   resourceStore?: ResourceStore;
@@ -83,6 +84,7 @@ export class HomePage extends React.Component<Props> {
         >
           <StyledCardContainer/>
           <div className="widgetSection">
+            <StyledProfileContainer/>
             <StyledTimeContainer/>
             <StyledCard
               className="myFavorites"
@@ -101,8 +103,10 @@ export class HomePage extends React.Component<Props> {
 
 export const StyledHomePage = inject('resourceStore', 'operationStore', 'metricActions')(styled(HomePage)`
   margin-left: -8px;
+  position: absolute;
+  
   .myFavorites {
-    height: 282px;
+    height: 294px;
     width: 338px;
     margin-left: 10px;
     background: #364958;
@@ -115,14 +119,14 @@ export const StyledHomePage = inject('resourceStore', 'operationStore', 'metricA
     }
 
     .body {
-        max-height: calc(282px - 32px - 10px);
+        max-height: 252px;
         border-radius: 0px;
-        height: 222px;
+        height: 234px;
         width: 330px;
     }
     
     .resourceList {
-        max-height: 184px;
+        max-height: 196px;
         overflow-x: hidden;
     }
     
@@ -134,8 +138,7 @@ export const StyledHomePage = inject('resourceStore', 'operationStore', 'metricA
     }
     
     .addResourceButton {
-      width: 320px;
-      margin-left: 5px;
+      width: 330px;
     }
   }
   
@@ -162,12 +165,13 @@ export const StyledHomePage = inject('resourceStore', 'operationStore', 'metricA
 
   .cardsContainer {
     display: flex;
+    position: relative;
   }
   
   .widgetSection {
     position: fixed;
     display: block;
-    top: 1px;
+    top: 10px;
     left: 1090px;
   }
 `);

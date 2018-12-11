@@ -15,6 +15,7 @@ import { OperationStore } from '../component/card/operation/stores/OperationStor
 import { OperationModel } from '../component/card/operation/OperationModel';
 import { StyledAddOperationPopup } from '../component/popup/AddOperationPopup';
 import { StyledTimeContainer } from '../component/widgets/time/TimeContainer';
+import { StyledProfileContainer } from '../profile/ProfileContainer';
 
 describe('HomePage', () => {
   let subject: ShallowWrapper;
@@ -98,5 +99,9 @@ describe('HomePage', () => {
 
   it('should display a time container', () => {
     expect(subject.find(StyledTimeContainer).exists()).toBeTruthy();
+  });
+
+  it('should have the profile banner', () => {
+    expect(subject.find(StyledProfileContainer).exists()).toBeTruthy();
   });
 });

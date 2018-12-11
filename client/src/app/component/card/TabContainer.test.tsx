@@ -6,6 +6,8 @@ describe('TabContainer', () => {
   let subject: ShallowWrapper;
   let resourceStore: any;
   let profileStore: any;
+  let resourceActions: any;
+  let profileActions: any;
 
   beforeEach(() => {
     resourceStore = {
@@ -16,10 +18,21 @@ describe('TabContainer', () => {
       profile: {name: 'Bob'}
     };
 
+    resourceActions = {
+      filterResources: jest.fn(),
+      sortResources: jest.fn()
+    };
+
+    profileActions = {
+      updateSort: jest.fn()
+    };
+
     subject = shallow(
       <TabContainer
         resourceStore={resourceStore}
         profileStore={profileStore}
+        resourceActions={resourceActions}
+        profileActions={profileActions}
       />
     );
   });
@@ -34,5 +47,19 @@ describe('TabContainer', () => {
   it('should change the active tab', () => {
     (subject.instance() as TabContainer).clickTab(2);
     expect(resourceStore.setActiveTab).toHaveBeenCalledWith(2);
+  });
+
+  it('should display a sort by selector', () => {
+    expect(subject.find('.sortSelector').exists()).toBeTruthy();
+  });
+
+  it('should display a filter section', () => {
+    expect(subject.find('.filterSection').exists()).toBeTruthy();
+  });
+
+  it('should save the sort option', async () => {
+    subject.find('.sortSelector').simulate('change', {target: {value: 2}});
+    await expect(profileActions.updateSort).toHaveBeenCalled();
+    await expect(resourceActions.sortResources).toHaveBeenCalled();
   });
 });

@@ -5,7 +5,7 @@ export const DropdownIcon = () => {
 
   return (
     <svg className="dropIcon" width="10" height="5" viewBox="0 0 10 5" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d={pathD} fill="white"/>
+      <path d={pathD} fill="black"/>
     </svg>
 
   );
