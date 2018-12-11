@@ -4,11 +4,15 @@ import styled from 'styled-components';
 import { OperationActions } from '../card/operation/actions/OperationActions';
 import { OperationStore } from '../card/operation/stores/OperationStore';
 import { StyledPopupModal } from './PopupModal';
+import { MetricActions } from '../metrics/metric/MetricActions';
+import { LogableActions } from '../metrics/metric/MetricModel';
+import * as ReactDOM from 'react-dom';
 
 interface Props {
   className?: string;
   operationActions?: OperationActions;
   operationStore?: OperationStore;
+  metricActions?: MetricActions;
 }
 
 interface State {
@@ -24,6 +28,17 @@ export class EditOperationPopup extends React.Component<Props, State> {
     address: this.props.operationStore!.pendingEdit!.address,
     description: this.props.operationStore!.pendingEdit!.description
   };
+
+  componentDidMount() {
+    const component = this;
+    ((ReactDOM.findDOMNode(this) as HTMLElement).querySelector('.pendingEditTitle') as HTMLElement).focus();
+    (ReactDOM.findDOMNode(this) as HTMLElement).addEventListener('keypress', async (e) => {
+      const key = e.which || e.keyCode;
+      if (key === 13) {
+        await component.onSaveButtonClick();
+      }
+    });
+  }
 
   onTitleFieldChange = (e: any) => {
     this.setState({title: e.target.value});
@@ -42,6 +57,7 @@ export class EditOperationPopup extends React.Component<Props, State> {
     this.props.operationStore!.pendingEdit!.setAddress(this.state.address);
     this.props.operationStore!.pendingEdit!.setDescription(this.state.description);
     await this.props.operationActions!.updateOperation();
+    this.props.metricActions!.logMetric(LogableActions.EDIT_OP, this.state.title);
   }
 
   render() {
@@ -91,7 +107,8 @@ export class EditOperationPopup extends React.Component<Props, State> {
   }
 }
 
-export const StyledEditOperationPopup = inject('operationActions', 'operationStore')(styled(EditOperationPopup)`
+export const StyledEditOperationPopup = inject('operationActions', 'operationStore', 'metricActions')
+(styled(EditOperationPopup)`
 
 .modal {
   height: 321px;

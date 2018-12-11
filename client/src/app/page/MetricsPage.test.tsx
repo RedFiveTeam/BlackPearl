@@ -2,42 +2,48 @@ import * as React from 'react';
 import { shallow, ShallowWrapper } from 'enzyme';
 import { MetricsPage } from './MetricsPage';
 import Mock = jest.Mock;
-import { LoginModel } from '../component/metrics/login/LoginModel';
-import { UserModel } from '../component/metrics/user/UserModel';
+import { LogableActions, MetricModel } from '../component/metrics/metric/MetricModel';
 import * as moment from 'moment';
-import { Moment } from 'moment';
 
 describe('MetricsPage', () => {
   let subject: ShallowWrapper;
   let metricsStore: any;
-  let metricsActions: any;
+  let metricsPageActions: any;
+  let metricActions: any;
   let initSpy: Mock;
-  let loginTime: Moment;
+  let loginTime: number;
 
   beforeEach(() => {
     initSpy = jest.fn();
-    loginTime = moment('2018-08-22T00:00:00.000Z').utc();
+    loginTime = moment('2018-08-22T00:00:00.000Z').utc().unix();
 
-    metricsActions = {
-      initializeStores: initSpy
+    metricsPageActions = {
+      initializeStores: initSpy,
+      exportLogins: jest.fn()
+    };
+
+    metricActions = {
+      logMetric: jest.fn()
     };
 
     metricsStore = {
       userCount: 2,
       logins: [
-        new LoginModel(new UserModel(1, 'name1', 'card1'), loginTime),
-        new LoginModel(new UserModel(2, 'name2', 'card2'), loginTime),
-        new LoginModel(new UserModel(3, 'name3', 'card3'), loginTime),
+        new MetricModel(1, 0, 'GUEST.GUEST.GUEST.0123456789', loginTime, LogableActions.VISIT, 'Home'),
+        new MetricModel(2, 0, 'GUEST.GUEST.GUEST.0123456789', loginTime, LogableActions.VISIT, 'Home'),
+        new MetricModel(3, 0, 'GUEST.GUEST.GUEST.0123456789', loginTime, LogableActions.VISIT, 'Home'),
       ]
     };
 
     subject = shallow(
       <MetricsPage
-        metricsActions={metricsActions}
+        metricsPageActions={metricsPageActions}
         metricsStore={metricsStore}
+        metricActions={metricActions}
       />
     );
   });
+
   it('should display a title', () => {
     expect(subject.find('.users').text()).toContain('Total user accounts:');
   });
@@ -46,24 +52,16 @@ describe('MetricsPage', () => {
     expect(subject.find('.users').text()).toContain('2');
   });
 
-  it('should display a login table with headers and 3 rows', () => {
-    expect(subject.find('table').exists()).toBeTruthy();
-    expect(subject.find('tr').length).toBe(4);
+  it('should display the number of visits', () => {
+    expect(subject.find('.visits').text()).toBe('Total Visits: 3');
   });
 
-  it('should display table headers', () => {
-    const row = subject.find('tr').at(0);
-    expect(row.find('th').length).toBe(3);
-    expect(row.find('th').at(0).text()).toBe('ID');
-    expect(row.find('th').at(1).text()).toBe('Name');
-    expect(row.find('th').at(2).text()).toEqual('Time');
+  it('should display the most recent actions', () => {
+    expect(subject.find('.recentActions').exists()).toBeTruthy();
   });
 
-  it('should display login information in each row', () => {
-    const row = subject.find('tr').at(1);
-    expect(row.find('td').length).toBe(3);
-    expect(row.find('td').at(0).text()).toBe('1');
-    expect(row.find('td').at(1).text()).toBe('name1');
-    expect(row.find('td').at(2).text()).toEqual('2018-08-22T00:00:00.000Z');
+  it('should export user logins as a text file', () => {
+    subject.find('.exportLoginsButton').simulate('click');
+    expect(metricsPageActions.exportLogins).toHaveBeenCalled();
   });
 });

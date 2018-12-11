@@ -6,9 +6,14 @@ import { AcronymModel } from './AcronymModel';
 describe('AcronymContainer', () => {
   let acronymStore: any;
   let acronymActions: any;
+  let metricActions: any;
   let subject: any;
 
   beforeEach(() => {
+    metricActions = {
+      logMetrics: jest.fn()
+    };
+
     let acronyms = [
       new AcronymModel(1, 'AAA', 'Aaron Allon Arnold')
     ];
@@ -27,6 +32,7 @@ describe('AcronymContainer', () => {
       <AcronymContainer
         acronymStore={acronymStore}
         acronymActions={acronymActions}
+        metricActions={metricActions}
       />
     );
   });

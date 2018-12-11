@@ -11,7 +11,8 @@ import {
 import { ProfileActions } from '../profile/ProfileActions';
 import { InformationActions } from '../component/card/information/actions/InformationActions';
 import { OperationActions } from '../component/card/operation/actions/OperationActions';
-import { MetricsActions } from '../page/actions/MetricsActions.tsx';
+import { MetricsPageActions } from '../page/actions/MetricsPageActions';
+import { MetricActions } from '../component/metrics/metric/MetricActions';
 
 const adminActions = new AdminActions(stores, WebRepositories);
 const acronymActions = new AcronymActions(stores, WebRepositories);
@@ -22,7 +23,8 @@ const timeActions = new TimeActions(stores, WebRepositories);
 const weatherActions = new WeatherActions(stores, WebRepositories);
 const informationActions = new InformationActions(stores, WebRepositories);
 const operationActions = new OperationActions(stores, WebRepositories);
-const metricsActions = new MetricsActions(stores, WebRepositories);
+const metricsPageActions = new MetricsPageActions(stores, WebRepositories);
+const metricActions = new MetricActions(stores, WebRepositories);
 
 export const actions = {
   acronymActions,
@@ -34,5 +36,6 @@ export const actions = {
   weatherActions,
   informationActions,
   operationActions,
-  metricsActions
+  metricsPageActions,
+  metricActions
 };

@@ -1,0 +1,11 @@
+ALTER TABLE metric
+    DROP FOREIGN KEY metric_ibfk_1;
+
+ALTER TABLE metric
+    ADD COLUMN cardID VARCHAR(128);
+
+ALTER TABLE metric
+    ADD COLUMN action VARCHAR (64);
+
+ALTER TABLE metric
+    ADD COLUMN context VARCHAR (512);

@@ -6,10 +6,13 @@ import { OperationModel } from './OperationModel';
 import { OperationMenuStore } from './stores/OperationMenuStore';
 import { OperationStore } from './stores/OperationStore';
 import classNames = require('classnames');
+import { LogableActions } from '../../metrics/metric/MetricModel';
+import { MetricActions } from '../../metrics/metric/MetricActions';
 
 interface Props {
   operation: OperationModel;
   operationStore?: OperationStore;
+  metricActions?: MetricActions;
   className?: string;
 }
 
@@ -34,7 +37,11 @@ export class Operation extends React.Component<Props, State> {
         className={classNames(this.props.className, ' operation')}
         style={{'height': (this.state.descHeight + 'px')}}
       >
-        <a href={this.props.operation.address} target="_blank">
+        <a
+          onClick={() => { this.props.metricActions!.logMetric(LogableActions.CLICK_OP, this.props.operation.title); }}
+          href={this.props.operation.address}
+          target="_blank"
+        >
           <div
             className="title"
             title={this.props.operation.title}
@@ -52,7 +59,7 @@ export class Operation extends React.Component<Props, State> {
   }
 }
 
-export const StyledOperation = inject('operationStore')(styled(Operation)`
+export const StyledOperation = inject('operationStore', 'metricActions')(styled(Operation)`
   font-size: 24px;
   background: #FFFFFF;
   font-family: Amaranth;
@@ -61,6 +68,10 @@ export const StyledOperation = inject('operationStore')(styled(Operation)`
   white-space: nowrap;
   display: flex;
   align-items: center;
+  
+  :hover {
+    background: #F2F2F2;
+  }
   
   .title {
     width: 250px;

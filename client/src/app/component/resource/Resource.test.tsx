@@ -16,6 +16,9 @@ describe('Resource', () => {
   let resourceStore: any;
   let resourceActions: any;
   let profileStore: any;
+  let metricActions: any;
+
+  metricActions = {};
 
   resourceStore = {};
 
@@ -30,11 +33,16 @@ describe('Resource', () => {
     resource2 = new ResourceModel(3, 'Y:/MyFolder/MyFile.txt', 'Local File', 1, 'CROSS.JORDAN.MIDDLE.0123456789');
 
     subject = mount(
-      <Provider resourceStore={resourceStore} resourceActions={resourceActions} profileStore={profileStore}>
-      <Resource
-        resource={resource1}
-        className="resource"
-      />
+      <Provider
+        resourceStore={resourceStore}
+        resourceActions={resourceActions}
+        profileStore={profileStore}
+        metricActions={metricActions}
+      >
+        <Resource
+          resource={resource1}
+          className="resource"
+        />
       </Provider>
     );
   });
@@ -47,7 +55,12 @@ describe('Resource', () => {
 
   it('should render a local resource', () => {
     subject = mount(
-      <Provider resourceStore={resourceStore} resourceActions={resourceActions} profileStore={profileStore}>
+      <Provider
+        resourceStore={resourceStore}
+        resourceActions={resourceActions}
+        profileStore={profileStore}
+        metricActions={metricActions}
+      >
         <Resource
           resource={resource2}
           className="resource"
@@ -56,7 +69,7 @@ describe('Resource', () => {
     );
 
     expect(subject.find('.title').text()).toBe(resource2.name);
-    expect(subject.find('a').prop('href')).toBeFalsy();
+    expect(subject.find('a').prop('href')).toBe('Y:/MyFolder/MyFile.txt');
     expect(subject.find(FolderIcon).exists()).toBeTruthy();
   });
 

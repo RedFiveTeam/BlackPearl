@@ -3,9 +3,10 @@ import { Repositories } from '../../../utils/Repositories';
 import { Stores } from '../../../utils/Stores';
 import { action } from 'mobx';
 import { ResourceRepository } from '../repositories/ResourceRepository';
-import { Category, ResourceModel } from '../ResourceModel';
+import { Category, ResourceModel, Sort } from '../ResourceModel';
 import { ProfileStore } from '../../../profile/ProfileStore';
 import { toast } from 'react-toastify';
+import * as fuzzysort from 'fuzzysort';
 
 export class ResourceActions {
   private resourceRepository: ResourceRepository;
@@ -19,8 +20,35 @@ export class ResourceActions {
   }
 
   @action.bound
+  async updateClicks(id: number) {
+    await this.resourceRepository.updateClicks(id);
+  }
+
+  @action.bound
   async setAllResources() {
     this.resourceStore.setResources(await this.resourceRepository.findAllByAccount(this.profileStore.profile.cardID));
+    if (this.resourceStore.filter !== '') {
+      await this.filterResources(this.resourceStore.filter);
+    }
+    await this.sortResources();
+  }
+
+  @action.bound
+  async sortResources() {
+    switch (this.profileStore.profile.sort) {
+      case Sort.MostClicked:
+        this.resourceStore.setClicks(await this.resourceRepository.getAllClicks());
+        await this.resourceStore.sortResourcesByPositionDesc();
+        break;
+      case Sort.Newest:
+        await this.resourceStore.sortResourcesByIdDesc();
+        break;
+      case Sort.Alphabetical:
+        await this.resourceStore.sortResourcesByNameDesc();
+        break;
+      default:
+        break;
+    }
   }
 
   @action.bound
@@ -130,10 +158,24 @@ export class ResourceActions {
   @action.bound
   checkDuplicates(title: string): boolean {
     for (let r of this.resourceStore.resources) {
-      if (r.name.toLowerCase() === title.toLowerCase()) {
+      if (r.name.toLowerCase() === title.toLowerCase() &&
+        r.categoryID === this.resourceStore.pendingResource!.categoryID) {
         return true;
       }
     }
     return false;
+  }
+
+  @action.bound
+  async filterResources(filter: string) {
+    const list = this.resourceStore.resources;
+    const opts = {
+      keys: ['name', 'url']
+    };
+    let results = fuzzysort.go(filter, list, opts);
+    const filteredResources = results.map((r) => { return r.obj; } );
+    this.resourceStore.setFilter(filter);
+    this.resourceStore.setFilteredResources(filteredResources);
+    await this.sortResources();
   }
 }

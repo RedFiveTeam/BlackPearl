@@ -7,8 +7,13 @@ describe('EditOperationPopup', () => {
   let subject: ReactWrapper;
   let operationStore: any;
   let operationActions: any;
+  let metricActions: any;
 
   beforeEach(() => {
+    metricActions = {
+      logMetric: jest.fn()
+    };
+
     operationActions = {
       updateOperation: jest.fn(),
       clearPendingEdit: jest.fn()
@@ -18,7 +23,13 @@ describe('EditOperationPopup', () => {
       pendingEdit: new OperationModel(1, '', '', '')
     };
 
-    subject = mount(<EditOperationPopup operationActions={operationActions} operationStore={operationStore}/>);
+    subject = mount(
+      <EditOperationPopup
+        operationActions={operationActions}
+        operationStore={operationStore}
+        metricActions={metricActions}
+      />
+    );
   });
 
   it('should close the popup when cancel is clicked', () => {

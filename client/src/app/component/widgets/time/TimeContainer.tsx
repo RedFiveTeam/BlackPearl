@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { observer, inject } from 'mobx-react';
 import styled from 'styled-components';
-import { StyledATODay } from './ATODay';
 import { TimeStore } from './TimeStore';
 import { TimeActions } from './actions/TimeActions';
 import { StyledTZClock } from './TZClock';
@@ -17,7 +16,6 @@ export class TimeContainer extends React.Component<Props> {
   render() {
     return (
       <div className={this.props.className}>
-        <StyledATODay className="atoDay"/>
         <div className="timeBanner">
           {
             this.props.timeStore!.time &&
@@ -52,16 +50,7 @@ export const StyledTimeContainer = inject('timeStore', 'timeActions')(styled(Tim
       align-self: flex-end;
       margin-left: 10px;
       position: relative;
-      bottom: 6px;
+      bottom: 10px;
       border-radius: 10px;
-  }
-  
-  .atoDay {
-    right: 124px;
-    height: 46px;
-    font-size: 36px;
-    font-family: Amaranth;
-    text-shadow: 0px 3px 6px rgba(0, 0, 0, 0.3);
-    padding-top: 25px;
   }
 `);

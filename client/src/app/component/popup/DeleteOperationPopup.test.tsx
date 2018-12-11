@@ -7,8 +7,13 @@ describe('DeleteOperationPopup', () => {
   let subject: ReactWrapper;
   let operationActions: any;
   let operationStore: any;
+  let metricActions: any;
 
   beforeEach(() => {
+    metricActions = {
+      logMetric: jest.fn()
+    };
+
     operationActions = {
       deleteOperation: jest.fn(),
       clearPendingDelete: jest.fn()
@@ -18,7 +23,13 @@ describe('DeleteOperationPopup', () => {
       pendingDelete: new OperationModel(1, 'Test', 'This is a test', 'https://www.google.com')
     };
 
-    subject = mount(<DeleteOperationPopup operationActions={operationActions} operationStore={operationStore}/>);
+    subject = mount(
+      <DeleteOperationPopup
+        operationActions={operationActions}
+        operationStore={operationStore}
+        metricActions={metricActions}
+      />
+    );
   });
 
   it('should close the popup when cancel is clicked', () => {

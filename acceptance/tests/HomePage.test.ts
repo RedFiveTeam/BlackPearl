@@ -9,6 +9,14 @@ Scenario('should see an ATO day', (I) => {
   I.see("ATO ", ".atoDay");
 });
 
+Scenario('should be able to search resources', (I) => {
+  I.haveHeader('Authorization', 'Basic Q1JPU1MuSk9SREFOLk1JRERMRS4wMTIzNDU2Nzg5OjE=');
+  I.amOnPage('/');
+  I.fillField('.filterSection > input', 'Amazon');
+  I.dontSee('YouTube');
+  I.see(' Amazon');
+});
+
 Scenario('should render six clocks', async function (I) {
   I.haveHeader('Authorization', 'Basic Q1JPU1MuSk9SREFOLk1JRERMRS4wMTIzNDU2Nzg5OjE=');
   I.amOnPage('/');
@@ -27,6 +35,8 @@ Scenario('should see a toast when clicking element in general info card', (I) =>
 Scenario('should render three unique cards', (I) => {
   I.haveHeader('Authorization', 'Basic Q1JPU1MuSk9SREFOLk1JRERMRS4wMTIzNDU2Nzg5OjE=');
   I.amOnPage('/');
+  I.click('.tab:nth-of-type(1) > div', '.tabContainer');
+  I.waitForText("Main", 10);
   I.see("Main", ".cardTitle");
   I.see("Situational Awareness", ".cardTitle");
   I.see("Target Research", ".cardTitle");
@@ -79,6 +89,7 @@ Scenario('should allow users to convert coordinates', async (I) => {
 Scenario('should allow the user to change tabs and see specialty resources', (I) => {
   I.haveHeader('Authorization', 'Basic Q1JPU1MuSk9SREFOLk1JRERMRS4wMTIzNDU2Nzg5OjE=');
   I.amOnPage('/');
+  I.click('.tab:nth-of-type(1) > div', '.tabContainer');
   I.see('FMV Amazon');
   I.see('FMV YouTube');
   I.see('FMV Reddit');
@@ -92,11 +103,6 @@ Scenario('should allow the user to change tabs and see specialty resources', (I)
   I.see('Fusion Amazon');
   I.see('Fusion YouTube');
   I.see('Fusion Reddit');
-
-  I.click('.tab:nth-of-type(4) > div', '.tabContainer');
-  I.see('MOC Amazon');
-  I.see('MOC YouTube');
-  I.see('MOC Reddit');
 });
 
 Scenario('should allow the user to add, edit and delete an operation', async (I) => {
@@ -171,6 +177,7 @@ Scenario('should allow the user to add, edit and delete a resource', async (I) =
 
   //create
   I.amOnPage('/');
+  I.click('.tab:nth-of-type(1) > div', '.tabContainer');
   I.click('Add Resource');
   I.fillField('.titleField', name);
   I.fillField('.urlField', 'https://www.testpage.com');
@@ -180,6 +187,7 @@ Scenario('should allow the user to add, edit and delete a resource', async (I) =
 
   //edit
   I.amOnPage('/');
+  I.click('.tab:nth-of-type(1) > div', '.tabContainer');
   I.waitForElement('.threeDotButton' + `.${name}`, 10);
   I.click('.threeDotButton' + `.${name}`);
   I.click('.editButton');
@@ -193,6 +201,7 @@ Scenario('should allow the user to add, edit and delete a resource', async (I) =
 
   //delete
   I.amOnPage('/');
+  I.click('.tab:nth-of-type(1) > div', '.tabContainer');
   I.click('.threeDotButton' + `.${name}`);
   I.click('.deleteButton');
   I.see(name);
@@ -224,4 +233,46 @@ Scenario('should validate user resource input', async (I) => {
   I.fillField('.urlField', 'sometrash.com');
   I.click('SAVE', '.modal');
   I.waitForText('Please enter a valid address (https://www...)');
+});
+
+Scenario('should order by most clicked', async (I) => {
+  I.haveHeader('Authorization', 'Basic Q1JPU1MuSk9SREFOLk1JRERMRS4wMTIzNDU2Nzg5OjE=');
+  let name = 'TestPage' + Date.now();
+
+  //create
+  I.amOnPage('/');
+  I.click('.tab:nth-of-type(1) > div', '.tabContainer');
+  I.click('Add Resource');
+  I.fillField('.titleField', name);
+  I.fillField('.urlField', 'Y:/Resource1');
+  I.click('SAVE', '.modal');
+  I.waitForText('Resource Link Added', 10);
+  I.waitForText(name, 10);
+
+  //create
+  I.click('Add Resource');
+  I.fillField('.titleField', name + '2');
+  I.fillField('.urlField', 'Y:/Resource2');
+  I.click('SAVE', '.modal');
+  I.waitForText('Resource Link Added', 10);
+  I.waitForText(name + '2', 10);
+
+  I.click(name + '2');
+  I.click(name + '2');
+  I.click(name + '2');
+
+  I.refreshPage();
+  I.wait(2);
+  let title = await I.grabAttributeFrom('.resource:last-of-type > a', 'href');
+  homeAssert.strictEqual(title, 'Y:/Resource1');
+
+  //delete
+  I.click('.threeDotButton' + `.${name}`);
+  I.click('.deleteButton');
+  I.click('.confirmButton');
+  I.click('.threeDotButton' + `.${name + '2'}`);
+  I.click('.deleteButton');
+  I.click('.confirmButton');
+  I.dontSee(name);
+  I.dontSee(name + '2');
 });

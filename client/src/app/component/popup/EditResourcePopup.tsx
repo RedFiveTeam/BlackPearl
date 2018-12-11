@@ -7,12 +7,16 @@ import { ResourceStore } from '../resource/stores/ResourceStore';
 import { InputValidation } from '../../utils/inputValidation/InputValidation';
 import { CSSProperties } from 'react';
 import { ProfileStore } from '../../profile/ProfileStore';
+import { MetricActions } from '../metrics/metric/MetricActions';
+import { LogableActions } from '../metrics/metric/MetricModel';
+import * as ReactDOM from 'react-dom';
 
 interface Props {
   className?: string;
   resourceActions?: ResourceActions;
   resourceStore?: ResourceStore;
   profileStore?: ProfileStore;
+  metricActions?: MetricActions;
 }
 
 interface State  {
@@ -34,6 +38,17 @@ export class EditResourcePopup extends React.Component<Props, State> {
     urlCSS: {},
     titleCSS: {}
   };
+
+  componentDidMount() {
+    const component = this;
+    ((ReactDOM.findDOMNode(this) as HTMLElement).querySelector('.pendingEditTitle') as HTMLElement).focus();
+    (ReactDOM.findDOMNode(this) as HTMLElement).addEventListener('keypress', async (e) => {
+      const key = e.which || e.keyCode;
+      if (key === 13) {
+        await component.onSaveButtonClick();
+      }
+    });
+  }
 
   onTitleFieldChange = (e: any) => {
     this.setState({title: e.target.value});
@@ -69,6 +84,7 @@ export class EditResourcePopup extends React.Component<Props, State> {
       this.props.resourceStore!.pendingEdit!.setName(this.state.title);
       this.props.resourceStore!.pendingEdit!.setAccountId(this.props.profileStore!.profile.cardID);
       await this.props.resourceActions!.updateResource();
+      this.props.metricActions!.logMetric(LogableActions.EDIT_RESOURCE, this.state.title);
     }
   }
 
@@ -122,7 +138,8 @@ export class EditResourcePopup extends React.Component<Props, State> {
 export const StyledEditResourcePopup = inject(
   'resourceActions',
   'resourceStore',
-  'profileStore'
+  'profileStore',
+  'metricActions'
 )(styled(EditResourcePopup)`
   .modal {
     width: 514px;

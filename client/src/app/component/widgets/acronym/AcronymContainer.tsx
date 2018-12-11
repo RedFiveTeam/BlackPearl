@@ -4,10 +4,13 @@ import styled from 'styled-components';
 import { AcronymStore } from './AcronymStore';
 import { StyledAcronym } from './Acronym';
 import { AcronymActions } from './actions/AcronymActions';
+import { MetricActions } from '../../metrics/metric/MetricActions';
+import { LogableActions } from '../../metrics/metric/MetricModel';
 
 interface Props {
   acronymStore?: AcronymStore;
   acronymActions?: AcronymActions;
+  metricActions?: MetricActions;
   className?: string;
 }
 
@@ -26,6 +29,7 @@ export class AcronymContainer extends React.Component<Props> {
         <input
           className="acronymSearch"
           placeholder="Find Acronym..."
+          onSelect={() => { this.props.metricActions!.logMetric(LogableActions.CLICK_ACRONYM, 'Acronym'); }}
           onChange={async (e) => { await this.props.acronymActions!.setFilteredAcronyms(e.target.value); }}
         />
         <div className="acronymList">
@@ -47,7 +51,8 @@ export class AcronymContainer extends React.Component<Props> {
   }
 }
 
-export const StyledAcronymContainer = inject('acronymStore', 'acronymActions')(styled(AcronymContainer)`
+export const StyledAcronymContainer = inject('acronymStore', 'acronymActions', 'metricActions')
+(styled(AcronymContainer)`
   font-family: Amaranth;
   text-align: center;
   font-size: 24px;
@@ -55,7 +60,7 @@ export const StyledAcronymContainer = inject('acronymStore', 'acronymActions')(s
   background: #364958;
   width: 350px;
   min-width: 350px;
-  height: 164px;
+  height: 175px;
   border-radius: 10px;
   margin-left: 8px;
   box-shadow: -1px 3px 3px rgba(0, 0, 0, .25);
@@ -82,7 +87,7 @@ export const StyledAcronymContainer = inject('acronymStore', 'acronymActions')(s
   }
 
   .acronymList {
-  height: 55px;
+  height: 66px;
   width: 324px;
   overflow: auto;
   font-size: 13px;

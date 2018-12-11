@@ -11,10 +11,16 @@ import { toast } from 'react-toastify';
 import { EarthIcon } from '../../icon/EarthIcon';
 import { FolderIcon } from '../../icon/FolderIcon';
 import classNames = require('classnames');
+import { ResourceActions } from './actions/ResourceActions';
+import * as ReactDOM from 'react-dom';
+import { MetricActions } from '../metrics/metric/MetricActions';
+import { LogableActions } from '../metrics/metric/MetricModel';
 
 interface Props {
   resource: ResourceModel;
   resourceStore?: ResourceStore;
+  resourceActions?: ResourceActions;
+  metricActions?: MetricActions;
   className?: string;
 }
 
@@ -22,11 +28,12 @@ interface Props {
 export class Resource extends React.Component<Props> {
   valid = new InputValidation();
   @observable state = {isLocal: false};
-  inputProps = {};
 
   @action.bound
-  launchResource() {
+  launchResource(e: any) {
+    this.props.resourceActions!.updateClicks(this.props.resource!.id!);
     if (this.state.isLocal) {
+      e.preventDefault();
       let selected = null;
       let el = document.createElement('textarea');
       el.value = this.props.resource.url;
@@ -46,20 +53,24 @@ export class Resource extends React.Component<Props> {
       }
       toast.success('Local Path Copied to Clipboard');
     }
+    this.props.metricActions!.logMetric(LogableActions.CLICK_RESOURCE, this.props.resource!.name);
   }
 
   componentDidMount() {
+    let ele = (ReactDOM.findDOMNode(this) as HTMLElement).querySelector('a');
+    ele!.addEventListener('click', this.launchResource);
+    ele!.addEventListener('auxclick', this.launchResource);
     this.setState({isLocal: !this.valid.isInternetResource(this.props.resource.url)});
-    this.inputProps = !this.valid.isInternetResource(this.props.resource.url) ?
-      {} :
-      {href: this.props.resource.url, target: '_blank'};
   }
 
   componentWillReceiveProps(newProps: Props) {
     this.setState({isLocal: !this.valid.isInternetResource(newProps.resource.url)});
-    this.inputProps = !this.valid.isInternetResource(this.props.resource.url) ?
-      {} :
-      {href: newProps.resource.url, target: '_blank'};
+  }
+
+  componentWillUnmount() {
+    let ele = (ReactDOM.findDOMNode(this) as HTMLElement).querySelector('a');
+    ele!.removeEventListener('click', this.launchResource);
+    ele!.removeEventListener('auxclick', this.launchResource);
   }
 
   render() {
@@ -67,8 +78,8 @@ export class Resource extends React.Component<Props> {
       <div className={classNames(this.props.className, 'resource')}>
         <a
           className="resourceLink"
-          onClick={this.launchResource}
-          {...this.inputProps}
+          href={this.props.resource.url}
+          target="_blank"
           title={this.props.resource.name}
         >
           <span className="icon">
@@ -87,7 +98,7 @@ export class Resource extends React.Component<Props> {
   }
 }
 
-export const StyledResource = inject('resourceStore')(styled(Resource)`
+export const StyledResource = inject('resourceStore', 'resourceActions', 'metricActions')(styled(Resource)`
   width: 335px;
   height: 37px;
   border: none;
@@ -101,6 +112,10 @@ export const StyledResource = inject('resourceStore')(styled(Resource)`
   line-height: 27px;
   overflow: hidden;
   position: relative;
+  
+  :hover {
+    background: #E2E2E2;
+  }
   
   .resourceLink {
     width: 90%;

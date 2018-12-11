@@ -12,7 +12,7 @@ import {
   StyledCoordinateConverterContainer
 } from '../component/widgets/coordinateConverter/CoordinateConverterContainer';
 import { StyledLoadingOverlay } from '../component/loading/LoadingOverlay';
-import { Category } from '../component/resource/ResourceModel';
+import { Category, ResourceModel } from '../component/resource/ResourceModel';
 import { StyledCard } from '../component/card/Card';
 import { OperationStore } from '../component/card/operation/stores/OperationStore';
 import { StyledAddOperationPopup } from '../component/popup/AddOperationPopup';
@@ -21,15 +21,36 @@ import { StyledTimeContainer } from '../component/widgets/time/TimeContainer';
 import { Slide, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { StyledDeleteOperationPopup } from '../component/popup/DeleteOperationPopup';
+import { LogableActions } from '../component/metrics/metric/MetricModel';
+import { MetricActions } from '../component/metrics/metric/MetricActions';
+import { StyledProfileContainer } from '../profile/ProfileContainer';
 
 interface Props {
   resourceStore?: ResourceStore;
   operationStore?: OperationStore;
+  metricActions?: MetricActions;
   className?: string;
 }
 
 @observer
 export class HomePage extends React.Component<Props> {
+  componentDidMount() {
+    this.props.metricActions!.logMetric(LogableActions.VISIT, 'Home');
+    this.getQ();
+  }
+
+  getQ() {
+    let getParams = window.location.search;
+    let query = getParams.substr(getParams.indexOf('q=') + 2);
+    let search = getParams.substr(getParams.indexOf('s=') + 2, 1);
+
+    if (search === '1') {
+      this.props.resourceStore!.setFilter(query);
+    } else if (search === '0') {
+      this.props.resourceStore!.setPendingResource(new ResourceModel(null, '', decodeURIComponent(query)));
+    }
+  }
+
   render() {
     return (
       <div
@@ -76,6 +97,7 @@ export class HomePage extends React.Component<Props> {
         >
           <StyledCardContainer/>
           <div className="widgetSection">
+            <StyledProfileContainer/>
             <StyledTimeContainer/>
             <StyledCard
               className="myFavorites"
@@ -92,10 +114,12 @@ export class HomePage extends React.Component<Props> {
   }
 }
 
-export const StyledHomePage = inject('resourceStore', 'operationStore')(styled(HomePage)`
+export const StyledHomePage = inject('resourceStore', 'operationStore', 'metricActions')(styled(HomePage)`
   margin-left: -8px;
+  position: absolute;
+  
   .myFavorites {
-    height: 282px;
+    height: 294px;
     width: 338px;
     margin-left: 10px;
     background: #364958;
@@ -108,14 +132,14 @@ export const StyledHomePage = inject('resourceStore', 'operationStore')(styled(H
     }
 
     .body {
-        max-height: calc(282px - 32px - 10px);
+        max-height: 252px;
         border-radius: 0px;
-        height: 222px;
+        height: 234px;
         width: 330px;
     }
     
     .resourceList {
-        max-height: 184px;
+        max-height: 196px;
         overflow-x: hidden;
     }
     
@@ -127,8 +151,7 @@ export const StyledHomePage = inject('resourceStore', 'operationStore')(styled(H
     }
     
     .addResourceButton {
-      width: 320px;
-      margin-left: 5px;
+      width: 330px;
     }
   }
   
@@ -155,12 +178,13 @@ export const StyledHomePage = inject('resourceStore', 'operationStore')(styled(H
 
   .cardsContainer {
     display: flex;
+    position: relative;
   }
   
   .widgetSection {
     position: fixed;
     display: block;
-    top: 1px;
+    top: 10px;
     left: 1090px;
   }
 `);

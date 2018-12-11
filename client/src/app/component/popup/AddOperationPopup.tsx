@@ -3,10 +3,14 @@ import { inject } from 'mobx-react';
 import styled from 'styled-components';
 import { StyledPopupModal } from './PopupModal';
 import { OperationActions } from '../card/operation/actions/OperationActions';
+import { MetricActions } from '../metrics/metric/MetricActions';
+import { LogableActions } from '../metrics/metric/MetricModel';
+import * as ReactDOM from 'react-dom';
 
 interface Props {
   className?: string;
   operationActions?: OperationActions;
+  metricActions?: MetricActions;
 }
 
 interface State {
@@ -17,6 +21,17 @@ interface State {
 
 export class AddOperationPopup extends React.Component<Props, State> {
   state = {title: '', description: '', address: ''};
+
+  componentDidMount() {
+    const component = this;
+    ((ReactDOM.findDOMNode(this) as HTMLElement).querySelector('.titleField') as HTMLElement).focus();
+    (ReactDOM.findDOMNode(this) as HTMLElement).addEventListener('keypress', async (e) => {
+      const key = e.which || e.keyCode;
+      if (key === 13) {
+        await component.onSaveButtonClick();
+      }
+    });
+  }
 
   onTitleFieldChange = (e: any) => {
     this.setState({title: e.target.value});
@@ -37,6 +52,7 @@ export class AddOperationPopup extends React.Component<Props, State> {
       this.state.address
     );
     await this.props.operationActions!.saveOperation();
+    this.props.metricActions!.logMetric(LogableActions.ADD_OP, this.state.title);
   }
 
   render() {
@@ -83,7 +99,7 @@ export class AddOperationPopup extends React.Component<Props, State> {
   }
 }
 
-export const StyledAddOperationPopup = inject('operationActions')(styled(AddOperationPopup)`
+export const StyledAddOperationPopup = inject('operationActions', 'metricActions')(styled(AddOperationPopup)`
 
   .modal {
   height: 321px;

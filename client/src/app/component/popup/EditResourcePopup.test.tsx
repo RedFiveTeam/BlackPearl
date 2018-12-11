@@ -7,9 +7,14 @@ describe('EditResourcePopup', () => {
   let subject: ReactWrapper;
   let resourceStore: any;
   let resourceActions: any;
+  let metricActions: any;
   let profileStore: any;
 
   beforeEach(() => {
+    metricActions = {
+      logMetrics: jest.fn()
+    };
+
     resourceActions = {
       clearPendingEdit: jest.fn(),
       updateResource: jest.fn()
@@ -28,6 +33,7 @@ describe('EditResourcePopup', () => {
         resourceActions={resourceActions}
         resourceStore={resourceStore}
         profileStore={profileStore}
+        metricActions={metricActions}
       />
     );
   });

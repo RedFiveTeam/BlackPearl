@@ -14,10 +14,8 @@ interface Props {
 
 @observer
 export class AppBanner extends React.Component<Props> {
-
-  async componentDidMount() {
+  async componentWillMount() {
     await this.props.profileActions!.setProfile();
-    await this.props.profileActions!.addLogin();
   }
 
   render() {

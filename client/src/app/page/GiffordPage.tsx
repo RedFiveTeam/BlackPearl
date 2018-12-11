@@ -1,15 +1,22 @@
 import * as React from 'react';
-import { observer } from 'mobx-react';
+import { inject, observer } from 'mobx-react';
 import styled from 'styled-components';
+import { LogableActions } from '../component/metrics/metric/MetricModel';
+import { MetricActions } from '../component/metrics/metric/MetricActions';
 const Gifford = require('../resources/gifford.json');
 const GroupPicture = require('../resources/groupPicture.jpg');
 
 interface Props {
   className?: string;
+  metricActions?: MetricActions;
 }
 
 @observer
 export class GiffordPage extends React.Component<Props> {
+  componentDidMount() {
+    this.props.metricActions!.logMetric(LogableActions.VISIT, 'Gifford');
+  }
+
   render() {
     return (
       <div
@@ -52,7 +59,7 @@ export class GiffordPage extends React.Component<Props> {
   }
 }
 
-export const StyledGiffordPage = styled(GiffordPage)`
+export const StyledGiffordPage = inject('metricActions')(styled(GiffordPage)`
 text-align: center;
 font-family: monowidth;
 
@@ -75,4 +82,4 @@ font-family: monowidth;
   width: 400px;
   height: 250px;
 }
-`;
+`);

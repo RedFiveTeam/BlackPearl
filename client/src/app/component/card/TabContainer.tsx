@@ -3,38 +3,60 @@ import { inject, observer } from 'mobx-react';
 import styled from 'styled-components';
 import { ResourceStore } from '../resource/stores/ResourceStore';
 import { ProfileStore } from '../../profile/ProfileStore';
-
-const Person = require('../../icon/Person.png');
+import { ProfileActions } from '../../profile/ProfileActions';
+import { SearchIcon } from '../../icon/SearchIcon';
+import { DropdownIcon } from '../../icon/DropdownIcon';
+import { Sort } from '../resource/ResourceModel';
+import { ResourceActions } from '../resource/actions/ResourceActions';
+import { observable } from 'mobx';
 
 interface Props {
   className?: string;
   resourceStore?: ResourceStore;
+  resourceActions?: ResourceActions;
   profileStore?: ProfileStore;
+  profileActions?: ProfileActions;
 }
 
 export enum Tab {
   FMV = 1,
   HighAlt = 2,
-  Fusion = 3,
-  MOC = 4
+  Fusion = 3
 }
 
 export enum TabName {
   FMV = 'FMV',
   HighAlt = 'High Alt',
-  Fusion = 'Fusion',
-  MOC = 'MOC'
+  Fusion = 'Fusion'
 }
 
 @observer
 export class TabContainer extends React.Component<Props> {
-  componentDidMount() {
-    this.makeItSelected(Tab.FMV);
+  @observable selectedState: number;
+
+  async sortSelected(e: any) {
+    this.selectedState = parseInt(e.target.value, 10);
+    if (e.target.value >= 0) {
+      await this.props.profileActions!.updateSort(parseInt(e.target.value, 10));
+      await this.props.resourceActions!.sortResources();
+    }
   }
 
-  clickTab = (tab: number) => {
+  async componentWillReceiveProps(props: any) {
+    if (props.profileStore!.profile !== undefined) {
+      if (props.profileStore!.profile.specialty === null) {
+        await this.clickTab(1);
+      }
+      await this.clickTab(props.profileStore!.profile.specialty!);
+    }
+  }
+
+  clickTab = async (tab: number) => {
     this.props.resourceStore!.setActiveTab(tab);
     this.makeItSelected(tab);
+    if (tab !== this.props.profileStore!.profile.specialty) {
+      await this.props.profileActions!.changeDefaultTab(tab);
+    }
   };
 
   makeItSelected = (tab: number) => {
@@ -61,33 +83,49 @@ export class TabContainer extends React.Component<Props> {
             );
           })
         }
-        <div className="profileBanner">
-          {
-            this.props.profileStore!.profile &&
-            this.props.profileStore!.profile.name
-          }
-          <img className="personImage" src={Person}/>
+        <div className="searchSection">
+          <div className="filterSection">
+            <SearchIcon/>
+            <input
+              onChange={async (e) => {
+                if (e.target.value === '') {
+                  (document.querySelector('.sortSelector') as HTMLSelectElement).value
+                    = this.props.profileStore!.profile.sort.toString();
+                } else {
+                  (document.querySelector('.sortSelector') as HTMLSelectElement).value = '';
+                }
+                await this.props.resourceActions!.filterResources(e.target.value);
+              }}
+              placeholder="Search"
+            />
+          </div>
+          <div className="sortSection">
+            Sort By:
+            <select
+              className="sortSelector"
+              onChange={async (e) => {
+                await this.sortSelected(e);
+              }}
+              value={this.props.profileStore!.profile ? this.props.profileStore!.profile.sort : 0}
+            >
+              <option value={Sort.None}/>
+              <option value={Sort.MostClicked}>Most Clicked</option>
+              <option value={Sort.Newest}>Newest</option>
+              <option value={Sort.Alphabetical}>Alphabetical</option>
+            </select>
+            <DropdownIcon/>
+          </div>
         </div>
       </div>
     );
   }
 }
 
-export const StyledTabContainer = inject('resourceStore', 'profileStore')(styled(TabContainer)`
+export const StyledTabContainer = inject('resourceStore', 'profileStore', 'resourceActions')(styled(TabContainer)`
   display: flex;
   padding-left: 10px;
   position: relative;
-  
-  .profileBanner {
-    align-items: center;
-    position: absolute;
-    right: 0px;
-    display: flex;
-    font-size: 12px;
-    color: white;
-    font-family: Amaranth;
-    z-index: 10;
-  }
+  font-family: Amaranth;
   
   .tab {
     display: inline-block;
@@ -111,11 +149,62 @@ export const StyledTabContainer = inject('resourceStore', 'profileStore')(styled
     z-index: 2;
     box-shadow: -3px -4px 6px rgba(0,0,0,0.25), 3px -4px 6px rgba(0,0,0,0.25);
   }
+  
+  .searchSection {
+    display: flex;
+    width: 667px;
+    align-items: center;
+    justify-content: flex-end;
+  }
+  
+  .filterSection {
+    display: flex;
+    height: 25px;
+    line-height: 25px;
+    width: 219px;
+    background: #FFFFFF;
+    border-radius: 20px;
+    padding-left: 2px;
+    padding-top: 1px;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  }
+  
+  .filterSection > input {
+    height: 25px;
+    line-height: 25px;
+    font-size: 16px;
+    font-family: Amaranth;
+    width: 182px;
+    outline: none;
+    background: none;
+    border: none;
+  }
+  
+  .sortSection {
+    margin-left: 17px;
+    font-size: 12px;
+    color: #000000;
+    .dropIcon {
+      width: 10px;
+      height: 10px;
+      margin-left: -10px;
+    }
+  }
     
-  .personImage {
-    width: 31px;
-    height: 31px;
-    margin-right: 4px;
-    margin-left: 10px;
+  .sortSelector {
+    position: relative;
+    -webkit-appearance: none;
+    margin-left: 5px;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-bottom: 1px solid #000000;
+    background: none;
+    color: #000000;
+    font-family: Amaranth;
+    border-radius: 0 0 0 0;
+    font-size: 12px;
+    outline: none;
+    width: 76px;
   }
 `);

@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { shallow, ShallowWrapper } from 'enzyme';
 import { TimeContainer } from './TimeContainer';
-import { StyledATODay } from './ATODay';
 import { StyledTZClock } from './TZClock';
 import { StubTimeRepository } from './repositories/StubTimeRepository';
 
@@ -31,10 +30,6 @@ describe('TimeContainer', () => {
         timeActions={timeActions}
       />
     );
-  });
-
-  it('should render an ATO date', () => {
-    expect(subject.find(StyledATODay).exists()).toBeTruthy();
   });
 
   it('should render six clocks', () => {

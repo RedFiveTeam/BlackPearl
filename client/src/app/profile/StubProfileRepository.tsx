@@ -4,7 +4,11 @@ import { ProfileModel } from './ProfileModel';
 export class StubProfileRepository implements ProfileRepository {
   getProfile(): Promise<ProfileModel> {
     return Promise.resolve(
-      new ProfileModel('TEST.TEST.TEST', 'TEST')
+      new ProfileModel(0, 'TEST.TEST.TEST', 'TEST', 1, 0)
     );
+  }
+
+  updateProfile(profile: ProfileModel): Promise<void> {
+    return Promise.resolve();
   }
 }

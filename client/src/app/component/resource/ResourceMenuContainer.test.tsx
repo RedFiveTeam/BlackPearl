@@ -16,8 +16,13 @@ describe('ResourceMenuContainer', () => {
   let resourceActions: any;
   let resourceMenuStore: ResourceMenuStore;
   let profileStore: ProfileStore;
+  let metricActions: any;
 
   beforeEach(() => {
+    metricActions = {
+      logMetrics: jest.fn()
+    };
+
     resource = new ResourceModel();
     resourceMenuStore = new ResourceMenuStore();
     profileStore = new ProfileStore();
@@ -28,7 +33,7 @@ describe('ResourceMenuContainer', () => {
       createPendingDelete: jest.fn()
     };
 
-    profileStore.setProfile(new ProfileModel('Guest', 'Guest'));
+    profileStore.setProfile(new ProfileModel(0, 'Guest', 'Guest'));
 
     subject = shallow(
       <ResourceMenuContainer
@@ -36,6 +41,7 @@ describe('ResourceMenuContainer', () => {
         resourceMenuStore={resourceMenuStore}
         resourceActions={resourceActions}
         profileStore={profileStore}
+        metricActions={metricActions}
       />
     );
   });

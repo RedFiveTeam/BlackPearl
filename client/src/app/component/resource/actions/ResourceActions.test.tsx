@@ -18,16 +18,24 @@ describe('ResourceActions', () => {
       setPendingDelete: jest.fn(),
       setPendingEdit: jest.fn(),
       setPendingResourceCategory: jest.fn(),
-      pendingResource: ResourceModel,
+      pendingResource: new ResourceModel(1, 'http://www.test.com', 'TestResource', 1, 'Guest', 0),
       pendingEdit: ResourceModel,
       resources: [
-        new ResourceModel(1, 'http://www.test.com', 'TestResource', 1, 'Guest', 0)
+        new ResourceModel(1, 'http://www.test.com', 'TestResource', 1, 'Guest', 0),
+        new ResourceModel(2, 'https://www.google.com', 'Google', 1),
+        new ResourceModel(3, 'https://www.yahoo.com', 'Yahoo', 1),
+        new ResourceModel(4, 'https://www.ebay.com', 'eBay', 2)
       ],
-      performLoading: async (fun: any) => { await fun(); }
+      performLoading: async (fun: any) => { await fun(); },
+      getAllClicks: jest.fn(),
+      setClicks: jest.fn(),
+      sortResourcesByPositionDesc: jest.fn(),
+      setFilteredResources: jest.fn(),
+      setFilter: jest.fn()
     };
 
     profileStore = {
-      profile: new ProfileModel('GUEST', 'GUEST')
+      profile: new ProfileModel(0, 'GUEST', 'GUEST')
     };
 
     resourceRepository = new StubResourceRepository();
@@ -36,6 +44,7 @@ describe('ResourceActions', () => {
     resourceRepository.updateResource = jest.fn();
     resourceRepository.saveResource = jest.fn();
     resourceRepository.updateGivenResources = jest.fn();
+    resourceRepository.updateClicks = jest.fn();
 
     testResources = [
       new ResourceModel(1, 'https://www.google.com', 'Google', 1),
@@ -54,6 +63,8 @@ describe('ResourceActions', () => {
   it('should store every resource in store', async () => {
     await subject.setAllResources();
     expect(resourceStore.setResources).toHaveBeenCalled();
+    expect(resourceStore.setClicks).toHaveBeenCalled();
+    expect(resourceStore.sortResourcesByPositionDesc).toHaveBeenCalled();
   });
 
   it('should clear pending resource', () => {
@@ -135,5 +146,10 @@ describe('ResourceActions', () => {
   it('should check for duplicate titles in resources', () => {
     expect(subject.checkDuplicates('TestResource')).toBe(true);
     expect(subject.checkDuplicates('Doesnt Exist')).toBe(false);
+  });
+
+  it('should filter the resources', async () => {
+    await subject.filterResources('eBay');
+    expect(resourceStore.setFilteredResources).toHaveBeenCalled();
   });
 });

@@ -1,12 +1,19 @@
 import * as React from 'react';
 import { mount, ReactWrapper } from 'enzyme';
 import { StyledAddResourcePopup } from './AddResourcePopup';
+import { ResourceModel } from '../resource/ResourceModel';
 
 describe('AddResourcePopup', () => {
   let subject: ReactWrapper;
   let resourceActions: any;
+  let metricActions: any;
+  let resourceStore: any;
 
   beforeEach(() => {
+    metricActions = {
+      logMetrics: jest.fn()
+    };
+
     resourceActions = {
       saveResource: jest.fn(),
       clearPendingResource: jest.fn(),
@@ -14,7 +21,17 @@ describe('AddResourcePopup', () => {
       checkDuplicates: () => { return false; }
     };
 
-    subject = mount(<StyledAddResourcePopup resourceActions={resourceActions}/>);
+    resourceStore = {
+      pendingResource: new ResourceModel()
+    };
+
+    subject = mount(
+      <StyledAddResourcePopup
+        resourceActions={resourceActions}
+        metricActions={metricActions}
+        resourceStore={resourceStore}
+      />
+    );
   });
 
   it('should close the popup when cancel is clicked', () => {

@@ -5,10 +5,16 @@ import { ResourceActions } from '../resource/actions/ResourceActions';
 import { inject } from 'mobx-react';
 import { CSSProperties } from 'react';
 import { InputValidation } from '../../utils/inputValidation/InputValidation';
+import { MetricActions } from '../metrics/metric/MetricActions';
+import { LogableActions } from '../metrics/metric/MetricModel';
+import * as ReactDOM from 'react-dom';
+import { ResourceStore } from '../resource/stores/ResourceStore';
 
 interface Props {
   className?: string;
   resourceActions?: ResourceActions;
+  resourceStore?: ResourceStore;
+  metricActions?: MetricActions;
 }
 
 interface State {
@@ -22,6 +28,28 @@ interface State {
 
 export class AddResourcePopup extends React.Component<Props, State> {
   state = {title: '', url: '', urlError: '', titleError: '', urlCSS: {}, titleCSS: {}};
+
+  componentDidMount() {
+    const component = this;
+    this.setState({
+      title: this.props.resourceStore!.pendingResource ?
+        this.props.resourceStore!.pendingResource!.name :
+        ''
+    });
+
+    if (this.props.resourceStore!.pendingResource!.name !== '') {
+      ((ReactDOM.findDOMNode(this) as HTMLElement).querySelector('.urlField') as HTMLElement).focus();
+    } else {
+      ((ReactDOM.findDOMNode(this) as HTMLElement).querySelector('.titleField') as HTMLElement).focus();
+    }
+
+    (ReactDOM.findDOMNode(this) as HTMLElement).addEventListener('keypress', async (e) => {
+      const key = e.which || e.keyCode;
+      if (key === 13) {
+        await component.onSaveButtonClick();
+      }
+    });
+  }
 
   onTitleFieldChange = (e: any) => {
     this.setState({title: e.target.value});
@@ -64,6 +92,7 @@ export class AddResourcePopup extends React.Component<Props, State> {
         this.state.url
       );
       await this.props.resourceActions!.saveResource();
+      this.props.metricActions!.logMetric(LogableActions.ADD_RESOURCE, this.state.title);
     }
   }
 
@@ -104,7 +133,9 @@ export class AddResourcePopup extends React.Component<Props, State> {
           }
           <button
             className="saveButton"
-            onClick={async () => { await this.onSaveButtonClick(); }}
+            onClick={async () => {
+              await this.onSaveButtonClick();
+            }}
           >
             SAVE
           </button>
@@ -114,7 +145,8 @@ export class AddResourcePopup extends React.Component<Props, State> {
   }
 }
 
-export const StyledAddResourcePopup = inject('resourceActions')(styled(AddResourcePopup)`
+export const StyledAddResourcePopup = inject('resourceActions', 'resourceStore', 'metricActions')
+(styled(AddResourcePopup)`
   .modal {
    width: 514px;
    height: 250px;

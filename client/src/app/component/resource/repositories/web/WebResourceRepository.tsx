@@ -2,9 +2,12 @@ import { ResourceRepository } from '../ResourceRepository';
 import { ResourceSerializer } from '../../serializer/ResourceSerializer';
 import { HTTPClient } from '../../../../utils/HTTPClient';
 import { ResourceModel } from '../../ResourceModel';
+import { ClickModel } from '../../ClickModel';
+import { ClickSerializer } from '../../serializer/ClickSerializer';
 
 export class WebResourceRepository implements ResourceRepository {
   private resourceSerializer = new ResourceSerializer();
+  private clickSerializer = new ClickSerializer();
 
   constructor(private client: HTTPClient) {
   }
@@ -47,6 +50,18 @@ export class WebResourceRepository implements ResourceRepository {
         return this.resourceSerializer.serialize(res);
       }))
     );
+    return;
+  }
+
+  async getAllClicks(): Promise<ClickModel[]> {
+    const json = await this.client.getJSON('/api/clicks');
+    return json.map((obj: any) => {
+      return this.clickSerializer.deserialize(obj);
+    });
+  }
+
+  async updateClicks(id: number): Promise<void> {
+    await this.client.get('/api/clicks/' + id);
     return;
   }
 }

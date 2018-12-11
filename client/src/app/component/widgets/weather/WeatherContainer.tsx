@@ -3,11 +3,14 @@ import { inject, observer } from 'mobx-react';
 import styled from 'styled-components';
 import { WeatherStore } from './WeatherStore';
 import { WeatherActions } from './actions/WeatherActions';
+import { MetricActions } from '../../metrics/metric/MetricActions';
+import { LogableActions } from '../../metrics/metric/MetricModel';
 
 interface Props {
   className?: string;
   weatherStore?: WeatherStore;
   weatherActions?: WeatherActions;
+  metricActions?: MetricActions;
 }
 
 @observer
@@ -33,6 +36,7 @@ export class WeatherContainer extends React.Component<Props> {
                 target="__blank"
                 key={index}
                 className={'weatherURL weather' + index}
+                onClick={() => { this.props.metricActions!.logMetric(LogableActions.CLICK_WEATHER, w.label); }}
                 href={w.url}
               >
                 <div key={index} className="weatherLabel">{w.label}</div>
@@ -45,7 +49,8 @@ export class WeatherContainer extends React.Component<Props> {
   }
 }
 
-export const StyledWeatherContainer = inject('weatherStore', 'weatherActions')(styled(WeatherContainer)`
+export const StyledWeatherContainer = inject('weatherStore', 'weatherActions', 'metricActions')
+(styled(WeatherContainer)`
 width: 350px;
 height: 141px;
 background: #364958;

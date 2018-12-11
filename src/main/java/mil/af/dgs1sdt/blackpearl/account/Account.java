@@ -23,11 +23,25 @@ public class Account implements UserDetails {
   private String cardID;
   private String name;
   private Long role;
+  private Long specialty;
+  private Long sort;
 
-  public Account(String cardId, String name, Long role) {
+  public Account(String cardId, String name, Long role, Long specialty, Long sort) {
     this.cardID = cardId;
     this.name = name;
     this.role = role;
+    this.specialty = specialty;
+    this.sort = sort;
+  }
+
+  public Account update(AccountJSON json) {
+    this.setId(json.getId());
+    this.setCardID(json.getCardID());
+    this.setName(json.getName());
+    this.setRole(1L);  //What purpose does this serve?
+    this.setSpecialty(json.getSpecialty());
+    this.setSort(json.getSort());
+    return this;
   }
 
   @Override

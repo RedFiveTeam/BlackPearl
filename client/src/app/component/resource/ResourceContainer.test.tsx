@@ -9,6 +9,9 @@ describe('ResourceContainer', () => {
   let resourceStore: any;
   let resourceActions: any;
   let profileStore: any;
+  let metricActions: any;
+
+  metricActions = {};
 
   resourceStore = {};
 
@@ -20,7 +23,12 @@ describe('ResourceContainer', () => {
 
   beforeEach(() => {
     subject = mount(
-      <Provider resourceStore={resourceStore} resourceActions={resourceActions} profileStore={profileStore}>
+      <Provider
+        resourceStore={resourceStore}
+        resourceActions={resourceActions}
+        profileStore={profileStore}
+        metricActions={metricActions}
+      >
         <ResourceContainer
           category={Category.FMV_Main}
           resourceActions={resourceActions}
