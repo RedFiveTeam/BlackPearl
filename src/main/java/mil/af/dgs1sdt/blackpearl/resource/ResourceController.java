@@ -1,5 +1,7 @@
 package mil.af.dgs1sdt.blackpearl.resource;
 
+import mil.af.dgs1sdt.blackpearl.account.Account;
+import mil.af.dgs1sdt.blackpearl.account.AccountRepository;
 import mil.af.dgs1sdt.blackpearl.resource.blame.Blame;
 import mil.af.dgs1sdt.blackpearl.resource.blame.BlameRepository;
 import mil.af.dgs1sdt.blackpearl.resource.click.ClickRepository;
@@ -30,6 +32,9 @@ public class ResourceController {
   @Autowired
   BlameRepository blameRepository;
 
+  @Autowired
+  AccountRepository accountRepository;
+
   @GetMapping
   public @ResponseBody
   Iterable<Resource> getAllResources() {
@@ -45,12 +50,20 @@ public class ResourceController {
   @RequestMapping(path = "/go")
   public @ResponseBody
   RedirectView goFunction(@RequestParam("q") String query) {
-    List<Resource> resources = resourceRepository.findAllByNameContains(query);
+    String user = SecurityContextHolder.getContext().getAuthentication().getName();
+    if (user.equals("anonymousUser")) {
+      user = "GUEST.GUEST.GUEST.0123456789";
+    }
+
+    Account account = accountRepository.findOneByCardID(user);
+    Long max = account != null ? account.getSpecialty() * 3 : 3L;
+
+    List<Resource> resources = resourceRepository.findAllForGo(query, user, max-2, max);
     int search = 0;
     if ( resources.size() > 1 ) {
       search = 1;
     }
-    String url = "/?s=" + search + "&q=" + query;
+    String url = "/?search=" + search + "&specialty=" + (max/3) + "&q=" + query;
     if (resources.size() == 1) {
       url = resources.get(0).getUrl();
     }

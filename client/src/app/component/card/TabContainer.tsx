@@ -97,6 +97,7 @@ export class TabContainer extends React.Component<Props> {
                 await this.props.resourceActions!.filterResources(e.target.value);
               }}
               placeholder="Search"
+              value={this.props.resourceStore!.filter}
             />
           </div>
           <div className="sortSection">
