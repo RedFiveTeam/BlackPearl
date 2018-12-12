@@ -1,6 +1,11 @@
 package mil.af.dgs1sdt.blackpearl.config;
 
+import org.springframework.boot.web.server.ErrorPage;
+import org.springframework.boot.web.server.WebServerFactoryCustomizer;
+import org.springframework.boot.web.servlet.server.ConfigurableServletWebServerFactory;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -14,5 +19,12 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addViewController("/poopdeck").setViewName("/index.html");
         registry.addViewController("/gifford").setViewName("/index.html");
         registry.addViewController("/metrics").setViewName("/index.html");
+    }
+
+    @Bean
+    public WebServerFactoryCustomizer<ConfigurableServletWebServerFactory> containerCustomizer() {
+      return container -> {
+        container.addErrorPages(new ErrorPage(HttpStatus.NOT_FOUND, "/index.html"));
+      };
     }
 }

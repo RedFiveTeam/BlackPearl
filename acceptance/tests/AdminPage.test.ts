@@ -5,7 +5,7 @@ const moment = require('moment-timezone');
 Feature('Admin Page');
 
 Scenario('should allow admin to change a time zone', async (I) => {
-  I.haveHeader('Authorization', 'Basic Q1JPU1MuSk9SREFOLk1JRERMRS4wMTIzNDU2Nzg5OjE=');
+  I.haveHeader('Authorization', 'Basic Q1JPU1MuSk9SREFOLk1JRERMRS4wMTIzNDU2Nzg5Og==');
   I.amOnPage('/admin');
   I.waitForElement('input', 10);
 
@@ -24,7 +24,7 @@ Scenario('should allow admin to change a time zone', async (I) => {
 });
 
 Scenario('should allow admin to change general information', async (I) => {
-  I.haveHeader('Authorization', 'Basic Q1JPU1MuSk9SREFOLk1JRERMRS4wMTIzNDU2Nzg5OjE=');
+  I.haveHeader('Authorization', 'Basic Q1JPU1MuSk9SREFOLk1JRERMRS4wMTIzNDU2Nzg5Og==');
   I.amOnPage('/admin');
   I.waitForElement('.tabSelector', 10);
   I.click('.tabSelector:nth-of-type(3)');
@@ -38,7 +38,7 @@ Scenario('should allow admin to change general information', async (I) => {
 });
 
 Scenario('should allow admin to add an acronym', async (I) => {
-  I.haveHeader('Authorization', 'Basic Q1JPU1MuSk9SREFOLk1JRERMRS4wMTIzNDU2Nzg5OjE=');
+  I.haveHeader('Authorization', 'Basic Q1JPU1MuSk9SREFOLk1JRERMRS4wMTIzNDU2Nzg5Og==');
   I.amOnPage('/admin');
   I.waitForElement('.tabSelector', 10);
   I.click('.tabSelector:nth-of-type(4)');
@@ -53,7 +53,7 @@ Scenario('should allow admin to add an acronym', async (I) => {
 });
 
 Scenario('should allow admin to change a weather data', async (I) => {
-  I.haveHeader('Authorization', 'Basic Q1JPU1MuSk9SREFOLk1JRERMRS4wMTIzNDU2Nzg5OjE=');
+  I.haveHeader('Authorization', 'Basic Q1JPU1MuSk9SREFOLk1JRERMRS4wMTIzNDU2Nzg5Og==');
   I.amOnPage('/admin');
   I.waitForElement('.tabSelector', 10);
   I.click('.tabSelector:nth-of-type(2)');
