@@ -62,5 +62,4 @@ export const StyledAdminPage = inject('adminStore', 'adminActions', 'metricActio
       margin-left: 20px;
     }
   }
-
 `);

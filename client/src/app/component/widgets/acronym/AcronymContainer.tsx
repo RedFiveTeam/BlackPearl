@@ -20,6 +20,10 @@ export class AcronymContainer extends React.Component<Props> {
     await this.props.acronymActions!.setAllAcronyms();
   }
 
+  clickAcronym(e: any) {
+    return;
+  }
+
   render() {
     return (
       <div
@@ -41,6 +45,7 @@ export class AcronymContainer extends React.Component<Props> {
                   acronym={acronym}
                   key={index}
                   className="acronym"
+                  onClick={(e: any) => { this.clickAcronym(e); }}
                 />
               );
             })

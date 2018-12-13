@@ -37,7 +37,7 @@ Scenario('should allow admin to change general information', async (I) => {
   I.waitForText('www.com', 10);
 });
 
-Scenario('should allow admin to add an acronym', async (I) => {
+Scenario('should allow admin to add and delete an acronym', async (I) => {
   I.haveHeader('Authorization', 'Basic Q1JPU1MuSk9SREFOLk1JRERMRS4wMTIzNDU2Nzg5Og==');
   I.amOnPage('/admin');
   I.waitForElement('.tabSelector', 10);
@@ -48,6 +48,11 @@ Scenario('should allow admin to add an acronym', async (I) => {
   I.click('.addAcronymButton');
   I.waitForElement('.customToast');
   I.waitForText('Wombats Are Tasty', 10);
+  I.click('.acronym:first-of-type');
+  I.click('Delete');
+  I.see('WAT');
+  I.click('DELETE');
+  I.dontSee('WAT');
 });
 
 Scenario('should allow admin to change a weather data', async (I) => {

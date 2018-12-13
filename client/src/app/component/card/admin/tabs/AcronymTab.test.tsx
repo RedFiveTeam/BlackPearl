@@ -43,6 +43,10 @@ describe('AcronymTab', () => {
     expect(subject.find('.acronymTitle').text()).toBe('Current Acronyms');
   });
 
+  it('should have a delete button', () => {
+    expect(subject.find('.deleteAcronymButton').exists()).toBeTruthy();
+  });
+
   it('should have an add acronym button', () => {
     expect(subject.find('.addAcronymButton').exists()).toBeTruthy();
     expect(subject.find('.addAcronymButton').text()).toBe('Add');

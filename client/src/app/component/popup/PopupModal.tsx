@@ -71,6 +71,12 @@ export const StyledPopupModal = styled(PopupModal)`
     padding-bottom: 2%;
   }
   
+  .modal {
+    position: relative;
+    left: 580px;
+    top: 275px;
+  }
+  
   .cancelButton {
     background: #C4C4C4;
     font-family: Amaranth;

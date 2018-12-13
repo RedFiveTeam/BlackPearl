@@ -21,4 +21,9 @@ export class WebAcronymRepository implements AcronymRepository {
     const json = await this.client.postJSON('/api/acronyms', body);
     return this.acronymSerializer.deserialize(json);
   }
+
+  async deleteAcronym(acronym: AcronymModel): Promise<void> {
+    await this.client.delete('api/acronyms', acronym.id!.toString());
+    return Promise.resolve();
+  }
 }

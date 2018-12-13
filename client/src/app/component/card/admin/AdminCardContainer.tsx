@@ -123,7 +123,7 @@ transform: translate(-50%, -50%);
   border-radius: 0px 5px 5px 0px;
 }
 
-button {
+.saveAll {
   position: absolute;
   bottom: 0px;
   border-radius: 0px 0px 0px 5px;

@@ -6,6 +6,8 @@ import { AdminStore } from '../../../../page/stores/AdminStore';
 import { StyledAcronym } from '../../../widgets/acronym/Acronym';
 import { AcronymActions } from '../../../widgets/acronym/actions/AcronymActions';
 import { AcronymStore } from '../../../widgets/acronym/AcronymStore';
+import { StyledDeleteAcronymPopup } from '../../../popup/DeleteAcronymPopup';
+import { AcronymModel } from '../../../widgets/acronym/AcronymModel';
 
 interface Props {
   className?: string;
@@ -18,9 +20,16 @@ interface Props {
 @observer
 export class AcronymTab extends React.Component<Props> {
   state = {acronym: '', definition: ''};
+  pendingDelete = {id: '', value: ''};
+  node: any = this.node;
 
   async componentDidMount() {
     await this.props.acronymActions!.setAllAcronyms();
+    document.addEventListener('click', this.handleSelect, false);
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener('click', this.handleSelect);
   }
 
   onAcronymFieldChange = (e: any) => {
@@ -44,11 +53,62 @@ export class AcronymTab extends React.Component<Props> {
     });
   }
 
+  deleteOnClick() {
+    if (this.pendingDelete.id.length > 0) {
+      this.props.acronymStore!.setPendingDelete(
+        new AcronymModel(
+          parseInt(this.pendingDelete.id, 10),
+          this.pendingDelete.value.substr(0, this.pendingDelete.value.indexOf(' - ')),
+          '',
+          this.pendingDelete.value
+        )
+      );
+    }
+  }
+
+  clickAcronym(e: any) {
+    return;
+  }
+
+  handleSelect = (e: any) => {
+    if (this.node && this.node.contains(e.target) && e.target.children.length > 0) {
+      e = e.target as HTMLElement;
+      e.focus();
+      if (e.nodeName === 'DIV') {
+        e = e.querySelector('span');
+      }
+      const html = e.innerHTML;
+      const div = document.createElement('div');
+      div.innerHTML = html;
+      const text = div.textContent || div.innerText || '';
+      this.pendingDelete.id = e.id;
+      this.pendingDelete.value = text;
+      let deleteButton = (document.querySelector('.deleteAcronymButton') as HTMLButtonElement);
+      deleteButton.style.cursor = 'pointer';
+      deleteButton.style.background = '#854646';
+      deleteButton.style.color = '#fff';
+      return;
+    }
+    if (e.target.classList.contains('deleteButton')) {
+      return;
+    } else {
+      this.pendingDelete = {id: '', value: ''};
+      let deleteButton = (document.querySelector('.deleteAcronymButton') as HTMLButtonElement);
+      deleteButton.style.cursor = 'no-select';
+      deleteButton.style.background = '#C4C4C4';
+      deleteButton.style.color = '#000';
+    }
+  };
+
   render() {
     return (
       <div
         className={this.props.className}
       >
+        {
+          this.props.acronymStore!.pendingDelete &&
+          <StyledDeleteAcronymPopup/>
+        }
         <div
           className="acronymTitle"
         >
@@ -57,9 +117,17 @@ export class AcronymTab extends React.Component<Props> {
         <input
           className="acronymSearch"
           placeholder="Find Acronym..."
-          onChange={async (e) => { await this.props.acronymActions!.setFilteredAcronyms(e.target.value); }}
+          onChange={async (e) => {
+            let value = e.target.value;
+            await this.props.acronymActions!.setFilteredAcronyms(value);
+            await this.props.acronymStore!.setSearch(value);
+          }}
+          value={this.props.acronymStore!.search}
         />
-        <div className="acronymList">
+        <div
+          className="acronymList"
+          ref={node => this.node = node}
+        >
           {
             this.props.acronymStore!.filteredAcronyms &&
             this.props.acronymStore!.filteredAcronyms.map((acronym, index) => {
@@ -68,6 +136,10 @@ export class AcronymTab extends React.Component<Props> {
                   acronym={acronym}
                   key={index}
                   className="acronym"
+                  onClick={(e: any) => {
+                    this.clickAcronym.bind(this);
+                    this.clickAcronym(e);
+                  }}
                 />
               );
             })
@@ -97,6 +169,15 @@ export class AcronymTab extends React.Component<Props> {
             Add
           </span>
         </div>
+        <button
+          className="deleteAcronymButton"
+          onClick={() => {
+            this.deleteOnClick.bind(this);
+            this.deleteOnClick();
+          }}
+        >
+          Delete
+        </button>
       </div>
     );
   }
@@ -104,6 +185,22 @@ export class AcronymTab extends React.Component<Props> {
 
 export const StyledAcronymTab = inject('adminActions', 'adminStore', 'acronymActions', 'acronymStore')
 (styled(AcronymTab)`
+
+.deleteAcronymButton {
+  cursor: not-allowed;
+  background: #C4C4C4;
+  outline: none;
+  font-family: Amaranth;
+  font-size: 18px;
+  position: absolute;
+  bottom: 9px;
+  right: 148px;
+  width: 131px;
+  height: 26px;
+  line-height: 21px;
+  display: flex;
+  justify-content: center;
+}
 
 .acronymTitle {
   font-size: 18px;
@@ -113,6 +210,11 @@ export const StyledAcronymTab = inject('adminActions', 'adminStore', 'acronymAct
   width: 140px;
   height: 45px;
   line-height: 45px;
+}
+
+.acronym:focus {
+  background-color: lightblue;
+  outline: none;
 }
 
 .acronymAdd {
@@ -161,8 +263,11 @@ export const StyledAcronymTab = inject('adminActions', 'adminStore', 'acronymAct
 
 span {
   color: black;
-  text-decoration: underline;
   cursor: pointer;
+}
+
+.searchMatch {
+  text-decoration: underline;
 }
 
 input {
