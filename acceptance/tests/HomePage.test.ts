@@ -4,13 +4,13 @@ let homeAssert = require('assert');
 Feature('Home Page');
 
 Scenario('should see an ATO day', (I) => {
-  I.haveHeader('Authorization', 'Basic Q1JPU1MuSk9SREFOLk1JRERMRS4wMTIzNDU2Nzg5OjE=');
+  I.haveHeader('Authorization', 'Basic Q1JPU1MuSk9SREFOLk1JRERMRS4wMTIzNDU2Nzg5Og==');
   I.amOnPage('/');
   I.see("ATO ", ".atoDay");
 });
 
 Scenario('should be able to search resources', (I) => {
-  I.haveHeader('Authorization', 'Basic Q1JPU1MuSk9SREFOLk1JRERMRS4wMTIzNDU2Nzg5OjE=');
+  I.haveHeader('Authorization', 'Basic Q1JPU1MuSk9SREFOLk1JRERMRS4wMTIzNDU2Nzg5Og==');
   I.amOnPage('/');
   I.fillField('.filterSection > input', 'Amazon');
   I.dontSee('YouTube');
@@ -18,7 +18,7 @@ Scenario('should be able to search resources', (I) => {
 });
 
 Scenario('should render six clocks', async function (I) {
-  I.haveHeader('Authorization', 'Basic Q1JPU1MuSk9SREFOLk1JRERMRS4wMTIzNDU2Nzg5OjE=');
+  I.haveHeader('Authorization', 'Basic Q1JPU1MuSk9SREFOLk1JRERMRS4wMTIzNDU2Nzg5Og==');
   I.amOnPage('/');
   I.waitForElement('.clock', 10);
   const clockCount = await I.grabNumberOfVisibleElements('.clock');
@@ -26,14 +26,14 @@ Scenario('should render six clocks', async function (I) {
 });
 
 Scenario('should see a toast when clicking element in general info card', (I) => {
-  I.haveHeader('Authorization', 'Basic Q1JPU1MuSk9SREFOLk1JRERMRS4wMTIzNDU2Nzg5OjE=');
+  I.haveHeader('Authorization', 'Basic Q1JPU1MuSk9SREFOLk1JRERMRS4wMTIzNDU2Nzg5Og==');
   I.amOnPage('/');
   I.click('.row:first-of-type > div:first-of-type');
   I.waitForElement('.customToast', 10);
 });
 
 Scenario('should render three unique cards', (I) => {
-  I.haveHeader('Authorization', 'Basic Q1JPU1MuSk9SREFOLk1JRERMRS4wMTIzNDU2Nzg5OjE=');
+  I.haveHeader('Authorization', 'Basic Q1JPU1MuSk9SREFOLk1JRERMRS4wMTIzNDU2Nzg5Og==');
   I.amOnPage('/');
   I.click('.tab:nth-of-type(1) > div', '.tabContainer');
   I.waitForText("Main", 10);
@@ -46,14 +46,14 @@ Scenario('should render three unique cards', (I) => {
 });
 
 Scenario('should display a list of acronyms', (I) => {
-  I.haveHeader('Authorization', 'Basic Q1JPU1MuSk9SREFOLk1JRERMRS4wMTIzNDU2Nzg5OjE=');
+  I.haveHeader('Authorization', 'Basic Q1JPU1MuSk9SREFOLk1JRERMRS4wMTIzNDU2Nzg5Og==');
   I.amOnPage('/');
   I.fillField('.acronymSearch', 'AAM');
   I.waitForText("AAM - air-to-air missile", 10, ".acronym");
 });
 
 Scenario('should see 4 weather links', async (I) => {
-  I.haveHeader('Authorization', 'Basic Q1JPU1MuSk9SREFOLk1JRERMRS4wMTIzNDU2Nzg5OjE=');
+  I.haveHeader('Authorization', 'Basic Q1JPU1MuSk9SREFOLk1JRERMRS4wMTIzNDU2Nzg5Og==');
   I.amOnPage('/');
   I.waitForElement('.weatherURL', 10);
   let weatherCount = await I.grabNumberOfVisibleElements('.weatherURL');
@@ -61,7 +61,7 @@ Scenario('should see 4 weather links', async (I) => {
 });
 
 Scenario('should see a general information', (I) => {
-  I.haveHeader('Authorization', 'Basic Q1JPU1MuSk9SREFOLk1JRERMRS4wMTIzNDU2Nzg5OjE=');
+  I.haveHeader('Authorization', 'Basic Q1JPU1MuSk9SREFOLk1JRERMRS4wMTIzNDU2Nzg5Og==');
   I.amOnPage('/');
   I.waitForElement('.information', 10);
   I.see('Image Server', '.information');
@@ -75,7 +75,7 @@ Scenario('should see a general information', (I) => {
 });
 
 Scenario('should allow users to convert coordinates', async (I) => {
-  I.haveHeader('Authorization', 'Basic Q1JPU1MuSk9SREFOLk1JRERMRS4wMTIzNDU2Nzg5OjE=');
+  I.haveHeader('Authorization', 'Basic Q1JPU1MuSk9SREFOLk1JRERMRS4wMTIzNDU2Nzg5Og==');
   I.amOnPage('/');
   I.waitForElement('.latLongInput', 10);
   I.fillField('.latLongInput', '37° 8\'1.97"N 76° 6\'30.23"W');
@@ -87,7 +87,7 @@ Scenario('should allow users to convert coordinates', async (I) => {
 });
 
 Scenario('should allow the user to change tabs and see specialty resources', (I) => {
-  I.haveHeader('Authorization', 'Basic Q1JPU1MuSk9SREFOLk1JRERMRS4wMTIzNDU2Nzg5OjE=');
+  I.haveHeader('Authorization', 'Basic Q1JPU1MuSk9SREFOLk1JRERMRS4wMTIzNDU2Nzg5Og==');
   I.amOnPage('/');
   I.click('.tab:nth-of-type(1) > div', '.tabContainer');
   I.see('FMV Amazon');
@@ -106,7 +106,7 @@ Scenario('should allow the user to change tabs and see specialty resources', (I)
 });
 
 Scenario('should allow the user to add, edit and delete an operation', async (I) => {
-  I.haveHeader('Authorization', 'Basic Q1JPU1MuSk9SREFOLk1JRERMRS4wMTIzNDU2Nzg5OjE=');
+  I.haveHeader('Authorization', 'Basic Q1JPU1MuSk9SREFOLk1JRERMRS4wMTIzNDU2Nzg5Og==');
   let name = 'TestOp' + Date.now();
 
   //create
@@ -145,7 +145,7 @@ Scenario('should allow the user to add, edit and delete an operation', async (I)
 });
 
 Scenario('should allow the user to add a local resource', async (I) => {
-  I.haveHeader('Authorization', 'Basic Q1JPU1MuSk9SREFOLk1JRERMRS4wMTIzNDU2Nzg5OjE=');
+  I.haveHeader('Authorization', 'Basic Q1JPU1MuSk9SREFOLk1JRERMRS4wMTIzNDU2Nzg5Og==');
   let name = 'TestPage' + Date.now();
 
   //create
@@ -172,7 +172,7 @@ Scenario('should allow the user to add a local resource', async (I) => {
 });
 
 Scenario('should allow the user to add, edit and delete a resource', async (I) => {
-  I.haveHeader('Authorization', 'Basic Q1JPU1MuSk9SREFOLk1JRERMRS4wMTIzNDU2Nzg5OjE=');
+  I.haveHeader('Authorization', 'Basic Q1JPU1MuSk9SREFOLk1JRERMRS4wMTIzNDU2Nzg5Og==');
   let name = 'TestPage' + Date.now();
 
   //create
@@ -212,7 +212,7 @@ Scenario('should allow the user to add, edit and delete a resource', async (I) =
 
 Scenario('should validate user resource input', async (I) => {
   //empty
-  I.haveHeader('Authorization', 'Basic Q1JPU1MuSk9SREFOLk1JRERMRS4wMTIzNDU2Nzg5OjE=');
+  I.haveHeader('Authorization', 'Basic Q1JPU1MuSk9SREFOLk1JRERMRS4wMTIzNDU2Nzg5Og==');
   I.amOnPage('/');
   I.click('Add Resource');
   I.click('SAVE', '.modal');
@@ -236,7 +236,7 @@ Scenario('should validate user resource input', async (I) => {
 });
 
 Scenario('should order by most clicked', async (I) => {
-  I.haveHeader('Authorization', 'Basic Q1JPU1MuSk9SREFOLk1JRERMRS4wMTIzNDU2Nzg5OjE=');
+  I.haveHeader('Authorization', 'Basic Q1JPU1MuSk9SREFOLk1JRERMRS4wMTIzNDU2Nzg5Og==');
   let name = 'TestPage' + Date.now();
 
   //create
