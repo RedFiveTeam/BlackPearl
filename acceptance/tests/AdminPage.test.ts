@@ -42,13 +42,11 @@ Scenario('should allow admin to add an acronym', async (I) => {
   I.amOnPage('/admin');
   I.waitForElement('.tabSelector', 10);
   I.click('.tabSelector:nth-of-type(4)');
-  I.waitForElement('.acronym', 10);
-  I.fillField('.acronym', 'WAT');
-  I.fillField('.acronymDefinition', 'Wombats Are Tasty');
+  I.waitForElement('.acronymAdd', 10);
+  I.fillField('.acronymAdd', 'WAT');
+  I.fillField('.acronymAddDefinition', 'Wombats Are Tasty');
   I.click('.addAcronymButton');
   I.waitForElement('.customToast');
-  I.amOnPage('/');
-  I.fillField('.acronymSearch', 'WAT');
   I.waitForText('Wombats Are Tasty', 10);
 });
 
