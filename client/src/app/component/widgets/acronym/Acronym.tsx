@@ -3,7 +3,7 @@ import { observer } from 'mobx-react';
 import styled from 'styled-components';
 
 interface Props {
-  acronym: string | null;
+  acronym: string;
   className?: string;
   onClick: (e: any) => void;
 }
@@ -15,7 +15,7 @@ export class Acronym extends React.Component<Props> {
       <div
         tabIndex={-1}
         className={this.props.className}
-        dangerouslySetInnerHTML={{ __html: this.props.acronym ? this.props.acronym : '' }}
+        dangerouslySetInnerHTML={{ __html: this.props.acronym }}
         onClick={(e) => this.props.onClick((e.target as HTMLElement))}
       />
     );
@@ -23,5 +23,4 @@ export class Acronym extends React.Component<Props> {
 }
 
 export const StyledAcronym = styled(Acronym)`
-
 `;

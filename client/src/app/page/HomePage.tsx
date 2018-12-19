@@ -15,13 +15,16 @@ import { ResourceModel } from '../component/resource/ResourceModel';
 import { OperationStore } from '../component/card/operation/stores/OperationStore';
 import { StyledAddOperationPopup } from '../component/popup/AddOperationPopup';
 import { StyledEditOperationPopup } from '../component/popup/EditOperationPopup';
-import { StyledTimeContainer } from '../component/widgets/time/TimeContainer';
 import { Slide, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { StyledDeleteOperationPopup } from '../component/popup/DeleteOperationPopup';
 import { LogableActions } from '../component/metrics/metric/MetricModel';
 import { MetricActions } from '../component/metrics/metric/MetricActions';
-import { StyledProfileContainer } from '../profile/ProfileContainer';
+import { StyledAppBanner } from '../component/AppBanner';
+import { PearlIcon } from '../icon/PearlIcon';
+import { HamburgerIcon } from '../icon/hamburgerMenu';
+import { StyledInformationContainer } from '../component/card/information/InformationContainer';
+import { StyledOperationContainer } from '../component/card/operation/OperationContainer';
 
 interface Props {
   resourceStore?: ResourceStore;
@@ -94,17 +97,25 @@ export class HomePage extends React.Component<Props> {
           transition={Slide}
           autoClose={5000}
         />
-        <div
-          className="cardsContainer"
-        >
-          <StyledCardContainer/>
-          <div className="widgetSection">
-            <StyledProfileContainer/>
-            <StyledTimeContainer/>
-            <StyledAcronymContainer/>
-            <StyledCoordinateConverterContainer/>
-            <StyledWeatherContainer/>
+        <div className="widgetSection">
+          <div className="topBar">
+            <PearlIcon/>
+            <div className="bannerTitle">
+              The Black Pearl
+            </div>
+            <HamburgerIcon/>
           </div>
+          <StyledAcronymContainer/>
+          <StyledCoordinateConverterContainer/>
+          <StyledWeatherContainer/>
+        </div>
+        <div
+          className="mainBody"
+        >
+          <StyledAppBanner/>
+          <StyledCardContainer/>
+          <StyledInformationContainer/>
+          <StyledOperationContainer/>
         </div>
       </div>
     );
@@ -112,16 +123,13 @@ export class HomePage extends React.Component<Props> {
 }
 
 export const StyledHomePage = inject('resourceStore', 'operationStore', 'metricActions')(styled(HomePage)`
-  margin-left: -8px;
-  position: absolute;
-  
+  display: flex;
   .customToast {
     width: 520px;
     height: 64px;
     border-radius: 10px;
     background: black;
     color: white;
-    font-family: Amaranth;
     font-size: 24px;
     
     button {
@@ -135,16 +143,65 @@ export const StyledHomePage = inject('resourceStore', 'operationStore', 'metricA
       margin-left: 20px;
     }
   }
-
-  .cardsContainer {
+  
+  .mainBody {
+    width: calc(100% - 360px);
+    min-width: 1275px;
+    //max-width: 1990px;
     display: flex;
-    position: relative;
+    flex-wrap: wrap;
   }
   
+  .bannerTitle {
+    font-family: "Avenir Next";
+    font-size: 30px;
+    color: #FBFDFF;
+  }
+
   .widgetSection {
-    position: fixed;
-    display: block;
-    top: 10px;
-    left: 1450px;
+    width: 354px;
+    float: left;
+    margin-right: 6px;
+    background: #1F2226;
+  }
+  
+  .appBanner {
+    background: #2F343B;
+    display: flex;
+    position: relative;
+    height: 53px;
+    width: 100%;
+    float: right;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    color: #F2F2F2;
+  }
+  
+  .topBar {
+    display: flex;
+    justify-content: space-between;
+    width: 354px;
+    height: 53px;
+    align-items: center;
+  }
+  
+  .atoDay {
+    height: 53px;
+    font-size: 36px;
+    text-shadow: 0px 3px 6px rgba(0, 0, 0, 0.3);
+    font-family: "Avenir Next";
+    font-size: 36px;
+  }
+  
+  #ATODayBorderIcon {
+    height: 53px;
+    margin-right: 15px;
+  }
+  
+  #pearlIcon {
+    margin-left: 14px;
+  }
+  
+  #hamburgerIcon {
+    margin-right: 16px;
   }
 `);

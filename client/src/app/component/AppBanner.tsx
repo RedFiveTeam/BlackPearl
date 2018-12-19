@@ -2,14 +2,14 @@ import * as React from 'react';
 import { inject, observer } from 'mobx-react';
 import styled from 'styled-components';
 import { ProfileActions } from '../profile/ProfileActions';
-import { ProfileStore } from '../profile/ProfileStore';
-
-const ShipLogo = require('../icon/ShipLogo.png');
+import { StyledProfileContainer } from '../profile/ProfileContainer';
+import { StyledTimeContainer } from './widgets/time/TimeContainer';
+import { StyledATODay } from './widgets/time/ATODay';
+import { ATODayBorderIcon } from '../icon/ATODayBorderIcon';
 
 interface Props {
   className?: string;
   profileActions?: ProfileActions;
-  profileStore?: ProfileStore;
 }
 
 @observer
@@ -20,44 +20,15 @@ export class AppBanner extends React.Component<Props> {
 
   render() {
     return (
-      <div className={this.props.className}>
-        <div className="leftSide">
-          <img className="shipImage" src={ShipLogo}/>
-        </div>
-        <div className="rightSide">
-          <div className="bannerTitle">
-            The Black Pearl
-          </div>
-        </div>
+      <div className="appBanner">
+        <StyledATODay className="atoDay"/>
+        <ATODayBorderIcon/>
+        <StyledTimeContainer/>
+        <StyledProfileContainer/>
       </div>
     );
   }
 }
 
-export const StyledAppBanner = inject('profileActions', 'profileStore')(styled(AppBanner)`
-display: flex;
-min-width: 1471px;
-
-  .leftSide {
-    min-width: 104px;
-    margin-left: 7px;
-  }
-
-  .rightSide {
-    display: flex;
-    position: relative;
-  }
-
-  .bannerTitle {
-    font-family: Iglesia;
-    font-size: 68px;
-    left: 10px;
-    margin: auto;
-    text-shadow: 0px 3px 6px rgba(0, 0, 0, 0.3);
-  }
-  
-  .shipImage {
-    width: 78px;
-    height: 66px;
-  }
+export const StyledAppBanner = inject('profileActions')(styled(AppBanner)`
 `);

@@ -70,7 +70,6 @@ export const StyledDeleteOperationPopup = inject('operationActions', 'operationS
   
   .pendingDeleteTitle {
     position: absolute;
-    font-family: Amaranth;
     background: #C4C4C4;
     border: none;
     font-size: 24px;
@@ -95,7 +94,6 @@ export const StyledDeleteOperationPopup = inject('operationActions', 'operationS
     left: 15%;
     bottom: 20px;
     background: #844646;
-    font-family: Amaranth;
     width: 157px;
     height: 49px;
     font-size: 24px;

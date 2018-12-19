@@ -39,18 +39,25 @@ export const StyledTimeContainer = inject('timeStore', 'timeActions')(styled(Tim
   display: block;
   
   .timeBanner {
-      background: #EAEAEA;
       width: 340px;
-      height: 37px;
-      box-shadow: -1px 3px 3px rgba(0, 0, 0, .25);
+      height: 53px;
       display: flex;
       justify-content: space-between;
-      font-family: Amaranth;
-      padding-left: 10px;
-      align-self: flex-end;
-      margin-left: 10px;
-      position: relative;
-      bottom: 10px;
-      border-radius: 10px;
+      font-family: "Avenir Next";
+      font-size: 36px;
+      color: #F2F2F2;
+      align-items: center;
+  }
+  
+  .title {
+  color: #93A7C3;
+  font-size: 12px;
+  margin-right: 5px;
+  }
+  
+  .time {
+  font-size: 16px;
+  margin-top: 6px;
+  margin-right: 5px;
   }
 `);

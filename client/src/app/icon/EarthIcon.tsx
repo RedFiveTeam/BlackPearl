@@ -8,7 +8,7 @@ export const EarthIcon = () => {
 
   return (
     <svg id="earthIcon" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d={pathD} fill="#545454"/>
+      <path d={pathD} fill="#E4E7EA"/>
     </svg>
 
   );

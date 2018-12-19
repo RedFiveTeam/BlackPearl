@@ -176,7 +176,6 @@ export const StyledAddResourcePopup = inject('resourceActions', 'resourceStore',
   }
   
   input {
-    font-family: Amaranth;
     background: #C4C4C4;
     border: 2px solid #C4C4C4;
     width: 490px;
@@ -205,7 +204,6 @@ export const StyledAddResourcePopup = inject('resourceActions', 'resourceStore',
     left: 15%;
     bottom: 6%;
     background: #65768B;
-    font-family: Amaranth;
     width: 157px;
     height: 49px;
     font-size: 24px;

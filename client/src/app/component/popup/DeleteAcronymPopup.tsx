@@ -92,7 +92,6 @@ export const StyledDeleteAcronymPopup = inject('acronymStore', 'acronymActions')
     width: 110px;
     line-height: 0;
     font-size: 18px;
-    font-family: Amaranth;
     display: flex;
     position: absolute;
     bottom: 7px;

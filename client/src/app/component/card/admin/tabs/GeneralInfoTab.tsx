@@ -84,7 +84,6 @@ tr {
 .informationContent {
   border: none;
   margin-left: 19px;
-  font-family: Amaranth;
   font-size: 18px;
   width: 322px;
   border-radius: 5px;

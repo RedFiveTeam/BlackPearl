@@ -38,7 +38,7 @@ describe('AcronymActions', () => {
   it('should filter our acronyms', async () => {
     await subject.setFilteredAcronyms('aaa');
     expect(acronymStore.setFilteredAcronyms).toHaveBeenCalledWith(
-      ['<span id="1"><span class="searchMatch" style="background: #FFFF00;">AAA</span> - Aaron Allon Arnold</span>']
+      ['<span id="1"><span class="searchMatch" style="background: #000000;">AAA</span> - Aaron Allon Arnold</span>']
     );
   });
 

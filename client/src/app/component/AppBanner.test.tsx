@@ -1,32 +1,36 @@
 import * as React from 'react';
 import { shallow, ShallowWrapper } from 'enzyme';
 import { AppBanner } from './AppBanner';
-import { ProfileModel } from '../profile/ProfileModel';
+import { StyledATODay } from './widgets/time/ATODay';
+import { ATODayBorderIcon } from '../icon/ATODayBorderIcon';
+import { StyledTimeContainer } from './widgets/time/TimeContainer';
+import { StyledProfileContainer } from '../profile/ProfileContainer';
 
 describe('AppBanner', () => {
   let subject: ShallowWrapper;
-  let profileStore: any;
   let profileActions: any;
 
   beforeEach(() => {
-    let profile = new ProfileModel();
-
     profileActions = {
       setProfile: jest.fn()
     };
 
-    profileStore = {
-      profile: profile
-    };
-
-    subject = shallow(<AppBanner profileStore={profileStore} profileActions={profileActions}/>);
+    subject = shallow(<AppBanner profileActions={profileActions}/>);
   });
 
-  it('should have text "The Black Pearl"', () => {
-    expect(subject.find('.bannerTitle').text()).toBe('The Black Pearl');
+  it('should render an ATO date', () => {
+    expect(subject.find(StyledATODay).exists()).toBeTruthy();
   });
 
-  it('should have a Black Pearl icon', () => {
-    expect(subject.find('.shipImage').exists()).toBeTruthy();
+  it('should have a border next to the ATO date', () => {
+    expect(subject.find(ATODayBorderIcon).exists()).toBeTruthy();
+  });
+
+  it('should have the time container', () => {
+    expect(subject.find(StyledTimeContainer).exists()).toBeTruthy();
+  });
+
+  it('should have a profile container', () => {
+    expect(subject.find(StyledProfileContainer).exists()).toBeTruthy();
   });
 });

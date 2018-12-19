@@ -48,7 +48,6 @@ export const StyledAdminPage = inject('adminStore', 'adminActions', 'metricActio
     border-radius: 10px;
     background: black;
     color: white;
-    font-family: Amaranth;
     font-size: 24px;
     
     button {

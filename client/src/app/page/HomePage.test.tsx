@@ -13,8 +13,10 @@ import { StyledLoadingOverlay } from '../component/loading/LoadingOverlay';
 import { OperationStore } from '../component/card/operation/stores/OperationStore';
 import { OperationModel } from '../component/card/operation/OperationModel';
 import { StyledAddOperationPopup } from '../component/popup/AddOperationPopup';
-import { StyledTimeContainer } from '../component/widgets/time/TimeContainer';
-import { StyledProfileContainer } from '../profile/ProfileContainer';
+import { StyledInformationContainer } from '../component/card/information/InformationContainer';
+import { StyledOperationContainer } from '../component/card/operation/OperationContainer';
+import { StyledAppBanner } from '../component/AppBanner';
+import { PearlIcon } from '../icon/PearlIcon';
 
 describe('HomePage', () => {
   let subject: ShallowWrapper;
@@ -88,11 +90,20 @@ describe('HomePage', () => {
     expect(subject.find(StyledAddOperationPopup).exists()).toBeTruthy();
   });
 
-  it('should display a time container', () => {
-    expect(subject.find(StyledTimeContainer).exists()).toBeTruthy();
+  it('should render an information card container', () => {
+    expect(subject.find(StyledInformationContainer).exists).toBeTruthy();
   });
 
-  it('should have the profile banner', () => {
-    expect(subject.find(StyledProfileContainer).exists()).toBeTruthy();
+  it('should render a operations container', () => {
+    expect(subject.find(StyledOperationContainer).exists()).toBeTruthy();
+  });
+
+  it('should have text "The Black Pearl" and an icon', () => {
+    expect(subject.find('.bannerTitle').text()).toBe('The Black Pearl');
+    expect(subject.find(PearlIcon).exists()).toBeTruthy();
+  });
+
+  it('should have a header', () => {
+    expect(subject.find(StyledAppBanner).exists()).toBeTruthy();
   });
 });

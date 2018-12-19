@@ -32,7 +32,7 @@ export class AcronymActions {
     let matches = results.map((el) => {
       return (
         '<span id="' + el.obj.id + '">' +
-        fuzzysort.highlight(el, '<span class="searchMatch" style="background: #FFFF00;">', '</span>') +
+        fuzzysort.highlight(el, '<span class="searchMatch" style="background: #000000;">', '</span>') +
         '</span>'
       );
     });

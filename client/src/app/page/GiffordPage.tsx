@@ -74,7 +74,6 @@ font-family: monowidth;
 }
 
 .body {
-  font-family: Amaranth;
   font-size: 24px;
 }
 

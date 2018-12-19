@@ -1,8 +1,6 @@
 import * as React from 'react';
 import { inject, observer } from 'mobx-react';
 import styled from 'styled-components';
-import { UpArrowIcon } from '../../../icon/UpArrowIcon';
-import { DownArrowIcon } from '../../../icon/DownArrowIcon';
 import { MetricActions } from '../../metrics/metric/MetricActions';
 import { LogableActions } from '../../metrics/metric/MetricModel';
 import { observable } from 'mobx';
@@ -39,7 +37,6 @@ export class CoordinateConverter extends React.Component<Props> {
           onClick={() => this.props.metricActions!.logMetric(LogableActions.CLICK_COORD, 'LatLong')}
           onChange={this.props.latLongFunction}
         />
-        <div className="iconContainer"><UpArrowIcon/><DownArrowIcon/></div>
         <input
           className="mgrsInput"
           placeholder="MGRS"
@@ -53,18 +50,16 @@ export class CoordinateConverter extends React.Component<Props> {
 }
 
 export const StyledCoordinateConverter = inject('metricActions')(styled(CoordinateConverter)`
-  font-family: Amaranth;
   text-align: center;
   font-size: 24px;
   color: #FFFFFF;
-  background: #364958;
-  width: 350px;
-  min-width: 350px;
-  height: 165px;
-  border-radius: 10px;
-  margin-left: 8px;
-  margin-top: 10px;
-  box-shadow: -1px 3px 3px rgba(0, 0, 0, .25);
+  background: #292E33;
+  width: 340px;
+  height: 145px;
+  border-radius: 4px;
+  margin-left: 7px;
+  margin-top: 8px;
+  box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.3);
   
   .title {
     height: 48px;
@@ -72,36 +67,36 @@ export const StyledCoordinateConverter = inject('metricActions')(styled(Coordina
   }
   
   .latLongInput {
-    font-family: Amaranth;
-    ::placeholder {
-       color: #15191C;
-       opacity: .25;
-       padding-left: 5px;
+    background: #292E33;
+    width: 329px;
+    height: 20px;
+    color: #FFFFFF;
+    border-bottom: 1px solid #93A7C3;
+    :focus {
+      border-bottom: 2px solid #6C9CD5;
     }
-  }
-  
-  .invertedIcon {
-    transform: rotate(180);
-  }
-  
-  .iconContainer {
-    height: 30px;
-    width: 100px;
-    line-height: 30px;
-    justify-content: space-evenly;
-    display: inline-flex;
-    align-items: center;
+    ::placeholder {
+       color: #93A7C3;
+       font-weight: 100;
+    }
   }
   
   .mgrsInput {
-    font-family: Amaranth;
-     ::placeholder {
-       color: #15191C;
-       opacity: .25;
-       padding-left: 5px;
+    background: #292E33;
+    width: 329px;
+    height: 20px;
+    color: #FFFFFF;
+    margin-top: 15px;
+    border-bottom: 1px solid #93A7C3;
+    :focus {
+      border-bottom: 2px solid #6C9CD5;
+    }
+    ::placeholder {
+       color: #93A7C3;
+       font-weight: 100;
     }
   }
-  
+
   input {
     width: 324px;
     height: 34px;

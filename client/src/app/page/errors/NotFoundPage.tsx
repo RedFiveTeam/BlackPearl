@@ -45,7 +45,6 @@ export const StyledNotFoundPage = styled(NotFoundPage)`
   z-index: 1;
   background: #7E7C7C;
   color: #ECECEC;
-  font-family: Amaranth;
   display: inline-flex;
   justify-content: center;
   

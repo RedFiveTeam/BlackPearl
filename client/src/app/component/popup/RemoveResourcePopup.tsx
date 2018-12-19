@@ -68,7 +68,6 @@ export const StyledRemoveResourcePopup = inject('resourceActions', 'resourceStor
   
   .pendingDeleteTitle {
     position: absolute;
-    font-family: Amaranth;
     background: #C4C4C4;
     border: none;
     font-size: 24px;
@@ -93,7 +92,6 @@ export const StyledRemoveResourcePopup = inject('resourceActions', 'resourceStor
     left: 15%;
     bottom: 20px;
     background: #844646;
-    font-family: Amaranth;
     width: 157px;
     height: 49px;
     font-size: 24px;

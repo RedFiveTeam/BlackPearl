@@ -133,7 +133,7 @@ export class AcronymTab extends React.Component<Props> {
             this.props.acronymStore!.filteredAcronyms.map((acronym, index) => {
               return (
                 <StyledAcronym
-                  acronym={acronym}
+                  acronym={acronym ? acronym : ''}
                   key={index}
                   className="acronym"
                   onClick={(e: any) => {
@@ -190,7 +190,6 @@ export const StyledAcronymTab = inject('adminActions', 'adminStore', 'acronymAct
   cursor: not-allowed;
   background: #C4C4C4;
   outline: none;
-  font-family: Amaranth;
   font-size: 18px;
   position: absolute;
   bottom: 9px;
@@ -204,7 +203,6 @@ export const StyledAcronymTab = inject('adminActions', 'adminStore', 'acronymAct
 
 .acronymTitle {
   font-size: 18px;
-  font-family: Amaranth;
   color: #000000;
   margin: auto;
   width: 140px;
@@ -235,7 +233,6 @@ export const StyledAcronymTab = inject('adminActions', 'adminStore', 'acronymAct
 }
 
 .acronymSearch {
-  font-family: Amaranth;
   width: 327.5px;
   height: 20px;
   margin-bottom: 10px;
@@ -271,7 +268,6 @@ span {
 }
 
 input {
-  font-family: Amaranth;
   font-size: 18px;
   border: none;
   ::placeholder {

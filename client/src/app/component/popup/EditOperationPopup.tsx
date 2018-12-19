@@ -122,7 +122,6 @@ export const StyledEditOperationPopup = inject('operationActions', 'operationSto
   }
 
   input {
-    font-family: Amaranth;
     background: #C4C4C4;
     border: none;
     width: 488px;
@@ -143,7 +142,6 @@ export const StyledEditOperationPopup = inject('operationActions', 'operationSto
     left: 15%;
     bottom: 22px;
     background: #65768B;
-    font-family: Amaranth;
     width: 157px;
     height: 49px;
     font-size: 24px;

@@ -43,20 +43,19 @@ export class OperationCard extends React.Component<Props> {
 }
 
 export const StyledOperationCard = inject('operationStore')(styled(OperationCard)`
-width: 1078px;
+width: 100%;
 height: 380px;
-padding-left: 6px;
-
+display: block;
+position: relative;
 
 .operationCardTitle {
-  background-color: #364958;
+  background-color: #1F2226;
   border-radius: 10px 10px 0px 0px;
   height: 34px;
   line-height: 34px;
   color: #FFFFFF;
   font-size: 24px;
   margin-bottom: 5px;
-  font-family: Amaranth;
   text-align: center;
   box-shadow: -1px 3px 3px rgba(0,0,0,.25);
 }
@@ -65,9 +64,9 @@ padding-left: 6px;
   max-height: 331px;
   overflow-y: auto;
   border-radius: 0px 0px 10px 10px;
-  background-color: #EAEAEA;
+  background-color: #1F2226;
   height: 330px;
-  border: 6px solid #EAEAEA;
+  border: 6px solid #1F2226;
   box-shadow: -1px 3px 3px rgba(0,0,0,.25);
 }
 

@@ -60,18 +60,18 @@ Scenario('should see 4 weather links', async (I) => {
   homeAssert.strictEqual(weatherCount, 4);
 });
 
-Scenario('should see a general information', (I) => {
+Scenario('should see a general information card', (I) => {
   I.haveHeader('Authorization', 'Basic Q1JPU1MuSk9SREFOLk1JRERMRS4wMTIzNDU2Nzg5Og==');
   I.amOnPage('/');
-  I.waitForElement('.information', 10);
-  I.see('Image Server', '.information');
-  I.see('Call Out Format', '.information');
-  I.see('Image Server (JWICS)', '.information');
-  I.see('AUAB', '.information');
-  I.see('NAVCENT', '.information');
-  I.see('DSN', '.information');
-  I.see('SVOIP', '.information');
-  I.see('TSVOIP', '.information');
+  I.waitForElement('.info', 10);
+  I.see('Image Server', '.info');
+  I.see('Call Out Format', '.info');
+  I.see('Image Server (JWICS)', '.info');
+  I.see('AUAB', '.info');
+  I.see('NAVCENT', '.info');
+  I.see('DSN', '.info');
+  I.see('SVOIP', '.info');
+  I.see('TSVOIP', '.info');
 });
 
 Scenario('should allow users to convert coordinates', async (I) => {
@@ -150,7 +150,7 @@ Scenario('should allow the user to add a local resource', async (I) => {
 
   //create
   I.amOnPage('/');
-  I.click('Add Resource');
+  I.click('ADD RESOURCE');
   I.fillField('.titleField', name);
   I.fillField('.urlField', 'Y:/TestFile.txt');
   I.click('SAVE', '.modal');
@@ -178,7 +178,7 @@ Scenario('should allow the user to add, edit and delete a resource', async (I) =
   //create
   I.amOnPage('/');
   I.click('.tab:nth-of-type(1) > div', '.tabContainer');
-  I.click('Add Resource');
+  I.click('ADD RESOURCE');
   I.fillField('.titleField', name);
   I.fillField('.urlField', 'https://www.testpage.com');
   I.click('SAVE', '.modal');
@@ -214,13 +214,13 @@ Scenario('should validate user resource input', async (I) => {
   //empty
   I.haveHeader('Authorization', 'Basic Q1JPU1MuSk9SREFOLk1JRERMRS4wMTIzNDU2Nzg5Og==');
   I.amOnPage('/');
-  I.click('Add Resource');
+  I.click('ADD RESOURCE');
   I.click('SAVE', '.modal');
   I.waitForText('Please enter a title', 10);
   I.waitForText('Please enter an address', 10);
   I.click('CANCEL', '.modal');
   //too long
-  I.click('Add Resource');
+  I.click('ADD RESOURCE');
   let superLongTitle = 'This string is waaaaaaay too long to possibly be a title. what am i even doing????? Whyyyyyyyy';
   I.fillField('.titleField', superLongTitle);
   let title = await I.grabValueFrom('.titleField');
@@ -242,7 +242,7 @@ Scenario('should order by most clicked', async (I) => {
   //create
   I.amOnPage('/');
   I.click('.tab:nth-of-type(1) > div', '.tabContainer');
-  I.click('Add Resource');
+  I.click('ADD RESOURCE');
   I.fillField('.titleField', name);
   I.fillField('.urlField', 'Y:/Resource1');
   I.click('SAVE', '.modal');
@@ -250,7 +250,7 @@ Scenario('should order by most clicked', async (I) => {
   I.waitForText(name, 10);
 
   //create
-  I.click('Add Resource');
+  I.click('ADD RESOURCE');
   I.fillField('.titleField', name + '2');
   I.fillField('.urlField', 'Y:/Resource2');
   I.click('SAVE', '.modal');

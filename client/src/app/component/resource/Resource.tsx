@@ -99,22 +99,21 @@ export class Resource extends React.Component<Props> {
 }
 
 export const StyledResource = inject('resourceStore', 'resourceActions', 'metricActions')(styled(Resource)`
-  width: 335px;
+  width: calc(100% - 15px);
   height: 37px;
   border: none;
-  border-top: 1px solid grey;
-  background: #EAEAEA;
-  font-family: Amaranth;
-  font-size: 18px;
+  border-top: 1px solid #8190A5;
+  font-size: 20px;
   margin: auto;
   display: flex;
   vertical-align: middle;
   line-height: 27px;
   overflow: hidden;
   position: relative;
+  transition: background 0.5s ease;
   
   :hover {
-    background: #E2E2E2;
+    background: #292E52;
   }
   
   .resourceLink {
@@ -135,6 +134,7 @@ export const StyledResource = inject('resourceStore', 'resourceActions', 'metric
     overflow: hidden;
     margin-top: -1px;
     white-space: nowrap;
+    color: #E4E7EA;
   }
   
   #borderIcon {

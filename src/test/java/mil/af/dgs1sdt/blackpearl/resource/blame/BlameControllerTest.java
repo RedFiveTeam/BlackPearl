@@ -6,6 +6,8 @@ import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.time.Instant;
+
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.equalTo;
 
@@ -19,10 +21,12 @@ public class BlameControllerTest extends BaseIntegrationTest {
 
   @Before
   public void setUp() {
-    blame1 = new Blame("ADD", "Google", "JORDAN CROSS", 1542738000L);
-    blame2 = new Blame("EDIT", "Google", "JORDAN CROSS", 1542733000L);
-    blame3 = new Blame("DELETE", "Google", "JORDAN CROSS", 1542736000L);
-    blame4 = new Blame("ADD", "Google", "JORDAN CROSS", 1540231698L);
+    Long today = Instant.now().getEpochSecond();
+    Long day = 86400L;
+    blame1 = new Blame("ADD", "Google", "JORDAN CROSS", today - day);
+    blame2 = new Blame("EDIT", "Google", "JORDAN CROSS", today - (day * 7));
+    blame3 = new Blame("DELETE", "Google", "JORDAN CROSS", today - (day * 2));
+    blame4 = new Blame("ADD", "Google", "JORDAN CROSS", today - (day * 35));
 
     blameRepository.save(blame1);
     blameRepository.save(blame2);

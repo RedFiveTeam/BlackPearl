@@ -175,7 +175,6 @@ export const StyledEditResourcePopup = inject(
   
   .pendingEditTitle {
     position: absolute;
-    font-family: Amaranth;
     background: #C4C4C4;
     border: none;
     font-size: 24px;
@@ -190,7 +189,6 @@ export const StyledEditResourcePopup = inject(
   
   .pendingEditUrl {
     position: absolute;
-    font-family: Amaranth;
     background: #C4C4C4;
     border: none;
     font-size: 24px;
@@ -208,7 +206,6 @@ export const StyledEditResourcePopup = inject(
     left: 15%;
     bottom: 6%;
     background: #65768B;
-    font-family: Amaranth;
     width: 157px;
     height: 49px;
     font-size: 24px;
