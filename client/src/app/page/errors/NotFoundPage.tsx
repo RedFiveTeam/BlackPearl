@@ -16,7 +16,6 @@ export class NotFoundPage extends React.Component<Props> {
         className={this.props.className}
       >
         <div className="errorShip">
-          {/*<BlackPearlShipIcon/>*/}
           <img className="shipImage" src={ShipLogo}/>
           <div className="firstFour">4</div>
           <div className="zero">0</div>

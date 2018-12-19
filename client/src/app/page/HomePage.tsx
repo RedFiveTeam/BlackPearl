@@ -8,12 +8,10 @@ import { StyledRemoveResourcePopup } from '../component/popup/RemoveResourcePopu
 import { StyledEditResourcePopup } from '../component/popup/EditResourcePopup';
 import { StyledAcronymContainer } from '../component/widgets/acronym/AcronymContainer';
 import { StyledWeatherContainer } from '../component/widgets/weather/WeatherContainer';
-import {
-  StyledCoordinateConverterContainer
-} from '../component/widgets/coordinateConverter/CoordinateConverterContainer';
+import { StyledCoordinateConverterContainer } from
+    '../component/widgets/coordinateConverter/CoordinateConverterContainer';
 import { StyledLoadingOverlay } from '../component/loading/LoadingOverlay';
-import { Category, ResourceModel } from '../component/resource/ResourceModel';
-import { StyledCard } from '../component/card/Card';
+import { ResourceModel } from '../component/resource/ResourceModel';
 import { OperationStore } from '../component/card/operation/stores/OperationStore';
 import { StyledAddOperationPopup } from '../component/popup/AddOperationPopup';
 import { StyledEditOperationPopup } from '../component/popup/EditOperationPopup';
@@ -103,11 +101,6 @@ export class HomePage extends React.Component<Props> {
           <div className="widgetSection">
             <StyledProfileContainer/>
             <StyledTimeContainer/>
-            <StyledCard
-              className="myFavorites"
-              category={Category.Favorites}
-              resources={this.props.resourceStore!.returnResourcesInCategory(Category.Favorites)}
-            />
             <StyledAcronymContainer/>
             <StyledCoordinateConverterContainer/>
             <StyledWeatherContainer/>
@@ -121,43 +114,6 @@ export class HomePage extends React.Component<Props> {
 export const StyledHomePage = inject('resourceStore', 'operationStore', 'metricActions')(styled(HomePage)`
   margin-left: -8px;
   position: absolute;
-  
-  .myFavorites {
-    height: 294px;
-    width: 338px;
-    margin-left: 10px;
-    background: #364958;
-    margin-bottom: 10px;
-    box-shadow: -1px 3px 3px rgba(0, 0, 0, .25);
-    border-radius: 10px;
-    
-    .resourceMenu {
-      width: 105px;
-    }
-
-    .body {
-        max-height: 252px;
-        border-radius: 0px;
-        height: 234px;
-        width: 330px;
-    }
-    
-    .resourceList {
-        max-height: 196px;
-        overflow-x: hidden;
-    }
-    
-    .resource {
-      width: 320px;
-    }
-    .cardTitle {
-        box-shadow: none;
-    }
-    
-    .addResourceButton {
-      width: 330px;
-    }
-  }
   
   .customToast {
     width: 520px;
@@ -189,6 +145,6 @@ export const StyledHomePage = inject('resourceStore', 'operationStore', 'metricA
     position: fixed;
     display: block;
     top: 10px;
-    left: 1090px;
+    left: 1450px;
   }
 `);

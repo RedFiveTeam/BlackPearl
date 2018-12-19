@@ -36,10 +36,11 @@ describe('CardContainer', () => {
   });
 
   it('should have a card for each card category', () => {
-    expect(subject.find(StyledCard).length).toBe(3);
+    expect(subject.find(StyledCard).length).toBe(4);
     expect(subject.find(StyledCard).at(0).prop('category')).toBe(Category.FMV_Main);
     expect(subject.find(StyledCard).at(1).prop('category')).toBe(Category.FMV_SituationalAwareness);
     expect(subject.find(StyledCard).at(2).prop('category')).toBe(Category.FMV_TargetResearch);
+    expect(subject.find(StyledCard).at(3).prop('category')).toBe(Category.Favorites);
   });
 
   it('should pass the resources to each card based on category', () => {
@@ -51,10 +52,11 @@ describe('CardContainer', () => {
   it('should have a card for each card category after the tab has changed', () => {
     resourceStore.activeTab = 2;
     subject.setProps({resourceStore: resourceStore});
-    expect(subject.find(StyledCard).length).toBe(3);
+    expect(subject.find(StyledCard).length).toBe(4);
     expect(subject.find(StyledCard).at(0).prop('category')).toBe(Category.HighAlt_Main);
     expect(subject.find(StyledCard).at(1).prop('category')).toBe(Category.HighAlt_SituationalAwareness);
     expect(subject.find(StyledCard).at(2).prop('category')).toBe(Category.HighAlt_TargetResearch);
+    expect(subject.find(StyledCard).at(3).prop('category')).toBe(Category.Favorites);
   });
 
   it('should pass the resources to each card based on category after the tab has changed', () => {

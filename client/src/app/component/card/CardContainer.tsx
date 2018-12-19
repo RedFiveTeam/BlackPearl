@@ -9,6 +9,7 @@ import { ProfileActions } from '../../profile/ProfileActions';
 import { ResourceStore } from '../resource/stores/ResourceStore';
 import classNames = require('classnames');
 import { StyledTabContainer } from './TabContainer';
+import { Category } from '../resource/ResourceModel';
 
 interface Props {
   className?: string;
@@ -42,6 +43,11 @@ export class CardContainer extends React.Component<Props> {
           <StyledCard
             category={this.props.resourceStore!.activeTab * 3}
             resources={this.props.resourceStore!.returnResourcesInCategory(this.props.resourceStore!.activeTab * 3)}
+          />
+          <StyledCard
+            className="myFavorites"
+            category={Category.Favorites}
+            resources={this.props.resourceStore!.returnResourcesInCategory(Category.Favorites)}
           />
           <StyledInformationContainer/>
           <StyledOperationContainer/>
