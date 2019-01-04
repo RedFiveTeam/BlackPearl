@@ -3,7 +3,6 @@ import { inject, observer } from 'mobx-react';
 import styled from 'styled-components';
 import { AdminStore } from '../../../../page/stores/AdminStore';
 import { BlameModel } from '../../../resource/blame/BlameModel';
-import { ClockIcon } from '../../../../icon/ClockIcon';
 
 const moment = require('moment-timezone');
 
@@ -16,7 +15,7 @@ interface Props {
 export class BlameTab extends React.Component<Props> {
 
   parseName(name: string) {
-    if (name === 'GUEST.GUEST.GUEST.0123456789') {
+    if (name === 'GUEST.GUEST.GUEST.0123456789' || name === 'anonymousUser') {
       return 'Guest';
     }
     const nameArray = name.split('.');
@@ -27,90 +26,140 @@ export class BlameTab extends React.Component<Props> {
     return last + first;
   }
 
+  parseAction(action: string) {
+    switch (action) {
+      case 'DELETE':
+        return 'Deleted resource: ';
+      case 'EDIT':
+        return 'Edited resource: ';
+      case 'ADD':
+        return 'Added resource: ';
+      default:
+        return 'Unknown action: ';
+    }
+  }
+
   render() {
     return (
       <div
         className={this.props.className}
       >
-        <div className="recentChangesTitle">Recent Resource Changes</div>
-        <div
-          className="recentChangesList"
-        >
+        <div className="recentChangesTitle">Recent Changes</div>
+        <table cellSpacing="0">
+          <thead>
+          <tr>
+            <th>Time</th>
+            <th>User</th>
+            <th>Activity</th>
+          </tr>
+          </thead>
+          <tbody>
           {
-            this.props.adminStore!.blames.map((b: BlameModel, index: number) => {
+            this.props.adminStore!.blames ? this.props.adminStore!.blames.map((b: BlameModel, index) => {
               return (
-                <div
+                <tr
                   key={index}
-                  className="blameLine"
                 >
-                  <div
-                    className="timeLine"
-                  >
-                    <ClockIcon/><span>{moment.unix(b.time).format('D MMM YY HHmm')}L</span>
-                  </div>
-                  <div
-                    className="actionLine"
-                  >
-                    <span>{b.name}</span> was {b.action.toLowerCase() + (b.action === 'DELETE' ? 'd ' : 'ed ')}
-                    by {this.parseName(b.user)}
-                  </div>
-                </div>
+                  <td>{moment.unix(b.time).format('DD MMMM YYYY @HHmm') + 'L'}</td>
+                  <td>{this.parseName(b.user)}</td>
+                  <td>{this.parseAction(b.action)}<strong>{b.name}</strong></td>
+                </tr>
               );
-            })
+            }) : ''
           }
-        </div>
+          </tbody>
+        </table>
       </div>
     );
   }
 }
 
 export const StyledBlameTab = inject('adminStore')(styled(BlameTab)`
+    .scrollView {
+      max-height: 500px;
+      overflow-y: auto;
+    }
 
-.recentChangesTitle {
-  text-align: center;
-  color: #000000;
-  margin-top: 8px;
-  margin-bottom: 29px;
-}
+    .recentChangesTitle {
+        text-align: center;
+        color: #FFFFFF;
+        font-size: 24px;
+        margin-top: 15px;
+        margin-bottom: 37px;
+    }
 
-.recentChangesList {
-  overflow: auto;
-  height: 277px;
-  background: #FFFFFF;
-  border: 5px solid #FFFFFF;
-  width: 547px;
-  border-radius: 2px;
-  margin: auto;
-}
+    table {
+        width: 95%;
+        height: 500px;
+        margin: auto;
+        background: #292E33;
+        border-radius: 4px;
+        table-layout: fixed;
 
-.blameLine {
-  margin-left: 5px;
-  border-bottom: 1px solid #C7C7C7;
-}
+        thead {
+            color: #93A7C3;
+            width: 100%;
+            display: table;
+            border-radius: 4px 4px 0 0;
+            background: #000000;
+            height: 40px;
+    
+        th {
+            text-align: left;
+            border-spacing: 0;
+            border-collapse: collapse;
+        }
+    
+        th:nth-of-type(1) {
+          width: 22%;
+          padding-left: 3%;
+        }
+        
+        th:nth-of-type(2) {
+          width: 20%;
+        }
+    
+        th:nth-of-type(3) {
+          width: 50%;
+        }
+    
+        }
+    
+    
+        tbody {
+            background: #292E33;
+            width: 100%;
+            display: block;
+            overflow-y: auto;
+            max-height: 460px;
+            margin: auto;
+    
+            tr {
+                line-height: 64px;
+                display: table;
+                width: 94%;
+                table-layout: fixed;
+                margin: auto;
+                height: 64px;
+                td {
+                    border-bottom: 1px solid #38404B;
+                    overflow: hidden;
+                    white-space: nowrap; 
+                    text-overflow: ellipsis;
+                }
+                
+                td:nth-of-type(1) {
+                  width: 22%;
+                }
+                td:nth-of-type(2) {
+                  width: 23%
+                }
+                td:nth-of-type(3) {
+                  width: 54%;
+                }
+                
+            }
+        }
+    }
 
-.timeLine {
-  margin-top: 10px;
-  font-size: 14px;
-  line-height: 16px;
-  vertical-align: middle;
-  display: flex;
-  align-items: center;
-  color: #494B4D;
-  svg {
-    margin-right: 6px;
-  }
-  
-}
-
-.actionLine  {
-  margin-bottom: 13px;
-  margin-top: 3px;
-  height: 22px;
-  line-height: 22px;
-  color: #000000;
-  white-space: nowrap;
-  span {
-    font-weight: bold;
-  }
-}
 `);

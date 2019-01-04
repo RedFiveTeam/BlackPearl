@@ -59,7 +59,7 @@ public class AcronymControllerTest extends BaseIntegrationTest {
   public void addAcronymTest() throws JsonProcessingException {
     AcronymJSON acronym = new AcronymJSON();
     acronym.setAcronym("AT");
-    acronym.setDefinition("Acronym Test");
+    acronym.setDefinition("AcronymRow Test");
 
     given()
       .port(port)
@@ -70,7 +70,7 @@ public class AcronymControllerTest extends BaseIntegrationTest {
       .then()
       .statusCode(200)
       .body("acronym", equalTo("AT"))
-      .body("definition", equalTo("Acronym Test"));
+      .body("definition", equalTo("AcronymRow Test"));
   }
 
   @Test

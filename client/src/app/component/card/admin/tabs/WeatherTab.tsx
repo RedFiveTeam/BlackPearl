@@ -17,69 +17,78 @@ export class WeatherTab extends React.Component<Props> {
       >
         <div className="weather">
           {
-            this.props.adminStore!.weather &&
-            this.props.adminStore!.weather.map((w, index) => {
+            this.props.adminStore!.pendingWeather &&
+            this.props.adminStore!.pendingWeather.map((w, index) => {
               return (
                 <div
                   key={index}
                   className="weatherRow"
                 >
+                  <div
+                    className="weatherTitle"
+                  >
+                  Location {index + 1}
+                  </div>
                   <input
                     value={w.label}
                     className="weatherLabel"
                     placeholder="Location"
-                    onChange={(e) => this.props.adminStore!.setWeatherLabel(index, e.target.value)}
+                    onChange={(e) => this.props.adminStore!.setPendingWeatherLabel(index, e.target.value)}
                   />
                   <input
                     value={w.url}
                     className="weatherURL"
-                    placeholder="Address"
-                    onChange={(e) => this.props.adminStore!.setWeatherUrl(index, e.target.value)}
+                    placeholder="URL"
+                    onChange={(e) => this.props.adminStore!.setPendingWeatherUrl(index, e.target.value)}
                   />
                 </div>
               );
             })
           }
         </div>
+        {this.props.children}
       </div>
     );
   }
 }
 
 export const StyledWeatherTab = inject('adminStore')(styled(WeatherTab)`
-margin-top: 10px;
-margin-left: 10px;
-
-.weatherRow:first-of-type {
-  border-top: 1px solid #DFDFDF;
-}
+margin-top: 30px;
 
 .weatherRow {
-  height: 34px;
-  width: 560px;
+  height: 90px;
+  width: 95%;
   line-height: 34px;
-  border-bottom: 1px solid #DFDFDF;
   white-space: nowrap;
+  display: flex;
+  align-items: center;
 }
 
 input {
   border: none;
-  border-radius: 5px;
   font-size: 18px;
-  height: 18px;
+  height: 36px;
+  background: none;
+  color: #FFFFFF;
+  border-bottom: 1px solid #93A7C3;
   ::placeholder {
-    color: #C7C7C7;
+    color: #93A7C3;
+    font-size: 14px;
   }
 }
 
+.weatherTitle {
+  width: 20%;
+  padding-left: 90px;
+}
+
 .weatherLabel {
-  margin-left: 4px;
-  width: 156px;
+  width: 20%;
 }
 
 .weatherURL {
-  margin-left: 9px;
-  width: 387px;
+  margin-left: 60px;
+  width: 55%;
 }
 
 `);

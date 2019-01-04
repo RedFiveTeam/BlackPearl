@@ -19,7 +19,7 @@ export class DeleteAcronymPopup extends React.Component<Props> {
         className={this.props.className}
       >
         <StyledPopupModal
-          title="Are you sure you want to delete this acronym?"
+          title="Delete Acronym"
           className="popupModal"
           onCancel={() => {
             this.props.acronymStore!.setPendingDelete(null);
@@ -33,8 +33,6 @@ export class DeleteAcronymPopup extends React.Component<Props> {
           <button
             onClick={async () => {
               await this.props.acronymActions!.deleteAcronym(this.props.acronymStore!.pendingDelete!);
-              await this.props.acronymStore!.setSearch('');
-              await this.props.acronymStore!.setSearch(this.props.acronymStore!.search);
             }}
             className="deleteButton"
           >
@@ -56,48 +54,51 @@ export const StyledDeleteAcronymPopup = inject('acronymStore', 'acronymActions')
   height: 100%;
   
   .modal {
-    width: 371px;
-    height: 111px;
+    width: 500px;
+    height: 250px;
   }
   
   .title {
-    font-size: 18px;
+    font-size: 36px;
   }
   
   .acronymString {
     background: #C4C4C4;
-    width: 301px;
-    height: 22px;
+    width: 440px;
+    height: 40px;
     margin: auto;
     text-align: left;
     padding-left: 5px;
     color: #000000;
-  }
-  
-  .cancelButton {
-    height: 25px;
-    width: 110px;
-    font-size: 18px;
-    line-height: 22px;
-    display: flex;
     position: absolute;
-    bottom: 7px;
-    left: 67px;
-    justify-content: center;
+    top: 114px;
+    left: 27px;
+    right: 56px;
+    bottom: 89px;
+    opacity: 0.5;
+    text-overflow: ellipsis;
+    font-size: 24px;
+    line-height: 40px;
   }
   
   .deleteButton {
-    background: #854646;
-    height: 25px;
-    width: 110px;
-    line-height: 0;
-    font-size: 18px;
-    display: flex;
     position: absolute;
-    bottom: 7px;
-    right: 63px;
-    justify-content: center;
-    color: #fff;
+    cursor: pointer;
+    border-radius: 2px;
+    right: 11%;
+    bottom: 6%;
+    color: #FFFFFF;
+    background-image: linear-gradient(to bottom, #a90329 17%,#8f0222 42%,#6d0019 81%);
+    border: none;
+    width: 94px;
+    height: 36px;
+  }
+  
+  .cancelButton {
+    position: absolute;
+    right: 34%;
+    bottom: 6%;
+    color: #FFFFFF;
   }
 }
 `);

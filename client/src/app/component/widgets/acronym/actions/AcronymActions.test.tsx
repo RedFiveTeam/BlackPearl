@@ -11,18 +11,26 @@ describe('AcronymActions', () => {
 
   beforeEach(() => {
     acronyms = [
-      new AcronymModel(1, 'AAA', 'Aaron Allon Arnold'),
+      new AcronymModel(
+        1,
+        'AAA',
+        'Aaron Allon Arnold',
+        'AAA - Aaron Allon Arnold'
+      ),
       new AcronymModel(2, 'BBB', 'Baron Bllon Brnold'),
       new AcronymModel(3, 'CCC', 'Crazy Cronin Creep'),
       new AcronymModel(4, 'DDD', 'Dank Dylan Does')
     ];
 
     acronymStore = {
+      filteredAcronyms: [],
       setAcronyms: jest.fn(),
-      setFilteredAcronyms: jest.fn(),
+      setFilteredAcronyms: (a: AcronymModel[]) => {
+        acronymStore.filteredAcronyms = a;
+      },
       acronyms: acronyms,
-      setPendingDelete: jest.fn()
-    };
+      setPendingDelete: jest.fn(),
+  };
 
     acronymRepository = new StubAcronymRepository();
     acronymRepository.deleteAcronym = jest.fn();
@@ -37,12 +45,13 @@ describe('AcronymActions', () => {
 
   it('should filter our acronyms', async () => {
     await subject.setFilteredAcronyms('aaa');
-    expect(acronymStore.setFilteredAcronyms).toHaveBeenCalledWith(
-      ['<span id="1"><span class="searchMatch" style="background: #000000;">AAA</span> - Aaron Allon Arnold</span>']
-    );
+    acronyms[0].setPrintString('<span class="searchMatch">AAA</span> - Aaron Allon Arnold');
+    expect(acronymStore.filteredAcronyms.length).toBe(1);
+    expect(acronymStore.filteredAcronyms[0].acronym).toBe('AAA');
+    expect(acronymStore.filteredAcronyms[0].definition).toBe('Aaron Allon Arnold');
   });
 
-  it('should delete an acronym', async() => {
+  it('should delete an acronym', async () => {
     await subject.deleteAcronym(acronymStore.acronyms[0].id);
     expect(acronymRepository.deleteAcronym).toHaveBeenCalled();
   });

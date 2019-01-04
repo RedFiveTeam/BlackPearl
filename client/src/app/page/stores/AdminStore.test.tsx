@@ -45,23 +45,22 @@ describe('AdminStore', () => {
     expect(subject.blames[0].action).toBe('ADD');
   });
 
-  it('should update the timezone zone from action', () => {
-    subject.setTimezoneZone(0, 'Zulu');
-    expect(subject.timezones[0].zone).toBe('Zulu');
+  it('should update the timezone name and zone', () => {
+    subject.setPendingTimezoneName(0, 'Friendly');
+    subject.setPendingTimezoneZone(0, 'Etc/UTC');
+    expect(subject.pendingTimezones[0].name).toBe('Friendly');
+    expect(subject.pendingTimezones[0].zone).toBe('Etc/UTC');
   });
 
-  it('should update the timezone friendly with index and text', () => {
-    subject.setTimezoneName(0, 'Friendly');
-    expect(subject.timezones[0].name).toBe('Friendly');
-  });
-
-  it('should update the weather url', () => {
-    subject.setWeatherUrl(0, 'https://www.notWeather.com');
-    expect(subject.weather[0].url).toBe('https://www.notWeather.com');
+  it('should update the weather name url', () => {
+    subject.setPendingWeatherLabel(0, 'NotAPlace');
+    subject.setPendingWeatherUrl(0, 'https://www.notWeather.com');
+    expect(subject.pendingWeather[0].url).toBe('https://www.notWeather.com');
+    expect(subject.pendingWeather[0].label).toBe('NotAPlace');
   });
 
   it('should update the information content', () => {
-    subject.setInformationContent(0, '098-765-4321');
-    expect(subject.information[0].content).toBe('098-765-4321');
+    subject.setPendingInformationContent(0, '098-765-4321');
+    expect(subject.pendingInformation[0].content).toBe('098-765-4321');
   });
 });

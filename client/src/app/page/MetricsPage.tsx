@@ -43,7 +43,6 @@ export class MetricsPage extends React.Component<Props> {
         <div className="pageBody">
           <button
             onClick={(e) => {
-              console.log(this.selectValue);
               this.props.metricsPageActions!.exportLogins(this.selectValue);
             }}
             className="exportButton"

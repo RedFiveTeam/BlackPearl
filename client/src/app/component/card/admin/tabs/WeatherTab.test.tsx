@@ -9,14 +9,14 @@ describe('WeatherTab', () => {
 
   beforeEach(() => {
     adminStore = {
-      weather: [
+      pendingWeather: [
         new WeatherModel(1, 'https://www.weather.com', 'USA'),
         new WeatherModel(1, 'https://www.weather2.com', 'CAN'),
         new WeatherModel(1, 'https://www.weather3.com', 'AUS'),
         new WeatherModel(1, 'https://www.weather4.com', 'EUR')
       ],
-      setWeatherUrl: jest.fn(),
-      setWeatherLabel: jest.fn(),
+      setPendingWeatherUrl: jest.fn(),
+      setPendingWeatherLabel: jest.fn(),
     };
     subject = shallow(
       <WeatherTab
@@ -45,12 +45,12 @@ describe('WeatherTab', () => {
 
   it('should update the weather url on text input', () => {
     subject.find('.weatherURL').at(0).simulate('change', {target: {value: 'https://notWeather.com'}});
-    expect(adminStore.setWeatherUrl).toHaveBeenCalledWith(0, 'https://notWeather.com');
+    expect(adminStore.setPendingWeatherUrl).toHaveBeenCalledWith(0, 'https://notWeather.com');
   });
 
   it('should update the weather label on text input', () => {
     subject.find('.weatherLabel').at(0).simulate('change', {target: {value: 'NOTUSA'}});
-    expect(adminStore.setWeatherLabel).toHaveBeenCalledWith(0, 'NOTUSA');
+    expect(adminStore.setPendingWeatherLabel).toHaveBeenCalledWith(0, 'NOTUSA');
   });
 
 });

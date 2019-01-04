@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 interface Props {
   text?: string;
-  onClick: () => void;
+  onClick: (e: any) => void;
   className?: string;
 }
 

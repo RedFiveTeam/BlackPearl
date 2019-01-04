@@ -3,8 +3,9 @@ import { AcronymModel } from './AcronymModel';
 
 export class AcronymStore {
   @observable private _acronyms: AcronymModel[] = [];
-  @observable private _filteredAcronyms: (string|null)[] = [];
+  @observable private _filteredAcronyms: AcronymModel[] = [];
   @observable private _pendingDelete: AcronymModel | null = null;
+  @observable private _pendingAcronym: AcronymModel | null = null;
   @observable private _search: string = '';
 
   @action.bound
@@ -13,7 +14,7 @@ export class AcronymStore {
   }
 
   @action.bound
-  setFilteredAcronyms(filteredAcronyms: (string|null)[]) {
+  setFilteredAcronyms(filteredAcronyms: AcronymModel[]) {
     this._filteredAcronyms = filteredAcronyms;
   }
 
@@ -25,6 +26,11 @@ export class AcronymStore {
   @action.bound
   setSearch(value: string) {
     this._search = value;
+  }
+
+  @action.bound
+  setPendingAcronym(acronym: AcronymModel | null) {
+    this._pendingAcronym = acronym;
   }
 
   @computed
@@ -45,5 +51,10 @@ export class AcronymStore {
   @computed
   get search() {
     return this._search;
+  }
+
+  @computed
+  get pendingAcronym() {
+    return this._pendingAcronym;
   }
 }

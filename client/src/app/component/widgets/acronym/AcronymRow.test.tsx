@@ -1,22 +1,19 @@
 import * as React from 'react';
 import { shallow, ShallowWrapper } from 'enzyme';
-import { Acronym } from './Acronym';
+import { AcronymRow } from './AcronymRow';
+import { AcronymModel } from './AcronymModel';
 
-describe('Acronym', () => {
+describe('AcronymRow', () => {
   let subject: ShallowWrapper;
-  let acronym: string;
-  let click: (e: any) => void;
+  let acronym: AcronymModel;
 
   beforeEach(() => {
-    acronym = 'AAA - Aaron Allon Arnold';
-
-    click = (e: any) => { return; };
+    acronym = new AcronymModel(null, 'AAA', 'Aaron Allon Arnold', 'AAA - Aaron Allon Arnold');
 
     subject = shallow(
-      <Acronym
+      <AcronymRow
         acronym={acronym}
         className="acronym"
-        onClick={click}
       />
     );
   });

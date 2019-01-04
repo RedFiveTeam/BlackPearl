@@ -8,6 +8,12 @@ import { StyledWeatherTab } from './tabs/WeatherTab';
 import { StyledGeneralInfoTab } from './tabs/GeneralInfoTab';
 import { StyledAcronymTab } from './tabs/AcronymTab';
 import { StyledBlameTab } from './tabs/BlameTab';
+import { ClockIcon } from '../../../icon/ClockIcon';
+import { CloudIcon } from '../../../icon/CloudIcon';
+import { InfoIcon } from '../../../icon/InfoIcon';
+import { ABCIcon } from '../../../icon/ABCIcon';
+import { AuditIcon } from '../../../icon/AuditIcon';
+import { action } from 'mobx';
 
 interface Props {
   className?: string;
@@ -19,20 +25,31 @@ interface Props {
 export class AdminCardContainer extends React.Component<Props> {
   constructor(props: any) {
     super(props);
-
-    this.changeTab = this.changeTab.bind(this);
   }
 
   async componentDidMount() {
     await this.props.adminActions!.initializeStores();
   }
 
+  @action.bound
   changeTab(e: any) {
+    this.props.adminActions!.resetTab();
     Array.from(document.getElementsByClassName('selected')).forEach((el) => {
       el.classList.remove('selected');
     });
     e.target.classList.add('selected');
     this.props.adminStore!.setCurrentTab(e.target.getAttribute('data-tab'));
+  }
+
+  tabActionButtons() {
+    return (
+      <div
+        className="buttonContainer"
+      >
+        <button className="cancelButton" onClick={this.props.adminActions!.resetTab}>CANCEL</button>
+        <button className="saveButton" onClick={this.props.adminActions!.submitChanges}>SAVE</button>
+      </div>
+    );
   }
 
   render() {
@@ -43,39 +60,49 @@ export class AdminCardContainer extends React.Component<Props> {
         <div
           className="selectors"
         >
-          <div data-tab="Time Zones" className="tabSelector selected" onClick={this.changeTab}>Time Zones</div>
-          <div data-tab="Weather" className="tabSelector" onClick={this.changeTab}>Weather</div>
-          <div data-tab="General Info" className="tabSelector" onClick={this.changeTab}>General Info</div>
-          <div data-tab="Acronyms" className="tabSelector" onClick={this.changeTab}>Acronyms</div>
-          <div data-tab="Recent Changes" className="tabSelector" onClick={this.changeTab}>Recent Changes</div>
-          <button
-            className="saveAll"
-            onClick={this.props.adminActions!.submitChanges}
-          >
-            Save
-          </button>
+          <div data-tab="General Info" className="tabSelector selected" onClick={this.changeTab}>
+            <InfoIcon/>General Info
+          </div>
+          <div data-tab="Time Zones" className="tabSelector" onClick={this.changeTab}>
+            <ClockIcon/>Time Zones
+          </div>
+          <div data-tab="Acronyms" className="tabSelector" onClick={this.changeTab}>
+            <ABCIcon/>Acronyms
+          </div>
+          <div data-tab="Weather" className="tabSelector" onClick={this.changeTab}>
+            <CloudIcon/>Weather
+          </div>
+          <div data-tab="Audit" className="tabSelector" onClick={this.changeTab}>
+            <AuditIcon/>Audit
+          </div>
         </div>
         <div
           className="tabContent"
         >
           {
             this.props.adminStore!.currentTab === 'Time Zones' &&
-            <StyledTimezoneTab/>
+            <StyledTimezoneTab>
+              {this.tabActionButtons()}
+            </StyledTimezoneTab>
           }
           {
             this.props.adminStore!.currentTab === 'Weather' &&
-            <StyledWeatherTab/>
+            <StyledWeatherTab>
+              {this.tabActionButtons()}
+            </StyledWeatherTab>
           }
           {
             this.props.adminStore!.currentTab === 'General Info' &&
-            <StyledGeneralInfoTab/>
+            <StyledGeneralInfoTab>
+              {this.tabActionButtons()}
+            </StyledGeneralInfoTab>
           }
           {
             this.props.adminStore!.currentTab === 'Acronyms' &&
             <StyledAcronymTab/>
           }
           {
-            this.props.adminStore!.currentTab === 'Recent Changes' &&
+            this.props.adminStore!.currentTab === 'Audit' &&
             <StyledBlameTab/>
           }
         </div>
@@ -85,50 +112,84 @@ export class AdminCardContainer extends React.Component<Props> {
 }
 
 export const StyledAdminCardContainer = inject('adminStore', 'adminActions')(styled(AdminCardContainer)`
-width:792px;
-height: 361px;
+width:90%;
+min-width: 1503px;
+height: 652px;
 border-radius: 5px;
 box-shadow: -1px 3px 3px rgba(0, 0, 0, .25);
-background-color: #C4C4C4;
+background-color: #1F2226;
 font-size: 18px;
-color: #000000;
+color: #93A7C3;
 display: flex;
-
 position: absolute;
 left: 50%;
 top: 50%;
 transform: translate(-50%, -50%);
 
-.tabSelector:first-child {
-  border-radius: 5px 0px 0px 0px;
+.selectors {
+  padding-top: 29px;
+  width: 5%;
+  min-width: 328px;
+  border-right: 1px solid #475364;
 }
-.tabSelector, button {
-  width: 212px;
-  height: 40px;
+
+.tabSelector {
+  width: 85%;
+  height: 67px;
   text-align: center;
   line-height: 40px;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  
+  svg {
+    pointer-events: none;
+    margin-left: 34px;
+    margin-right: 25px;
+    width: 41px;
+  }
 }
 
 .selected {
-  background: #494B4D;
-  color: white;
+  background: linear-gradient(to bottom, #679CF6, #4072EE);
+  color: #FFFFFF;
+  border-radius: 0 6px 6px 0;
+  svg > path {
+    fill: #FFFFFF;
+  }
 }
 
 .tabContent {
-  color: #626262;
-  background: #e8e8e8;
-  width: 100%;
+  color: #FFFFFF;
+  background: #1F2226;
+  width: 95%;
   border-radius: 0px 5px 5px 0px;
 }
 
-.saveAll {
+.buttonContainer {
+  display: flex;
+  justify-content: flex-end;
   position: absolute;
-  bottom: 0px;
-  border-radius: 0px 0px 0px 5px;
-  font-size: 18px;
-  color: white;
-  background-color: #65768B;
+  bottom: 20px;
+  right: 3.5%;
+}
+
+.cancelButton {
+  width: 94px;
+  height: 36px;
+  background: none;
   border: none;
+  color: #76ADED;
+}
+
+.saveButton {
+  width: 94px;
+  height: 36px;
+  background: linear-gradient(180deg, #679CF6 0%, #4072EE 100%);
+  box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.24), 0px 0px 2px rgba(0, 0, 0, 0.12);
+  border-radius: 2px;
+  border: none;
+  color: #FFFFFF;
+  margin-right: 5%;
 }
 `);
