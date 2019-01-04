@@ -105,28 +105,38 @@ export class AddResourcePopup extends React.Component<Props, State> {
             this.props.resourceActions!.clearPendingResource();
           }}
         >
-          <input
-            value={this.state.title}
-            className="titleField"
-            type="text"
-            style={this.state.titleCSS}
-            maxLength={64}
-            placeholder="Title"
-            onChange={(e) => this.onTitleFieldChange(e)}
-          />
+          <div className="group">
+            <input
+              value={this.state.title}
+              className="titleField"
+              type="text"
+              style={this.state.titleCSS}
+              maxLength={64}
+              required={true}
+              onChange={(e) => this.onTitleFieldChange(e)}
+            />
+            <span className="highlight" />
+            <span className="bar" />
+            <label>Title</label>
+          </div>
           {
             this.state.titleError !== '' &&
             <span className="titleError">{this.state.titleError}</span>
           }
           <br/>
-          <input
-            value={this.state.url}
-            className="urlField"
-            type="text"
-            style={this.state.urlCSS}
-            placeholder="Address (i.e. https://www...)"
-            onChange={(e) => this.onUrlFieldChange(e)}
-          />
+          <div className="group">
+            <input
+              value={this.state.url}
+              className="urlField"
+              type="text"
+              style={this.state.urlCSS}
+              required={true}
+              onChange={(e) => this.onUrlFieldChange(e)}
+            />
+            <span className="highlight" />
+            <span className="bar" />
+            <label>Location</label>
+          </div>
           {
             this.state.urlError !== '' &&
             <span className="urlError">{this.state.urlError}</span>
@@ -147,79 +157,139 @@ export class AddResourcePopup extends React.Component<Props, State> {
 
 export const StyledAddResourcePopup = inject('resourceActions', 'resourceStore', 'metricActions')
 (styled(AddResourcePopup)`
-  .modal {
-   width: 514px;
-   height: 250px;
+
+  .group {
+    margin-top: 55px;
+    position: relative;
+    width: 410px;
+    margin-left: auto;
+    margin-right: auto;
   }
   
-  .title {
-    height: 61px;
-    width: 514px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 0;
-  }
-  
-  .titleError {
-    position: absolute;
-    top: 105px;
-    left: 20px;
-    color: #A40000;
-  }
-  
-  .urlError {
-    position: absolute;
-    top: 166px;
-    left: 20px;
-    color: #A40000;
+  .group:nth-of-type(2) {
+    margin-top: 30px;
   }
   
   input {
-    background: #C4C4C4;
-    border: 2px solid #C4C4C4;
-    width: 490px;
-    height: 40px;
-    left: 480px;
-    top: 429px;
-    font-size: 24px;
-    outline: none;
-    ::placeholder {
-      padding-left: 8px;
-      opacity: 0.5;
-      color: black;
-    }
-  }
-  
-  .titleField {
-    margin-bottom: 15px;
-  }
-  
-  .urlField {
-    margin-bottom: 10px;
-  }
-  
-  .saveButton {
-    position: absolute;
-    left: 15%;
-    bottom: 6%;
-    background: #65768B;
-    width: 157px;
-    height: 49px;
-    font-size: 24px;
-    outline: 0px;
-    border: solid #65768B;
+    padding-bottom: 5px;
+    padding-left: 0;
+    padding-right: 0;
+    display: block;
+    width: 400px;
+    border: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    background: #292E33;
     color: #FFFFFF;
-    border-radius: 3px;
+    font-size: 24px;
   }
-    
-  .cancelButton {
+  
+  input:focus {
+    outline: none;
+  }
+  
+  label {
+    color: #999;
+    font-size: 14px;
     position: absolute;
-    right: 15%;
-    bottom: 6%;
-    background: #FFFFFF;
-    border: solid #65768B;
-    color: #65768B;
-    border-radius: 3px;
+    pointer-events: none;
+    left: 5px;
+    top: 5px;
+    opacity: 0.2;
+    transition: 0.2s ease all;
+    -moz-transition: 0.2s ease all;
+    -webkit-transition: 0.2s ease all;
   }
+  
+  input:focus ~ label, input:valid ~label {
+    top: -20px;
+    font-size: 14px;
+    color: #93A7C3;
+    opacity: 1;
+  }
+  
+  .bar {
+    position: relative;
+    display: block;
+    width: 400px;
+  }
+  
+  .bar:before, .bar:after {
+    content: '';
+    height: 2px;
+    width: 0px;
+    bottom: 0px;
+    position: absolute;
+    background: #93A7C3;
+    transition:0.2s ease all; 
+    -moz-transition:0.2s ease all; 
+    -webkit-transition:0.2s ease all;
+  }
+  
+  .bar:before {
+    left: 50%;
+  }
+  
+  .bar:after {
+    right: 50%;
+  }
+  
+  input:focus ~ .bar:before, input:focus ~ .bar:after {
+    width:50%;
+  }
+  
+  .highlight {
+    position:absolute;
+    height:60%; 
+    width:100px; 
+    top:25%; 
+    left:0;
+    pointer-events:none;
+    opacity:0.5;
+  }
+  
+  input:focus ~ .highlight {
+    -webkit-animation:inputHighlighter 0.3s ease;
+    -moz-animation:inputHighlighter 0.3s ease;
+    animation:inputHighlighter 0.3s ease;
+  }
+  
+  @-webkit-keyframes inputHighlighter {
+	from { background:#5264AE; }
+    to 	{ width:0; background:transparent; }
+  }
+  @-moz-keyframes inputHighlighter {
+      from { background:#5264AE; }
+    to 	{ width:0; background:transparent; }
+  }
+  @keyframes inputHighlighter {
+      from { background:#5264AE; }
+    to 	{ width:0; background:transparent; }
+  }
+  
+    .cancelButton {
+    position: absolute;
+    right: 34%;
+    bottom: 8%;
+   }
+   
+   button:focus {
+   outline: 0;
+   }
+   
+   .saveButton {
+     position: absolute;
+     cursor: pointer;
+     border-radius: 2px;
+     right: 11%;
+     bottom: 6%;
+     color: #FFFFFF;
+     background-image: linear-gradient(to bottom, #207cca 11%,#207cca 11%,#207cca 27%,#207cca 44%,#1e5799 100%);
+     border: none;
+     width: 94px;
+     height: 36px;
+     }
+     
+     .titleError, .urlError {
+     color: #FFF;
+     }
 `);

@@ -27,7 +27,7 @@ export class RemoveResourcePopup extends React.Component<Props> {
       <div className={this.props.className}>
         <StyledPopupModal
           className="deletePopup"
-          title="Are you sure you want to delete this resource?"
+          title="Delete Resource"
           onCancel={() => {
             this.props.resourceActions!.clearPendingDelete();
           }}
@@ -52,18 +52,9 @@ export class RemoveResourcePopup extends React.Component<Props> {
 
 export const StyledRemoveResourcePopup = inject('resourceActions', 'resourceStore', 'metricActions')
 (styled(RemoveResourcePopup)`
+
   .modal {
-  width: 514px;
-  height: 190px;
-  }
-  
-  .title {
-  height: 61px;
-  width: 514px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 0;
+    height: 250px;
   }
   
   .pendingDeleteTitle {
@@ -72,10 +63,10 @@ export const StyledRemoveResourcePopup = inject('resourceActions', 'resourceStor
     border: none;
     font-size: 24px;
     height: 40px;
-    width: 490px;
-    top: 61px;
+    width: 440px;
+    top: 114px;
     bottom: 89px;
-    left: 12px;
+    left: 27px;
     right: 56px;
     opacity: 0.5;
     color: black;
@@ -89,27 +80,26 @@ export const StyledRemoveResourcePopup = inject('resourceActions', 'resourceStor
   
   .confirmButton {
     position: absolute;
-    left: 15%;
-    bottom: 20px;
-    background: #844646;
-    width: 157px;
-    height: 49px;
-    font-size: 24px;
-    cursor: pointer;
-    outline: 0px;
-    border: solid #844646;
-    color: #FFFFFF;
-    border-radius: 3px;
+     cursor: pointer;
+     border-radius: 2px;
+     right: 11%;
+     bottom: 6%;
+     color: #FFFFFF;
+     background-image: linear-gradient(to bottom, #a90329 17%,#8f0222 42%,#6d0019 81%);
+     border: none;
+     width: 94px;
+     height: 36px;
   }
   
   .cancelButton {
     position: absolute;
-    right: 15%;
-    bottom: 20px;
-    background: white;
-    border: solid #844646;
-    color: #844646;
-    border-radius: 3px;
+    right: 34%;
+    bottom: 10%;
+    color: #fff;
+  }
+  
+  button:focus {
+   outline: 0;
   }
 
 `);

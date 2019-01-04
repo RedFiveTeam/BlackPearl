@@ -67,13 +67,21 @@ export class ResourceMenuContainer extends React.Component<Props> {
   };
 
   updateStyle = () => {
+    // let ele = (ReactDOM.findDOMNode(this) as HTMLElement).querySelector('#threeDot');
+    // let paths = (ele!.querySelectorAll('path') as NodeListOf<SVGPathElement>);
     if (this.props.resourceMenuStore.menuVisible) {
+      // for (let i = 0; i < paths.length; i++) {
+      //   paths[i].setAttribute('fill', '#5689F3');
+      // }
       this.setState({
         backgroundColor:
-          'linear-gradient(90deg, rgba(0,0,0,0) 0%, rgba(200,200,200, .95) 5%, rgba(200,200,200, .95) 100%)',
+          'linear-gradient(90deg, rgba(0,0,0,0) 0%, rgba(19,31,39, .95) 5%, rgba(19,31,39, .95) 100%)',
         zIndex: 2
       });
     } else {
+      // for (let i = 0; i < paths.length; i++) {
+      //   paths[i].setAttribute('fill', '#FFF');
+      // }
       this.setState({backgroundColor: 'rgba(0, 0, 0, 0)', zIndex: 0});
     }
   };

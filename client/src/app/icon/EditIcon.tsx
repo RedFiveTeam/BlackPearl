@@ -9,15 +9,15 @@ export const EditIcon = () => {
     <svg xmlns="http://www.w3.org/2000/svg" width="17" height="20" viewBox="0 0 14 16" fill="none">
       <path
         d={pathA}
-        fill="#636363"
+        fill="#FFF"
       />
       <path
         d={pathB}
-        fill="#636363"
+        fill="#FFF"
       />
       <path
         d={pathC}
-        fill="#636363"
+        fill="#FFF"
       />
     </svg>
   );

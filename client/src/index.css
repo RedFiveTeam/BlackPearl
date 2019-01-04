@@ -10,6 +10,12 @@
     font-weight: 400;
 }
 
+@font-face {
+    font-family: 'Avenir Next';
+    src: local('Avenir Next'), url('./app/fonts/AvenirNext/AvenirNextLTPro-Regular.otf');
+    font-weight: 400;
+}
+
 body {
     background: #2F343B;
     font-family: "Avenir Next", sans-serif;

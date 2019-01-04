@@ -72,27 +72,45 @@ export class EditOperationPopup extends React.Component<Props, State> {
             this.props.operationActions!.clearPendingEdit();
           }}
         >
-          <input
-            className="pendingEditTitle"
-            type="text"
-            placeholder={this.props.operationStore!.pendingEdit!.title}
-            value={this.state.title}
-            onChange={(e) => this.onTitleFieldChange(e)}
-          />
-          <input
-            className="pendingEditDescription"
-            type="text"
-            placeholder={this.props.operationStore!.pendingEdit!.description}
-            value={this.state.description}
-            onChange={(e) => this.onDescriptionFieldChange(e)}
-          />
-          <input
-            className="pendingEditAddress"
-            type="text"
-            placeholder={this.props.operationStore!.pendingEdit!.address}
-            value={this.state.address}
-            onChange={(e) => this.onAddressFieldChange(e)}
-          />
+          <div className="group">
+            <input
+              className="pendingEditTitle"
+              type="text"
+              placeholder={this.props.operationStore!.pendingEdit!.title}
+              value={this.state.title}
+              required={true}
+              onChange={(e) => this.onTitleFieldChange(e)}
+            />
+            <span className="highlight" />
+            <span className="bar" />
+            <label>Title</label>
+          </div>
+          <div className="group">
+            <input
+              className="pendingEditDescription"
+              type="text"
+              placeholder={this.props.operationStore!.pendingEdit!.description}
+              value={this.state.description}
+              required={true}
+              onChange={(e) => this.onDescriptionFieldChange(e)}
+            />
+            <span className="highlight" />
+            <span className="bar" />
+            <label>Description</label>
+          </div>
+          <div className="group">
+            <input
+              className="pendingEditAddress"
+              type="text"
+              placeholder={this.props.operationStore!.pendingEdit!.address}
+              value={this.state.address}
+              required={true}
+              onChange={(e) => this.onAddressFieldChange(e)}
+            />
+            <span className="highlight" />
+            <span className="bar" />
+            <label>URL</label>
+          </div>
           <button
             className="saveButton"
             onClick={async () => {
@@ -110,54 +128,133 @@ export class EditOperationPopup extends React.Component<Props, State> {
 export const StyledEditOperationPopup = inject('operationActions', 'operationStore', 'metricActions')
 (styled(EditOperationPopup)`
 
-.modal {
-  height: 321px;
-  width: 514px;
+  .modal {
+    height: 450px;
+  }
+.group {
+    margin-top: 55px;
+    position: relative;
+    width: 410px;
+    margin-left: auto;
+    margin-right: auto;
   }
   
-  .title {
-  padding-top: 20px;
-  padding-bottom: 10px;
-  color: #454545;
-  }
-
   input {
-    background: #C4C4C4;
+    padding-bottom: 5px;
+    padding-left: 0;
+    padding-right: 0;
+    display: block;
+    width: 400px;
     border: none;
-    width: 488px;
-    height: 38px;
-    font-size: 24px;
-    outline: none;
-    border-radius: 3px;
-    margin-bottom: 20px;
-    ::placeholder {
-      padding-left: 8px;
-      opacity: 0.5;
-      color: black;
-    }
-  }
-  
-  .saveButton {
-    position: absolute;
-    left: 15%;
-    bottom: 22px;
-    background: #65768B;
-    width: 157px;
-    height: 49px;
-    font-size: 24px;
-    outline: 0px;
-    border: solid #65768B;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    background: #292E33;
     color: #FFFFFF;
-    border-radius: 3px;
+    font-size: 24px;
   }
   
-  .cancelButton {
-    position: absolute;
-    right: 15%;
-    bottom: 22px;
-    background: #FFFFFF;
-    border: solid #65768B;
-    color: #65768B;
-    border-radius: 3px;
+  input:focus {
+    outline: none;
   }
+  
+  label {
+    color: #999;
+    font-size: 14px;
+    position: absolute;
+    pointer-events: none;
+    left: 5px;
+    top: 5px;
+    opacity: 0.2;
+    transition: 0.2s ease all;
+    -moz-transition: 0.2s ease all;
+    -webkit-transition: 0.2s ease all;
+  }
+  
+  input:focus ~ label, input:valid ~label {
+    top: -20px;
+    font-size: 14px;
+    color: #93A7C3;
+    opacity: 1;
+  }
+  
+  .bar {
+    position: relative;
+    display: block;
+    width: 400px;
+  }
+  
+  .bar:before, .bar:after {
+    content: '';
+    height: 2px;
+    width: 0px;
+    bottom: 0px;
+    position: absolute;
+    background: #93A7C3;
+    transition:0.2s ease all; 
+    -moz-transition:0.2s ease all; 
+    -webkit-transition:0.2s ease all;
+  }
+  
+  .bar:before {
+    left: 50%;
+  }
+  
+  .bar:after {
+    right: 50%;
+  }
+  
+  input:focus ~ .bar:before, input:focus ~ .bar:after {
+    width:50%;
+  }
+  
+  .highlight {
+    position:absolute;
+    height:60%; 
+    width:100px; 
+    top:25%; 
+    left:0;
+    pointer-events:none;
+    opacity:0.5;
+  }
+  
+  input:focus ~ .highlight {
+    -webkit-animation:inputHighlighter 0.3s ease;
+    -moz-animation:inputHighlighter 0.3s ease;
+    animation:inputHighlighter 0.3s ease;
+  }
+  
+  @-webkit-keyframes inputHighlighter {
+	from { background:#5264AE; }
+    to 	{ width:0; background:transparent; }
+  }
+  @-moz-keyframes inputHighlighter {
+      from { background:#5264AE; }
+    to 	{ width:0; background:transparent; }
+  }
+  @keyframes inputHighlighter {
+      from { background:#5264AE; }
+    to 	{ width:0; background:transparent; }
+  }
+  
+    .cancelButton {
+    position: absolute;
+    right: 34%;
+    bottom: 8%;
+   }
+   
+   button:focus {
+   outline: 0;
+   }
+   
+   .saveButton {
+     position: absolute;
+     cursor: pointer;
+     border-radius: 2px;
+     right: 11%;
+     bottom: 6%;
+     color: #FFFFFF;
+     background-image: linear-gradient(to bottom, #207cca 11%,#207cca 11%,#207cca 27%,#207cca 44%,#1e5799 100%);
+     border: none;
+     width: 94px;
+     height: 36px;
+     }
 `);

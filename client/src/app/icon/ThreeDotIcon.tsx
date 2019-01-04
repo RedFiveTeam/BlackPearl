@@ -12,7 +12,7 @@ export const ThreeDotIcon = () => {
     '18.6653Z';
 
   return (
-    <svg width="5" height="21" viewBox="0 0 5 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg id="threeDot" width="5" height="21" viewBox="0 0 5 21" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path d={pathD1} fill="#E4E7EA"/>
       <path d={pathD2} fill="#E4E7EA"/>
       <path d={pathD3} fill="#E4E7EA"/>
