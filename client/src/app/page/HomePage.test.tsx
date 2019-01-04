@@ -5,10 +5,6 @@ import { StyledAddResourcePopup } from '../component/popup/AddResourcePopup';
 import { ResourceStore } from '../component/resource/stores/ResourceStore';
 import { ResourceModel } from '../component/resource/ResourceModel';
 import { StyledCardContainer } from '../component/card/CardContainer';
-import { StyledAcronymContainer } from '../component/widgets/acronym/AcronymContainer';
-import { StyledWeatherContainer } from '../component/widgets/weather/WeatherContainer';
-import { StyledCoordinateConverterContainer } from
-    '../component/widgets/coordinateConverter/CoordinateConverterContainer';
 import { StyledLoadingOverlay } from '../component/loading/LoadingOverlay';
 import { OperationStore } from '../component/card/operation/stores/OperationStore';
 import { OperationModel } from '../component/card/operation/OperationModel';
@@ -16,7 +12,6 @@ import { StyledAddOperationPopup } from '../component/popup/AddOperationPopup';
 import { StyledInformationContainer } from '../component/card/information/InformationContainer';
 import { StyledOperationContainer } from '../component/card/operation/OperationContainer';
 import { StyledAppBanner } from '../component/AppBanner';
-import { PearlIcon } from '../icon/PearlIcon';
 
 describe('HomePage', () => {
   let subject: ShallowWrapper;
@@ -59,24 +54,8 @@ describe('HomePage', () => {
     expect(subject.find(StyledAddResourcePopup).exists()).toBeTruthy();
   });
 
-  it('should have an acronym container', () => {
-    expect(subject.find(StyledAcronymContainer).exists()).toBeTruthy();
-  });
-
-  it('should have a widgets section', () => {
-    expect(subject.find('.widgetSection').exists()).toBeTruthy();
-  });
-
   it('should have a CardContainer', () => {
     expect(subject.find(StyledCardContainer).exists()).toBeTruthy();
-  });
-
-  it('should have a weather container', () => {
-    expect(subject.find(StyledWeatherContainer).exists()).toBeTruthy();
-  });
-
-  it('should have a Coordinate Converter', () => {
-    expect(subject.find(StyledCoordinateConverterContainer).exists()).toBeTruthy();
   });
 
   it('should render the loading overlay', () => {
@@ -96,11 +75,6 @@ describe('HomePage', () => {
 
   it('should render a operations container', () => {
     expect(subject.find(StyledOperationContainer).exists()).toBeTruthy();
-  });
-
-  it('should have text "The Black Pearl" and an icon', () => {
-    expect(subject.find('.bannerTitle').text()).toBe('The Black Pearl');
-    expect(subject.find(PearlIcon).exists()).toBeTruthy();
   });
 
   it('should have a header', () => {

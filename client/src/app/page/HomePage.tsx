@@ -6,10 +6,6 @@ import { StyledAddResourcePopup } from '../component/popup/AddResourcePopup';
 import { StyledCardContainer } from '../component/card/CardContainer';
 import { StyledRemoveResourcePopup } from '../component/popup/RemoveResourcePopup';
 import { StyledEditResourcePopup } from '../component/popup/EditResourcePopup';
-import { StyledAcronymContainer } from '../component/widgets/acronym/AcronymContainer';
-import { StyledWeatherContainer } from '../component/widgets/weather/WeatherContainer';
-import { StyledCoordinateConverterContainer } from
-    '../component/widgets/coordinateConverter/CoordinateConverterContainer';
 import { StyledLoadingOverlay } from '../component/loading/LoadingOverlay';
 import { ResourceModel } from '../component/resource/ResourceModel';
 import { OperationStore } from '../component/card/operation/stores/OperationStore';
@@ -21,10 +17,9 @@ import { StyledDeleteOperationPopup } from '../component/popup/DeleteOperationPo
 import { LogableActions } from '../component/metrics/metric/MetricModel';
 import { MetricActions } from '../component/metrics/metric/MetricActions';
 import { StyledAppBanner } from '../component/AppBanner';
-import { PearlIcon } from '../icon/PearlIcon';
-import { HamburgerIcon } from '../icon/hamburgerMenu';
 import { StyledInformationContainer } from '../component/card/information/InformationContainer';
 import { StyledOperationContainer } from '../component/card/operation/OperationContainer';
+import { StyledWidgetContainer } from '../component/widgets/WidgetContainer';
 
 interface Props {
   resourceStore?: ResourceStore;
@@ -97,18 +92,7 @@ export class HomePage extends React.Component<Props> {
           transition={Slide}
           autoClose={5000}
         />
-        <div className="widgetSection">
-          <div className="topBar">
-            <PearlIcon/>
-            <div className="bannerTitle">
-              The Black Pearl
-            </div>
-            <HamburgerIcon/>
-          </div>
-          <StyledAcronymContainer/>
-          <StyledCoordinateConverterContainer/>
-          <StyledWeatherContainer/>
-        </div>
+        <StyledWidgetContainer/>
         <div
           className="mainBody"
         >
@@ -123,7 +107,8 @@ export class HomePage extends React.Component<Props> {
 }
 
 export const StyledHomePage = inject('resourceStore', 'operationStore', 'metricActions')(styled(HomePage)`
-  display: flex;
+  display: inline-flex;
+  
   .customToast {
     width: 520px;
     height: 64px;
@@ -145,11 +130,12 @@ export const StyledHomePage = inject('resourceStore', 'operationStore', 'metricA
   }
   
   .mainBody {
-    width: calc(100% - 360px);
+    position: relative;
+    width: 100%;
     min-width: 1275px;
-    //max-width: 1990px;
     display: flex;
     flex-wrap: wrap;
+    background: #2F343B;
   }
   
   .bannerTitle {
@@ -159,10 +145,11 @@ export const StyledHomePage = inject('resourceStore', 'operationStore', 'metricA
   }
 
   .widgetSection {
-    width: 354px;
-    float: left;
+    position: relative;
     margin-right: 6px;
     background: #1F2226;
+    width: 0px;
+    transition: width 0.5s ease-in-out;
   }
   
   .appBanner {
@@ -201,7 +188,14 @@ export const StyledHomePage = inject('resourceStore', 'operationStore', 'metricA
     margin-left: 14px;
   }
   
-  #hamburgerIcon {
-    margin-right: 16px;
+  .bannerBurger {
+  cursor: pointer;
+  left: 5px;
+  transition: opacity 0.5s ease-in-out;
+  }
+  
+  .widgetBurger {
+  cursor: pointer;
+  right: 5px;
   }
 `);

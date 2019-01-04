@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-export const HamburgerIcon = () => {
+export const HamburgerMenuIcon = () => {
   const pathD = 'M0 12H18V10H0V12ZM0 7H18V5H0V7ZM0 0V2H18V0H0Z';
 
   return (

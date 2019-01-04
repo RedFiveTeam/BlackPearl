@@ -58,6 +58,7 @@ export const StyledPopupModal = styled(PopupModal)`
     left: 50%;
     top: 50%;
     position: absolute;
+    transform: translate(-50%, -50%);
     box-shadow: -1px 3px 3px rgba(0, 0, 0, .25);
   }
   
@@ -77,23 +78,12 @@ export const StyledPopupModal = styled(PopupModal)`
     color: white;
   }
   
-  .modal {
-    position: relative;
-    left: 580px;
-    top: 275px;
-  }
-  
   .cancelButton {
     font-weight: 500;
     font-size: 14px;
     color: #76ADED;
     background: #292E33;
     border: none;
-    // background: #C4C4C4;
-    // width: 157px;
-    // height: 49px;
-    // font-size: 24px;
-    // outline: 0px;
   }
   
   .cancelButton:hover {

@@ -72,12 +72,20 @@ export class ResourceMenuContainer extends React.Component<Props> {
     if (this.props.resourceMenuStore.menuVisible) {
       // for (let i = 0; i < paths.length; i++) {
       //   paths[i].setAttribute('fill', '#5689F3');
-      // }
-      this.setState({
-        backgroundColor:
-          'linear-gradient(90deg, rgba(0,0,0,0) 0%, rgba(19,31,39, .95) 5%, rgba(19,31,39, .95) 100%)',
-        zIndex: 2
-      });
+      //
+      if (this.props.resource.categoryID !== 0) {
+        this.setState({
+          backgroundColor:
+            'linear-gradient(90deg, rgba(0,0,0,0) 0%, rgba(19,31,39, .95) 5%, rgba(19,31,39, .95) 100%)',
+          zIndex: 2
+        });
+      } else {
+        this.setState({
+          backgroundColor:
+            'linear-gradient(90deg, rgba(0,0,0,0) 30%, rgba(19,31,39, .95) 35%, rgba(19,31,39, .95) 100%)',
+          zIndex: 2
+        });
+      }
     } else {
       // for (let i = 0; i < paths.length; i++) {
       //   paths[i].setAttribute('fill', '#FFF');
