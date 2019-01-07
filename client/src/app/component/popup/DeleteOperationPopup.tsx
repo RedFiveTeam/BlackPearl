@@ -19,7 +19,7 @@ export class DeleteOperationPopup extends React.Component<Props> {
   onClick = async () => {
     const title = this.props.operationStore!.pendingDelete!.title;
     await this.props.operationActions!.deleteOperation(this.props.operationStore!.pendingDelete!.id!);
-    this.props.metricActions!.logMetric(LogableActions.DELETE_OP, title);
+    await this.props.metricActions!.logMetric(LogableActions.DELETE_OP, title);
   };
 
   render() {

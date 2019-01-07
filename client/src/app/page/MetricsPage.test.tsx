@@ -32,7 +32,8 @@ describe('MetricsPage', () => {
         new MetricModel(1, 0, 'GUEST.GUEST.GUEST.0123456789', loginTime, LogableActions.VISIT, 'Home'),
         new MetricModel(2, 0, 'GUEST.GUEST.GUEST.0123456789', loginTime, LogableActions.VISIT, 'Home'),
         new MetricModel(3, 0, 'GUEST.GUEST.GUEST.0123456789', loginTime, LogableActions.VISIT, 'Home'),
-      ]
+      ],
+      displayData: {'users': [0, 0]}
     };
 
     subject = shallow(
@@ -45,15 +46,15 @@ describe('MetricsPage', () => {
   });
 
   it('should display a title', () => {
-    expect(subject.find('.users').text()).toContain('Total user accounts:');
+    expect(subject.find('.usersCounter > .title').text()).toContain('Total User Accounts');
   });
 
   it('should display the number of users', () => {
-    expect(subject.find('.users').text()).toContain('2');
+    expect(subject.find('.usersCounter > .number').text()).toContain('2');
   });
 
   it('should display the number of visits', () => {
-    expect(subject.find('.visits').text()).toBe('Total Visits: 3');
+    expect(subject.find('.visitCounter > .title').text()).toBe('Total Visits');
   });
 
   it('should display the most recent actions', () => {
@@ -61,7 +62,7 @@ describe('MetricsPage', () => {
   });
 
   it('should export user logins as a text file', () => {
-    subject.find('.exportLoginsButton').simulate('click');
+    subject.find('.exportButton').simulate('click');
     expect(metricsPageActions.exportLogins).toHaveBeenCalled();
   });
 });

@@ -13,8 +13,8 @@ interface Props {
 
 @observer
 export class GiffordPage extends React.Component<Props> {
-  componentDidMount() {
-    this.props.metricActions!.logMetric(LogableActions.VISIT, 'Gifford');
+  async componentDidMount() {
+    await this.props.metricActions!.logMetric(LogableActions.VISIT, 'Gifford');
   }
 
   render() {

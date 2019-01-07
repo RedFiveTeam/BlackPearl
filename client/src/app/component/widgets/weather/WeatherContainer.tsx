@@ -36,7 +36,9 @@ export class WeatherContainer extends React.Component<Props> {
                 target="__blank"
                 key={index}
                 className={'weatherURL weather' + index}
-                onClick={() => { this.props.metricActions!.logMetric(LogableActions.CLICK_WEATHER, w.label); }}
+                onClick={async () => {
+                  await this.props.metricActions!.logMetric(LogableActions.CLICK_WEATHER, w.label);
+                }}
                 href={w.url}
               >
                 <div key={index} className="weatherLabel">{w.label}</div>

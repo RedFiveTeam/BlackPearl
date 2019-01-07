@@ -34,14 +34,14 @@ export class CoordinateConverter extends React.Component<Props> {
           className="latLongInput"
           placeholder="Lat/Long"
           value={this.latLong}
-          onClick={() => this.props.metricActions!.logMetric(LogableActions.CLICK_COORD, 'LatLong')}
+          onClick={async () => await this.props.metricActions!.logMetric(LogableActions.CLICK_COORD, 'LatLong')}
           onChange={this.props.latLongFunction}
         />
         <input
           className="mgrsInput"
           placeholder="MGRS"
           value={this.mgrs}
-          onClick={() => this.props.metricActions!.logMetric(LogableActions.CLICK_COORD, 'MGRS')}
+          onClick={async () => await this.props.metricActions!.logMetric(LogableActions.CLICK_COORD, 'MGRS')}
           onChange={this.props.mgrsFunction}
         />
       </div>

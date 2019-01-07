@@ -63,7 +63,7 @@ export class ResourceMenuContainer extends React.Component<Props> {
     res.setCategoryId(0);
     await this.props.resourceActions!.saveFavorite(res);
     this.updateStyle();
-    this.props.metricActions!.logMetric(LogableActions.ADD_FAVORITE, this.props.resource.name);
+    await this.props.metricActions!.logMetric(LogableActions.ADD_FAVORITE, this.props.resource.name);
   };
 
   updateStyle = () => {

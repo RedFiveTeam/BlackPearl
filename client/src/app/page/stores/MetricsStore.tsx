@@ -1,25 +1,24 @@
-import { computed, observable } from 'mobx';
-import { UserModel } from '../../component/metrics/user/UserModel';
+import { action, computed, observable } from 'mobx';
 import { UserRepository } from '../../component/metrics/user/UserRepository';
 import { LogableActions, MetricModel } from '../../component/metrics/metric/MetricModel';
 import { MetricRepository } from '../../component/metrics/metric/MetricRepository';
 import moment = require('moment-timezone');
+import { MetricDisplayModel } from '../../component/metrics/metric/MetricDisplayModel';
 
 export class MetricsStore {
-  @observable private _users: UserModel[];
-  @observable private _logins: MetricModel[];
+  @observable private _logins: MetricModel[] = [];
+  @observable private _displayData: MetricDisplayModel;
 
   async hydrate(
     userRepository: UserRepository,
     metricRepository: MetricRepository
   ) {
-    this._users = await userRepository.findAll();
     this._logins = await metricRepository.findAll();
   }
 
-  @computed
-  get userCount() {
-    return (this._users) ? this._users.length : 0;
+  @action.bound
+  setDisplayData(data: MetricDisplayModel) {
+    this._displayData = data;
   }
 
   @computed
@@ -27,4 +26,10 @@ export class MetricsStore {
     return this._logins ? this._logins :
       [ new MetricModel(null, 0, 'loading', moment().unix(), LogableActions.VISIT, 'none') ];
   }
+
+  @computed
+  get displayData() {
+    return this._displayData;
+  }
+
 }

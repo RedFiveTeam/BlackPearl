@@ -30,7 +30,7 @@ export class Resource extends React.Component<Props> {
   @observable state = {isLocal: false};
 
   @action.bound
-  launchResource(e: any) {
+  async launchResource(e: any) {
     this.props.resourceActions!.updateClicks(this.props.resource!.id!);
     if (this.state.isLocal) {
       e.preventDefault();
@@ -53,7 +53,7 @@ export class Resource extends React.Component<Props> {
       }
       toast.success('Local Path Copied to Clipboard');
     }
-    this.props.metricActions!.logMetric(LogableActions.CLICK_RESOURCE, this.props.resource!.name);
+    await this.props.metricActions!.logMetric(LogableActions.CLICK_RESOURCE, this.props.resource!.name);
   }
 
   componentDidMount() {

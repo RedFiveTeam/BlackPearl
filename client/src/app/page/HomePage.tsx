@@ -30,8 +30,8 @@ interface Props {
 
 @observer
 export class HomePage extends React.Component<Props> {
-  componentDidMount() {
-    this.props.metricActions!.logMetric(LogableActions.VISIT, 'Home');
+  async componentDidMount() {
+    await this.props.metricActions!.logMetric(LogableActions.VISIT, 'Home');
     this.getQ();
   }
 

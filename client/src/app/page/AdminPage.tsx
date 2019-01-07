@@ -17,8 +17,8 @@ interface Props {
 
 @observer
 export class AdminPage extends React.Component<Props> {
-  componentDidMount() {
-    this.props.metricActions!.logMetric(LogableActions.VISIT, 'Admin');
+  async componentDidMount() {
+    await this.props.metricActions!.logMetric(LogableActions.VISIT, 'Admin');
   }
 
   render() {

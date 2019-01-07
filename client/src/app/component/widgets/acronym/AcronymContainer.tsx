@@ -33,7 +33,7 @@ export class AcronymContainer extends React.Component<Props> {
         <input
           className="acronymSearch"
           placeholder="Acronym"
-          onSelect={() => { this.props.metricActions!.logMetric(LogableActions.CLICK_ACRONYM, 'Acronym'); }}
+          onSelect={async () => { await this.props.metricActions!.logMetric(LogableActions.CLICK_ACRONYM, 'Acronym'); }}
           onChange={async (e) => { await this.props.acronymActions!.setFilteredAcronyms(e.target.value); }}
         />
         <div className="acronymList">

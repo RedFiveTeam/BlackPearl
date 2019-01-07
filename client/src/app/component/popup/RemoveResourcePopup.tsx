@@ -19,7 +19,7 @@ export class RemoveResourcePopup extends React.Component<Props> {
   onClick = async () => {
     const name = this.props.resourceStore!.pendingDelete!.name;
     await this.props.resourceActions!.delete(this.props.resourceStore!.pendingDelete!.id!);
-    this.props.metricActions!.logMetric(LogableActions.DELETE_RESOURCE, name);
+    await this.props.metricActions!.logMetric(LogableActions.DELETE_RESOURCE, name);
   };
 
   render() {

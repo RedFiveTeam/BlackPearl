@@ -57,7 +57,7 @@ export class EditOperationPopup extends React.Component<Props, State> {
     this.props.operationStore!.pendingEdit!.setAddress(this.state.address);
     this.props.operationStore!.pendingEdit!.setDescription(this.state.description);
     await this.props.operationActions!.updateOperation();
-    this.props.metricActions!.logMetric(LogableActions.EDIT_OP, this.state.title);
+    await this.props.metricActions!.logMetric(LogableActions.EDIT_OP, this.state.title);
   }
 
   render() {

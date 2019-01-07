@@ -92,7 +92,7 @@ export class AddResourcePopup extends React.Component<Props, State> {
         this.state.url
       );
       await this.props.resourceActions!.saveResource();
-      this.props.metricActions!.logMetric(LogableActions.ADD_RESOURCE, this.state.title);
+      await this.props.metricActions!.logMetric(LogableActions.ADD_RESOURCE, this.state.title);
     }
   }
 

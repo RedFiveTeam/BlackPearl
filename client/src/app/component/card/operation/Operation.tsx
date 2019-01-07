@@ -38,7 +38,9 @@ export class Operation extends React.Component<Props, State> {
         style={{'height': (this.state.descHeight + 'px')}}
       >
         <a
-          onClick={() => { this.props.metricActions!.logMetric(LogableActions.CLICK_OP, this.props.operation.title); }}
+          onClick={async () => {
+            await this.props.metricActions!.logMetric(LogableActions.CLICK_OP, this.props.operation.title);
+          }}
           href={this.props.operation.address}
           target="_blank"
         >

@@ -29,7 +29,7 @@ export class AppBanner extends React.Component<Props> {
 
   render() {
     return (
-      <div className="appBanner">
+      <div className={this.props.className + ' appBanner'}>
         <div className="button">
           <StyledHamburgerButton
             className="bannerBurger"

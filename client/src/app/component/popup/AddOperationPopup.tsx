@@ -52,7 +52,7 @@ export class AddOperationPopup extends React.Component<Props, State> {
       this.state.address
     );
     await this.props.operationActions!.saveOperation();
-    this.props.metricActions!.logMetric(LogableActions.ADD_OP, this.state.title);
+    await this.props.metricActions!.logMetric(LogableActions.ADD_OP, this.state.title);
   }
 
   render() {
