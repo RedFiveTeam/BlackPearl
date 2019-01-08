@@ -81,6 +81,18 @@ export class MetricsPageActions {
               resource = new DisplayInformationModel(m.context, 1);
               resources.push(resource);
             }
+          } else if (m.action.toString() === 'CLICK_ACRONYM'
+            || m.action.toString() === 'CLICK_WEATHER'
+            || m.action.toString() === 'CLICK_COORD') {
+            let item: DisplayInformationModel | null = actions.filter((a: DisplayInformationModel) => {
+              return a.name === m.context;
+            })[0];
+            if (item) {
+              item.setClicks(item.clicks + 1);
+            } else {
+              item = new DisplayInformationModel(m.context, 1);
+              actions.push(item);
+            }
           }
         }
       });

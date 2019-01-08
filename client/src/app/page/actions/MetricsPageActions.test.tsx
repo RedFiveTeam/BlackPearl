@@ -14,6 +14,7 @@ describe('MetricsPageActions', () => {
     metricsStore = {
       hydrate: jest.fn(),
       logins: [{'action': 'none'}],
+      actions: [{'context': 'none'}],
       setDisplayData: jest.fn()
     };
 

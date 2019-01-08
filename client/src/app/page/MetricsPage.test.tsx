@@ -33,7 +33,7 @@ describe('MetricsPage', () => {
         new MetricModel(2, 0, 'GUEST.GUEST.GUEST.0123456789', loginTime, LogableActions.VISIT, 'Home'),
         new MetricModel(3, 0, 'GUEST.GUEST.GUEST.0123456789', loginTime, LogableActions.VISIT, 'Home'),
       ],
-      displayData: {'users': [0, 0], 'resources': []}
+      displayData: {'users': [0, 0], 'resources': [], 'actions': []}
     };
 
     subject = shallow(

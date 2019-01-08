@@ -70,6 +70,21 @@ export class MetricsPage extends React.Component<Props> {
               </div>
               <div className="title">Resources Clicked</div>
             </div>
+            <div
+              className="widgetCounter counter"
+            >
+              <div className="number">
+                {
+                  this.props.metricsStore!.displayData && this.props.metricsStore!.displayData.actions.length > 0 ?
+                    this.props.metricsStore!.displayData.actions.map((a: DisplayInformationModel) => {
+                      return a.clicks;
+                    }).reduce((count, curr) => {
+                      return count + curr;
+                    }) : 0
+                }
+              </div>
+              <div className="title">Widgets Used</div>
+            </div>
           </div>
             <div
               className="recentActions"
