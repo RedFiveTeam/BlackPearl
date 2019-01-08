@@ -113,7 +113,7 @@ export const StyledResource = inject('resourceStore', 'resourceActions', 'metric
   transition: background 0.5s ease;
   
   :hover {
-    background: #292E52;
+    background: #1F2226;
   }
   
   .resourceLink {

@@ -25,25 +25,29 @@ export class WidgetContainer extends React.Component<Props> {
 
   render() {
     return (
-      <div
-        className="widgetSection"
-      >
-        <div className="topBar">
-          <PearlIcon/>
-          <div className="bannerTitle">
-            The Black Pearl
+      <div>
+        <div
+          className="widgetSection"
+        >
+          <div className="topBar">
+            <PearlIcon/>
+            <div className="bannerTitle">
+              The Black Pearl
+            </div>
+            <StyledHamburgerButton
+              className="widgetBurger"
+              onClick={this.toggleMenu}
+            />
           </div>
-          <StyledHamburgerButton
-            className="widgetBurger"
-            onClick={this.toggleMenu}
-          />
+          <StyledAcronymContainer/>
+          <StyledCoordinateConverterContainer/>
+          <StyledWeatherContainer/>
+          <div className="widgetBackground" />
         </div>
-        <StyledAcronymContainer/>
-        <StyledCoordinateConverterContainer/>
-        <StyledWeatherContainer/>
       </div>
     );
   }
 }
 
-export const StyledWidgetContainer = styled(WidgetContainer)``;
+export const StyledWidgetContainer = styled(WidgetContainer)`
+`;

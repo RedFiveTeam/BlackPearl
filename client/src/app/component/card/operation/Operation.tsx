@@ -72,7 +72,7 @@ export const StyledOperation = inject('operationStore', 'metricActions')(styled(
   transition: background 0.5s ease;
   
   :hover {
-    background: #292E52;
+    background: #1F2226;
   }
   
   .title {

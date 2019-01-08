@@ -145,18 +145,31 @@ export const StyledHomePage = inject('resourceStore', 'operationStore', 'metricA
   }
 
   .widgetSection {
-    position: relative;
+    position: sticky;
+    top: 0px;
     margin-right: 6px;
     background: #1F2226;
     width: 0px;
     transition: width 0.5s ease-in-out;
   }
   
+  .widgetBackground {
+    background: #1F2226;
+    height: 100%;
+    width: 100%;
+    min-height: 666px;
+    position: absolute;
+  }
+
+  
   .appBanner {
-    right: 6px;
+    padding-right: 6px;
+    margin-left: -6px;
     background: #2F343B;
     display: flex;
-    position: relative;
+    position: sticky;
+    top: 0px;
+    z-index: 5;
     height: 53px;
     width: 100%;
     float: right;
