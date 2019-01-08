@@ -6,7 +6,7 @@ import { MetricsPageActions } from './actions/MetricsPageActions';
 import { LogableActions } from '../component/metrics/metric/MetricModel';
 import { MetricActions } from '../component/metrics/metric/MetricActions';
 import * as moment from 'moment';
-import { DisplayUserModel } from '../component/metrics/metric/MetricDisplayModel';
+import { DisplayInformationModel, DisplayUserModel } from '../component/metrics/metric/MetricDisplayModel';
 
 interface Props {
   metricsPageActions?: MetricsPageActions;
@@ -32,60 +32,75 @@ export class MetricsPage extends React.Component<Props> {
             EXPORT AS .CSV
           </button>
           <div className="counters">
-          <div
-            className="usersCounter counter"
-          >
-            <div className="number">
-              {this.props.metricsStore!.displayData ? this.props.metricsStore!.displayData.users.length : 0}
+            <div
+              className="usersCounter counter"
+            >
+              <div className="number">
+                {this.props.metricsStore!.displayData ? this.props.metricsStore!.displayData.users.length : 0}
+              </div>
+              <div className="title">Total User Accounts</div>
             </div>
-            <div className="title">Total User Accounts</div>
-          </div>
-          <div
-            className="visitCounter counter"
-          >
-            <div className="number">
-              {
-                this.props.metricsStore!.displayData && this.props.metricsStore!.displayData.users.length > 0 ?
-                  this.props.metricsStore!.displayData.users.map((u: DisplayUserModel) => {
-                    return u.logins;
-                  }).reduce((count, curr) => {
-                    return count + curr;
-                  }) : 0
-              }
+            <div
+              className="visitCounter counter"
+            >
+              <div className="number">
+                {
+                  this.props.metricsStore!.displayData && this.props.metricsStore!.displayData.users.length > 0 ?
+                    this.props.metricsStore!.displayData.users.map((u: DisplayUserModel) => {
+                      return u.logins;
+                    }).reduce((count, curr) => {
+                      return count + curr;
+                    }) : 0
+                }
+              </div>
+              <div className="title">Total Visits</div>
             </div>
-            <div className="title">Total Visits</div>
+            <div
+              className="resourceCounter counter"
+            >
+              <div className="number">
+                {
+                  this.props.metricsStore!.displayData && this.props.metricsStore!.displayData.resources.length > 0 ?
+                    this.props.metricsStore!.displayData.resources.map((r: DisplayInformationModel) => {
+                      return r.clicks;
+                    }).reduce((count, curr) => {
+                      return count + curr;
+                    }) : 0
+                }
+              </div>
+              <div className="title">Resources Clicked</div>
+            </div>
           </div>
-          </div>
-          <div
-            className="recentActions"
-          >
-            <table>
-              <tbody>
-              <tr>
-                <td>Users</td>
-                <td>Action</td>
-                <td>Context</td>
-                <td>Time</td>
-              </tr>
-              {
-                this.props.metricsStore!.logins.reverse().slice(0, 50).map((l, index) => {
-                  return (
-                    <tr
-                      key={index}
-                    >
-                      <td>{l.cardID.split('.')[1] + ' ' + l.cardID.split('.')[0]}</td>
-                      <td>{l.action}</td>
-                      <td>{l.context}</td>
-                      <td>{moment.unix(l.time).format('MMMM D, YYYY HHmm')}L</td>
-                    </tr>
-                  );
-                })
-              }
-              </tbody>
-            </table>
+            <div
+              className="recentActions"
+            >
+              <table>
+                <tbody>
+                <tr>
+                  <td>Users</td>
+                  <td>Action</td>
+                  <td>Context</td>
+                  <td>Time</td>
+                </tr>
+                {
+                  this.props.metricsStore!.logins.reverse().slice(0, 50).map((l, index) => {
+                    return (
+                      <tr
+                        key={index}
+                      >
+                        <td>{l.cardID.split('.')[1] + ' ' + l.cardID.split('.')[0]}</td>
+                        <td>{l.action}</td>
+                        <td>{l.context}</td>
+                        <td>{moment.unix(l.time).format('MMMM D, YYYY HHmm')}L</td>
+                      </tr>
+                    );
+                  })
+                }
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
-      </div>
     );
   }
 }
