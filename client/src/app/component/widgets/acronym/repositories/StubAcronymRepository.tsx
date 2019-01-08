@@ -16,4 +16,8 @@ export class StubAcronymRepository implements AcronymRepository {
     acronym.setDefinition('New Test Acronym');
     return Promise.resolve(acronym);
   }
+
+  deleteAcronym(acronym: AcronymModel): Promise<void> {
+    return Promise.resolve();
+  }
 }

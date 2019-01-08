@@ -20,8 +20,7 @@ export class ATODay extends React.Component<Props> {
 }
 
 export const StyledATODay = inject('timeStore')(styled(ATODay)`
-width: 360px;
-height: 68px;
-margin-bottom: 17px;
+width: 175px;
 text-align: center;
+margin-top: 3px;
 `);

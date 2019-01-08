@@ -10,7 +10,7 @@ export const FavoriteIcon = () => {
 
   return (
     <svg width="16" height="17" viewBox="0 0 16 17" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path fillRule="evenodd" clipRule="evenodd" d={pathD} fill="#080C12"/>
+      <path fillRule="evenodd" clipRule="evenodd" d={pathD} fill="#FFFFFF"/>
     </svg>
 
   );

@@ -16,7 +16,6 @@ export class NotFoundPage extends React.Component<Props> {
         className={this.props.className}
       >
         <div className="errorShip">
-          {/*<BlackPearlShipIcon/>*/}
           <img className="shipImage" src={ShipLogo}/>
           <div className="firstFour">4</div>
           <div className="zero">0</div>
@@ -46,7 +45,6 @@ export const StyledNotFoundPage = styled(NotFoundPage)`
   z-index: 1;
   background: #7E7C7C;
   color: #ECECEC;
-  font-family: Amaranth;
   display: inline-flex;
   justify-content: center;
   

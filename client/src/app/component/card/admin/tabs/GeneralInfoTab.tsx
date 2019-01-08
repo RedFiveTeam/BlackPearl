@@ -15,6 +15,7 @@ export class GeneralInfoTab extends React.Component<Props> {
     return (
       <div>
         <table>
+          <tbody>
           {
             this.props.adminStore!.information.map((i: InformationModel, index: number) => {
               return (
@@ -33,6 +34,7 @@ export class GeneralInfoTab extends React.Component<Props> {
               );
             })
           }
+          </tbody>
         </table>
       </div>
     );
@@ -82,7 +84,6 @@ tr {
 .informationContent {
   border: none;
   margin-left: 19px;
-  font-family: Amaranth;
   font-size: 18px;
   width: 322px;
   border-radius: 5px;

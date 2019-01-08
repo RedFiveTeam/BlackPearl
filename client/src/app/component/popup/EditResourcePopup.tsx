@@ -84,7 +84,7 @@ export class EditResourcePopup extends React.Component<Props, State> {
       this.props.resourceStore!.pendingEdit!.setName(this.state.title);
       this.props.resourceStore!.pendingEdit!.setAccountId(this.props.profileStore!.profile.cardID);
       await this.props.resourceActions!.updateResource();
-      this.props.metricActions!.logMetric(LogableActions.EDIT_RESOURCE, this.state.title);
+      await this.props.metricActions!.logMetric(LogableActions.EDIT_RESOURCE, this.state.title);
     }
   }
 
@@ -98,27 +98,37 @@ export class EditResourcePopup extends React.Component<Props, State> {
             this.props.resourceActions!.clearPendingEdit();
           }}
         >
-          <input
-            className="pendingEditTitle"
-            type="text"
-            maxLength={64}
-            style={this.state.titleCSS}
-            placeholder={this.props.resourceStore!.pendingEdit!.name}
-            value={this.state.title}
-            onChange={(e) => this.onTitleFieldChange(e)}
-          />
+          <div className="group">
+            <input
+              className="pendingEditTitle"
+              type="text"
+              maxLength={64}
+              style={this.state.titleCSS}
+              placeholder={this.props.resourceStore!.pendingEdit!.name}
+              value={this.state.title}
+              onChange={(e) => this.onTitleFieldChange(e)}
+            />
+            <span className="highlight" />
+            <span className="bar" />
+            <label>Title</label>
+          </div>
           {
             this.state.titleError !== '' &&
             <div className="titleError">{this.state.titleError}</div>
           }
-          <input
-            className="pendingEditUrl"
-            type="text"
-            style={this.state.urlCSS}
-            placeholder={this.props.resourceStore!.pendingEdit!.url}
-            value={this.state.url}
-            onChange={(e) => this.onUrlFieldChange(e)}
-          />
+          <div className="group">
+            <input
+              className="pendingEditUrl"
+              type="text"
+              style={this.state.urlCSS}
+              placeholder={this.props.resourceStore!.pendingEdit!.url}
+              value={this.state.url}
+              onChange={(e) => this.onUrlFieldChange(e)}
+            />
+            <span className="highlight" />
+            <span className="bar" />
+            <label>Location</label>
+          </div>
           {
             this.state.urlError !== '' &&
             <div className="urlError">{this.state.urlError}</div>
@@ -141,92 +151,144 @@ export const StyledEditResourcePopup = inject(
   'profileStore',
   'metricActions'
 )(styled(EditResourcePopup)`
-  .modal {
-    width: 514px;
-    height: 250px;
-  }
-  
-  .title {
-    height: 80px;
-    width: 514px;
-    padding-top: 21px;
-    padding-bottom: 19px;
-  }
-  
-  .titleError {
-    position: absolute;
-    top: 108px;
-    left: 20px;
-    color: #A40000;
-  }
-  
-  .urlError {
-    position: absolute;
-    top: 167px;
-    left: 20px;
-    color: #A40000;
+
+  .group {
+    margin-top: 55px;
+    position: relative;
+    width: 410px;
+    margin-left: auto;
+    margin-right: auto;
   }
   
   input {
-    padding-left: 7px;
-    box-sizing: border-box;
+    padding-bottom: 5px;
+    padding-left: 0;
+    padding-right: 0;
+    display: block;
+    width: 400px;
+    border: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    background: #292E33;
+    color: #FFFFFF;
+    font-size: 24px;
+  }
+  
+  input:focus {
     outline: none;
   }
   
-  .pendingEditTitle {
+  label {
+    color: #999;
+    font-size: 14px;
     position: absolute;
-    font-family: Amaranth;
-    background: #C4C4C4;
-    border: none;
-    font-size: 24px;
-    height: 40px;
-    width: 490px;
-    top: 67px;
-    bottom: 89px;
-    left: 12px;
-    color: black;
-    text-align: left;
+    pointer-events: none;
+    left: 5px;
+    top: 5px;
+    opacity: 0.2;
+    transition: 0.2s ease all;
+    -moz-transition: 0.2s ease all;
+    -webkit-transition: 0.2s ease all;
   }
   
-  .pendingEditUrl {
-    position: absolute;
-    font-family: Amaranth;
-    background: #C4C4C4;
-    border: none;
-    font-size: 24px;
-    height: 40px;
-    width: 490px;
-    top: 127px;
-    bottom: 89px;
-    left: 12px;
-    color: black;
-    text-align: left;
+  input:focus ~ label, input:valid ~label {
+    top: -20px;
+    font-size: 14px;
+    color: #93A7C3;
+    opacity: 1;
   }
   
-  .saveButton {
-    position: absolute;
-    left: 15%;
-    bottom: 6%;
-    background: #65768B;
-    font-family: Amaranth;
-    width: 157px;
-    height: 49px;
-    font-size: 24px;
-    cursor: pointer;
-    outline: 0px;
-    color: #FFFFFF;
-    border: solid #65768B;
-    border-radius: 3px;
+  .bar {
+    position: relative;
+    display: block;
+    width: 400px;
   }
   
-  .cancelButton {
+  .bar:before, .bar:after {
+    content: '';
+    height: 2px;
+    width: 0px;
+    bottom: 0px;
     position: absolute;
-    right: 15%;
-    bottom: 6%;
-    border: solid #65768B;
-    background: #FFFFFF;
-    color: #65768B;
-    border-radius: 3px;
+    background: #93A7C3;
+    transition:0.2s ease all; 
+    -moz-transition:0.2s ease all; 
+    -webkit-transition:0.2s ease all;
   }
-
+  
+  .bar:before {
+    left: 50%;
+  }
+  
+  .bar:after {
+    right: 50%;
+  }
+  
+  input:focus ~ .bar:before, input:focus ~ .bar:after {
+    width:50%;
+  }
+  
+  .highlight {
+    position:absolute;
+    height:60%; 
+    width:100px; 
+    top:25%; 
+    left:0;
+    pointer-events:none;
+    opacity:0.5;
+  }
+  
+  input:focus ~ .highlight {
+    -webkit-animation:inputHighlighter 0.3s ease;
+    -moz-animation:inputHighlighter 0.3s ease;
+    animation:inputHighlighter 0.3s ease;
+  }
+  
+  @-webkit-keyframes inputHighlighter {
+	from { background:#5264AE; }
+    to 	{ width:0; background:transparent; }
+  }
+  @-moz-keyframes inputHighlighter {
+      from { background:#5264AE; }
+    to 	{ width:0; background:transparent; }
+  }
+  @keyframes inputHighlighter {
+      from { background:#5264AE; }
+    to 	{ width:0; background:transparent; }
+  }
+  
+    .cancelButton {
+    position: absolute;
+    right: 34%;
+    bottom: 8%;
+   }
+   
+   button:focus {
+   outline: 0;
+   }
+   
+   .saveButton {
+     position: absolute;
+     cursor: pointer;
+     border-radius: 2px;
+     right: 11%;
+     bottom: 6%;
+     color: #FFFFFF;
+     background-image: linear-gradient(to bottom, #207cca 11%,#207cca 11%,#207cca 27%,#207cca 44%,#1e5799 100%);
+     border: none;
+     width: 94px;
+     height: 36px;
+     }
+     
+     .titleError, .urlError {
+     position: absolute;
+     color: #FFF;
+     }
+     
+     .titleError {
+       left: 172px;
+     }
+     
+     .urlError {
+      left: 150px;
+     }
 `);

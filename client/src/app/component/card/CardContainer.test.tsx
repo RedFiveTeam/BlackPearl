@@ -3,8 +3,6 @@ import { shallow, ShallowWrapper } from 'enzyme';
 import { CardContainer } from './CardContainer';
 import { StyledCard } from './Card';
 import { Category } from '../resource/ResourceModel';
-import { StyledInformationContainer } from './information/InformationContainer';
-import { StyledOperationContainer } from './operation/OperationContainer';
 
 describe('CardContainer', () => {
   let subject: ShallowWrapper;
@@ -36,10 +34,11 @@ describe('CardContainer', () => {
   });
 
   it('should have a card for each card category', () => {
-    expect(subject.find(StyledCard).length).toBe(3);
+    expect(subject.find(StyledCard).length).toBe(4);
     expect(subject.find(StyledCard).at(0).prop('category')).toBe(Category.FMV_Main);
     expect(subject.find(StyledCard).at(1).prop('category')).toBe(Category.FMV_SituationalAwareness);
     expect(subject.find(StyledCard).at(2).prop('category')).toBe(Category.FMV_TargetResearch);
+    expect(subject.find(StyledCard).at(3).prop('category')).toBe(Category.Favorites);
   });
 
   it('should pass the resources to each card based on category', () => {
@@ -51,10 +50,11 @@ describe('CardContainer', () => {
   it('should have a card for each card category after the tab has changed', () => {
     resourceStore.activeTab = 2;
     subject.setProps({resourceStore: resourceStore});
-    expect(subject.find(StyledCard).length).toBe(3);
+    expect(subject.find(StyledCard).length).toBe(4);
     expect(subject.find(StyledCard).at(0).prop('category')).toBe(Category.HighAlt_Main);
     expect(subject.find(StyledCard).at(1).prop('category')).toBe(Category.HighAlt_SituationalAwareness);
     expect(subject.find(StyledCard).at(2).prop('category')).toBe(Category.HighAlt_TargetResearch);
+    expect(subject.find(StyledCard).at(3).prop('category')).toBe(Category.Favorites);
   });
 
   it('should pass the resources to each card based on category after the tab has changed', () => {
@@ -71,14 +71,6 @@ describe('CardContainer', () => {
 
   it('should set the profile', () => {
     expect(profileActions.setProfile).toHaveBeenCalled();
-  });
-
-  it('should render an information card container', () => {
-    expect(subject.find(StyledInformationContainer).exists).toBeTruthy();
-  });
-
-  it('should render a operations container', () => {
-    expect(subject.find(StyledOperationContainer).exists()).toBeTruthy();
   });
 
   it('should have a body for the contents to go into', () => {

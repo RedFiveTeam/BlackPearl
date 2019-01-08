@@ -74,7 +74,6 @@ span {
 }
 
 input, select {
-  font-family: Amaranth;
   font-size: 18px;
   height: 18px;
   margin-left: 37px;
@@ -85,7 +84,6 @@ input {
   width: 138px;
   border: none;
   border-radius: 5px;
-  font-family: Amaranth;
   font-size: 18px;
   height: 18px;
   ::placeholder {

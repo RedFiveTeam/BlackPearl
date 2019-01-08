@@ -1,8 +1,6 @@
 import * as React from 'react';
 import { shallow, ShallowWrapper } from 'enzyme';
 import { CoordinateConverter } from './CoordinateConverter';
-import { DownArrowIcon } from '../../../icon/DownArrowIcon';
-import { UpArrowIcon } from '../../../icon/UpArrowIcon';
 
 describe('CoordinateConverter', () => {
   let subject: ShallowWrapper;
@@ -37,11 +35,6 @@ describe('CoordinateConverter', () => {
   it('should have an mgrs input tag', () => {
     expect(subject.find('.mgrsInput').exists()).toBeTruthy();
     expect(subject.find('.mgrsInput').props().value).toBe('12ABC123456789');
-  });
-
-  it('should contain two, strictly cosmetic, arrows', () => {
-    expect(subject.find(DownArrowIcon).exists()).toBeTruthy();
-    expect(subject.find(UpArrowIcon).exists()).toBeTruthy();
   });
 
   it('should call mgrsFunction on change', () => {

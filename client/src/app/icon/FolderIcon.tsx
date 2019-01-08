@@ -6,7 +6,7 @@ export const FolderIcon = () => {
 
   return (
     <svg width="20" height="16" viewBox="0 0 20 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d={pathD} fill="#545454"/>
+      <path d={pathD} fill="#E4E7EA"/>
     </svg>
 
   );

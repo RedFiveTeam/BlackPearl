@@ -5,14 +5,18 @@ import { Acronym } from './Acronym';
 describe('Acronym', () => {
   let subject: ShallowWrapper;
   let acronym: string;
+  let click: (e: any) => void;
 
   beforeEach(() => {
     acronym = 'AAA - Aaron Allon Arnold';
+
+    click = (e: any) => { return; };
 
     subject = shallow(
       <Acronym
         acronym={acronym}
         className="acronym"
+        onClick={click}
       />
     );
   });

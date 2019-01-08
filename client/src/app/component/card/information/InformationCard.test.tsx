@@ -25,22 +25,22 @@ describe('InformationCard', () => {
     expect(subject.find('.cardTitle').text()).toBe('General Info');
   });
 
-  it('should render a table with 3 rows and 8 cells', () => {
-    expect(subject.find('.table').exists()).toBeTruthy();
+  it('should render a table with 3 rows and 9 cells', () => {
+    expect(subject.find('.cardContent').exists()).toBeTruthy();
     expect(subject.find('.row').length).toBe(3);
-    expect(subject.find('.d').length).toBe(9);
+    expect(subject.find('.cell').length).toBe(9);
   });
 
   it('should have the proper information in the proper places', () => {
-    expect(subject.find('.imageServer').text()).toBe('image.smil.mil');
-    expect(subject.find('.callOutFormat').text()).toBe('| ONE | TWO | THREE |');
-    expect(subject.find('.imageServerJWICS').text()).toBe('image.ic.gov');
-    expect(subject.find('.auabServer').text()).toBe('auab.com');
-    expect(subject.find('.navcentServer').text()).toBe('navcent.com');
-    expect(subject.find('.dsnNumber').text()).toBe('123-4567');
-    expect(subject.find('.svoipNumber').text()).toBe('123-456-7890(1234)');
-    expect(subject.find('.tsvoipNumber').text()).toBe('123-1234');
-    expect(subject.find('.jwicsServer').text()).toBe('irc://blackpearlisthegreatest');
+    expect(subject.find('.cell').at(0).text()).toContain('image.smil.mil');
+    expect(subject.find('.cell').at(1).text()).toContain('image.ic.gov');
+    expect(subject.find('.cell').at(2).text()).toContain('| ONE | TWO | THREE |');
+    expect(subject.find('.cell').at(3).text()).toContain('irc://blackpearlisthegreatest');
+    expect(subject.find('.cell').at(4).text()).toContain('auab.com');
+    expect(subject.find('.cell').at(5).text()).toContain('navcent.com');
+    expect(subject.find('.cell').at(6).text()).toContain('123-4567');
+    expect(subject.find('.cell').at(7).text()).toContain('123-456-7890(1234)');
+    expect(subject.find('.cell').at(8).text()).toContain('123-1234');
   });
 
 });

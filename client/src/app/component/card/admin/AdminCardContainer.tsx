@@ -90,7 +90,6 @@ height: 361px;
 border-radius: 5px;
 box-shadow: -1px 3px 3px rgba(0, 0, 0, .25);
 background-color: #C4C4C4;
-font-family: Amaranth;
 font-size: 18px;
 color: #000000;
 display: flex;
@@ -123,11 +122,10 @@ transform: translate(-50%, -50%);
   border-radius: 0px 5px 5px 0px;
 }
 
-button {
+.saveAll {
   position: absolute;
   bottom: 0px;
   border-radius: 0px 0px 0px 5px;
-  font-family: Amaranth;
   font-size: 18px;
   color: white;
   background-color: #65768B;

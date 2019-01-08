@@ -15,11 +15,6 @@ describe('MetricsStore', () => {
     subject = new MetricsStore();
   });
 
-  it('should set the users from a service on hydrate', async () => {
-    await subject.hydrate(userRepository, metricRepository);
-    expect(subject.userCount).toBe(3);
-  });
-
   it('should set the logins on hydrate', async () => {
     await subject.hydrate(userRepository, metricRepository);
     expect(subject.logins.length).toBe(2);

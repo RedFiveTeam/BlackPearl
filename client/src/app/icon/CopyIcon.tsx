@@ -13,6 +13,7 @@ export const CopyIcon = () => {
       />
       <path
         d={pathD2}
+        fill="#FFFFFF"
       />
     </svg>
   );

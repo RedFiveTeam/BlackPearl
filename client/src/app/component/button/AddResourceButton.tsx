@@ -30,7 +30,7 @@ export class AddResourceButton extends React.Component<Props> {
             <AddResourceIcon/>
           </div>
           <div className="addResourceTitle">
-          Add Resource
+          ADD RESOURCE
           </div>
         </StyledButton>
       </div>
@@ -39,29 +39,24 @@ export class AddResourceButton extends React.Component<Props> {
 }
 
 export const StyledAddResourceButton = inject('resourceActions')(styled(AddResourceButton)`
-  width: 335px;
-  margin: auto;
+  width: calc(100% - 15px);
+  margin-left: 8px;
 
   .addResourceButton {
-    width: 335px;
-    height: 38px;
+    width: 100%;
+    height: 76px;
     font-size: 14px;
     border: none;
-    border-top: 1px solid grey;
-    color: #7A7A7A;
-    background: #EAEAEA;
-    margin: auto;
+    border-top: 1px solid #8190A5;
+    background: #292E33;
+    display: flex;
+    justify-content: center;
   }
   
   .addResourceTitle {
-    margin-left: 15px;
-    margin-top: -21px;
-    text-decoration: underline;
-    text-decoration-color: grey;
-  }
-  
-  .icon {
-    margin-right: 110px;
+    margin-top: 2px;
+    margin-left: 8px;
+    color: #76ADED;
   }
   
   .addResourceButton:hover {

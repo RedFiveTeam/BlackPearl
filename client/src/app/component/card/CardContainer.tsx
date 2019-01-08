@@ -3,12 +3,11 @@ import { inject, observer } from 'mobx-react';
 import styled from 'styled-components';
 import { StyledCard } from './Card';
 import { ResourceActions } from '../resource/actions/ResourceActions';
-import { StyledInformationContainer } from './information/InformationContainer';
-import { StyledOperationContainer } from './operation/OperationContainer';
 import { ProfileActions } from '../../profile/ProfileActions';
 import { ResourceStore } from '../resource/stores/ResourceStore';
 import classNames = require('classnames');
 import { StyledTabContainer } from './TabContainer';
+import { Category } from '../resource/ResourceModel';
 
 interface Props {
   className?: string;
@@ -43,8 +42,11 @@ export class CardContainer extends React.Component<Props> {
             category={this.props.resourceStore!.activeTab * 3}
             resources={this.props.resourceStore!.returnResourcesInCategory(this.props.resourceStore!.activeTab * 3)}
           />
-          <StyledInformationContainer/>
-          <StyledOperationContainer/>
+          <StyledCard
+            className="myFavorites"
+            category={Category.Favorites}
+            resources={this.props.resourceStore!.returnResourcesInCategory(Category.Favorites)}
+          />
         </div>
       </div>
     );
@@ -52,16 +54,28 @@ export class CardContainer extends React.Component<Props> {
 }
 
 export const StyledCardContainer = inject('resourceActions', 'profileActions', 'resourceStore')(styled(CardContainer)`
-  margin-top: 15px;
+  display: flex;
+  position: relative;
+  flex-wrap: wrap;
+  margin-top: 30px;
+  width: 100%;
   
   .cardBody {
+    background: #1F2226;
     display: flex;
     padding-top: 6px;
     padding-right: 8px;
-    height: 1175px;
+    height: 770px;
     margin-bottom: 10px;
     position: relative;
-    box-shadow: 0px 0px 10px 4px rgba(0,0,0,0.25);
+    box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.3);
     border-radius: 0 4px 4px 0;
+    width: 100%;
+  }
+  
+  .tabContainer {
+    width: 100%;
+    display: flex;
+    align-items: flex-end;
   }
 `);

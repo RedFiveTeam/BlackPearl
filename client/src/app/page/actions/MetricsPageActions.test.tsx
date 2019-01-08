@@ -12,7 +12,9 @@ describe('MetricsPageActions', () => {
 
   beforeEach(() => {
     metricsStore = {
-      hydrate: jest.fn()
+      hydrate: jest.fn(),
+      logins: [{'action': 'none'}],
+      setDisplayData: jest.fn()
     };
 
     userRepository = new StubUserRepository();

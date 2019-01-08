@@ -17,8 +17,8 @@ interface Props {
 
 @observer
 export class AdminPage extends React.Component<Props> {
-  componentDidMount() {
-    this.props.metricActions!.logMetric(LogableActions.VISIT, 'Admin');
+  async componentDidMount() {
+    await this.props.metricActions!.logMetric(LogableActions.VISIT, 'Admin');
   }
 
   render() {
@@ -48,7 +48,6 @@ export const StyledAdminPage = inject('adminStore', 'adminActions', 'metricActio
     border-radius: 10px;
     background: black;
     color: white;
-    font-family: Amaranth;
     font-size: 24px;
     
     button {
@@ -62,5 +61,4 @@ export const StyledAdminPage = inject('adminStore', 'adminActions', 'metricActio
       margin-left: 20px;
     }
   }
-
 `);

@@ -6,24 +6,20 @@ import { StyledAddResourcePopup } from '../component/popup/AddResourcePopup';
 import { StyledCardContainer } from '../component/card/CardContainer';
 import { StyledRemoveResourcePopup } from '../component/popup/RemoveResourcePopup';
 import { StyledEditResourcePopup } from '../component/popup/EditResourcePopup';
-import { StyledAcronymContainer } from '../component/widgets/acronym/AcronymContainer';
-import { StyledWeatherContainer } from '../component/widgets/weather/WeatherContainer';
-import {
-  StyledCoordinateConverterContainer
-} from '../component/widgets/coordinateConverter/CoordinateConverterContainer';
 import { StyledLoadingOverlay } from '../component/loading/LoadingOverlay';
-import { Category, ResourceModel } from '../component/resource/ResourceModel';
-import { StyledCard } from '../component/card/Card';
+import { ResourceModel } from '../component/resource/ResourceModel';
 import { OperationStore } from '../component/card/operation/stores/OperationStore';
 import { StyledAddOperationPopup } from '../component/popup/AddOperationPopup';
 import { StyledEditOperationPopup } from '../component/popup/EditOperationPopup';
-import { StyledTimeContainer } from '../component/widgets/time/TimeContainer';
 import { Slide, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { StyledDeleteOperationPopup } from '../component/popup/DeleteOperationPopup';
 import { LogableActions } from '../component/metrics/metric/MetricModel';
 import { MetricActions } from '../component/metrics/metric/MetricActions';
-import { StyledProfileContainer } from '../profile/ProfileContainer';
+import { StyledAppBanner } from '../component/AppBanner';
+import { StyledInformationContainer } from '../component/card/information/InformationContainer';
+import { StyledOperationContainer } from '../component/card/operation/OperationContainer';
+import { StyledWidgetContainer } from '../component/widgets/WidgetContainer';
 
 interface Props {
   resourceStore?: ResourceStore;
@@ -34,8 +30,8 @@ interface Props {
 
 @observer
 export class HomePage extends React.Component<Props> {
-  componentDidMount() {
-    this.props.metricActions!.logMetric(LogableActions.VISIT, 'Home');
+  async componentDidMount() {
+    await this.props.metricActions!.logMetric(LogableActions.VISIT, 'Home');
     this.getQ();
   }
 
@@ -96,22 +92,14 @@ export class HomePage extends React.Component<Props> {
           transition={Slide}
           autoClose={5000}
         />
+        <StyledWidgetContainer/>
         <div
-          className="cardsContainer"
+          className="mainBody"
         >
+          <StyledAppBanner/>
           <StyledCardContainer/>
-          <div className="widgetSection">
-            <StyledProfileContainer/>
-            <StyledTimeContainer/>
-            <StyledCard
-              className="myFavorites"
-              category={Category.Favorites}
-              resources={this.props.resourceStore!.returnResourcesInCategory(Category.Favorites)}
-            />
-            <StyledAcronymContainer/>
-            <StyledCoordinateConverterContainer/>
-            <StyledWeatherContainer/>
-          </div>
+          <StyledInformationContainer/>
+          <StyledOperationContainer/>
         </div>
       </div>
     );
@@ -119,45 +107,7 @@ export class HomePage extends React.Component<Props> {
 }
 
 export const StyledHomePage = inject('resourceStore', 'operationStore', 'metricActions')(styled(HomePage)`
-  margin-left: -8px;
-  position: absolute;
-  
-  .myFavorites {
-    height: 294px;
-    width: 338px;
-    margin-left: 10px;
-    background: #364958;
-    margin-bottom: 10px;
-    box-shadow: -1px 3px 3px rgba(0, 0, 0, .25);
-    border-radius: 10px;
-    
-    .resourceMenu {
-      width: 105px;
-    }
-
-    .body {
-        max-height: 252px;
-        border-radius: 0px;
-        height: 234px;
-        width: 330px;
-    }
-    
-    .resourceList {
-        max-height: 196px;
-        overflow-x: hidden;
-    }
-    
-    .resource {
-      width: 320px;
-    }
-    .cardTitle {
-        box-shadow: none;
-    }
-    
-    .addResourceButton {
-      width: 330px;
-    }
-  }
+  display: inline-flex;
   
   .customToast {
     width: 520px;
@@ -165,7 +115,6 @@ export const StyledHomePage = inject('resourceStore', 'operationStore', 'metricA
     border-radius: 10px;
     background: black;
     color: white;
-    font-family: Amaranth;
     font-size: 24px;
     
     button {
@@ -179,16 +128,88 @@ export const StyledHomePage = inject('resourceStore', 'operationStore', 'metricA
       margin-left: 20px;
     }
   }
-
-  .cardsContainer {
-    display: flex;
+  
+  .mainBody {
     position: relative;
+    width: 100%;
+    min-width: 1275px;
+    display: flex;
+    flex-wrap: wrap;
+    background: #2F343B;
   }
   
+  .bannerTitle {
+    font-family: "Avenir Next";
+    font-size: 30px;
+    color: #FBFDFF;
+  }
+
   .widgetSection {
-    position: fixed;
-    display: block;
-    top: 10px;
-    left: 1090px;
+    position: sticky;
+    top: 0px;
+    margin-right: 6px;
+    background: #1F2226;
+    width: 0px;
+    transition: width 0.5s ease-in-out;
+  }
+  
+  .widgetBackground {
+    background: #1F2226;
+    height: 100%;
+    width: 100%;
+    min-height: 666px;
+    position: absolute;
+  }
+
+  
+  .appBanner {
+    padding-right: 6px;
+    margin-left: -6px;
+    background: #2F343B;
+    display: flex;
+    position: sticky;
+    top: 0px;
+    z-index: 5;
+    height: 53px;
+    width: 100%;
+    float: right;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    color: #F2F2F2;
+  }
+  
+  .topBar {
+    display: flex;
+    justify-content: space-between;
+    width: 354px;
+    height: 53px;
+    align-items: center;
+  }
+  
+  .atoDay {
+    height: 53px;
+    font-size: 36px;
+    text-shadow: 0px 3px 6px rgba(0, 0, 0, 0.3);
+    font-family: "Avenir Next";
+    font-size: 36px;
+  }
+  
+  #ATODayBorderIcon {
+    height: 53px;
+    margin-right: 15px;
+  }
+  
+  #pearlIcon {
+    margin-left: 14px;
+  }
+  
+  .bannerBurger {
+  cursor: pointer;
+  left: 5px;
+  transition: opacity 0.5s ease-in-out;
+  }
+  
+  .widgetBurger {
+  cursor: pointer;
+  right: 5px;
   }
 `);

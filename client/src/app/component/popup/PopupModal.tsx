@@ -24,7 +24,6 @@ export class PopupModal extends React.Component<Props> {
           </p>
           <div className="body">
             {this.props.children}
-          </div>
           {
             this.props.onCancel &&
             <button
@@ -34,6 +33,7 @@ export class PopupModal extends React.Component<Props> {
               CANCEL
             </button>
           }
+          </div>
         </div>
       </div>
     );
@@ -49,35 +49,41 @@ export const StyledPopupModal = styled(PopupModal)`
   position: fixed;
   z-index: 75;
   text-align: center;
-  font-family: Amaranth;
   
   .modal {
-    border-radius: 10px;
-    background: #F6F6F6;
-    width: 544px;
-    height: 308px;
-    margin-left: -272px; // negative half width
-    margin-top: -154px;  // negative half height
+    border-radius: 4px;
+    background: #292E33;
+    width: 498px;
+    height: 346px;
     left: 50%;
     top: 50%;
     position: absolute;
+    transform: translate(-50%, -50%);
     box-shadow: -1px 3px 3px rgba(0, 0, 0, .25);
   }
   
+  .body {
+    background-color: #292E33;
+  }
+  
   .title {
-    font-size: 24px;
+    border-radius: 4px 4px 0 0;
+    background-color: #4377CF;
+    width: 100%;
+    height: 66px;
+    line-height: 66px;
+    vertical-align: middle;
+    font-size: 36px;
     margin: 0px;
-    padding-top: 4%;
-    padding-bottom: 2%;
+    color: white;
   }
   
   .cancelButton {
-    background: #C4C4C4;
-    font-family: Amaranth;
-    width: 157px;
-    height: 49px;
-    font-size: 24px;
-    outline: 0px;
+    font-weight: 500;
+    font-size: 14px;
+    color: #76ADED;
+    background: #292E33;
+    border: none;
   }
   
   .cancelButton:hover {

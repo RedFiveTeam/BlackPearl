@@ -36,7 +36,9 @@ export class WeatherContainer extends React.Component<Props> {
                 target="__blank"
                 key={index}
                 className={'weatherURL weather' + index}
-                onClick={() => { this.props.metricActions!.logMetric(LogableActions.CLICK_WEATHER, w.label); }}
+                onClick={async () => {
+                  await this.props.metricActions!.logMetric(LogableActions.CLICK_WEATHER, w.label);
+                }}
                 href={w.url}
               >
                 <div key={index} className="weatherLabel">{w.label}</div>
@@ -51,17 +53,16 @@ export class WeatherContainer extends React.Component<Props> {
 
 export const StyledWeatherContainer = inject('weatherStore', 'weatherActions', 'metricActions')
 (styled(WeatherContainer)`
-width: 350px;
+width: 340px;
 height: 141px;
-background: #364958;
-font-family: Amaranth;
+background: #292E33;
 color: #FFFFFF;
-box-shadow: -1px 3px 3px rgba(0, 0, 0, .25);
-border-radius: 10px;
+box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.3);
+border-radius: 4px;
 display: flex;
 flex-wrap: wrap;
-margin-left: 8px;
-margin-top: 10px;
+margin-left: 7px;
+margin-top: 8px;
 justify-content: space-evenly;
 
 a {
@@ -69,7 +70,6 @@ a {
 }
 
 .title {
-  font-family: Amaranth;
   font-size: 24px;
   text-align: center;
   line-height: 24px;
@@ -85,13 +85,12 @@ a {
 .weatherLabel {
   width: 158px;
   height: 40px;
-  font-family: Amaranth;
   font-size: 24px;
   line-height: 40px;
   text-align: center;
   color: #FFFFFF;
   background: rgba(141, 141, 141, 0.5);
-  border-radius: 10px;
+  border-radius: 4px;
   box-shadow: -1px 3px 3px rgba(0, 0, 0, .4);
 }
 

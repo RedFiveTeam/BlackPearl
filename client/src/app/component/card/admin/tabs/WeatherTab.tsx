@@ -65,7 +65,6 @@ margin-left: 10px;
 input {
   border: none;
   border-radius: 5px;
-  font-family: Amaranth;
   font-size: 18px;
   height: 18px;
   ::placeholder {

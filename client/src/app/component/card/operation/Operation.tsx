@@ -38,7 +38,9 @@ export class Operation extends React.Component<Props, State> {
         style={{'height': (this.state.descHeight + 'px')}}
       >
         <a
-          onClick={() => { this.props.metricActions!.logMetric(LogableActions.CLICK_OP, this.props.operation.title); }}
+          onClick={async () => {
+            await this.props.metricActions!.logMetric(LogableActions.CLICK_OP, this.props.operation.title);
+          }}
           href={this.props.operation.address}
           target="_blank"
         >
@@ -61,37 +63,40 @@ export class Operation extends React.Component<Props, State> {
 
 export const StyledOperation = inject('operationStore', 'metricActions')(styled(Operation)`
   font-size: 24px;
-  background: #FFFFFF;
-  font-family: Amaranth;
+  background: #292E33;
   margin-top: 5px;
   border-radius: 2px;
   white-space: nowrap;
   display: flex;
   align-items: center;
+  transition: background 0.5s ease;
   
   :hover {
-    background: #F2F2F2;
+    background: #1F2226;
   }
   
   .title {
-    width: 250px;
+    width: 25%;
     margin-left: 16px;
     overflow: hidden;
     text-overflow: ellipsis;
-    text-decoration: underline;
+    border-right: 1px solid #8290A5;
+    padding-right: 20px;
   }
 
   .description {
-    width: 675px;
+    width: 75%;
+    margin-left: 50px;
     white-space: normal;
-    color: #474747;
+    color: #FFFFFF;
   }
 
   a {
     height: 100%;
+    width: 100%;
     align-items: center;
     text-decoration: none;
-    color: #000000;
+    color: #FEFEFE;
     display: flex;
   }
 `);

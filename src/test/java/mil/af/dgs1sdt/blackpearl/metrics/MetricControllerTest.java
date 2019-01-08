@@ -8,6 +8,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.time.Instant;
 import java.util.Date;
 import java.util.List;
 
@@ -60,7 +61,7 @@ public class MetricControllerTest extends BaseIntegrationTest {
     metricRepository.save(new Metric(
       accountRepository.findAll().get(0).getId(),
       accountRepository.findAll().get(0).getCardID(),
-      new Date(),
+      Instant.now().getEpochSecond(),
       "VISIT",
       "Home"
     ));

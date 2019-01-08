@@ -21,11 +21,11 @@ public class AcronymControllerTest extends BaseIntegrationTest {
 
   @Before
   public void setUp() {
-    acronym1 = new Acronym(1L, "AAA", "Aron Alen Arnolnd");
-    acronym2 = new Acronym(2L, "BBB", "Baron Balen Barnold");
-    acronym3 = new Acronym(3L, "JJJ", "Jim Jewlwam Jailor");
-    acronym4 = new Acronym(4L, "CCC", "Creepy Cronin Crabs");
-    acronym5 = new Acronym(5L, "DDD", "Dufus Dylan Doops");
+    acronym1 = new Acronym("AAA", "Aron Alen Arnolnd");
+    acronym2 = new Acronym("BBB", "Baron Balen Barnold");
+    acronym3 = new Acronym("JJJ", "Jim Jewlwam Jailor");
+    acronym4 = new Acronym("CCC", "Creepy Cronin Crabs");
+    acronym5 = new Acronym("DDD", "Dufus Dylan Doops");
 
     acronymRepository.save(acronym1);
     acronymRepository.save(acronym2);
@@ -71,5 +71,18 @@ public class AcronymControllerTest extends BaseIntegrationTest {
       .statusCode(200)
       .body("acronym", equalTo("AT"))
       .body("definition", equalTo("Acronym Test"));
+  }
+
+  @Test
+  public void deleteAcronymTest() {
+    given()
+      .port(port)
+      .contentType("application/json")
+      .body(acronym1.getId())
+      .when()
+      .delete(AcronymController.URI)
+      .then()
+      .statusCode(204);
+
   }
 }

@@ -63,17 +63,33 @@ export class ResourceMenuContainer extends React.Component<Props> {
     res.setCategoryId(0);
     await this.props.resourceActions!.saveFavorite(res);
     this.updateStyle();
-    this.props.metricActions!.logMetric(LogableActions.ADD_FAVORITE, this.props.resource.name);
+    await this.props.metricActions!.logMetric(LogableActions.ADD_FAVORITE, this.props.resource.name);
   };
 
   updateStyle = () => {
+    // let ele = (ReactDOM.findDOMNode(this) as HTMLElement).querySelector('#threeDot');
+    // let paths = (ele!.querySelectorAll('path') as NodeListOf<SVGPathElement>);
     if (this.props.resourceMenuStore.menuVisible) {
-      this.setState({
-        backgroundColor:
-          'linear-gradient(90deg, rgba(0,0,0,0) 0%, rgba(200,200,200, .95) 5%, rgba(200,200,200, .95) 100%)',
-        zIndex: 2
-      });
+      // for (let i = 0; i < paths.length; i++) {
+      //   paths[i].setAttribute('fill', '#5689F3');
+      //
+      if (this.props.resource.categoryID !== 0) {
+        this.setState({
+          backgroundColor:
+            'linear-gradient(90deg, rgba(0,0,0,0) 0%, rgba(19,31,39, .95) 5%, rgba(19,31,39, .95) 100%)',
+          zIndex: 2
+        });
+      } else {
+        this.setState({
+          backgroundColor:
+            'linear-gradient(90deg, rgba(0,0,0,0) 30%, rgba(19,31,39, .95) 35%, rgba(19,31,39, .95) 100%)',
+          zIndex: 2
+        });
+      }
     } else {
+      // for (let i = 0; i < paths.length; i++) {
+      //   paths[i].setAttribute('fill', '#FFF');
+      // }
       this.setState({backgroundColor: 'rgba(0, 0, 0, 0)', zIndex: 0});
     }
   };

@@ -74,32 +74,18 @@ export class TabContainer extends React.Component<Props> {
       <div
         className={this.props.className + ' tabContainer'}
       >
-        {
-          Object.keys(Tab).filter((tab: any) => !isNaN(Number(tab))).map((tab: any) => {
-            return (
-              <div key={tab} className={'tab tab' + tab}>
-                <div onClick={() => this.clickTab(tab)}>{TabName[Tab[tab]]}</div>
-              </div>
-            );
-          })
-        }
+        <div className="tabSection">
+          {
+            Object.keys(Tab).filter((tab: any) => !isNaN(Number(tab))).map((tab: any) => {
+              return (
+                <div key={tab} className={'tab tab' + tab}>
+                  <div onClick={() => this.clickTab(tab)}>{TabName[Tab[tab]]}</div>
+                </div>
+              );
+            })
+          }
+        </div>
         <div className="searchSection">
-          <div className="filterSection">
-            <SearchIcon/>
-            <input
-              onChange={async (e) => {
-                if (e.target.value === '') {
-                  (document.querySelector('.sortSelector') as HTMLSelectElement).value
-                    = this.props.profileStore!.profile.sort.toString();
-                } else {
-                  (document.querySelector('.sortSelector') as HTMLSelectElement).value = '';
-                }
-                await this.props.resourceActions!.filterResources(e.target.value);
-              }}
-              placeholder="Search"
-              value={this.props.resourceStore!.filter}
-            />
-          </div>
           <div className="sortSection">
             Sort By:
             <select
@@ -116,6 +102,22 @@ export class TabContainer extends React.Component<Props> {
             </select>
             <DropdownIcon/>
           </div>
+          <div className="filterSection">
+            <SearchIcon/>
+            <input
+              onChange={async (e) => {
+                if (e.target.value === '') {
+                  (document.querySelector('.sortSelector') as HTMLSelectElement).value
+                    = this.props.profileStore!.profile.sort.toString();
+                } else {
+                  (document.querySelector('.sortSelector') as HTMLSelectElement).value = '';
+                }
+                await this.props.resourceActions!.filterResources(e.target.value);
+              }}
+              placeholder="Search"
+              value={this.props.resourceStore!.filter}
+            />
+          </div>
         </div>
       </div>
     );
@@ -124,18 +126,15 @@ export class TabContainer extends React.Component<Props> {
 
 export const StyledTabContainer = inject('resourceStore', 'profileStore', 'resourceActions')(styled(TabContainer)`
   display: flex;
-  padding-left: 10px;
   position: relative;
-  font-family: Amaranth;
   
   .tab {
     display: inline-block;
     z-index: auto;
-    width: 133px;
-    height: 36px;
-    background: #545454;
+    width: 30%;
+    height: 30px;
+    background: #576476;
     color: #FFFFFF;
-    font-family: Amaranth;
     font-size: 16px;
     border-radius: 6px 6px 0px 0px;
     margin-right: 2px;
@@ -146,19 +145,25 @@ export const StyledTabContainer = inject('resourceStore', 'profileStore', 'resou
   }
   
   .selectedTab {
-    background: #AEA4BF;
-    z-index: 2;
-    box-shadow: -3px -4px 6px rgba(0,0,0,0.25), 3px -4px 6px rgba(0,0,0,0.25);
+    background: #1F2226;
+    transition: background 0.2s ease;
+    box-shadow: -4px -4px 10px rgba(0, 0, 0, 0.25), 4px 4px 10px rgba(0, 0, 0, 0.25);
+  }
+  
+  .tabSection {
+    width: 40%;
   }
   
   .searchSection {
     display: flex;
-    width: 667px;
+    width: 59.9%;
     align-items: center;
     justify-content: flex-end;
   }
   
   .filterSection {
+    position: relative;
+    bottom: 5px;
     display: flex;
     height: 25px;
     line-height: 25px;
@@ -174,7 +179,6 @@ export const StyledTabContainer = inject('resourceStore', 'profileStore', 'resou
     height: 25px;
     line-height: 25px;
     font-size: 16px;
-    font-family: Amaranth;
     width: 182px;
     outline: none;
     background: none;
@@ -184,13 +188,18 @@ export const StyledTabContainer = inject('resourceStore', 'profileStore', 'resou
   .sortSection {
     margin-left: 17px;
     font-size: 12px;
-    color: #000000;
+    color: #FFF;
     .dropIcon {
       width: 10px;
       height: 10px;
       margin-left: -10px;
+      margin-right: 15px;
     }
   }
+  
+   option {
+   color: #000;
+   }
     
   .sortSelector {
     position: relative;
@@ -199,13 +208,12 @@ export const StyledTabContainer = inject('resourceStore', 'profileStore', 'resou
     border-top: none;
     border-left: none;
     border-right: none;
-    border-bottom: 1px solid #000000;
+    border-bottom: 1px solid #FFFFFF;
     background: none;
-    color: #000000;
-    font-family: Amaranth;
+    color: #FFFFFF;
     border-radius: 0 0 0 0;
     font-size: 12px;
     outline: none;
-    width: 76px;
+    width: 100px;
   }
 `);
