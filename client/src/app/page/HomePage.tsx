@@ -153,6 +153,7 @@ export const StyledHomePage = inject('resourceStore', 'operationStore', 'metricA
   }
   
   .appBanner {
+    right: 6px;
     background: #2F343B;
     display: flex;
     position: relative;

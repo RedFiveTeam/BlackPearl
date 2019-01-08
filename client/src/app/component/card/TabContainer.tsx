@@ -75,33 +75,17 @@ export class TabContainer extends React.Component<Props> {
         className={this.props.className + ' tabContainer'}
       >
         <div className="tabSection">
-        {
-          Object.keys(Tab).filter((tab: any) => !isNaN(Number(tab))).map((tab: any) => {
-            return (
-              <div key={tab} className={'tab tab' + tab}>
-                <div onClick={() => this.clickTab(tab)}>{TabName[Tab[tab]]}</div>
-              </div>
-            );
-          })
-        }
+          {
+            Object.keys(Tab).filter((tab: any) => !isNaN(Number(tab))).map((tab: any) => {
+              return (
+                <div key={tab} className={'tab tab' + tab}>
+                  <div onClick={() => this.clickTab(tab)}>{TabName[Tab[tab]]}</div>
+                </div>
+              );
+            })
+          }
         </div>
         <div className="searchSection">
-          <div className="filterSection">
-            <SearchIcon/>
-            <input
-              onChange={async (e) => {
-                if (e.target.value === '') {
-                  (document.querySelector('.sortSelector') as HTMLSelectElement).value
-                    = this.props.profileStore!.profile.sort.toString();
-                } else {
-                  (document.querySelector('.sortSelector') as HTMLSelectElement).value = '';
-                }
-                await this.props.resourceActions!.filterResources(e.target.value);
-              }}
-              placeholder="Search"
-              value={this.props.resourceStore!.filter}
-            />
-          </div>
           <div className="sortSection">
             Sort By:
             <select
@@ -117,6 +101,22 @@ export class TabContainer extends React.Component<Props> {
               <option value={Sort.Alphabetical}>Alphabetical</option>
             </select>
             <DropdownIcon/>
+          </div>
+          <div className="filterSection">
+            <SearchIcon/>
+            <input
+              onChange={async (e) => {
+                if (e.target.value === '') {
+                  (document.querySelector('.sortSelector') as HTMLSelectElement).value
+                    = this.props.profileStore!.profile.sort.toString();
+                } else {
+                  (document.querySelector('.sortSelector') as HTMLSelectElement).value = '';
+                }
+                await this.props.resourceActions!.filterResources(e.target.value);
+              }}
+              placeholder="Search"
+              value={this.props.resourceStore!.filter}
+            />
           </div>
         </div>
       </div>
@@ -156,12 +156,14 @@ export const StyledTabContainer = inject('resourceStore', 'profileStore', 'resou
   
   .searchSection {
     display: flex;
-    width: 60%;
+    width: 59.9%;
     align-items: center;
     justify-content: flex-end;
   }
   
   .filterSection {
+    position: relative;
+    bottom: 5px;
     display: flex;
     height: 25px;
     line-height: 25px;
@@ -186,7 +188,7 @@ export const StyledTabContainer = inject('resourceStore', 'profileStore', 'resou
   .sortSection {
     margin-left: 17px;
     font-size: 12px;
-    color: #FFFFFF;
+    color: #FFF;
     .dropIcon {
       width: 10px;
       height: 10px;
@@ -194,6 +196,10 @@ export const StyledTabContainer = inject('resourceStore', 'profileStore', 'resou
       margin-right: 15px;
     }
   }
+  
+   option {
+   color: #000;
+   }
     
   .sortSelector {
     position: relative;

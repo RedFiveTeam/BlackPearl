@@ -136,6 +136,7 @@ export const StyledMetricsPage = inject('metricsPageActions', 'metricsStore', 'm
     background: none;
     border: none;
     color: #76ADED;
+    cursor: pointer;
   }
   
   table {
