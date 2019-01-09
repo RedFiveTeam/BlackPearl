@@ -7,6 +7,9 @@ import { LogableActions } from '../component/metrics/metric/MetricModel';
 import { MetricActions } from '../component/metrics/metric/MetricActions';
 import * as moment from 'moment';
 import { DisplayInformationModel, DisplayUserModel } from '../component/metrics/metric/MetricDisplayModel';
+import { DropdownIcon } from '../icon/DropdownIcon';
+import { ClockIcon } from '../icon/ClockIcon';
+import { observable } from 'mobx';
 
 interface Props {
   metricsPageActions?: MetricsPageActions;
@@ -18,9 +21,17 @@ interface Props {
 @observer
 export class MetricsPage extends React.Component<Props> {
 
+  @observable
+  selectValue: number = Number.MAX_SAFE_INTEGER;
+
   async componentDidMount() {
     await this.props.metricsPageActions!.initializeStores();
     await this.props.metricActions!.logMetric(LogableActions.VISIT, 'Metrics');
+  }
+
+  async sortSelected(e: any) {
+    this.selectValue = e.target.value;
+    await this.props.metricsPageActions!.buildMetrics(e.target.value);
   }
 
   render() {
@@ -28,9 +39,35 @@ export class MetricsPage extends React.Component<Props> {
       <div className={this.props.className}>
         <div className="pageTitle">Metrics</div>
         <div className="pageBody">
-          <button onClick={this.props.metricsPageActions!.exportLogins} className="exportButton">
+          <button
+            onClick={(e) => {
+              console.log(this.selectValue);
+              this.props.metricsPageActions!.exportLogins(this.selectValue);
+            }}
+            className="exportButton"
+          >
             EXPORT AS .CSV
           </button>
+          <div className="sortSection">
+            <div className="clock">
+              <ClockIcon/>
+            </div>
+            Time Frame:
+            <select
+              defaultValue="All Time"
+              className="sortSelector"
+              onChange={async (e) => {
+                await this.sortSelected(e);
+              }}
+            >
+              <option value={Number.MAX_SAFE_INTEGER}>All Time</option>
+              <option value={60 * 60 * 24}>Last 24 Hours</option>
+              <option value={60 * 60 * 24 * 3}>Last 72 Hours</option>
+              <option value={60 * 60 * 24 * 7}>Last 7 Days</option>
+              <option value={60 * 60 * 24 * 30}>Last 30 Days</option>
+            </select>
+            <DropdownIcon/>
+          </div>
           <div className="counters">
             <div
               className="usersCounter counter"
@@ -161,6 +198,51 @@ export class MetricsPage extends React.Component<Props> {
 }
 
 export const StyledMetricsPage = inject('metricsPageActions', 'metricsStore', 'metricActions')(styled(MetricsPage)`
+
+  .sortSection {
+    position: absolute;
+    top: 15px;
+    margin-left: 17px;
+    font-size: 14px;
+    .dropIcon {
+      pointer-events: none;
+      position: relative;
+      top: 1px;
+      width: 10px;
+      height: 10px;
+      margin-left: -20px;
+    }
+  }
+  
+  .clock {
+    display: inline-block;
+    margin-right: 5px;
+    position: relative;
+    top: 3px;
+    
+    svg > path {
+      fill: #93A7C3;
+    }
+  }
+  
+   option {
+    color: #000;
+   }
+    
+  .sortSelector {
+    position: relative;
+    border: none;
+    border-radius: 4px;
+    text-align: center;
+    -webkit-appearance: none;
+    margin-left: 5px;
+    background: none;
+    padding-right: 25px;
+    color: #FFFFFF;
+    outline: none;
+    width: auto;
+  }
+  
   .pageTitle {
     color: #FFFFFF;
     font-size: 48px;
