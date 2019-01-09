@@ -23,6 +23,7 @@ export class MetricsPage extends React.Component<Props> {
 
   @observable
   selectValue: number = Number.MAX_SAFE_INTEGER;
+  selectText: string = 'All Time';
 
   async componentDidMount() {
     await this.props.metricsPageActions!.initializeStores();
@@ -31,6 +32,7 @@ export class MetricsPage extends React.Component<Props> {
 
   async sortSelected(e: any) {
     this.selectValue = e.target.value;
+    this.selectText = (document.querySelector('option:checked') as HTMLElement).innerHTML;
     await this.props.metricsPageActions!.buildMetrics(e.target.value);
   }
 
@@ -46,7 +48,7 @@ export class MetricsPage extends React.Component<Props> {
             }}
             className="exportButton"
           >
-            EXPORT AS .CSV
+            EXPORT {this.selectText.toUpperCase()} AS .CSV
           </button>
           <div className="sortSection">
             <div className="clock">

@@ -134,5 +134,7 @@ export class ResourceContainer extends React.Component<Props, State> {
 
 export const StyledResourceContainer = inject('resourceActions')(styled(ResourceContainer)`
   overflow-y: auto;
+  //noinspection CssInvalidPropertyValue
+  overflow-y: overlay;
   max-height: 625px;
 `);
