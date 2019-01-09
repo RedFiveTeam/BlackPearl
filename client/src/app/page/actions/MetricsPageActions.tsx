@@ -81,16 +81,45 @@ export class MetricsPageActions {
               resource = new DisplayInformationModel(m.context, 1);
               resources.push(resource);
             }
-          } else if (m.action.toString() === 'CLICK_ACRONYM'
+          }
+          if (m.action.toString() === 'CLICK_ACRONYM'
             || m.action.toString() === 'CLICK_WEATHER'
-            || m.action.toString() === 'CLICK_COORD') {
+            || m.action.toString() === 'CLICK_COORD'
+            || m.action.toString() === 'CLICK_RESOURCE'
+            || m.action.toString() === 'ADD_FAVORITE') {
+            let name = m.action.toString();
+            switch (name) {
+              case 'CLICK_ACRONYM': {
+                name = 'Find Acronym';
+                break;
+              }
+              case 'CLICK_COORD': {
+                name = 'Convert Coordinates';
+                break;
+              }
+              case 'CLICK_RESOURCE': {
+                name = 'Click Resource';
+                break;
+              }
+              case 'ADD_FAVORITE': {
+                name = 'Add Favorite';
+                break;
+              }
+              case 'CLICK_WEATHER': {
+                name = 'Click Weather';
+                break;
+              }
+              default: {
+                break;
+              }
+            }
             let item: DisplayInformationModel | null = actions.filter((a: DisplayInformationModel) => {
-              return a.name === m.context;
+              return a.name === name;
             })[0];
             if (item) {
               item.setClicks(item.clicks + 1);
             } else {
-              item = new DisplayInformationModel(m.context, 1);
+              item = new DisplayInformationModel(name, 1);
               actions.push(item);
             }
           }

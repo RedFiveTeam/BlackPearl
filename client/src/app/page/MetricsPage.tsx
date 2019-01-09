@@ -106,6 +106,25 @@ export class MetricsPage extends React.Component<Props> {
                 }
               </div>
             </div>
+            <div
+              className="topActions"
+            >
+              <div className="topTitle">Top Actions</div>
+              <div className="topList">
+                {
+                  this.props.metricsStore!.displayData && this.props.metricsStore!.displayData.actions.length > 0 ?
+                    this.props.metricsStore!.displayData.actions.sort((a, b) => {
+                      return b.clicks - a.clicks;
+                    }).slice(0, 5).map((a, index) => {
+                      return <div className="topItem" key={index}>
+                        <div>{(index + 1) + '. ' + a.name}</div>
+                        <div className="spacer" />
+                        <div>{a.clicks} Clicks</div>
+                      </div>;
+                    }) : 'No Data Available'
+                }
+              </div>
+            </div>
           </div>
           <div
             className="recentActions"
@@ -167,7 +186,14 @@ export const StyledMetricsPage = inject('metricsPageActions', 'metricsStore', 'm
   
   .topResources {
     position: relative;
-    left: 210px;
+    display: inline-block;
+    margin-right: 7%;
+  }
+  
+  .topActions {
+    position: relative;
+    display: inline-block;
+    margin-left: 7%;
   }
   
   .spacer {
@@ -188,6 +214,8 @@ export const StyledMetricsPage = inject('metricsPageActions', 'metricsStore', 'm
   
   .topRow {
     margin-top: 55px;
+    display: flex;
+    justify-content: center;
   }
   
   .topItem > div {
