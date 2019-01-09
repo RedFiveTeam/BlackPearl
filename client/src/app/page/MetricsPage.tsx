@@ -86,36 +86,57 @@ export class MetricsPage extends React.Component<Props> {
               <div className="title">Widgets Used</div>
             </div>
           </div>
+          <div className="topRow">
             <div
-              className="recentActions"
+              className="topResources"
             >
-              <table>
-                <tbody>
-                <tr>
-                  <td>Users</td>
-                  <td>Action</td>
-                  <td>Context</td>
-                  <td>Time</td>
-                </tr>
+              <div className="topTitle">Top Resources</div>
+              <div className="topList">
                 {
-                  this.props.metricsStore!.logins.reverse().slice(0, 50).map((l, index) => {
-                    return (
-                      <tr
-                        key={index}
-                      >
-                        <td>{l.cardID.split('.')[1] + ' ' + l.cardID.split('.')[0]}</td>
-                        <td>{l.action}</td>
-                        <td>{l.context}</td>
-                        <td>{moment.unix(l.time).format('MMMM D, YYYY HHmm')}L</td>
-                      </tr>
-                    );
-                  })
+                  this.props.metricsStore!.displayData && this.props.metricsStore!.displayData.resources.length > 0 ?
+                    this.props.metricsStore!.displayData.resources.sort((a, b) => {
+                      return b.clicks - a.clicks;
+                    }).slice(0, 5).map((r, index) => {
+                      return <div className="topItem" key={index}>
+                        <div>{(index + 1) + '. ' + r.name}</div>
+                        <div className="spacer" />
+                        <div>{r.clicks} Clicks</div>
+                      </div>;
+                    }) : 'No Data Available'
                 }
-                </tbody>
-              </table>
+              </div>
             </div>
           </div>
+          <div
+            className="recentActions"
+          >
+            <table>
+              <tbody>
+              <tr>
+                <td>Users</td>
+                <td>Action</td>
+                <td>Context</td>
+                <td>Time</td>
+              </tr>
+              {
+                this.props.metricsStore!.logins.reverse().slice(0, 50).map((l, index) => {
+                  return (
+                    <tr
+                      key={index}
+                    >
+                      <td>{l.cardID.split('.')[1] + ' ' + l.cardID.split('.')[0]}</td>
+                      <td>{l.action}</td>
+                      <td>{l.context}</td>
+                      <td>{moment.unix(l.time).format('MMMM D, YYYY HHmm')}L</td>
+                    </tr>
+                  );
+                })
+              }
+              </tbody>
+            </table>
+          </div>
         </div>
+      </div>
     );
   }
 }
@@ -138,6 +159,56 @@ export const StyledMetricsPage = inject('metricsPageActions', 'metricsStore', 'm
     border-radius: 4px;
   }
   
+  .topTitle {
+    font-size: 30px;
+    color: #fff;
+    margin-bottom: 8px;
+  }
+  
+  .topResources {
+    position: relative;
+    left: 210px;
+  }
+  
+  .spacer {
+    position: relative;
+    left: 0px;
+    bottom: 3px;
+    height: 22px;
+    border-left: 1px solid #686868;
+  }
+  
+  .topItem {
+    position: relative;
+    width: 475px;
+    font-size: 18px;
+    white-space: nowrap;
+    line-height: 28px;
+  }
+  
+  .topRow {
+    margin-top: 55px;
+  }
+  
+  .topItem > div {
+    display: inline-block;
+  }
+  
+  .topItem > div:first-of-type {
+    position: relative;
+    left: 0px;
+    width: 350px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  
+  .topItem > div:nth-of-type(3) {
+    position: relative;
+    margin-left: 20px;
+    bottom: 8px;
+    position: relative;
+  }
+  
   .number {
     font-size: 64px;
     color: #fff;
@@ -150,9 +221,12 @@ export const StyledMetricsPage = inject('metricsPageActions', 'metricsStore', 'm
   
   .counters {
     display: flex;
+    margin: auto;
+    width: 90%;
     justify-content: space-evenly;
-    padding-bottom: 55px;
+    padding-bottom: 30px;
     padding-top: 109px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.28);
   }
   
   .title {
@@ -170,7 +244,6 @@ export const StyledMetricsPage = inject('metricsPageActions', 'metricsStore', 'm
   }
   
   table {
-    border-top: 1px solid rgba(255, 255, 255, 0.28);
     width: 90%;
     margin: auto;
   }
