@@ -3,6 +3,20 @@ let homeAssert = require('assert');
 
 Feature('Home Page');
 
+Scenario('it should convert measurements', async (I) => {
+  I.haveHeader('Authorization', 'Basic Q1JPU1MuSk9SREFOLk1JRERMRS4wMTIzNDU2Nzg5Og==');
+  I.amOnPage('/');
+  I.click('.bannerBurger');
+  I.waitForText('Measurement Converter', 10);
+  I.fillField('.conversionInput', '1');
+  let value = await I.grabValueFrom('.conversionOutput');
+  homeAssert.strictEqual(value, '0.62');
+  I.click('KM');
+  I.click('.ddd:first-of-type');
+  value = await I.grabValueFrom('.conversionOutput');
+  homeAssert.strictEqual(value, '1.15');
+});
+
 Scenario('should see an ATO day', (I) => {
   I.haveHeader('Authorization', 'Basic Q1JPU1MuSk9SREFOLk1JRERMRS4wMTIzNDU2Nzg5Og==');
   I.amOnPage('/');

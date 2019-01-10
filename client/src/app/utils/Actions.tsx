@@ -13,6 +13,7 @@ import { InformationActions } from '../component/card/information/actions/Inform
 import { OperationActions } from '../component/card/operation/actions/OperationActions';
 import { MetricsPageActions } from '../page/actions/MetricsPageActions';
 import { MetricActions } from '../component/metrics/metric/MetricActions';
+import { MeasurementConverterActions } from '../component/widgets/measurementConverter/MeasurementConverterActions';
 
 const adminActions = new AdminActions(stores, WebRepositories);
 const acronymActions = new AcronymActions(stores, WebRepositories);
@@ -25,6 +26,7 @@ const informationActions = new InformationActions(stores, WebRepositories);
 const operationActions = new OperationActions(stores, WebRepositories);
 const metricsPageActions = new MetricsPageActions(stores, WebRepositories);
 const metricActions = new MetricActions(stores, WebRepositories);
+const measurementConverterActions = new MeasurementConverterActions(stores);
 
 export const actions = {
   acronymActions,
@@ -37,5 +39,6 @@ export const actions = {
   informationActions,
   operationActions,
   metricsPageActions,
-  metricActions
+  metricActions,
+  measurementConverterActions
 };

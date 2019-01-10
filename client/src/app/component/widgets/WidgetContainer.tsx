@@ -6,6 +6,7 @@ import { StyledAcronymContainer } from './acronym/AcronymContainer';
 import { StyledCoordinateConverterContainer } from './coordinateConverter/CoordinateConverterContainer';
 import { StyledWeatherContainer } from './weather/WeatherContainer';
 import { StyledHamburgerButton } from '../button/HamburgerButton';
+import { StyledMeasurementConverterContainer } from './measurementConverter/MeasurementConverterContainer';
 
 interface Props {
   className?: string;
@@ -41,8 +42,9 @@ export class WidgetContainer extends React.Component<Props> {
           </div>
           <StyledAcronymContainer/>
           <StyledCoordinateConverterContainer/>
+          <StyledMeasurementConverterContainer/>
           <StyledWeatherContainer/>
-          <div className="widgetBackground" />
+          <div className="widgetBackground"/>
         </div>
       </div>
     );
