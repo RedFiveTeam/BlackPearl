@@ -1,6 +1,7 @@
 import { action, computed, observable } from 'mobx';
 
 export class DisplayUserModel {
+  @observable private _cardID: string;
   @observable private _name: string;
   @observable private _logins: number;
   @observable private _actions: number;
@@ -8,8 +9,10 @@ export class DisplayUserModel {
   constructor(
     name: string = '',
     logins: number = 0,
-    actions: number = 0
+    actions: number = 0,
+    cardID: string = '',
   ) {
+    this._cardID = cardID;
     this._name = name;
     this._logins = logins;
     this._actions = actions;
@@ -30,6 +33,11 @@ export class DisplayUserModel {
     this._name = value;
   }
 
+  @action.bound
+  setCardID(value: string) {
+    this._cardID = value;
+  }
+
   @computed
   get actions(): number {
     return this._actions;
@@ -43,6 +51,11 @@ export class DisplayUserModel {
   @computed
   get name(): string {
     return this._name;
+  }
+
+  @computed
+  get cardID(): string {
+    return this._cardID;
   }
 }
 

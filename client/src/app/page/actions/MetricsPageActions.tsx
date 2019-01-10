@@ -34,7 +34,7 @@ export class MetricsPageActions {
     const a = document.createElement('a');
     const array = ['time,cardID,action,context\r\n'];
     const file = new Blob(
-      array.concat(this.metricsStore.logins.reverse()
+      array.concat(this.metricsStore.logins.slice().reverse()
         .filter((m: MetricModel) => {
           return (moment().unix() - moment.unix(m.time).unix()) < timeframe;
         })
@@ -66,16 +66,16 @@ export class MetricsPageActions {
       .map((m: MetricModel) => {
         if (m.action != null && m.cardID != null && m.context != null) {
           if (m.action.toString() === 'VISIT' && m.context.toString() === 'Home') {
-            let nameArray = m.cardID.split('.');
-            let name = nameArray[1] + ' ' + nameArray[1];
-            let user: DisplayUserModel | null = users.filter((u: DisplayUserModel) => {
-              return u.name === name;
+             let user: DisplayUserModel | null = users.filter((u: DisplayUserModel) => {
+              return u.cardID === m.cardID;
             })[0];
-            if (user) {
+             if (user) {
               user.setActions(user.actions + 1);
               user.setLogins(user.logins + 1);
             } else {
-              user = new DisplayUserModel(name, 1, 1);
+              let nameArray = m.cardID.split('.');
+              let name = nameArray[1] + ' ' + nameArray[1];
+              user = new DisplayUserModel(name, 1, 1, m.cardID);
               users.push(user);
             }
           } else if (m.action.toString() === 'CLICK_RESOURCE') {

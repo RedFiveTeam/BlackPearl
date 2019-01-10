@@ -36,6 +36,58 @@ export class MetricsPage extends React.Component<Props> {
     await this.props.metricsPageActions!.buildMetrics(e.target.value);
   }
 
+  getResourcesClicked() {
+    if (this.props.metricsStore!.displayData.resources.length > 0) {
+      let clickArray = this.props.metricsStore!.displayData.resources.map((r: DisplayInformationModel) => {
+        return r.clicks;
+      });
+
+      if (clickArray.length > 0) {
+        return clickArray.reduce((count, curr) => {
+          return count + curr;
+        });
+      }
+    }
+
+    return 0;
+  }
+
+  getTotalVisits() {
+    if (this.props.metricsStore!.displayData.users.length > 0) {
+      let countArray = this.props.metricsStore!.displayData.users.map((u: DisplayUserModel) => {
+        return u.logins;
+      });
+
+      if (countArray.length > 0) {
+        return countArray.reduce((count, curr) => {
+          return count + curr;
+        });
+      }
+    }
+    return 0;
+  }
+
+  getWidgetsUsed() {
+    if (this.props.metricsStore!.displayData.actions.length > 0) {
+      let clickArray = this.props.metricsStore!.displayData.actions.filter((a: DisplayInformationModel) => {
+        return (
+          a.name === 'Find Acronym'
+          || a.name === 'Convert Coordinates'
+          || a.name === 'Click Weather'
+        );
+      }).map((a: DisplayInformationModel) => {
+        return a.clicks;
+      });
+
+      if (clickArray.length > 0) {
+        return clickArray.reduce((count, curr) => {
+          return count + curr;
+        });
+      }
+    }
+    return 0;
+  }
+
   render() {
     return (
       <div className={this.props.className}>
@@ -83,12 +135,7 @@ export class MetricsPage extends React.Component<Props> {
             >
               <div className="number">
                 {
-                  this.props.metricsStore!.displayData && this.props.metricsStore!.displayData.users.length > 0 ?
-                    this.props.metricsStore!.displayData.users.map((u: DisplayUserModel) => {
-                      return u.logins;
-                    }).reduce((count, curr) => {
-                      return count + curr;
-                    }) : 0
+                  this.props.metricsStore!.displayData ? this.getTotalVisits() : 0
                 }
               </div>
               <div className="title">Total Visits</div>
@@ -98,12 +145,8 @@ export class MetricsPage extends React.Component<Props> {
             >
               <div className="number">
                 {
-                  this.props.metricsStore!.displayData && this.props.metricsStore!.displayData.resources.length > 0 ?
-                    this.props.metricsStore!.displayData.resources.map((r: DisplayInformationModel) => {
-                      return r.clicks;
-                    }).reduce((count, curr) => {
-                      return count + curr;
-                    }) : 0
+                  this.props.metricsStore!.displayData &&
+                  this.getResourcesClicked()
                 }
               </div>
               <div className="title">Resources Clicked</div>
@@ -114,18 +157,7 @@ export class MetricsPage extends React.Component<Props> {
               <div className="number">
                 {
                   this.props.metricsStore!.displayData &&
-                  this.props.metricsStore!.displayData.actions.length > 0 ?
-                    this.props.metricsStore!.displayData.actions.filter((a: DisplayInformationModel) => {
-                      return (
-                        a.name === 'Find Acronym'
-                        || a.name === 'Convert Coordinates'
-                        || a.name === 'Click Weather'
-                      );
-                    }).map((a: DisplayInformationModel) => {
-                      return a.clicks;
-                    }).reduce((count, curr) => {
-                      return count + curr;
-                    }) : 0
+                  this.getWidgetsUsed()
                 }
               </div>
               <div className="title">Widgets Used</div>
@@ -139,7 +171,7 @@ export class MetricsPage extends React.Component<Props> {
               <div className="topList">
                 {
                   this.props.metricsStore!.displayData && this.props.metricsStore!.displayData.resources.length > 0 ?
-                    this.props.metricsStore!.displayData.resources.sort((a, b) => {
+                    this.props.metricsStore!.displayData.resources.slice().sort((a, b) => {
                       return b.clicks - a.clicks;
                     }).slice(0, 5).map((r, index) => {
                       return <div className="topItem" key={index}>
@@ -158,7 +190,7 @@ export class MetricsPage extends React.Component<Props> {
               <div className="topList">
                 {
                   this.props.metricsStore!.displayData && this.props.metricsStore!.displayData.actions.length > 0 ?
-                    this.props.metricsStore!.displayData.actions.sort((a, b) => {
+                    this.props.metricsStore!.displayData.actions.slice().sort((a, b) => {
                       return b.clicks - a.clicks;
                     }).slice(0, 5).map((a, index) => {
                       return <div className="topItem" key={index}>
@@ -183,7 +215,7 @@ export class MetricsPage extends React.Component<Props> {
                 <td>Time</td>
               </tr>
               {
-                this.props.metricsStore!.logins.reverse().slice(0, 50).map((l, index) => {
+                this.props.metricsStore!.logins.slice().reverse().slice(0, 50).map((l, index) => {
                   return (
                     <tr
                       key={index}
