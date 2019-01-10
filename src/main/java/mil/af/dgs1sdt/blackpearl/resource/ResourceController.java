@@ -98,16 +98,19 @@ public class ResourceController {
     Long id = Long.valueOf(resourceId);
     Resource resource = resourceRepository.getOne(id);
 
-    Blame blame = new Blame(
-      "DELETE",
-      resource.getName(),
-      SecurityContextHolder.getContext().getAuthentication().getName(),
-      Instant.now().getEpochSecond()
-    );
+    if (resource != null) {
+      Blame blame = new Blame(
+        "DELETE",
+        resource.getName(),
+        SecurityContextHolder.getContext().getAuthentication().getName(),
+        Instant.now().getEpochSecond()
+      );
 
-    this.blameRepository.save(blame);
-    this.clickRepository.getAllByResourceID(id).forEach((r) -> this.clickRepository.deleteById(r.getId()));
-    resourceRepository.deleteById(id);
+      this.blameRepository.save(blame);
+      this.clickRepository.getAllByResourceID(id).forEach((r) -> this.clickRepository.deleteById(r.getId()));
+      resourceRepository.deleteById(id);
+    }
+
     return ResponseEntity.noContent().build();
   }
 

@@ -34,6 +34,12 @@ export class BlameTab extends React.Component<Props> {
         return 'Edited resource: ';
       case 'ADD':
         return 'Added resource: ';
+      case 'ADD_OP':
+        return 'Added operation: ';
+      case 'EDIT_OP':
+        return 'Edited operation: ';
+      case 'DELETE_OP':
+        return 'Deleted operation: ';
       default:
         return 'Unknown action: ';
     }
