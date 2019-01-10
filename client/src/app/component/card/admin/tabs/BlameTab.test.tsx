@@ -7,8 +7,13 @@ const moment = require('moment-timezone');
 describe('BlameTab', () => {
   let subject: ShallowWrapper;
   let adminStore: any;
+  let adminActions: any;
 
   beforeEach(() => {
+    adminActions = {
+      initializeStores: jest.fn()
+    };
+
     adminStore = {
       blames: [
         new BlameModel(1, 'ADD', 'Google', 'TOM', 1542726000),
@@ -20,6 +25,7 @@ describe('BlameTab', () => {
     subject = shallow(
       <BlameTab
         adminStore={adminStore}
+        adminActions={adminActions}
       />
     );
   });

@@ -58,12 +58,12 @@ public class ResourceController {
     Account account = accountRepository.findOneByCardID(user);
     Long max = account != null ? account.getSpecialty() * 3 : 3L;
 
-    List<Resource> resources = resourceRepository.findAllForGo(query, user, max-2, max);
+    List<Resource> resources = resourceRepository.findAllForGo(query, user, max - 2, max);
     int search = 0;
-    if ( resources.size() > 1 ) {
+    if (resources.size() > 1) {
       search = 1;
     }
-    String url = "/?search=" + search + "&specialty=" + (max/3) + "&q=" + query;
+    String url = "/?search=" + search + "&specialty=" + (max / 3) + "&q=" + query;
     if (resources.size() == 1) {
       url = resources.get(0).getUrl();
     }
@@ -81,14 +81,16 @@ public class ResourceController {
       resourceJSON.getPosition()
     );
 
-    Blame blame = new Blame(
-      "ADD",
-      resourceJSON.getName(),
-      resourceJSON.getAccountID(),
-      Instant.now().getEpochSecond()
-    );
+    if (resource.getCategoryID() != 0) {
+      Blame blame = new Blame(
+        "ADD",
+        resourceJSON.getName(),
+        resourceJSON.getAccountID(),
+        Instant.now().getEpochSecond()
+      );
 
-    this.blameRepository.save(blame);
+      this.blameRepository.save(blame);
+    }
 
     return this.resourceRepository.save(resource);
   }
@@ -98,15 +100,19 @@ public class ResourceController {
     Long id = Long.valueOf(resourceId);
     Resource resource = resourceRepository.getOne(id);
 
-    if (resource != null) {
-      Blame blame = new Blame(
-        "DELETE",
-        resource.getName(),
-        SecurityContextHolder.getContext().getAuthentication().getName(),
-        Instant.now().getEpochSecond()
-      );
 
-      this.blameRepository.save(blame);
+    if (resource != null) {
+      if (resource.getCategoryID() != 0) {
+
+        Blame blame = new Blame(
+          "DELETE",
+          resource.getName(),
+          SecurityContextHolder.getContext().getAuthentication().getName(),
+          Instant.now().getEpochSecond()
+        );
+
+        this.blameRepository.save(blame);
+      }
       this.clickRepository.getAllByResourceID(id).forEach((r) -> this.clickRepository.deleteById(r.getId()));
       resourceRepository.deleteById(id);
     }
@@ -119,30 +125,33 @@ public class ResourceController {
   Resource update(@Valid @RequestBody ResourceJSON json) {
     final Resource resource = resourceRepository.getOne(json.getId());
 
-    String oldName = resource.getName().substring(0, Math.min(resource.getName().length(), 10));
-    if (!oldName.equals(resource.getName())) {
-      oldName = oldName + "...";
+    if (resource.getCategoryID() != 0) {
+
+      String oldName = resource.getName().substring(0, Math.min(resource.getName().length(), 10));
+      if (!oldName.equals(resource.getName())) {
+        oldName = oldName + "...";
+      }
+
+      String newName = json.getName().substring(0, Math.min(json.getName().length(), 10));
+      if (!newName.equals(json.getName())) {
+        newName = newName + "...";
+      }
+
+      String blameName = oldName + " (Now: " + newName + ")";
+
+      if (resource.getName().equals(json.getName())) {
+        blameName = json.getName();
+      }
+
+      Blame blame = new Blame(
+        "EDIT",
+        blameName,
+        json.getAccountID(),
+        Instant.now().getEpochSecond()
+      );
+
+      blameRepository.save(blame);
     }
-
-    String newName = json.getName().substring(0, Math.min(json.getName().length(), 10));
-    if (!newName.equals(json.getName())) {
-      newName = newName + "...";
-    }
-
-    String blameName = oldName + " (Now: " + newName + ")";
-
-    if (resource.getName().equals(json.getName())) {
-      blameName = json.getName();
-    }
-
-    Blame blame = new Blame(
-      "EDIT",
-      blameName,
-      json.getAccountID(),
-      Instant.now().getEpochSecond()
-    );
-
-    blameRepository.save(blame);
     return resourceRepository.save(resource.update(json));
   }
 

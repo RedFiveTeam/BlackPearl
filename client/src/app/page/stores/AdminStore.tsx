@@ -31,7 +31,6 @@ export class AdminStore extends LoadingStore {
     weatherRepository: WeatherRepository,
     blameRepository: BlameRepository
   ) {
-    this._currentTab = 'General Info';
     this._acronym = await acronymRepository.findAll();
     this._information = await informationRepository.findAll();
     this._pendingInformation = [];

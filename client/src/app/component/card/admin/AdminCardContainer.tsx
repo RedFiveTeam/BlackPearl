@@ -28,6 +28,7 @@ export class AdminCardContainer extends React.Component<Props> {
   }
 
   async componentDidMount() {
+    this.props.adminStore!.setCurrentTab('General Info');
     await this.props.adminActions!.initializeStores();
   }
 

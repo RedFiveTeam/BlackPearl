@@ -3,16 +3,22 @@ import { inject, observer } from 'mobx-react';
 import styled from 'styled-components';
 import { AdminStore } from '../../../../page/stores/AdminStore';
 import { BlameModel } from '../../../resource/blame/BlameModel';
+import { AdminActions } from '../../../../page/actions/AdminActions';
 
 const moment = require('moment-timezone');
 
 interface Props {
   className?: string;
   adminStore?: AdminStore;
+  adminActions?: AdminActions;
 }
 
 @observer
 export class BlameTab extends React.Component<Props> {
+
+  async componentDidMount() {
+    await this.props.adminActions!.initializeStores();
+  }
 
   parseName(name: string) {
     if (name === 'GUEST.GUEST.GUEST.0123456789' || name === 'anonymousUser') {
@@ -40,6 +46,10 @@ export class BlameTab extends React.Component<Props> {
         return 'Edited operation: ';
       case 'DELETE_OP':
         return 'Deleted operation: ';
+      case 'ADD_ACRONYM':
+        return 'Added acronym: ';
+      case 'DELETE_ACRONYM':
+        return 'Deleted acronym: ';
       default:
         return 'Unknown action: ';
     }
@@ -80,7 +90,7 @@ export class BlameTab extends React.Component<Props> {
   }
 }
 
-export const StyledBlameTab = inject('adminStore')(styled(BlameTab)`
+export const StyledBlameTab = inject('adminStore', 'adminActions')(styled(BlameTab)`
     .scrollView {
       max-height: 500px;
       overflow-y: auto;

@@ -13,6 +13,13 @@ In the [master/artifacts](https://gitlab.devops.geointservices.io/dgs1sdt/blackp
 * io: Meant for deployment on geointservices.io. Uses Basic Authentication at website.com/login to sign in.
 * muhj: Meant for deployment on muhj workstations. Uses Smart Card Authentication at website.com/ to sign in.
 
+### Endpoints
+* /admin: Administrator functions such as updating clocks, weather, acronyms, etc.
+* /metrics: Metric information based on the usage of The Black Pearl
+* /login: (IO Only) Allows the user to log in with either of the following accounts:
+  * CROSS.JORDAN.MIDDLE.0123456789
+  * YODA.MASTER.MIDDLE.0123456789
+
 ## Installing (Production)
 ### Prerequisites
 
