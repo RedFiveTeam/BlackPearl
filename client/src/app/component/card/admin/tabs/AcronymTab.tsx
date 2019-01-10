@@ -3,11 +3,14 @@ import { inject, observer } from 'mobx-react';
 import styled from 'styled-components';
 import { AdminActions } from '../../../../page/actions/AdminActions';
 import { AdminStore } from '../../../../page/stores/AdminStore';
-import { StyledAcronym } from '../../../widgets/acronym/Acronym';
 import { AcronymActions } from '../../../widgets/acronym/actions/AcronymActions';
 import { AcronymStore } from '../../../widgets/acronym/AcronymStore';
 import { StyledDeleteAcronymPopup } from '../../../popup/DeleteAcronymPopup';
+import { StyledAdminAcronymRow } from '../../../widgets/acronym/AdminAcronymRow';
+import { AcronymSearchIcon } from '../../../../icon/AcronymSearchIcon';
+import { PlusIcon } from '../../../../icon/PlusIcon';
 import { AcronymModel } from '../../../widgets/acronym/AcronymModel';
+import { StyledAddAcronymPopup } from '../../../popup/AddAcronymPopup';
 
 interface Props {
   className?: string;
@@ -19,17 +22,8 @@ interface Props {
 
 @observer
 export class AcronymTab extends React.Component<Props> {
-  state = {acronym: '', definition: ''};
-  pendingDelete = {id: '', value: ''};
-  node: any = this.node;
-
   async componentDidMount() {
     await this.props.acronymActions!.setAllAcronyms();
-    document.addEventListener('click', this.handleSelect, false);
-  }
-
-  componentWillUnmount() {
-    document.removeEventListener('click', this.handleSelect);
   }
 
   onAcronymFieldChange = (e: any) => {
@@ -40,65 +34,13 @@ export class AcronymTab extends React.Component<Props> {
     this.setState({definition: e.target.value});
   };
 
-  async onAddAcronymButtonClick() {
-    await this.props.adminStore!.performLoading(async () => {
-      this.props.adminActions!.updatePendingAcronym(this.state.acronym, this.state.definition);
-      await this.props.adminActions!.addAcronym();
-      await this.props.acronymActions!.setAllAcronyms();
-      if (document.querySelector('.acronymSearch')) {
-        (document.querySelector('.acronymSearch') as HTMLInputElement).value = this.state.acronym;
-      }
-      await this.props.acronymActions!.setFilteredAcronyms(this.state.acronym);
-      this.setState({acronym: '', definition: ''});
-    });
+  onDeleteClick(acronym: AcronymModel) {
+    this.props.acronymStore!.setPendingDelete(acronym);
   }
 
-  deleteOnClick() {
-    if (this.pendingDelete.id.length > 0) {
-      this.props.acronymStore!.setPendingDelete(
-        new AcronymModel(
-          parseInt(this.pendingDelete.id, 10),
-          this.pendingDelete.value.substr(0, this.pendingDelete.value.indexOf(' - ')),
-          '',
-          this.pendingDelete.value
-        )
-      );
-    }
+  onAddClick() {
+    this.props.acronymStore!.setPendingAcronym(new AcronymModel());
   }
-
-  clickAcronym(e: any) {
-    return;
-  }
-
-  handleSelect = (e: any) => {
-    if (this.node && this.node.contains(e.target) && e.target.children.length > 0) {
-      e = e.target as HTMLElement;
-      e.focus();
-      if (e.nodeName === 'DIV') {
-        e = e.querySelector('span');
-      }
-      const html = e.innerHTML;
-      const div = document.createElement('div');
-      div.innerHTML = html;
-      const text = div.textContent || div.innerText || '';
-      this.pendingDelete.id = e.id;
-      this.pendingDelete.value = text;
-      let deleteButton = (document.querySelector('.deleteAcronymButton') as HTMLButtonElement);
-      deleteButton.style.cursor = 'pointer';
-      deleteButton.style.background = '#854646';
-      deleteButton.style.color = '#fff';
-      return;
-    }
-    if (e.target.classList.contains('deleteButton')) {
-      return;
-    } else {
-      this.pendingDelete = {id: '', value: ''};
-      let deleteButton = (document.querySelector('.deleteAcronymButton') as HTMLButtonElement);
-      deleteButton.style.cursor = 'no-select';
-      deleteButton.style.background = '#C4C4C4';
-      deleteButton.style.color = '#000';
-    }
-  };
 
   render() {
     return (
@@ -109,74 +51,74 @@ export class AcronymTab extends React.Component<Props> {
           this.props.acronymStore!.pendingDelete &&
           <StyledDeleteAcronymPopup/>
         }
+        {
+          this.props.acronymStore!.pendingAcronym &&
+          <StyledAddAcronymPopup/>
+        }
         <div
           className="acronymTitle"
         >
           Current Acronyms
         </div>
-        <input
-          className="acronymSearch"
-          placeholder="Find Acronym..."
-          onChange={async (e) => {
-            let value = e.target.value;
-            await this.props.acronymActions!.setFilteredAcronyms(value);
-            await this.props.acronymStore!.setSearch(value);
-          }}
-          value={this.props.acronymStore!.search}
-        />
         <div
-          className="acronymList"
-          ref={node => this.node = node}
+          className="acronymSearch"
         >
-          {
-            this.props.acronymStore!.filteredAcronyms &&
-            this.props.acronymStore!.filteredAcronyms.map((acronym, index) => {
-              return (
-                <StyledAcronym
-                  acronym={acronym ? acronym : ''}
-                  key={index}
-                  className="acronym"
-                  onClick={(e: any) => {
-                    this.clickAcronym.bind(this);
-                    this.clickAcronym(e);
-                  }}
-                />
-              );
-            })
-          }
+          <AcronymSearchIcon/>
+          <input
+            placeholder="Find Acronym..."
+            onChange={async (e) => {
+              let value = e.target.value;
+              await this.props.acronymActions!.setFilteredAcronyms(value);
+              await this.props.acronymStore!.setSearch(value);
+            }}
+            value={this.props.acronymStore!.search}
+          />
         </div>
         <div
-          className="addAcronym"
+          className="acronymTables"
         >
-          <input
-            value={this.state.acronym}
-            className="acronymAdd"
-            placeholder="Acronym"
-            onChange={(e) => this.onAcronymFieldChange(e)}
-          />
-          <input
-            value={this.state.definition}
-            className="acronymAddDefinition"
-            placeholder="Definition"
-            onChange={(e) => this.onDefinitionFieldChange(e)}
-          />
-          <span
-            className="addAcronymButton"
-            onClick={async () => {
-              await this.onAddAcronymButtonClick();
-            }}
+          <table
+            className="headerTable"
           >
-            Add
-          </span>
+            <tbody>
+            <tr>
+              <td>Acronym</td>
+              <td>Definition</td>
+              <td>Actions</td>
+            </tr>
+            </tbody>
+          </table>
+          <div
+            className="acronymList"
+          >
+            <table>
+              <tbody>
+              {
+                this.props.acronymStore!.filteredAcronyms &&
+                this.props.acronymStore!.filteredAcronyms.map((acronym, index) => {
+                  return (
+                    <StyledAdminAcronymRow
+                      acronym={acronym}
+                      onDeleteClick={(a: AcronymModel) => {
+                        this.onDeleteClick(a);
+                      }}
+                      key={index}
+                    />
+                  );
+                })
+              }
+              </tbody>
+            </table>
+          </div>
         </div>
         <button
-          className="deleteAcronymButton"
+          className="addAcronymButton"
           onClick={() => {
-            this.deleteOnClick.bind(this);
-            this.deleteOnClick();
+            this.onAddClick();
           }}
         >
-          Delete
+          <PlusIcon/>
+          <div>ADD NEW</div>
         </button>
       </div>
     );
@@ -186,92 +128,105 @@ export class AcronymTab extends React.Component<Props> {
 export const StyledAcronymTab = inject('adminActions', 'adminStore', 'acronymActions', 'acronymStore')
 (styled(AcronymTab)`
 
-.deleteAcronymButton {
-  cursor: not-allowed;
-  background: #C4C4C4;
-  outline: none;
-  font-size: 18px;
-  position: absolute;
-  bottom: 9px;
-  right: 148px;
-  width: 131px;
-  height: 26px;
-  line-height: 21px;
-  display: flex;
-  justify-content: center;
-}
-
 .acronymTitle {
-  font-size: 18px;
-  color: #000000;
-  margin: auto;
-  width: 140px;
-  height: 45px;
-  line-height: 45px;
-}
-
-.acronym:focus {
-  background-color: lightblue;
-  outline: none;
-}
-
-.acronymAdd {
-  width: 109px;
-  background: #F6F6F6;
-}
-
-.acronymAddDefinition {
-  width: 393px;
-  height: 22px;
-  background: #F6F6F6;
-}
-
-.addAcronym {
-  margin-top: 10px;
-  display: flex;
-  justify-content: space-evenly;
+  font-size: 24px;
+  text-align: center;
+  margin: 15px 0 25px 0;
 }
 
 .acronymSearch {
-  width: 327.5px;
-  height: 20px;
-  margin-bottom: 10px;
-  font-size: 18px;
-  font-weight: bold;
-  outline: none;
-  border: none;
-  margin-left: 11px;
-  ::placeholder {
-     color: #15191C;
-     opacity: .25;
-     padding-left: 5px;
+  width: 240px;
+  margin-left: 64px;
+  border-bottom: 1px solid #93A7C3;
+  
+  input {
+    background: none;
+    border: none;
+    outline: none;
+    line-height: 25px;
+    font-size: 18px;
+    color: #FFFFFF;
+    text-indent: 10px;
   }
 }
 
-.acronymList {
-  height: 190px;
-  width: 557px;
-  overflow: auto;
-  font-size: 13px;
-  background: #FFFFFF;
-  color: #000000;
-  margin-left: 11px;
+.acronymTables {
+  width: 90%;
+  height: 425px;
+  margin: 15px auto auto auto;
+  background: #292E33;
+  border-radius: 4px;
+  
+  table {
+    width: 90%;
+    margin: auto;
+    border-spacing: 0;
+    border-collapse: collapse;
+    
+    td:nth-of-type(1) {
+      width: 15%;
+    }
+    td:nth-of-type(2) {
+      width: 80%
+    }
+    td:nth-of-type(3) {
+      width: 5%;
+    }
+  }
+  
+  .headerTable {
+    border-radius: 4px 4px 0px 0px;
+    width: 100%;
+    height: 40px;
+    background: #000000;
+    tr {
+      font-size: 18px;
+      color: #93A7C3;
+    }
+        
+    td:nth-of-type(1) {
+      padding-left: 5%;
+    }
+    td:nth-of-type(2) {
+      padding-left: 3.5%;
+    }
+    td:nth-of-type(3) {
+      line-height: 40px;
+      position: absolute;
+      right: 0;
+      margin-right: 6%;
+    }
+  }
+  
+  .acronymList {
+    max-height: 385px;
+    overflow-y: auto;
+    
+    td:last-of-type {
+      text-align: right;
+    }
+  }
 }
 
-span {
-  color: black;
-  cursor: pointer;
-}
-
-.searchMatch {
-  text-decoration: underline;
-}
-
-input {
-  font-size: 18px;
+.addAcronymButton {
+  width: 116px;
+  height: 36px;
   border: none;
-  ::placeholder {
-    color: #B7B7B7;
+  background: linear-gradient(180deg, #679CF6 0%, #4072EE 100%);
+  box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.24), 0px 0px 2px rgba(0, 0, 0, 0.12);
+  border-radius: 2px;
+  font-size: 14px;
+  color: #FFFFFF;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  right: 3.5%;
+  bottom: 43px;
+  outline: none;
+  
+  div {
+    padding-left: 10px;
   }
 }
 `);

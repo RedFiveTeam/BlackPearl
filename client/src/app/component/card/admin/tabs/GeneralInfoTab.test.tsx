@@ -9,7 +9,7 @@ describe('GeneralInfoTab', () => {
 
   beforeEach(() => {
     adminStore = {
-      information: [
+      pendingInformation: [
         new InformationModel(1, 'Phone Number', '123-456-7890'),
         new InformationModel(2, 'Server', 'www.com')
       ],

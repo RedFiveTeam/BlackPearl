@@ -220,6 +220,11 @@ export const StyledInformationCard = styled(InformationCard)`
       margin: 1px;
       align-items: center;
       position: relative;
+      cursor: pointer;
+    }
+    
+    .row:first-of-type > .cell:nth-of-type(3) {
+      cursor: default;
     }
     
     .info {

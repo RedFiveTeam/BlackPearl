@@ -30,14 +30,18 @@ export class AcronymActions {
     };
     let results = fuzzysort.go(filter, list, opts);
     let matches = results.map((el) => {
-      return (
-        '<span id="' + el.obj.id + '">' +
-        fuzzysort.highlight(el, '<span class="searchMatch" style="background: #000000;">', '</span>') +
-        '</span>'
+      let printString = fuzzysort.highlight(el, '<span class="searchMatch">', '</span>');
+      if (!printString) {
+        printString = '';
+      }
+      return new AcronymModel(
+        el.obj.id,
+        el.obj.acronym,
+        el.obj.definition,
+        printString
       );
     });
-    let filteredAcronyms = matches.map((el) => { return el; });
-    this.acronymStore.setFilteredAcronyms(filteredAcronyms);
+    this.acronymStore.setFilteredAcronyms(matches);
   }
 
   @action.bound
@@ -45,7 +49,29 @@ export class AcronymActions {
     await this.acronymRepository.deleteAcronym(acronym);
     this.acronymStore.setPendingDelete(null);
     await this.setAllAcronyms();
-    await this.setFilteredAcronyms('');
-    toast.success('Acronym Deleted');
+    await this.setFilteredAcronyms(this.acronymStore.search);
+    toast.success(acronym.acronym + ' Deleted');
+  }
+
+  @action.bound
+  createPendingDelete(acronym: AcronymModel) {
+    this.acronymStore.setPendingDelete(acronym);
+  }
+
+  @action.bound
+  clearPendingDelete() {
+    this.acronymStore.setPendingDelete(null);
+  }
+
+  @action.bound
+  async addAcronym(acronym: string, definition: string) {
+    this.acronymStore!.pendingAcronym!.setAcronym(acronym);
+    this.acronymStore!.pendingAcronym!.setDefinition(definition);
+    await this.acronymRepository.saveAcronym(this.acronymStore.pendingAcronym!);
+    this.acronymStore.setPendingAcronym(null);
+    await this.setAllAcronyms();
+    this.acronymStore.setSearch(acronym);
+    await this.setFilteredAcronyms(acronym);
+    toast.success(acronym + ' Added');
   }
 }

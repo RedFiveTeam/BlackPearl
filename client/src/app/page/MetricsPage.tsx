@@ -6,7 +6,10 @@ import { MetricsPageActions } from './actions/MetricsPageActions';
 import { LogableActions } from '../component/metrics/metric/MetricModel';
 import { MetricActions } from '../component/metrics/metric/MetricActions';
 import * as moment from 'moment';
-import { DisplayUserModel } from '../component/metrics/metric/MetricDisplayModel';
+import { DisplayInformationModel, DisplayUserModel } from '../component/metrics/metric/MetricDisplayModel';
+import { DropdownIcon } from '../icon/DropdownIcon';
+import { ClockIcon } from '../icon/ClockIcon';
+import { observable } from 'mobx';
 
 interface Props {
   metricsPageActions?: MetricsPageActions;
@@ -18,9 +21,71 @@ interface Props {
 @observer
 export class MetricsPage extends React.Component<Props> {
 
+  @observable
+  selectValue: number = Number.MAX_SAFE_INTEGER;
+  selectText: string = 'All Time';
+
   async componentDidMount() {
     await this.props.metricsPageActions!.initializeStores();
     await this.props.metricActions!.logMetric(LogableActions.VISIT, 'Metrics');
+  }
+
+  async sortSelected(e: any) {
+    this.selectValue = e.target.value;
+    this.selectText = (document.querySelector('option:checked') as HTMLElement).innerHTML;
+    await this.props.metricsPageActions!.buildMetrics(e.target.value);
+  }
+
+  getResourcesClicked() {
+    if (this.props.metricsStore!.displayData.resources.length > 0) {
+      let clickArray = this.props.metricsStore!.displayData.resources.map((r: DisplayInformationModel) => {
+        return r.clicks;
+      });
+
+      if (clickArray.length > 0) {
+        return clickArray.reduce((count, curr) => {
+          return count + curr;
+        });
+      }
+    }
+
+    return 0;
+  }
+
+  getTotalVisits() {
+    if (this.props.metricsStore!.displayData.users.length > 0) {
+      let countArray = this.props.metricsStore!.displayData.users.map((u: DisplayUserModel) => {
+        return u.logins;
+      });
+
+      if (countArray.length > 0) {
+        return countArray.reduce((count, curr) => {
+          return count + curr;
+        });
+      }
+    }
+    return 0;
+  }
+
+  getWidgetsUsed() {
+    if (this.props.metricsStore!.displayData.actions.length > 0) {
+      let clickArray = this.props.metricsStore!.displayData.actions.filter((a: DisplayInformationModel) => {
+        return (
+          a.name === 'Find Acronym'
+          || a.name === 'Convert Coordinates'
+          || a.name === 'Click Weather'
+        );
+      }).map((a: DisplayInformationModel) => {
+        return a.clicks;
+      });
+
+      if (clickArray.length > 0) {
+        return clickArray.reduce((count, curr) => {
+          return count + curr;
+        });
+      }
+    }
+    return 0;
   }
 
   render() {
@@ -28,33 +93,115 @@ export class MetricsPage extends React.Component<Props> {
       <div className={this.props.className}>
         <div className="pageTitle">Metrics</div>
         <div className="pageBody">
-          <button onClick={this.props.metricsPageActions!.exportLogins} className="exportButton">
-            EXPORT AS .CSV
+          <button
+            onClick={(e) => {
+              this.props.metricsPageActions!.exportLogins(this.selectValue);
+            }}
+            className="exportButton"
+          >
+            EXPORT {this.selectText.toUpperCase()} AS .CSV
           </button>
+          <div className="sortSection">
+            <div className="clock">
+              <ClockIcon/>
+            </div>
+            Time Frame:
+            <select
+              defaultValue="All Time"
+              className="sortSelector"
+              onChange={async (e) => {
+                await this.sortSelected(e);
+              }}
+            >
+              <option value={Number.MAX_SAFE_INTEGER}>All Time</option>
+              <option value={60 * 60 * 24}>Last 24 Hours</option>
+              <option value={60 * 60 * 24 * 3}>Last 72 Hours</option>
+              <option value={60 * 60 * 24 * 7}>Last 7 Days</option>
+              <option value={60 * 60 * 24 * 30}>Last 30 Days</option>
+            </select>
+            <DropdownIcon/>
+          </div>
           <div className="counters">
-          <div
-            className="usersCounter counter"
-          >
-            <div className="number">
-              {this.props.metricsStore!.displayData ? this.props.metricsStore!.displayData.users.length : 0}
+            <div
+              className="usersCounter counter"
+            >
+              <div className="number">
+                {this.props.metricsStore!.displayData ? this.props.metricsStore!.displayData.users.length : 0}
+              </div>
+              <div className="title">Total User Accounts</div>
             </div>
-            <div className="title">Total User Accounts</div>
-          </div>
-          <div
-            className="visitCounter counter"
-          >
-            <div className="number">
-              {
-                this.props.metricsStore!.displayData && this.props.metricsStore!.displayData.users.length > 0 ?
-                  this.props.metricsStore!.displayData.users.map((u: DisplayUserModel) => {
-                    return u.logins;
-                  }).reduce((count, curr) => {
-                    return count + curr;
-                  }) : 0
-              }
+            <div
+              className="visitCounter counter"
+            >
+              <div className="number">
+                {
+                  this.props.metricsStore!.displayData ? this.getTotalVisits() : 0
+                }
+              </div>
+              <div className="title">Total Visits</div>
             </div>
-            <div className="title">Total Visits</div>
+            <div
+              className="resourceCounter counter"
+            >
+              <div className="number">
+                {
+                  this.props.metricsStore!.displayData &&
+                  this.getResourcesClicked()
+                }
+              </div>
+              <div className="title">Resources Clicked</div>
+            </div>
+            <div
+              className="widgetCounter counter"
+            >
+              <div className="number">
+                {
+                  this.props.metricsStore!.displayData &&
+                  this.getWidgetsUsed()
+                }
+              </div>
+              <div className="title">Widgets Used</div>
+            </div>
           </div>
+          <div className="topRow">
+            <div
+              className="topResources"
+            >
+              <div className="topTitle">Top Resources</div>
+              <div className="topList">
+                {
+                  this.props.metricsStore!.displayData && this.props.metricsStore!.displayData.resources.length > 0 ?
+                    this.props.metricsStore!.displayData.resources.slice().sort((a, b) => {
+                      return b.clicks - a.clicks;
+                    }).slice(0, 5).map((r, index) => {
+                      return <div className="topItem" key={index}>
+                        <div>{(index + 1) + '. ' + r.name}</div>
+                        <div className="spacer"/>
+                        <div>{r.clicks} Clicks</div>
+                      </div>;
+                    }) : 'No Data Available'
+                }
+              </div>
+            </div>
+            <div
+              className="topActions"
+            >
+              <div className="topTitle">Top Actions</div>
+              <div className="topList">
+                {
+                  this.props.metricsStore!.displayData && this.props.metricsStore!.displayData.actions.length > 0 ?
+                    this.props.metricsStore!.displayData.actions.slice().sort((a, b) => {
+                      return b.clicks - a.clicks;
+                    }).slice(0, 5).map((a, index) => {
+                      return <div className="topItem" key={index}>
+                        <div>{(index + 1) + '. ' + a.name}</div>
+                        <div className="spacer"/>
+                        <div>{a.clicks} Clicks</div>
+                      </div>;
+                    }) : 'No Data Available'
+                }
+              </div>
+            </div>
           </div>
           <div
             className="recentActions"
@@ -68,7 +215,7 @@ export class MetricsPage extends React.Component<Props> {
                 <td>Time</td>
               </tr>
               {
-                this.props.metricsStore!.logins.reverse().slice(0, 50).map((l, index) => {
+                this.props.metricsStore!.logins.slice().reverse().slice(0, 50).map((l, index) => {
                   return (
                     <tr
                       key={index}
@@ -91,6 +238,51 @@ export class MetricsPage extends React.Component<Props> {
 }
 
 export const StyledMetricsPage = inject('metricsPageActions', 'metricsStore', 'metricActions')(styled(MetricsPage)`
+
+  .sortSection {
+    position: absolute;
+    top: 15px;
+    margin-left: 17px;
+    font-size: 14px;
+    .dropIcon {
+      pointer-events: none;
+      position: relative;
+      top: 1px;
+      width: 10px;
+      height: 10px;
+      margin-left: -20px;
+    }
+  }
+  
+  .clock {
+    display: inline-block;
+    margin-right: 5px;
+    position: relative;
+    top: 3px;
+    
+    svg > path {
+      fill: #93A7C3;
+    }
+  }
+  
+   option {
+    color: #000;
+   }
+    
+  .sortSelector {
+    position: relative;
+    border: none;
+    border-radius: 4px;
+    text-align: center;
+    -webkit-appearance: none;
+    margin-left: 5px;
+    background: none;
+    padding-right: 25px;
+    color: #FFFFFF;
+    outline: none;
+    width: auto;
+  }
+  
   .pageTitle {
     color: #FFFFFF;
     font-size: 48px;
@@ -108,6 +300,65 @@ export const StyledMetricsPage = inject('metricsPageActions', 'metricsStore', 'm
     border-radius: 4px;
   }
   
+  .topTitle {
+    font-size: 30px;
+    color: #fff;
+    margin-bottom: 8px;
+  }
+  
+  .topResources {
+    position: relative;
+    display: inline-block;
+    margin-right: 7%;
+  }
+  
+  .topActions {
+    position: relative;
+    display: inline-block;
+    margin-left: 7%;
+  }
+  
+  .spacer {
+    position: relative;
+    left: 0px;
+    bottom: 3px;
+    height: 22px;
+    border-left: 1px solid #686868;
+  }
+  
+  .topItem {
+    position: relative;
+    width: 475px;
+    font-size: 18px;
+    white-space: nowrap;
+    line-height: 28px;
+  }
+  
+  .topRow {
+    margin-top: 55px;
+    display: flex;
+    justify-content: center;
+  }
+  
+  .topItem > div {
+    display: inline-block;
+  }
+  
+  .topItem > div:first-of-type {
+    position: relative;
+    left: 0px;
+    width: 350px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  
+  .topItem > div:nth-of-type(3) {
+    position: relative;
+    margin-left: 20px;
+    bottom: 8px;
+    position: relative;
+  }
+  
   .number {
     font-size: 64px;
     color: #fff;
@@ -120,9 +371,12 @@ export const StyledMetricsPage = inject('metricsPageActions', 'metricsStore', 'm
   
   .counters {
     display: flex;
+    margin: auto;
+    width: 90%;
     justify-content: space-evenly;
-    padding-bottom: 55px;
+    padding-bottom: 30px;
     padding-top: 109px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.28);
   }
   
   .title {
@@ -140,26 +394,29 @@ export const StyledMetricsPage = inject('metricsPageActions', 'metricsStore', 'm
   }
   
   table {
-    border-top: 1px solid rgba(255, 255, 255, 0.28);
     width: 90%;
     margin: auto;
+    table-layout: fixed;
   }
   
   td {
     padding: 0px;
     font-size: 18px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
   }
   
   td:nth-of-type(1) {
-    width: 40%;
+    width: 30%;
   }
   
   td:nth-of-type(2) {
-    width: 25%;
+    width: 23%;
   }
   
   td:nth-of-type(3) {
-    width: 21%;
+    width: 30%;
   }
   
   tr:first-of-type > td {

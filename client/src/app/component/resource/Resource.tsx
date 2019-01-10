@@ -99,7 +99,7 @@ export class Resource extends React.Component<Props> {
 }
 
 export const StyledResource = inject('resourceStore', 'resourceActions', 'metricActions')(styled(Resource)`
-  width: calc(100% - 15px);
+  width: calc(100% - 30px);
   height: 37px;
   border: none;
   border-top: 1px solid #8190A5;

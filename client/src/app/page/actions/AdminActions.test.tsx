@@ -29,9 +29,14 @@ describe('AdminActions', () => {
     saveSpy = jest.fn();
 
     adminStore = {
+      setTimezones: jest.fn(),
+      setWeather: jest.fn(),
+      setInformation: jest.fn(),
+      pendingTimezones: [new TimezoneModel(1, 1, '1', '1'), new TimezoneModel(2, 2, '2', '2')],
+      pendingWeather: [],
+      pendingInformation: [],
       hydrate: jest.fn(),
-      setPendingAcronym: jest.fn(),
-      timezones: [new TimezoneModel(1, 1, '1', '1'), new TimezoneModel(2, 2, '2', '2')]
+      setPendingAcronym: jest.fn()
     };
 
     acronymRepository = new StubAcronymRepository();
@@ -65,17 +70,9 @@ describe('AdminActions', () => {
 
   it('should use the repository to send timezones change requests', async () => {
     await subject.submitChanges();
-    expect(updateSpy).toHaveBeenCalledWith((adminStore.timezones));
-  });
-
-  it('should use the repository to send weather change request', async () => {
-    await subject.submitChanges();
-    expect(updateSpy).toHaveBeenCalledWith((adminStore.weather));
-  });
-
-  it('should use the repository to add an acronym', async() => {
-    await subject.addAcronym();
-    expect(saveSpy).toHaveBeenCalledWith(adminStore.acronym);
+    expect(updateSpy).toHaveBeenCalledWith((adminStore.pendingTimezones));
+    expect(updateSpy).toHaveBeenCalledWith((adminStore.pendingWeather));
+    expect(updateSpy).toHaveBeenCalledWith((adminStore.pendingInformation));
   });
 
   it('should update a pending acronym', () => {

@@ -3,31 +3,47 @@ import { inject, observer } from 'mobx-react';
 import styled from 'styled-components';
 import { AdminStore } from '../../../../page/stores/AdminStore';
 import { InformationModel } from '../../information/InformationModel';
+import { AdminActions } from '../../../../page/actions/AdminActions';
 
 interface Props {
   className?: string;
   adminStore?: AdminStore;
+  adminActions?: AdminActions;
 }
 
 @observer
 export class GeneralInfoTab extends React.Component<Props> {
+  getPlaceholder(index: number) {
+    if (index <= 3) {
+      return 'Server Address';
+    } else if (index <= 6) {
+      return 'Phone Number';
+    } else if (index <= 7) {
+      return 'Format';
+    } else {
+      return 'Server Address';
+    }
+  }
+
   generateInformationRows() {
     return (
       <div>
         <table>
           <tbody>
           {
-            this.props.adminStore!.information.map((i: InformationModel, index: number) => {
+            this.props.adminStore!.pendingInformation.map((i: InformationModel, index: number) => {
               return (
                 <tr className="information" key={index}>
                   <td className="informationName">
                     {i.name}
                   </td>
-                  <td>
+                  <td
+                    className="informationContent"
+                  >
                     <input
-                      className="informationContent"
                       value={i.content}
-                      onChange={(e) => this.props.adminStore!.setInformationContent(index, e.target.value)}
+                      onChange={(e) => this.props.adminStore!.setPendingInformationContent(index, e.target.value)}
+                      placeholder={this.getPlaceholder(index)}
                     />
                   </td>
                 </tr>
@@ -36,6 +52,7 @@ export class GeneralInfoTab extends React.Component<Props> {
           }
           </tbody>
         </table>
+        {this.props.children}
       </div>
     );
   }
@@ -46,7 +63,7 @@ export class GeneralInfoTab extends React.Component<Props> {
         className={this.props.className}
       >
         {
-          this.props.adminStore!.information &&
+          this.props.adminStore!.pendingInformation &&
           this.generateInformationRows()
         }
       </div>
@@ -54,39 +71,40 @@ export class GeneralInfoTab extends React.Component<Props> {
   }
 }
 
-export const StyledGeneralInfoTab = inject('adminStore')(styled(GeneralInfoTab)`
-
+export const StyledGeneralInfoTab = inject('adminStore', 'adminActions')(styled(GeneralInfoTab)`
 margin-top: 10px;
-margin-left: 16px;
-
 
 table {
   border-collapse: collapse;
-  width: 547px;
+  width: 95%;
 }
 
 tr {
-  height: 35px;
-}
-
-.information td {
-  border-top: 1px solid #DFDFDF;
-  border-bottom: 1px solid #DFDFDF;
+  height: 65px;
 }
 
 .informationName {
-  width: 174px;
+  width: 30%;
   height: 18px;
   line-height: 18px;
-  padding-left: 18px;
+  padding-left: 62px;
 }
 
 .informationContent {
+  width: 60%;
+}
+
+.informationContent > input {
   border: none;
-  margin-left: 19px;
   font-size: 18px;
-  width: 322px;
-  border-radius: 5px;
-  height: 18px;
+  height: 36px;
+  width: 100%;
+  background: none;
+  border-bottom: 1px solid #93A7C3;
+  color: white;
+  ::placeholder {
+    font-size: 14px;
+    color: #93A7C3;
+  }
 }
 `);

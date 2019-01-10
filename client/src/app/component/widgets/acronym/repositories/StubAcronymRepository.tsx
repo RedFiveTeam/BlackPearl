@@ -13,7 +13,7 @@ export class StubAcronymRepository implements AcronymRepository {
 
   saveAcronym(acronym: AcronymModel): Promise<AcronymModel> {
     acronym.setAcronym('NTA');
-    acronym.setDefinition('New Test Acronym');
+    acronym.setDefinition('New Test AcronymRow');
     return Promise.resolve(acronym);
   }
 

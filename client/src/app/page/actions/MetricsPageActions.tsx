@@ -26,15 +26,19 @@ export class MetricsPageActions {
   @action.bound
   async initializeStores() {
     await this.metricsStore.hydrate(this.userRepository, this.metricRepository);
-    await this.buildMetrics();
+    await this.buildMetrics(Number.MAX_SAFE_INTEGER);
   }
 
   @action.bound
-  exportLogins() {
+  exportLogins(timeframe: number) {
     const a = document.createElement('a');
     const array = ['time,cardID,action,context\r\n'];
     const file = new Blob(
-      array.concat(this.metricsStore.logins.reverse().map((l: MetricModel) => {
+      array.concat(this.metricsStore.logins.slice().reverse()
+        .filter((m: MetricModel) => {
+          return (moment().unix() - moment.unix(m.time).unix()) < timeframe;
+        })
+        .map((l: MetricModel) => {
         return moment.unix(l.time).format('MMMM Do YYYY H:mm') + 'L' +
           ',' + l.cardID +
           ',' + l.action +
@@ -50,25 +54,28 @@ export class MetricsPageActions {
   }
 
   @action.bound
-  async buildMetrics() {
+  async buildMetrics(timeframe: number) {
     let users: DisplayUserModel[] = [];
     let resources: DisplayInformationModel[] = [];
     let actions: DisplayInformationModel[] = [];
 
     this.metricsStore.logins
+      .filter((m: MetricModel) => {
+        return (moment().unix() - moment.unix(m.time).unix()) < timeframe;
+      })
       .map((m: MetricModel) => {
         if (m.action != null && m.cardID != null && m.context != null) {
           if (m.action.toString() === 'VISIT' && m.context.toString() === 'Home') {
-            let nameArray = m.cardID.split('.');
-            let name = nameArray[1] + ' ' + nameArray[1];
-            let user: DisplayUserModel | null = users.filter((u: DisplayUserModel) => {
-              return u.name === name;
+             let user: DisplayUserModel | null = users.filter((u: DisplayUserModel) => {
+              return u.cardID === m.cardID;
             })[0];
-            if (user) {
+             if (user) {
               user.setActions(user.actions + 1);
               user.setLogins(user.logins + 1);
             } else {
-              user = new DisplayUserModel(name, 1, 1);
+              let nameArray = m.cardID.split('.');
+              let name = nameArray[1] + ' ' + nameArray[1];
+              user = new DisplayUserModel(name, 1, 1, m.cardID);
               users.push(user);
             }
           } else if (m.action.toString() === 'CLICK_RESOURCE') {
@@ -80,6 +87,82 @@ export class MetricsPageActions {
             } else {
               resource = new DisplayInformationModel(m.context, 1);
               resources.push(resource);
+            }
+          }
+          if (m.action.toString() === 'CLICK_ACRONYM'
+            || m.action.toString() === 'CLICK_WEATHER'
+            || m.action.toString() === 'CLICK_COORD'
+            || m.action.toString() === 'CLICK_RESOURCE'
+            || m.action.toString() === 'ADD_FAVORITE'
+            || m.action.toString() === 'EDIT_RESOURCE'
+            || m.action.toString() === 'DELETE_RESOURCE'
+            || m.action.toString() === 'ADD_RESOURCE'
+            || m.action.toString() === 'CLICK_OP'
+            || m.action.toString() === 'ADD_OP'
+            || m.action.toString() === 'EDIT_OP'
+            || m.action.toString() === 'DELETE_OP') {
+            let name = m.action.toString();
+            switch (name) {
+              case 'CLICK_ACRONYM': {
+                name = 'Find Acronym';
+                break;
+              }
+              case 'CLICK_COORD': {
+                name = 'Convert Coordinates';
+                break;
+              }
+              case 'CLICK_RESOURCE': {
+                name = 'Click Resource';
+                break;
+              }
+              case 'ADD_FAVORITE': {
+                name = 'Add Favorite';
+                break;
+              }
+              case 'CLICK_WEATHER': {
+                name = 'Click Weather';
+                break;
+              }
+              case 'ADD_RESOURCE': {
+                name = 'Add Resource';
+                break;
+              }
+              case 'EDIT_RESOURCE': {
+                name = 'Edit Resource';
+                break;
+              }
+              case 'DELETE_RESOURCE': {
+                name = 'Delete Resource';
+                break;
+              }
+              case 'CLICK_OP': {
+                name = 'Click OP';
+                break;
+              }
+              case 'ADD_OP': {
+                name = 'Add OP';
+                break;
+              }
+              case 'EDIT_OP': {
+                name = 'Edit OP';
+                break;
+              }
+              case 'DELETE_OP': {
+                name = 'Delete OP';
+                break;
+              }
+              default: {
+                break;
+              }
+            }
+            let item: DisplayInformationModel | null = actions.filter((a: DisplayInformationModel) => {
+              return a.name === name;
+            })[0];
+            if (item) {
+              item.setClicks(item.clicks + 1);
+            } else {
+              item = new DisplayInformationModel(name, 1);
+              actions.push(item);
             }
           }
         }

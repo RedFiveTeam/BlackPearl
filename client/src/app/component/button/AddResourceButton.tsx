@@ -39,8 +39,8 @@ export class AddResourceButton extends React.Component<Props> {
 }
 
 export const StyledAddResourceButton = inject('resourceActions')(styled(AddResourceButton)`
-  width: calc(100% - 15px);
-  margin-left: 8px;
+  width: calc(100% - 30px);
+  margin: auto;
 
   .addResourceButton {
     width: 100%;

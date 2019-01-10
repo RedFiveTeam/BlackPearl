@@ -2,7 +2,7 @@ import * as React from 'react';
 import { inject, observer } from 'mobx-react';
 import styled from 'styled-components';
 import { AcronymStore } from './AcronymStore';
-import { StyledAcronym } from './Acronym';
+import { StyledAcronymRow } from './AcronymRow';
 import { AcronymActions } from './actions/AcronymActions';
 import { MetricActions } from '../../metrics/metric/MetricActions';
 import { LogableActions } from '../../metrics/metric/MetricModel';
@@ -20,10 +20,6 @@ export class AcronymContainer extends React.Component<Props> {
     await this.props.acronymActions!.setAllAcronyms();
   }
 
-  clickAcronym(e: any) {
-    return;
-  }
-
   render() {
     return (
       <div
@@ -33,19 +29,22 @@ export class AcronymContainer extends React.Component<Props> {
         <input
           className="acronymSearch"
           placeholder="Acronym"
-          onSelect={async () => { await this.props.metricActions!.logMetric(LogableActions.CLICK_ACRONYM, 'Acronym'); }}
-          onChange={async (e) => { await this.props.acronymActions!.setFilteredAcronyms(e.target.value); }}
+          onClick={async () => {
+            await this.props.metricActions!.logMetric(LogableActions.CLICK_ACRONYM, 'AcronymRow');
+          }}
+          onChange={async (e) => {
+            await this.props.acronymActions!.setFilteredAcronyms(e.target.value);
+          }}
         />
         <div className="acronymList">
           {
             this.props.acronymStore!.filteredAcronyms &&
             this.props.acronymStore!.filteredAcronyms.map((acronym, index) => {
               return (
-                <StyledAcronym
-                  acronym={acronym ? acronym : ''}
+                <StyledAcronymRow
+                  acronym={acronym}
                   key={index}
                   className="acronym"
-                  onClick={(e: any) => { this.clickAcronym(e); }}
                 />
               );
             })
@@ -101,6 +100,5 @@ export const StyledAcronymContainer = inject('acronymStore', 'acronymActions', '
   text-align: left;
   color: #FFFFFF;
   margin-left: 10px;
-  }
-  
+  } 
 `);

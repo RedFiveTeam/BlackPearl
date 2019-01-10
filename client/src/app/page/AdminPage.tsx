@@ -26,6 +26,11 @@ export class AdminPage extends React.Component<Props> {
       <div
         className={this.props.className}
       >
+        <div
+          className="pageTitle"
+        >
+          Admin
+        </div>
         <StyledAdminCardContainer/>
         <ToastContainer
           toastClassName="customToast"
@@ -42,6 +47,14 @@ export class AdminPage extends React.Component<Props> {
 }
 
 export const StyledAdminPage = inject('adminStore', 'adminActions', 'metricActions')(styled(AdminPage)`
+.pageTitle {
+  color: #FFFFFF;
+  font-size: 48px;
+  position: absolute;
+  top: 73px;
+  left: 92px;
+}
+
  .customToast {
     width: 520px;
     height: 64px;

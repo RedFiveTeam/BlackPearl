@@ -1,6 +1,8 @@
 import * as React from 'react';
 import { shallow, ShallowWrapper } from 'enzyme';
 import { AcronymTab } from './AcronymTab';
+import { StyledAdminAcronymRow } from '../../../widgets/acronym/AdminAcronymRow';
+import { AcronymModel } from '../../../widgets/acronym/AcronymModel';
 
 describe('AcronymTab', () => {
   let subject: ShallowWrapper;
@@ -16,6 +18,8 @@ describe('AcronymTab', () => {
     };
 
     acronymStore = {
+      filteredAcronyms: [new AcronymModel(0, 'ABC', 'Alpha Bravo Charlie', 'ABC - Alpha Bravo Charlie')],
+      setSearch: jest.fn()
     };
 
     adminActions = {
@@ -43,26 +47,13 @@ describe('AcronymTab', () => {
     expect(subject.find('.acronymTitle').text()).toBe('Current Acronyms');
   });
 
-  it('should have a delete button', () => {
-    expect(subject.find('.deleteAcronymButton').exists()).toBeTruthy();
+  it('should have an acronym row', () => {
+    expect(subject.find(StyledAdminAcronymRow).exists()).toBeTruthy();
   });
 
   it('should have an add acronym button', () => {
     expect(subject.find('.addAcronymButton').exists()).toBeTruthy();
-    expect(subject.find('.addAcronymButton').text()).toBe('Add');
-  });
-
-  it('should have an input for an acronym and a definition', () => {
-    expect(subject.find('.acronymAdd').exists()).toBeTruthy();
-    expect(subject.find('.acronymAddDefinition').exists()).toBeTruthy();
-  });
-
-  it('should pass the new acronym values to be saved', async () => {
-    subject.find('.acronymAdd').simulate('change', {target: {value: 'AT'}});
-    subject.find('.acronymAddDefinition').simulate('change', {target: {value: 'Acronym Test'}});
-    await (subject.instance() as AcronymTab).onAddAcronymButtonClick();
-    expect(adminActions.updatePendingAcronym).toHaveBeenCalledWith('AT', 'Acronym Test');
-    expect(adminActions.addAcronym).toHaveBeenCalled();
+    expect(subject.find('.addAcronymButton').text()).toContain('ADD NEW');
   });
 
   it('should have an acronym search box ', () => {
@@ -71,7 +62,7 @@ describe('AcronymTab', () => {
   });
 
   it('should update acronym list on type in search box', () => {
-    subject.find('.acronymSearch').simulate('change', {target: { value: 'test' }});
+    subject.find('.acronymSearch > input').simulate('change', {target: { value: 'test' }});
     expect(acronymActions.setFilteredAcronyms).toHaveBeenCalled();
   });
 });

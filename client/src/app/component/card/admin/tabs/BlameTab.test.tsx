@@ -2,14 +2,18 @@ import * as React from 'react';
 import { shallow, ShallowWrapper } from 'enzyme';
 import { BlameTab } from './BlameTab';
 import { BlameModel } from '../../../resource/blame/BlameModel';
-import { ClockIcon } from '../../../../icon/ClockIcon';
 const moment = require('moment-timezone');
 
 describe('BlameTab', () => {
   let subject: ShallowWrapper;
   let adminStore: any;
+  let adminActions: any;
 
   beforeEach(() => {
+    adminActions = {
+      initializeStores: jest.fn()
+    };
+
     adminStore = {
       blames: [
         new BlameModel(1, 'ADD', 'Google', 'TOM', 1542726000),
@@ -21,27 +25,24 @@ describe('BlameTab', () => {
     subject = shallow(
       <BlameTab
         adminStore={adminStore}
+        adminActions={adminActions}
       />
     );
   });
 
   it('should have a list of blame lines', () => {
-    expect(subject.find('.recentChangesList').exists()).toBeTruthy();
-    expect(subject.find('.blameLine').length).toBe(3);
-  });
-
-  it('should have a clock icon', () => {
-    expect(subject.find(ClockIcon).exists()).toBeTruthy();
+    expect(subject.find('table').exists()).toBeTruthy();
+    expect(subject.find('table > tbody > tr').length).toBe(3);
   });
 
   it('should have a timestamp', () => {
-    expect(subject.html()).toContain(moment.unix(1542726000).format('D MMM YY HHmm'));
-    expect(subject.html()).toContain(moment.unix(1542727000).format('D MMM YY HHmm'));
-    expect(subject.html()).toContain(moment.unix(1542728000).format('D MMM YY HHmm'));
+    expect(subject.html()).toContain(moment.unix(1542726000).format('DD MMMM YYYY @HHmm') + 'L');
+    expect(subject.html()).toContain(moment.unix(1542727000).format('DD MMMM YYYY @HHmm') + 'L');
+    expect(subject.html()).toContain(moment.unix(1542728000).format('DD MMMM YYYY @HHmm') + 'L');
   });
 
   it('should have a title', () => {
-    expect(subject.find('.recentChangesTitle').text()).toBe('Recent Resource Changes');
+    expect(subject.find('.recentChangesTitle').text()).toBe('Recent Changes');
   });
 
   it('should parse a name', () => {

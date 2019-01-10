@@ -3,10 +3,13 @@ import { inject, observer } from 'mobx-react';
 import styled from 'styled-components';
 import { AdminStore } from '../../../../page/stores/AdminStore';
 import moment = require('moment-timezone');
+import { AdminActions } from '../../../../page/actions/AdminActions';
+import { DropdownIcon } from '../../../../icon/DropdownIcon';
 
 interface Props {
   className?: string;
   adminStore?: AdminStore;
+  adminActions?: AdminActions;
 }
 
 @observer
@@ -14,18 +17,22 @@ export class TimezoneTab extends React.Component<Props> {
   generateTimezoneRows() {
     const availableTimezones = moment.tz.names();
     return (
-      this.props.adminStore!.timezones.map((timezone, index) => {
+      this.props.adminStore!.pendingTimezones.map((timezone, index) => {
         return (
           <div className="timezoneRow" key={index}>
-            <span>Timezone {timezone.position}</span>
+            <div
+              className="rowTitle"
+            >
+              Time Zone {timezone.position}
+            </div>
             <input
               value={timezone.name}
               placeholder="Title"
-              onChange={(e) => this.props.adminStore!.setTimezoneName(index, e.target.value)}
+              onChange={(e) => this.props.adminStore!.setPendingTimezoneName(index, e.target.value)}
             />
             <select
               value={timezone.zone}
-              onChange={(e) => this.props.adminStore!.setTimezoneZone(index, e.target.value)}
+              onChange={(e) => this.props.adminStore!.setPendingTimezoneZone(index, e.target.value)}
             >
               {
                 availableTimezones.map((tz, i) => {
@@ -33,6 +40,7 @@ export class TimezoneTab extends React.Component<Props> {
                 })
               }
             </select>
+            <DropdownIcon/>
           </div>
         );
       })
@@ -45,58 +53,100 @@ export class TimezoneTab extends React.Component<Props> {
         className={this.props.className}
       >
         {
-          this.props.adminStore!.timezones &&
+          this.props.adminStore!.pendingTimezones &&
           this.generateTimezoneRows()
         }
+        {this.props.children}
       </div>
     );
   }
 }
 
-export const StyledTimezoneTab = inject('adminStore')(styled(TimezoneTab)`
-margin-top: 10px;
+export const StyledTimezoneTab = inject('adminStore', 'adminActions')(styled(TimezoneTab)`
+margin-top: 35px;
 margin-left: 7px;
 
-.timezoneRow:first-of-type {
-  border-top: 1px solid #DFDFDF;
+.buttonContainer {
+  display: flex;
+  justify-content: flex-end;
+  position: absolute;
+  bottom: 20px;
+  right: 3.5%;
+}
+
+.cancelButton {
+  width: 94px;
+  height: 36px;
+  background: none;
+  border: none;
+  color: #76ADED;
+}
+
+.saveButton {
+  width: 94px;
+  height: 36px;
+  background: linear-gradient(180deg, #679CF6 0%, #4072EE 100%);
+  box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.24), 0px 0px 2px rgba(0, 0, 0, 0.12);
+  border-radius: 2px;
+  border: none;
+  color: #FFFFFF;
+  margin-right: 5%;
 }
 
 .timezoneRow {
-  height: 53px;
-  width: 560px;
+  height: 94px;
+  width: 96%;
   line-height: 53px;
-  border-bottom: 1px solid #DFDFDF;
   white-space: nowrap;
+  display: flex;
+  justify-items: center;
+  position: relative;
 }
 
-span {
-  margin-left: 12px;
+.rowTitle {
+  width: 20%;
+  text-align: center;
 }
 
 input, select {
   font-size: 18px;
-  height: 18px;
-  margin-left: 37px;
+  height: 36px;
+  margin-left: 60px;
+  color: #FFFFFF;
 }
 
 input {
   padding: 0 0 0 0;
-  width: 138px;
+  width: 20%;
   border: none;
-  border-radius: 5px;
+  background: none;
+  border-bottom: 1px solid #93A7C3;
   font-size: 18px;
-  height: 18px;
   ::placeholder {
-    color: #C7C7C7;
+    color: #93A7C3;
+    font-size: 14px;
   }
 }
 
 select {
-  width: 242px;
+  width: 55%;
   font-size: 14px;
   border: none;
-  background: #FFFFFF;
-  margin-top: -10px;
+  border-bottom: 1px solid #93A7C3;
+  -webkit-appearance: none;
+  background: none;
+  border-radius: 0;
 }
 
+svg {
+  position: relative;
+  right: 15px;
+  top: 20px;
+  width: 10px;
+  height: 5px;
+}
+
+svg > path {
+  fill: #93A7C3;
+}
 `);

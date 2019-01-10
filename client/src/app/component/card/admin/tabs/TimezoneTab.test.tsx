@@ -9,13 +9,13 @@ describe('TimezoneTab', () => {
 
   beforeEach(() => {
     adminStore = {
-      timezones: [
-        new TimezoneModel(1, 4, '1', '1'),
-        new TimezoneModel(2, 5, '2', '2'),
-        new TimezoneModel(3, 6, '3', '3')
+      pendingTimezones: [
+        new TimezoneModel(1, 1, '1', '1'),
+        new TimezoneModel(2, 2, '2', '2'),
+        new TimezoneModel(3, 3, '3', '3')
       ],
-      setTimezoneZone: jest.fn(),
-      setTimezoneName: jest.fn(),
+      setPendingTimezoneZone: jest.fn(),
+      setPendingTimezoneName: jest.fn(),
     };
     subject = shallow(
       <TimezoneTab
@@ -25,22 +25,25 @@ describe('TimezoneTab', () => {
   });
 
   it('should have a timezone for each zone in the store', () => {
-    expect(subject.find('.timezoneRow').length).toBe(adminStore.timezones.length);
+    expect(subject.find('.timezoneRow').length).toBe(adminStore.pendingTimezones.length);
   });
 
   it('should have a label for each time zone', () => {
-    expect(subject.find('.timezoneRow').at(0).find('span').text()).toContain('Timezone 4');
-    expect(subject.find('.timezoneRow').at(1).find('span').text()).toContain('Timezone 5');
-    expect(subject.find('.timezoneRow').at(2).find('span').text()).toContain('Timezone 6');
+    expect(subject.find('.rowTitle').at(0).text()).toContain('Time Zone 1');
+    expect(subject.find('.rowTitle').at(1).text()).toContain('Time Zone 2');
+    expect(subject.find('.rowTitle').at(2).text()).toContain('Time Zone 3');
   });
 
   it('should have a dropdown for each time zone', () => {
     expect(subject.find('.timezoneRow').at(0).find('select').exists()).toBeTruthy();
     expect(subject.find('.timezoneRow').at(1).find('select').exists()).toBeTruthy();
     expect(subject.find('.timezoneRow').at(2).find('select').exists()).toBeTruthy();
-    expect(subject.find('.timezoneRow').at(0).find('select').prop('value')).toBe(`${adminStore.timezones[0].id}`);
-    expect(subject.find('.timezoneRow').at(1).find('select').prop('value')).toBe(`${adminStore.timezones[1].id}`);
-    expect(subject.find('.timezoneRow').at(2).find('select').prop('value')).toBe(`${adminStore.timezones[2].id}`);
+    expect(subject.find('.timezoneRow').at(0).find('select').prop('value'))
+      .toBe(`${adminStore.pendingTimezones[0].id}`);
+    expect(subject.find('.timezoneRow').at(1).find('select').prop('value'))
+      .toBe(`${adminStore.pendingTimezones[1].id}`);
+    expect(subject.find('.timezoneRow').at(2).find('select').prop('value'))
+      .toBe(`${adminStore.pendingTimezones[2].id}`);
   });
 
   it('should have all time zone options for each select', () => {
@@ -67,19 +70,21 @@ describe('TimezoneTab', () => {
     expect(subject.find('.timezoneRow').at(0).find('input').exists()).toBeTruthy();
     expect(subject.find('.timezoneRow').at(1).find('input').exists()).toBeTruthy();
     expect(subject.find('.timezoneRow').at(2).find('input').exists()).toBeTruthy();
-    expect(subject.find('.timezoneRow').at(0).find('input').prop('value')).toBe(`${adminStore.timezones[0].id}`);
-    expect(subject.find('.timezoneRow').at(1).find('input').prop('value')).toBe(`${adminStore.timezones[1].id}`);
-    expect(subject.find('.timezoneRow').at(2).find('input').prop('value')).toBe(`${adminStore.timezones[2].id}`);
+    expect(subject.find('.timezoneRow').at(0).find('input').prop('value'))
+      .toBe(`${adminStore.pendingTimezones[0].id}`);
+    expect(subject.find('.timezoneRow').at(1).find('input').prop('value'))
+      .toBe(`${adminStore.pendingTimezones[1].id}`);
+    expect(subject.find('.timezoneRow').at(2).find('input').prop('value'))
+      .toBe(`${adminStore.pendingTimezones[2].id}`);
   });
 
   it('should set the new value on dropdown selection', () => {
     subject.find('.timezoneRow').at(0).find('select').simulate('change', {target: {value: 'Zulu'}});
-    expect(adminStore.setTimezoneZone).toHaveBeenCalledWith(0, 'Zulu');
+    expect(adminStore.setPendingTimezoneZone).toHaveBeenCalledWith(0, 'Zulu');
   });
 
   it('should update the timezone friendly zone on text input', () => {
     subject.find('.timezoneRow').at(0).find('input').simulate('change', {target: {value: 'Friendly'}});
-    expect(adminStore.setTimezoneName).toHaveBeenCalledWith(0, 'Friendly');
+    expect(adminStore.setPendingTimezoneName).toHaveBeenCalledWith(0, 'Friendly');
   });
-
 });
