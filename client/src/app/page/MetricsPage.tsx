@@ -113,8 +113,15 @@ export class MetricsPage extends React.Component<Props> {
             >
               <div className="number">
                 {
-                  this.props.metricsStore!.displayData && this.props.metricsStore!.displayData.actions.length > 0 ?
-                    this.props.metricsStore!.displayData.actions.map((a: DisplayInformationModel) => {
+                  this.props.metricsStore!.displayData &&
+                  this.props.metricsStore!.displayData.actions.length > 0 ?
+                    this.props.metricsStore!.displayData.actions.filter((a: DisplayInformationModel) => {
+                      return (
+                        a.name === 'Find Acronym'
+                        || a.name === 'Convert Coordinates'
+                        || a.name === 'Click Weather'
+                      );
+                    }).map((a: DisplayInformationModel) => {
                       return a.clicks;
                     }).reduce((count, curr) => {
                       return count + curr;
@@ -137,7 +144,7 @@ export class MetricsPage extends React.Component<Props> {
                     }).slice(0, 5).map((r, index) => {
                       return <div className="topItem" key={index}>
                         <div>{(index + 1) + '. ' + r.name}</div>
-                        <div className="spacer" />
+                        <div className="spacer"/>
                         <div>{r.clicks} Clicks</div>
                       </div>;
                     }) : 'No Data Available'
@@ -156,7 +163,7 @@ export class MetricsPage extends React.Component<Props> {
                     }).slice(0, 5).map((a, index) => {
                       return <div className="topItem" key={index}>
                         <div>{(index + 1) + '. ' + a.name}</div>
-                        <div className="spacer" />
+                        <div className="spacer"/>
                         <div>{a.clicks} Clicks</div>
                       </div>;
                     }) : 'No Data Available'
@@ -357,23 +364,27 @@ export const StyledMetricsPage = inject('metricsPageActions', 'metricsStore', 'm
   table {
     width: 90%;
     margin: auto;
+    table-layout: fixed;
   }
   
   td {
     padding: 0px;
     font-size: 18px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
   }
   
   td:nth-of-type(1) {
-    width: 40%;
+    width: 30%;
   }
   
   td:nth-of-type(2) {
-    width: 25%;
+    width: 23%;
   }
   
   td:nth-of-type(3) {
-    width: 21%;
+    width: 30%;
   }
   
   tr:first-of-type > td {
