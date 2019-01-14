@@ -6,17 +6,21 @@ import mil.af.dgs1sdt.blackpearl.resource.blame.Blame;
 import mil.af.dgs1sdt.blackpearl.resource.blame.BlameRepository;
 import mil.af.dgs1sdt.blackpearl.resource.click.ClickRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.event.ApplicationReadyEvent;
+import org.springframework.context.event.EventListener;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
 import javax.validation.Valid;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 @Controller
 @RequestMapping(ResourceController.URI)
@@ -78,7 +82,8 @@ public class ResourceController {
       resourceJSON.getUrl(),
       resourceJSON.getCategoryID(),
       resourceJSON.getAccountID(),
-      resourceJSON.getPosition()
+      resourceJSON.getPosition(),
+      Instant.now().getEpochSecond()
     );
 
     if (resource.getCategoryID() != 0) {
@@ -167,10 +172,28 @@ public class ResourceController {
           item.getName(),
           item.getCategoryID(),
           item.getAccountID(),
-          item.getPosition()
+          item.getPosition(),
+          item.getClicked()
         )
       );
     });
     return this.resourceRepository.saveAll(resources);
+  }
+
+  @EventListener(ApplicationReadyEvent.class)
+  public void deleteOldResources() {
+    Runnable helloRunnable = new Runnable() {
+
+      public void run() {
+        Iterable<Resource> resources = resourceRepository.findAll();
+        for (Resource r : resources) {
+          Long now = Instant.now().getEpochSecond();
+          if (r.getCategoryID() != 0 && (now - r.getClicked()) > 60 * 60 * 24 * 90)
+            resourceRepository.deleteById(r.getId());
+        }
+      }
+    };
+    ScheduledExecutorService executor = Executors.newScheduledThreadPool(1);
+    executor.scheduleAtFixedRate(helloRunnable, 0, 1, TimeUnit.DAYS);
   }
 }

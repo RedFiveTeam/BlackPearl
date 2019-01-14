@@ -31,9 +31,9 @@ public class ClickControllerTest extends BaseIntegrationTest {
 
   @Before
   public void setUp() {
-    resource1 = new Resource("Google", "https://www.google.com", 1L, "GUEST.GUEST.GUEST.0123456789", 0L);
-    resource2 = new Resource("Google", "https://www.google.com", 1L, "GUEST.GUEST.GUEST.0123456789", 0L);
-    resource3 = new Resource("Google", "https://www.google.com", 1L, "GUEST.GUEST.GUEST.0123456789", 0L);
+    resource1 = new Resource("Google", "https://www.google.com", 1L, "GUEST.GUEST.GUEST.0123456789", 0L, Instant.now().getEpochSecond());
+    resource2 = new Resource("Google", "https://www.google.com", 1L, "GUEST.GUEST.GUEST.0123456789", 0L, Instant.now().getEpochSecond());
+    resource3 = new Resource("Google", "https://www.google.com", 1L, "GUEST.GUEST.GUEST.0123456789", 0L, Instant.now().getEpochSecond());
 
     resourceRepository.save(resource1);
     resourceRepository.save(resource2);
