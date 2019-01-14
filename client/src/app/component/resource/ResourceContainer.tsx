@@ -30,7 +30,7 @@ export class ResourceContainer extends React.Component<Props, State> {
   }
 
   reorder = async (list: ResourceModel[], startIndex: number, endIndex: number) => {
-    const result = Array.from(list);
+    const result = list;
     const [removed] = result.splice(startIndex, 1);
     result.splice(endIndex, 0, removed);
     result.map((obj, index) => {

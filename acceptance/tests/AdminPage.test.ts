@@ -48,9 +48,9 @@ Scenario('should allow admin to add and delete an acronym', async (I) => {
   I.waitForElement('.customToast');
   I.waitForText('Wombats Are Tasty', 10);
   I.click('tr:first-of-type > .actionColumn > div > .deleteAcronymButton');
-  I.see('WAT', '.acronymColumn:first-of-type');
+  I.see('WAT', '#scrollBody > tr:first-of-type > .acronymColumn');
   I.click('DELETE');
-  I.dontSee('WAT', '.acronymColumn:first-of-type');
+  I.dontSee('WAT', '#scrollBody > tr:first-of-type > .acronymColumn');
 });
 
 Scenario('should allow admin to change a weather data', async (I) => {

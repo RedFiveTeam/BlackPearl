@@ -64,7 +64,6 @@ text-align: center;
 font-family: monowidth;
 
 .title {
-  font-family: Iglesia;
   font-size: 68px;
 }
 

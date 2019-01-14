@@ -166,6 +166,7 @@ table {
   background: #292E33;
   border-radius: 4px;
   
+  
           thead {
             color: #93A7C3;
             width: 100%;

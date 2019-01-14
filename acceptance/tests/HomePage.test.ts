@@ -3,7 +3,7 @@ let homeAssert = require('assert');
 
 Feature('Home Page');
 
-Scenario('it should convert measurements', async (I) => {
+Scenario('should convert measurements', async (I) => {
   I.haveHeader('Authorization', 'Basic Q1JPU1MuSk9SREFOLk1JRERMRS4wMTIzNDU2Nzg5Og==');
   I.amOnPage('/');
   I.click('.bannerBurger');
@@ -121,7 +121,7 @@ Scenario('should allow the user to change tabs and see specialty resources', (I)
 
 Scenario('should allow the user to add, edit and delete an operation', async (I) => {
   I.haveHeader('Authorization', 'Basic Q1JPU1MuSk9SREFOLk1JRERMRS4wMTIzNDU2Nzg5Og==');
-  let name = 'TestOp' + Date.now();
+  let name = 't' + Date.now().toString().substr(8);
 
   //create
   I.amOnPage('/');
@@ -160,16 +160,17 @@ Scenario('should allow the user to add, edit and delete an operation', async (I)
 
 Scenario('should allow the user to add a local resource', async (I) => {
   I.haveHeader('Authorization', 'Basic Q1JPU1MuSk9SREFOLk1JRERMRS4wMTIzNDU2Nzg5Og==');
-  let name = 'TestPage' + Date.now();
-
+  let name = 't' + Date.now().toString().substr(8);
   //create
   I.amOnPage('/');
+  I.selectOption('.sortSelector', 'Newest'); // This test hates life if this line isn't here
   I.click('ADD RESOURCE');
   I.fillField('.titleField', name);
   I.fillField('.urlField', 'Y:/TestFile.txt');
   I.click('SAVE', '.modal');
   I.waitForText('Resource Link Added', 10);
-  I.waitForText(name, 10);
+  const title = await I.grabAttributeFrom('.resource:nth-of-type(1) > .resourceLink', 'title');
+  homeAssert.strictEqual(title, name);
 
   //click
   I.click(name);
@@ -187,7 +188,7 @@ Scenario('should allow the user to add a local resource', async (I) => {
 
 Scenario('should allow the user to add, edit and delete a resource', async (I) => {
   I.haveHeader('Authorization', 'Basic Q1JPU1MuSk9SREFOLk1JRERMRS4wMTIzNDU2Nzg5Og==');
-  let name = 'TestPage' + Date.now();
+  let name = 't' + Date.now().toString().substr(8);
 
   //create
   I.amOnPage('/');
@@ -210,7 +211,7 @@ Scenario('should allow the user to add, edit and delete a resource', async (I) =
   I.click('SAVE');
   I.waitForText('Resource Edit Complete', 10);
   I.waitForText(name, 10);
-  const href = await I.grabAttributeFrom('.resource:nth-of-type(5) > .resourceLink', 'href');
+  const href = await I.grabAttributeFrom('.resource:nth-of-type(1) > .resourceLink', 'href');
   homeAssert.strictEqual('https://www.google.com', href);
 
   //delete
@@ -251,10 +252,11 @@ Scenario('should validate user resource input', async (I) => {
 
 Scenario('should order by most clicked', async (I) => {
   I.haveHeader('Authorization', 'Basic Q1JPU1MuSk9SREFOLk1JRERMRS4wMTIzNDU2Nzg5Og==');
-  let name = 'TestPage' + Date.now();
+  let name = 't' + Date.now().toString().substr(8);
 
   //create
   I.amOnPage('/');
+  I.selectOption('.sortSelector', 'Most Clicked');
   I.click('.tab:nth-of-type(1) > div', '.tabContainer');
   I.click('ADD RESOURCE');
   I.fillField('.titleField', name);
@@ -289,4 +291,5 @@ Scenario('should order by most clicked', async (I) => {
   I.click('.confirmButton');
   I.dontSee(name);
   I.dontSee(name + '2');
+  I.selectOption('.sortSelector', 'Newest');
 });
