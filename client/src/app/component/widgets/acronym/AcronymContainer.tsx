@@ -6,6 +6,7 @@ import { StyledAcronymRow } from './AcronymRow';
 import { AcronymActions } from './actions/AcronymActions';
 import { MetricActions } from '../../metrics/metric/MetricActions';
 import { LogableActions } from '../../metrics/metric/MetricModel';
+import * as ReactDOM from 'react-dom';
 
 interface Props {
   acronymStore?: AcronymStore;
@@ -33,6 +34,14 @@ export class AcronymContainer extends React.Component<Props> {
             await this.props.metricActions!.logMetric(LogableActions.CLICK_ACRONYM, 'AcronymRow');
           }}
           onChange={async (e) => {
+            let ele = (ReactDOM.findDOMNode(this) as HTMLElement).querySelector('.acronymList') as HTMLElement;
+            if (e.target.value === '') {
+              (ReactDOM.findDOMNode(this) as HTMLElement).style.height = '120px';
+              ele.style.height = '27px';
+            } else {
+              (ReactDOM.findDOMNode(this) as HTMLElement).style.height = '350px';
+              ele.style.height = '261px';
+            }
             await this.props.acronymActions!.setFilteredAcronyms(e.target.value);
           }}
         />
@@ -62,7 +71,8 @@ export const StyledAcronymContainer = inject('acronymStore', 'acronymActions', '
   color: #FFFFFF;
   background: #292E33;
   width: 340px;
-  height: 200px;
+  height: 120px;
+  transition: height ease-in 0.5s;
   margin-left: 7px;
   border-radius: 4px;
   margin-top: 30px;
@@ -92,7 +102,7 @@ export const StyledAcronymContainer = inject('acronymStore', 'acronymActions', '
   }
 
   .acronymList {
-  height: 107px;
+  height: 27px;
   width: 324px;
   overflow: auto;
   font-size: 13px;
@@ -100,5 +110,6 @@ export const StyledAcronymContainer = inject('acronymStore', 'acronymActions', '
   text-align: left;
   color: #FFFFFF;
   margin-left: 10px;
+  transition: height ease-in 0.5s;
   } 
 `);
