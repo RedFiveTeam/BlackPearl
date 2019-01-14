@@ -211,7 +211,7 @@ Scenario('should allow the user to add, edit and delete a resource', async (I) =
   I.click('SAVE');
   I.waitForText('Resource Edit Complete', 10);
   I.waitForText(name, 10);
-  const href = await I.grabAttributeFrom('.resource:nth-of-type(1) > .resourceLink', 'href');
+  const href = await I.grabAttributeFrom('.category1 > .body > .resourceList > div:nth-of-type(5) > div > a', 'href');
   homeAssert.strictEqual('https://www.google.com', href);
 
   //delete
@@ -256,7 +256,6 @@ Scenario('should order by most clicked', async (I) => {
 
   //create
   I.amOnPage('/');
-  I.selectOption('.sortSelector', 'Most Clicked');
   I.click('.tab:nth-of-type(1) > div', '.tabContainer');
   I.click('ADD RESOURCE');
   I.fillField('.titleField', name);
@@ -273,13 +272,15 @@ Scenario('should order by most clicked', async (I) => {
   I.waitForText('Resource Link Added', 10);
   I.waitForText(name + '2', 10);
 
+  I.selectOption('.sortSelector', 'Most Clicked');
+
   I.click(name + '2');
   I.click(name + '2');
   I.click(name + '2');
 
   I.refreshPage();
   I.wait(2);
-  let title = await I.grabAttributeFrom('.resource:last-of-type > a', 'href');
+  let title = await I.grabAttributeFrom('.category1 > .body > .resourceList > div:last-of-type > div > a', 'href');
   homeAssert.strictEqual(title, 'Y:/Resource1');
 
   //delete
@@ -291,5 +292,4 @@ Scenario('should order by most clicked', async (I) => {
   I.click('.confirmButton');
   I.dontSee(name);
   I.dontSee(name + '2');
-  I.selectOption('.sortSelector', 'Newest');
 });

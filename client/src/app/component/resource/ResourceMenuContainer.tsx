@@ -67,12 +67,7 @@ export class ResourceMenuContainer extends React.Component<Props> {
   };
 
   updateStyle = () => {
-    // let ele = (ReactDOM.findDOMNode(this) as HTMLElement).querySelector('#threeDot');
-    // let paths = (ele!.querySelectorAll('path') as NodeListOf<SVGPathElement>);
     if (this.props.resourceMenuStore.menuVisible) {
-      // for (let i = 0; i < paths.length; i++) {
-      //   paths[i].setAttribute('fill', '#5689F3');
-      //
       if (this.props.resource.categoryID !== 0) {
         this.setState({
           backgroundColor:
@@ -87,9 +82,6 @@ export class ResourceMenuContainer extends React.Component<Props> {
         });
       }
     } else {
-      // for (let i = 0; i < paths.length; i++) {
-      //   paths[i].setAttribute('fill', '#FFF');
-      // }
       this.setState({backgroundColor: 'rgba(0, 0, 0, 0)', zIndex: 0});
     }
   };

@@ -3,9 +3,9 @@ import { inject, observer } from 'mobx-react';
 import styled from 'styled-components';
 import { StyledResource } from './Resource';
 import { Category, ResourceModel } from './ResourceModel';
-import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
-import classNames = require('classnames');
+import { Draggable } from 'react-beautiful-dnd';
 import { ResourceActions } from './actions/ResourceActions';
+import classNames = require('classnames');
 
 interface Props {
   className?: string;
@@ -25,19 +25,7 @@ export class ResourceContainer extends React.Component<Props, State> {
     this.state = {
       items: this.props.resources!
     };
-    this.onDragEnd = this.onDragEnd.bind(this);
-    this.reorder = this.reorder.bind(this);
   }
-
-  reorder = async (list: ResourceModel[], startIndex: number, endIndex: number) => {
-    const result = list;
-    const [removed] = result.splice(startIndex, 1);
-    result.splice(endIndex, 0, removed);
-    result.map((obj, index) => {
-      obj.setPosition(index);
-    });
-    return result;
-  };
 
   getItemStyle = (isDragging: boolean, draggableStyle: any) => ({
     userSelect: 'none',
@@ -51,24 +39,6 @@ export class ResourceContainer extends React.Component<Props, State> {
     this.setState({
       items: newProps.resources!
     });
-  }
-
-  async onDragEnd(result: any) {
-    if (!result.destination) {
-      return;
-    }
-
-    const items = await this.reorder(
-      this.state.items,
-      result.source.index,
-      result.destination.index
-    );
-
-    this.setState({
-      items
-    });
-
-    await this.props.resourceActions.updateGivenResources(items);
   }
 
   renderDrag(resource: ResourceModel, index: number) {
@@ -105,29 +75,32 @@ export class ResourceContainer extends React.Component<Props, State> {
 
   render() {
     return (
-      <DragDropContext onDragEnd={this.onDragEnd}>
-        <Droppable droppableId="droppable">
-          {
-            (provided) => (
-              <div
-                className={classNames('resourceList', this.props.className)}
-                ref={provided.innerRef}
-              >
-                {
-                  this.state.items &&
-                  this.state.items!.map((resource, index) => {
-                    return (
-                      this.props.category === 0 ?
-                        this.renderDrag(resource, index) :
-                        this.renderNoDrag(resource, index)
-                    );
-                  })
-                }
-              </div>
-            )
-          }
-        </Droppable>
-      </DragDropContext>
+      <div
+        className={classNames('resourceList', this.props.className, 'category' + this.props.category)}
+      >
+        {
+          this.state.items &&
+          (this.props.category === 0 ?
+            this.state.items!
+              .sort((a, b) => {
+                return a.position! - b.position!;
+              })
+              .map((resource, index) => {
+                return (
+                  0 === 0 ?
+                    this.renderDrag(resource, index) :
+                    this.renderNoDrag(resource, index)
+                );
+              })
+            : this.state.items!.map((resource, index) => {
+              return (
+                0 === 0 ?
+                  this.renderDrag(resource, index) :
+                  this.renderNoDrag(resource, index)
+              );
+            }))
+        }
+      </div>
     );
   }
 }

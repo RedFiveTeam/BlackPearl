@@ -2,26 +2,36 @@ import * as React from 'react';
 import { shallow, ShallowWrapper } from 'enzyme';
 import { CardContainer } from './CardContainer';
 import { StyledCard } from './Card';
-import { Category } from '../resource/ResourceModel';
+import { Category, ResourceModel } from '../resource/ResourceModel';
 
 describe('CardContainer', () => {
   let subject: ShallowWrapper;
   let resourceActions: any;
   let resourceStore: any;
   let profileActions: any;
+  let profileStore: any;
 
   beforeEach(() => {
     resourceActions = {
-      setAllResources: jest.fn()
+      setAllResources: jest.fn(),
+      updateGivenResources: jest.fn(),
+      saveFavorite: jest.fn(),
+      sortResources: jest.fn()
     };
 
     resourceStore = {
       returnResourcesInCategory: jest.fn(),
-      activeTab: 1
+      activeTab: 1,
+      resources: [new ResourceModel(1, '', '', 0, '', 0)],
+      updateFavoritePositions: jest.fn()
     };
 
     profileActions = {
       setProfile: jest.fn()
+    };
+
+    profileStore = {
+      profile: { cardID: 'test' }
     };
 
     subject = shallow(
@@ -29,6 +39,7 @@ describe('CardContainer', () => {
         profileActions={profileActions}
         resourceActions={resourceActions}
         resourceStore={resourceStore}
+        profileStore={profileStore}
       />
     );
   });
@@ -75,5 +86,17 @@ describe('CardContainer', () => {
 
   it('should have a body for the contents to go into', () => {
     expect(subject.find('.cardBody').exists()).toBeTruthy();
+  });
+
+  it('should update resources when reordered', async () => {
+    let result = {
+      draggableId: '1',
+      destination: { index: 1, droppableId: 'category0' },
+      source: { index: 1 }
+    };
+
+    await (subject.instance() as CardContainer).onDragEnd(result);
+
+    expect(resourceActions.updateGivenResources).toHaveBeenCalled();
   });
 });

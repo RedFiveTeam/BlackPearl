@@ -1,7 +1,8 @@
 import * as React from 'react';
-import { mount, ReactWrapper, shallow, ShallowWrapper } from 'enzyme';
+import { mount, ReactWrapper } from 'enzyme';
 import { Category, ResourceModel } from './ResourceModel';
 import { ResourceContainer } from './ResourceContainer';
+import { StyledCardContainer } from '../card/CardContainer';
 import { Provider } from 'mobx-react';
 
 describe('ResourceContainer', () => {
@@ -9,15 +10,26 @@ describe('ResourceContainer', () => {
   let resourceStore: any;
   let resourceActions: any;
   let profileStore: any;
+  let profileActions: any;
   let metricActions: any;
+
+  profileActions = {
+    setProfile: jest.fn()
+  };
 
   metricActions = {};
 
-  resourceStore = {};
+  resourceStore = {
+    resources: [new ResourceModel(1, '', '', 1, '', 0)],
+    returnResourcesInCategory: () => {
+      return [new ResourceModel(1, '', '', 1, '', 0), new ResourceModel(2, '', '', 1, '', 0)];
+    }
+  };
 
   profileStore = {};
 
   resourceActions = {
+    setAllResources: jest.fn(),
     updateGivenResources: jest.fn()
   };
 
@@ -27,45 +39,27 @@ describe('ResourceContainer', () => {
         resourceStore={resourceStore}
         resourceActions={resourceActions}
         profileStore={profileStore}
+        profileActions={profileActions}
         metricActions={metricActions}
       >
-        <ResourceContainer
-          category={Category.FMV_Main}
+        <StyledCardContainer
+          resourceStore={resourceStore}
           resourceActions={resourceActions}
-          resources={[
-            new ResourceModel(1, 'https://www.google.com', 'Google', Category.FMV_Main),
-            new ResourceModel(2, 'https://www.yahoo.com', 'Yahoo', Category.FMV_Main),
-          ]}
-        />
+          profileStore={profileStore}
+          profileActions={profileActions}
+        >
+          <ResourceContainer
+            category={Category.FMV_Main}
+            resourceActions={resourceActions}
+            resources={[]}
+          />
+        </StyledCardContainer>
       </Provider>
     );
 
   });
 
   it('should render resources based on the props', () => {
-    expect(subject.find('.resource').length).toEqual(2);
-  });
-
-  it('should update resources when reordered', async () => {
-    let shallowSubject: ShallowWrapper;
-    shallowSubject = shallow(
-        <ResourceContainer
-          category={Category.FMV_Main}
-          resourceActions={resourceActions}
-          resources={[
-            new ResourceModel(1, 'https://www.google.com', 'Google', Category.FMV_Main),
-            new ResourceModel(2, 'https://www.yahoo.com', 'Yahoo', Category.FMV_Main),
-          ]}
-        />
-    );
-
-    let result = {
-      destination: { index: 1 },
-      source: { index: 1 }
-    };
-
-    await (shallowSubject.instance() as ResourceContainer).onDragEnd(result);
-
-    expect(resourceActions.updateGivenResources).toHaveBeenCalled();
+    expect(subject.find('.resource').length).toEqual(6);
   });
 });

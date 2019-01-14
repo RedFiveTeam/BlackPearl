@@ -109,6 +109,9 @@ export class ResourceActions {
   @action.bound
   async saveResource() {
     if (this.resourceStore.pendingResource != null) {
+      if (this.resourceStore.pendingResource.categoryID === 0) {
+        this.resourceStore.pendingResource.setPosition(this.resourceStore.resources.length);
+      }
       await this.resourceStore.performLoading(async () => {
         await this.resourceRepository.saveResource(this.resourceStore.pendingResource!);
         this.clearPendingResource();
