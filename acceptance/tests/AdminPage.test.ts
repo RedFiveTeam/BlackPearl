@@ -47,7 +47,7 @@ Scenario('should allow admin to add and delete an acronym', async (I) => {
   I.click('.saveAcronymButton');
   I.waitForElement('.customToast');
   I.waitForText('Wombats Are Tasty', 10);
-  I.click('.deleteAcronymButton:first-of-type');
+  I.click('tr:first-of-type > .actionColumn > div > .deleteAcronymButton');
   I.see('WAT', '.acronymColumn:first-of-type');
   I.click('DELETE');
   I.dontSee('WAT', '.acronymColumn:first-of-type');

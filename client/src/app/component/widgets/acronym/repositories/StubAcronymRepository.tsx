@@ -20,4 +20,10 @@ export class StubAcronymRepository implements AcronymRepository {
   deleteAcronym(acronym: AcronymModel): Promise<void> {
     return Promise.resolve();
   }
+
+  updateAcronym(acronym: AcronymModel): Promise<AcronymModel> {
+    acronym.setAcronym('UTA');
+    acronym.setDefinition('Updated Test AcronymRow');
+    return Promise.resolve(acronym);
+  }
 }

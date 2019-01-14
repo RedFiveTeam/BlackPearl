@@ -1,25 +1,54 @@
 import * as React from 'react';
-import { shallow, ShallowWrapper } from 'enzyme';
+import { mount, ReactWrapper } from 'enzyme';
 import { AdminAcronymRow } from './AdminAcronymRow';
-import { StyledDeleteAcronymButton } from '../../button/DeleteAcronymButton';
 import { AcronymModel } from './AcronymModel';
+import { DeleteAcronymIcon } from '../../../icon/DeleteAcronymIcon';
+import { EditIcon } from '../../../icon/EditIcon';
 
 describe('AdminAcronymRow', () => {
-  let subject: ShallowWrapper;
+  let subject: ReactWrapper;
   let acronym: AcronymModel;
 
   beforeEach(() => {
-    acronym = new AcronymModel(0, 'AAA', 'Armadillos Are Awesome', 'AAA - Armadillos Are Awesome');
-    subject = shallow(
-      <AdminAcronymRow
-        acronym={acronym}
-        onDeleteClick={() => { return; }}
-      />
+    acronym = new AcronymModel(5, 'AAA', 'Armadillos Are Awesome', 'AAA - Armadillos Are Awesome');
+    subject = mount(
+      <table>
+        <tbody>
+        <AdminAcronymRow
+          acronym={acronym}
+          onDeleteClick={() => {
+            return;
+          }}
+          onSaveClick={() => {
+            return;
+          }}
+          onEditClick={() => {
+            return;
+          }}
+          clearEdit={false}
+        />
+        </tbody>
+      </table>
     );
   });
 
-  it('should contain a delete trashcan', () => {
-    expect(subject.find(StyledDeleteAcronymButton).exists()).toBeTruthy();
+  it('should contain an edit and delete trashcan', () => {
+    expect(subject.find(DeleteAcronymIcon).exists()).toBeTruthy();
+    expect(subject.find(EditIcon).exists()).toBeTruthy();
+  });
+
+  it('should switch to edit mode when edit is clicked', async () => {
+    await (subject.find(AdminAcronymRow).instance() as AdminAcronymRow).editClicked();
+
+    expect(subject.find('.actionColumn').html()).toContain('confirmAcronymButton');
+    expect(subject.find('.actionColumn').html()).toContain('cancelAcronymButton');
+  });
+
+  it('should switch to normal mode when cancel is clicked', async () => {
+    await (subject.find(AdminAcronymRow).instance() as AdminAcronymRow).cancelClicked();
+
+    expect(subject.find('.actionColumn').html()).toContain('editAcronymButton');
+    expect(subject.find('.actionColumn').html()).toContain('deleteAcronymButton');
   });
 
   it('should have acronym, definition, and action columns', () => {

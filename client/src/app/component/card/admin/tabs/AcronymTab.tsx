@@ -11,6 +11,7 @@ import { AcronymSearchIcon } from '../../../../icon/AcronymSearchIcon';
 import { PlusIcon } from '../../../../icon/PlusIcon';
 import { AcronymModel } from '../../../widgets/acronym/AcronymModel';
 import { StyledAddAcronymPopup } from '../../../popup/AddAcronymPopup';
+import { action } from 'mobx';
 
 interface Props {
   className?: string;
@@ -20,22 +21,37 @@ interface Props {
   acronymStore?: AcronymStore;
 }
 
+interface State {
+  clearEdit: boolean;
+  openID: number;
+}
+
 @observer
-export class AcronymTab extends React.Component<Props> {
+export class AcronymTab extends React.Component<Props, State> {
+  state = {clearEdit: false, openID: -1};
+
   async componentDidMount() {
     await this.props.acronymActions!.setAllAcronyms();
   }
 
-  onAcronymFieldChange = (e: any) => {
-    this.setState({acronym: e.target.value});
-  };
-
-  onDefinitionFieldChange = (e: any) => {
-    this.setState({definition: e.target.value});
-  };
-
-  onDeleteClick(acronym: AcronymModel) {
+  async onDeleteClick(acronym: AcronymModel) {
     this.props.acronymStore!.setPendingDelete(acronym);
+    await this.setState({clearEdit: true, openID: -1});
+    await this.setState({clearEdit: false});
+  }
+
+  async onSaveClick(acronym: AcronymModel) {
+    await this.props.acronymActions!.updateAcronym(acronym);
+    const objDiv = document.getElementById('scrollBody');
+    objDiv!.scrollTop = 0;
+    await this.setState({clearEdit: true, openID: -1});
+    await this.setState({clearEdit: false});
+  }
+
+  @action.bound
+  async onEditClick(i: number) {
+    await this.setState({clearEdit: true, openID: i});
+    await this.setState({clearEdit: false});
   }
 
   onAddClick() {
@@ -74,43 +90,36 @@ export class AcronymTab extends React.Component<Props> {
             value={this.props.acronymStore!.search}
           />
         </div>
-        <div
-          className="acronymTables"
-        >
-          <table
-            className="headerTable"
-          >
-            <tbody>
-            <tr>
-              <td>Acronym</td>
-              <td>Definition</td>
-              <td>Actions</td>
-            </tr>
-            </tbody>
-          </table>
-          <div
-            className="acronymList"
-          >
-            <table>
-              <tbody>
-              {
-                this.props.acronymStore!.filteredAcronyms &&
-                this.props.acronymStore!.filteredAcronyms.map((acronym, index) => {
-                  return (
-                    <StyledAdminAcronymRow
-                      acronym={acronym}
-                      onDeleteClick={(a: AcronymModel) => {
-                        this.onDeleteClick(a);
-                      }}
-                      key={index}
-                    />
-                  );
-                })
-              }
-              </tbody>
-            </table>
-          </div>
-        </div>
+        <table>
+          <thead>
+          <tr>
+            <th>Acronym</th>
+            <th>Definition</th>
+            <th>Actions</th>
+          </tr>
+          </thead>
+          <tbody id="scrollBody">
+          {
+            this.props.acronymStore!.filteredAcronyms &&
+            this.props.acronymStore!.filteredAcronyms.map((acronym, index) => {
+              return (
+                <StyledAdminAcronymRow
+                  acronym={acronym}
+                  onDeleteClick={(a: AcronymModel) => {
+                    this.onDeleteClick(a);
+                  }}
+                  onSaveClick={async (a: AcronymModel) => {
+                    await this.onSaveClick(a);
+                  }}
+                  onEditClick={(i: number) => this.onEditClick(i)}
+                  clearEdit={this.state.openID === acronym.id ? false : this.state.clearEdit}
+                  key={index}
+                />
+              );
+            })
+          }
+          </tbody>
+        </table>
         <button
           className="addAcronymButton"
           onClick={() => {
@@ -150,61 +159,71 @@ export const StyledAcronymTab = inject('adminActions', 'adminStore', 'acronymAct
   }
 }
 
-.acronymTables {
+table {
   width: 90%;
   height: 425px;
   margin: 15px auto auto auto;
   background: #292E33;
   border-radius: 4px;
   
-  table {
-    width: 90%;
-    margin: auto;
-    border-spacing: 0;
-    border-collapse: collapse;
+          thead {
+            color: #93A7C3;
+            width: 100%;
+            display: table;
+            border-radius: 4px 4px 0 0;
+            background: #000000;
+            height: 40px;
     
-    td:nth-of-type(1) {
-      width: 15%;
-    }
-    td:nth-of-type(2) {
-      width: 80%
-    }
-    td:nth-of-type(3) {
-      width: 5%;
-    }
-  }
-  
-  .headerTable {
-    border-radius: 4px 4px 0px 0px;
-    width: 100%;
-    height: 40px;
-    background: #000000;
-    tr {
-      font-size: 18px;
-      color: #93A7C3;
-    }
+        th {
+            text-align: left;
+            border-spacing: 0;
+            border-collapse: collapse;
+        }
+    
+        th:nth-of-type(1) {
+          width: 14.4%;
+          padding-left: 3%;
+        }
         
-    td:nth-of-type(1) {
-      padding-left: 5%;
-    }
-    td:nth-of-type(2) {
-      padding-left: 3.5%;
-    }
-    td:nth-of-type(3) {
-      line-height: 40px;
-      position: absolute;
-      right: 0;
-      margin-right: 6%;
+        th:nth-of-type(2) {
+          width: 58.5%;
+        }
+    
+        th:nth-of-type(3) {
+          width: 11.5%;
+        }
+    
+        }
+  
+  tbody {
+    width: 100%;
+    display: block;
+    overflow-y: auto;
+    max-height: 385px;
+    margin: auto;
+    
+    tr {
+      display: table;
+      table-layout: fixed;
+      width: 94%;
+      margin: auto;
+        td:nth-of-type(1) {
+    width: 15%;
+  }
+  td:nth-of-type(2) {
+    width: 75%
+  }
+  td:nth-of-type(3) {
+    width: 10%;
+  }
     }
   }
   
-  .acronymList {
-    max-height: 385px;
-    overflow-y: auto;
-    
-    td:last-of-type {
-      text-align: right;
-    }
+  input {
+    width: 95%;
+    border-radius: 4px;
+    outline: none;
+    border: none;
   }
 }
 

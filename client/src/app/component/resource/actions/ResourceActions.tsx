@@ -170,10 +170,12 @@ export class ResourceActions {
   async filterResources(filter: string) {
     const list = this.resourceStore.resources;
     const opts = {
-      keys: ['name', 'url']
+      keys: ['name']
     };
     let results = fuzzysort.go(filter, list, opts);
-    const filteredResources = results.map((r) => { return r.obj; } );
+    const filteredResources = results.map((r) => {
+      return r.obj;
+    });
     this.resourceStore.setFilter(filter);
     this.resourceStore.setFilteredResources(filteredResources);
     await this.sortResources();
