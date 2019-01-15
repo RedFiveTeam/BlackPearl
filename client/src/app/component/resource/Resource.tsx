@@ -31,7 +31,7 @@ export class Resource extends React.Component<Props> {
 
   @action.bound
   async launchResource(e: any) {
-    this.props.resourceActions!.updateClicks(this.props.resource!.id!);
+    await this.props.resourceActions!.updateClicks(this.props.resource!.id!);
     if (this.state.isLocal) {
       e.preventDefault();
       let selected = null;

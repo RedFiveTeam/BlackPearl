@@ -188,7 +188,7 @@ public class ResourceController {
         Iterable<Resource> resources = resourceRepository.findAll();
         for (Resource r : resources) {
           Long now = Instant.now().getEpochSecond();
-          if (r.getCategoryID() != 0 && (now - r.getClicked()) > 60 * 60 * 24 * 90)
+          if (r.getCategoryID() != 0 && r.getClicked() != null && (now - r.getClicked()) > 60 * 60 * 24 * 90)
             resourceRepository.deleteById(r.getId());
         }
       }

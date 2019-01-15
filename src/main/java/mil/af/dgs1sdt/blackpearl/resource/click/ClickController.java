@@ -2,6 +2,8 @@ package mil.af.dgs1sdt.blackpearl.resource.click;
 
 import mil.af.dgs1sdt.blackpearl.metrics.Metric;
 import mil.af.dgs1sdt.blackpearl.metrics.MetricRepository;
+import mil.af.dgs1sdt.blackpearl.resource.Resource;
+import mil.af.dgs1sdt.blackpearl.resource.ResourceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -18,6 +20,9 @@ public class ClickController {
   @Autowired
   ClickRepository clickRepository;
 
+  @Autowired
+  ResourceRepository resourceRepository;
+
   @GetMapping
   public @ResponseBody
   Iterable<Click> getRecentClicks() {
@@ -29,6 +34,14 @@ public class ClickController {
   public @ResponseBody
   Click update(@Valid @PathVariable Long resourceID) {
     Click click = clickRepository.getOneByResourceIDAndDay(resourceID, Instant.now().getEpochSecond() / 86400);
+
+    Resource resource = resourceRepository.getOne(resourceID);
+
+    if(resource != null) {
+      resource.setClicked(Instant.now().getEpochSecond());
+      resourceRepository.save(resource);
+    }
+
     if (click == null) {
       click = new Click(resourceID, Instant.now().getEpochSecond() / 86400, 0L);
     }
