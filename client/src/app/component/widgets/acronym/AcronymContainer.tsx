@@ -70,13 +70,14 @@ export const StyledAcronymContainer = inject('acronymStore', 'acronymActions', '
   font-size: 24px;
   color: #FFFFFF;
   background: #292E33;
-  width: 340px;
+  width: 95%;
   height: 120px;
   transition: height ease-in 0.5s;
-  margin-left: 7px;
+  //margin-left: 7px;
   border-radius: 4px;
-  margin-top: 30px;
+  //margin-top: 30px;
   box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.3);
+  margin: auto;
   
   .title {
     height: 42px;
@@ -84,7 +85,7 @@ export const StyledAcronymContainer = inject('acronymStore', 'acronymActions', '
   }
   
   .acronymSearch {
-    width: 329px;
+    width: 90%;
     height: 20px;
     font-size: 18px;
     outline: none;
@@ -103,7 +104,7 @@ export const StyledAcronymContainer = inject('acronymStore', 'acronymActions', '
 
   .acronymList {
   height: 27px;
-  width: 324px;
+  width: 90%;
   overflow: auto;
   font-size: 13px;
   background: #292E33;

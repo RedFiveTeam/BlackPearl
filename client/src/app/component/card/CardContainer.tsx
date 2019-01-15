@@ -179,7 +179,7 @@ export const StyledCardContainer = inject('resourceActions', 'profileActions', '
     margin-bottom: 10px;
     position: relative;
     box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.3);
-    border-radius: 0 4px 4px 0;
+    border-radius: 0 4px 4px 4px;
     width: 100%;
   }
   

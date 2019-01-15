@@ -51,6 +51,9 @@ export class MetricsPageActions {
     a.href = URL.createObjectURL(file);
     a.download = 'logins.csv';
     a.click();
+    if (navigator.msSaveBlob) {
+      navigator.msSaveBlob(file, 'login.csv');
+    }
   }
 
   @action.bound

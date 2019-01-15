@@ -132,84 +132,20 @@ export const StyledHomePage = inject('resourceStore', 'operationStore', 'metricA
   .mainBody {
     position: relative;
     width: 100%;
-    min-width: 1275px;
+    min-width: 1160px;
     display: flex;
     flex-wrap: wrap;
     background: #2F343B;
   }
   
-  .bannerTitle {
-    font-family: "Avenir Next";
-    font-size: 30px;
-    color: #FBFDFF;
-  }
-
-  .widgetSection {
-    position: sticky;
-    top: 0px;
-    margin-right: 6px;
-    background: #1F2226;
-    width: 0px;
-    transition: width 0.5s ease-in-out;
-  }
-  
-  .widgetBackground {
-    background: #1F2226;
-    height: 100%;
-    width: 100%;
-    min-height: 666px;
-    position: absolute;
-  }
-
-  
-  .appBanner {
-    padding-right: 6px;
-    margin-left: -6px;
-    background: #2F343B;
-    display: flex;
-    position: sticky;
-    top: 0px;
-    z-index: 5;
-    height: 53px;
-    width: 100%;
-    float: right;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-    color: #F2F2F2;
-  }
-  
-  .topBar {
-    display: flex;
-    justify-content: space-between;
-    width: 354px;
-    height: 53px;
-    align-items: center;
-  }
-  
-  .atoDay {
-    height: 53px;
-    font-size: 36px;
-    text-shadow: 0px 3px 6px rgba(0, 0, 0, 0.3);
-    font-family: "Avenir Next";
-    font-size: 36px;
-  }
-  
-  #ATODayBorderIcon {
-    height: 53px;
-    margin-right: 15px;
-  }
-  
-  #pearlIcon {
-    margin-left: 14px;
-  }
-  
-  .bannerBurger {
-  cursor: pointer;
-  left: 5px;
-  transition: opacity 0.5s ease-in-out;
-  }
-  
-  .widgetBurger {
-  cursor: pointer;
-  right: 5px;
+  @media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) { /* For Internet Exploder */
+      .mainBody {
+      top: 50px;
+      }
+      
+      .Toastify__toast-body {
+        padding-top: 13px;
+      margin-left: 20px;
+    }
   }
 `);

@@ -35,9 +35,10 @@ export class AdminCardContainer extends React.Component<Props> {
   @action.bound
   changeTab(e: any) {
     this.props.adminActions!.resetTab();
-    Array.from(document.getElementsByClassName('selected')).forEach((el) => {
-      el.classList.remove('selected');
-    });
+    let selected = document.getElementsByClassName('selected');
+    for (let i = 0; i < selected.length; i++) {
+      selected.item(i)!.classList.remove('selected');
+    }
     e.target.classList.add('selected');
     this.props.adminStore!.setCurrentTab(e.target.getAttribute('data-tab'));
   }
@@ -61,6 +62,7 @@ export class AdminCardContainer extends React.Component<Props> {
         <div
           className="selectors"
         >
+
           <div data-tab="General Info" className="tabSelector selected" onClick={this.changeTab}>
             <InfoIcon/>General Info
           </div>

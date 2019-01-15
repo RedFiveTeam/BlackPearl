@@ -31,7 +31,6 @@ export class Resource extends React.Component<Props> {
 
   @action.bound
   async launchResource(e: any) {
-    await this.props.resourceActions!.updateClicks(this.props.resource!.id!);
     if (this.state.isLocal) {
       e.preventDefault();
       let selected = null;
@@ -40,13 +39,13 @@ export class Resource extends React.Component<Props> {
       el.setAttribute('readonly', '');
       el.style.position = 'absolute';
       el.style.left = '-9999px';
-      document.body.appendChild(el);
+      document.getElementsByClassName('topBar')[0].appendChild(el);
       if (document.getSelection()!.rangeCount > 0) {
         selected = document.getSelection()!.getRangeAt(0);
       }
       el.select();
       document.execCommand('copy');
-      document.body.removeChild(el);
+      document.getElementsByClassName('topBar')[0].removeChild(el);
       if (selected) {
         document.getSelection()!.removeAllRanges();
         document.getSelection()!.addRange(selected);
@@ -54,6 +53,7 @@ export class Resource extends React.Component<Props> {
       toast.success('Local Path Copied to Clipboard');
     }
     await this.props.metricActions!.logMetric(LogableActions.CLICK_RESOURCE, this.props.resource!.name);
+    await this.props.resourceActions!.updateClicks(this.props.resource!.id!);
   }
 
   componentDidMount() {

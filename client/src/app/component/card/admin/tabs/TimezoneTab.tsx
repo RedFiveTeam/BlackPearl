@@ -149,4 +149,14 @@ svg {
 svg > path {
   fill: #93A7C3;
 }
+
+@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) { /* For Internet Exploder */
+  .dropIcon {
+    display: none;
+  }
+  
+  select option {
+    background-color: grey;
+  }
+}
 `);

@@ -22,18 +22,19 @@ interface Props {
 export class MetricsPage extends React.Component<Props> {
 
   @observable
-  selectValue: number = Number.MAX_SAFE_INTEGER;
+  selectValue: number = 9007199254740991;
   selectText: string = 'All Time';
 
   async componentDidMount() {
     await this.props.metricsPageActions!.initializeStores();
     await this.props.metricActions!.logMetric(LogableActions.VISIT, 'Metrics');
+    await this.props.metricsPageActions!.buildMetrics(9007199254740991);
   }
 
   async sortSelected(e: any) {
     this.selectValue = e.target.value;
     this.selectText = (document.querySelector('option:checked') as HTMLElement).innerHTML;
-    await this.props.metricsPageActions!.buildMetrics(e.target.value);
+    await this.props.metricsPageActions!.buildMetrics(this.selectValue);
   }
 
   getResourcesClicked() {
@@ -113,7 +114,7 @@ export class MetricsPage extends React.Component<Props> {
                 await this.sortSelected(e);
               }}
             >
-              <option value={Number.MAX_SAFE_INTEGER}>All Time</option>
+              <option value={9007199254740991}>All Time</option>
               <option value={60 * 60 * 24}>Last 24 Hours</option>
               <option value={60 * 60 * 24 * 3}>Last 72 Hours</option>
               <option value={60 * 60 * 24 * 7}>Last 7 Days</option>
@@ -258,7 +259,7 @@ export const StyledMetricsPage = inject('metricsPageActions', 'metricsStore', 'm
     display: inline-block;
     margin-right: 5px;
     position: relative;
-    top: 3px;
+    top: 6px;
     
     svg > path {
       fill: #93A7C3;
@@ -386,7 +387,7 @@ export const StyledMetricsPage = inject('metricsPageActions', 'metricsStore', 'm
   .exportButton {
     position: absolute;
     right: 33px;
-    top: 15px;
+    top: 28px;
     background: none;
     border: none;
     color: #76ADED;
@@ -423,5 +424,19 @@ export const StyledMetricsPage = inject('metricsPageActions', 'metricsStore', 'm
     padding-top: 73px;
     color: #FFFFFF;
     font-size: 36px;
+  }
+  
+  @media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) { /* For Internet Exploder */
+    .counter {
+       padding-left: 5%;
+    }
+    
+    .counter:first-of-type {
+      padding-left: 17%;
+    }
+    
+    .dropIcon {
+      display: none;
+    }
   }
 `);

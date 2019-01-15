@@ -54,7 +54,7 @@ export const StyledCoordinateConverter = inject('metricActions')(styled(Coordina
   font-size: 24px;
   color: #FFFFFF;
   background: #292E33;
-  width: 340px;
+  width: 95%;
   height: 145px;
   border-radius: 4px;
   margin-left: 7px;
@@ -64,11 +64,12 @@ export const StyledCoordinateConverter = inject('metricActions')(styled(Coordina
   .title {
     height: 48px;
     line-height: 48px;
+    white-space: nowrap;
   }
   
   .latLongInput {
     background: #292E33;
-    width: 329px;
+    width: 90%;
     height: 20px;
     color: #FFFFFF;
     border-bottom: 1px solid #93A7C3;
@@ -83,7 +84,7 @@ export const StyledCoordinateConverter = inject('metricActions')(styled(Coordina
   
   .mgrsInput {
     background: #292E33;
-    width: 329px;
+    width: 90%;
     height: 20px;
     color: #FFFFFF;
     margin-top: 15px;
@@ -98,7 +99,7 @@ export const StyledCoordinateConverter = inject('metricActions')(styled(Coordina
   }
 
   input {
-    width: 324px;
+    width: 90%;
     height: 34px;
     font-size: 18px;
     font-weight: bold;

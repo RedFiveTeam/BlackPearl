@@ -218,7 +218,7 @@ export class MeasurementConverter extends React.Component<Props> {
 export const StyledMeasurementConverter = inject('metricActions', 'measurementConverterStore')
 (styled(MeasurementConverter)`
 
-  width: 340px;
+  width: 95%;
   height: 135px;
   background-color: #292E33;
   border-radius: 4px;
@@ -230,13 +230,15 @@ export const StyledMeasurementConverter = inject('metricActions', 'measurementCo
   .title {
     font-size: 24px;
     color: white;
-    width: 270px;
+    width: 95%;
     margin: auto;
+    text-align: center;
+    white-space: nowrap;
   }
   
   input {
     margin-left: 7px;
-    width: 251px;
+    width: 70%;
     margin-right: 20px;
     display: inline-block;
     outline: none;
@@ -267,7 +269,7 @@ export const StyledMeasurementConverter = inject('metricActions', 'measurementCo
   
   .conversionOutput {
     cursor: text;
-    width: 251px;
+    width: 70%;
     border-radius: 4px;
     background: #5B5D60;
     border: none;
@@ -278,6 +280,7 @@ export const StyledMeasurementConverter = inject('metricActions', 'measurementCo
   
   .row {
     margin-top: 10px;
+    width: 100%;
   }
 
   .b {
@@ -286,7 +289,7 @@ export const StyledMeasurementConverter = inject('metricActions', 'measurementCo
     outline: none;
     border: none;
     color: #EEF5FC;
-    width: 49px;
+    width: 100%;
     font-size: 14px;
     text-align: left;
   }
@@ -294,13 +297,14 @@ export const StyledMeasurementConverter = inject('metricActions', 'measurementCo
   .d {
     display: inline-block;
     position: relative;
+    width: 18%;
   }
   
   .dd {
     position: absolute;
     display: none;
-    width: 85px;
-    height: 96px;
+    width: 82px;
+    height: 100px;
     left: -24px;
     border-radius: 4px;
     background: #292E33;

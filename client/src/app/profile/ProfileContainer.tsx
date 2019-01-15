@@ -48,4 +48,10 @@ export const StyledProfileContainer = inject('profileStore')
   #personIcon {
     margin: 0px 21px 0px 19px;
   }
+  
+  @media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) { /* For Internet Exploder */
+  .profileSection {
+  top: 15px;
+  }
+}
 `);
