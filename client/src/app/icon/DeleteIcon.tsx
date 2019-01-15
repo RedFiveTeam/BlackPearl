@@ -1,16 +1,20 @@
 import * as React from 'react';
 
 export const DeleteIcon = () => {
-  const pathD = 'M5.20763 0.912354L0.444589 2.33024L5.5837 7.98443L0.635354 13.4819L4.32447 15.185L7.97356 ' +
-    '11.1307L11.0537 15.185L15.4489 13.1907L10.6825 8.12073L15.6248 2.63052L11.9356 0.92745L8.29261 4.97438L5.20763 ' +
-    '0.912354Z';
+  const pathD = 'M9.77778 5.33333V14.2222H2.66667V5.33333H9.77778ZM8.44444 0H4L3.11111 ' +
+    '0.888889H0V2.66667H12.4444V0.888889H9.33333L8.44444 0ZM11.5556 3.55556H0.888889V14.2222C0.888889 ' +
+    '15.2 1.68889 16 2.66667 16H9.77778C10.7556 16 11.5556 15.2 11.5556 14.2222V3.55556Z';
 
   return (
-    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
-      <path
-        d={pathD}
-        fill="#B02626"
-      />
+    <svg
+      id="DeleteAcronymIcon"
+      width="13"
+      height="16"
+      viewBox="0 0 13 16"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path d={pathD} fill="#76ACED"/>
     </svg>
   );
 };

@@ -4,17 +4,16 @@ import { ResourceStore } from './stores/ResourceStore';
 import styled from 'styled-components';
 import { ResourceModel } from './ResourceModel';
 import { StyledResourceMenuContainer } from './ResourceMenuContainer';
-import { ResourceMenuStore } from './stores/ResourceMenuStore';
 import { action, observable } from 'mobx';
 import { InputValidation } from '../../utils/inputValidation/InputValidation';
 import { toast } from 'react-toastify';
 import { EarthIcon } from '../../icon/EarthIcon';
 import { FolderIcon } from '../../icon/FolderIcon';
-import classNames = require('classnames');
 import { ResourceActions } from './actions/ResourceActions';
 import * as ReactDOM from 'react-dom';
 import { MetricActions } from '../metrics/metric/MetricActions';
 import { LogableActions } from '../metrics/metric/MetricModel';
+import classNames = require('classnames');
 
 interface Props {
   resource: ResourceModel;
@@ -75,7 +74,17 @@ export class Resource extends React.Component<Props> {
 
   render() {
     return (
-      <div className={classNames(this.props.className, 'resource')}>
+      <div
+        className={classNames(this.props.className, 'resource')}
+        onMouseEnter={(e) => {
+          let ele = (ReactDOM.findDOMNode(this) as HTMLElement).querySelector('.resourceMenu') as HTMLElement;
+          ele.style.opacity = '1';
+        }}
+        onMouseLeave={(e) => {
+          let ele = (ReactDOM.findDOMNode(this) as HTMLElement).querySelector('.resourceMenu') as HTMLElement;
+          ele.style.opacity = '0';
+        }}
+      >
         <a
           className="resourceLink"
           href={this.props.resource.url}
@@ -91,14 +100,14 @@ export class Resource extends React.Component<Props> {
         </a>
         <StyledResourceMenuContainer
           resource={this.props.resource}
-          resourceMenuStore={new ResourceMenuStore()}
         />
       </div>
     );
   }
 }
 
-export const StyledResource = inject('resourceStore', 'resourceActions', 'metricActions')(styled(Resource)`
+export const StyledResource = inject('resourceStore', 'resourceActions', 'metricActions')
+(styled(Resource)`
   width: calc(100% - 30px);
   height: 37px;
   border: none;
@@ -117,7 +126,7 @@ export const StyledResource = inject('resourceStore', 'resourceActions', 'metric
   }
   
   .resourceLink {
-    width: 90%;
+    width: 80%;
     text-decoration: none;
     color: black;
     display: inline-flex;

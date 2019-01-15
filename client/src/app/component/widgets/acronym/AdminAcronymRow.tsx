@@ -3,7 +3,7 @@ import { observer } from 'mobx-react';
 import styled from 'styled-components';
 import { AcronymModel } from './AcronymModel';
 import { action } from 'mobx';
-import { DeleteAcronymIcon } from '../../../icon/DeleteAcronymIcon';
+import { DeleteIcon } from '../../../icon/DeleteIcon';
 import { StyledButton } from '../../button/Button';
 import { EditIcon } from '../../../icon/EditIcon';
 import { ConfirmIcon } from '../../../icon/ConfirmIcon';
@@ -93,7 +93,7 @@ export class AdminAcronymRow extends React.Component<Props, State> {
           onClick={this.deleteClicked}
           className="deleteAcronymButton"
         >
-          <DeleteAcronymIcon/>
+          <DeleteIcon/>
         </StyledButton>
       </div>
     );

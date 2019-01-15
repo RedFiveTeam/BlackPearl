@@ -2,7 +2,7 @@ import * as React from 'react';
 import { mount, ReactWrapper } from 'enzyme';
 import { AdminAcronymRow } from './AdminAcronymRow';
 import { AcronymModel } from './AcronymModel';
-import { DeleteAcronymIcon } from '../../../icon/DeleteAcronymIcon';
+import { DeleteIcon } from '../../../icon/DeleteIcon';
 import { EditIcon } from '../../../icon/EditIcon';
 
 describe('AdminAcronymRow', () => {
@@ -33,7 +33,7 @@ describe('AdminAcronymRow', () => {
   });
 
   it('should contain an edit and delete trashcan', () => {
-    expect(subject.find(DeleteAcronymIcon).exists()).toBeTruthy();
+    expect(subject.find(DeleteIcon).exists()).toBeTruthy();
     expect(subject.find(EditIcon).exists()).toBeTruthy();
   });
 

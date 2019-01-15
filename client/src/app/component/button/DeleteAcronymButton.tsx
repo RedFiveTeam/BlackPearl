@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { observer } from 'mobx-react';
 import styled from 'styled-components';
-import { DeleteAcronymIcon } from '../../icon/DeleteAcronymIcon';
+import { DeleteIcon } from '../../icon/DeleteIcon';
 import { StyledButton } from './Button';
 
 interface Props {
@@ -20,7 +20,7 @@ export class DeleteAcronymButton extends React.Component<Props> {
           onClick={this.props.onClick}
           className="deleteAcronymButton"
         >
-          <DeleteAcronymIcon/>
+          <DeleteIcon/>
         </StyledButton>
       </div>
     );

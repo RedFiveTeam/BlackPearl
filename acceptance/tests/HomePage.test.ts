@@ -135,9 +135,7 @@ Scenario('should allow the user to add, edit and delete an operation', async (I)
 
   //edit
   I.amOnPage('/');
-  I.waitForElement('.threeDotButton' + `.${name}`, 10);
-  I.click('.threeDotButton' + `.${name}`);
-  I.click('.editButton');
+  I.click('.editButton', '.operation:last-of-type');
   I.fillField('.pendingEditTitle', name);
   I.fillField('.pendingEditDescription', 'This is my newly revised Op');
   I.fillField('.pendingEditAddress', 'https://www.mynewop.com');
@@ -145,13 +143,12 @@ Scenario('should allow the user to add, edit and delete an operation', async (I)
   I.waitForText('Operation Edit Complete', 10);
   I.waitForText(name, 10);
   I.waitForText('This is my newly revised Op', 10);
-  const href = await I.grabAttributeFrom('.operation:nth-of-type(6) > a', 'href');
+  const href = await I.grabAttributeFrom('.operation:last-of-type > a', 'href');
   homeAssert.strictEqual('https://www.mynewop.com', href);
 
   //delete
   I.amOnPage('/');
-  I.click('.threeDotButton' + `.${name}`);
-  I.click('.deleteButton');
+  I.click('.deleteButton', '.operation:last-of-type');
   I.see(name);
   I.click('DELETE');
   I.waitForText('Operation Deleted', 10);
@@ -178,7 +175,6 @@ Scenario('should allow the user to add a local resource', async (I) => {
 
   //delete
   I.amOnPage('/');
-  I.click('.threeDotButton' + `.${name}`);
   I.click('.deleteButton');
   I.see(name);
   I.click('.confirmButton');
@@ -203,8 +199,6 @@ Scenario('should allow the user to add, edit and delete a resource', async (I) =
   //edit
   I.amOnPage('/');
   I.click('.tab:nth-of-type(1) > div', '.tabContainer');
-  I.waitForElement('.threeDotButton' + `.${name}`, 10);
-  I.click('.threeDotButton' + `.${name}`);
   I.click('.editButton');
   I.fillField('.pendingEditTitle', name);
   I.fillField('.pendingEditUrl', 'https://www.google.com');
@@ -217,7 +211,6 @@ Scenario('should allow the user to add, edit and delete a resource', async (I) =
   //delete
   I.amOnPage('/');
   I.click('.tab:nth-of-type(1) > div', '.tabContainer');
-  I.click('.threeDotButton' + `.${name}`);
   I.click('.deleteButton');
   I.see(name);
   I.click('.confirmButton');
@@ -284,11 +277,9 @@ Scenario('should order by most clicked', async (I) => {
   homeAssert.strictEqual(title, 'Y:/Resource1');
 
   //delete
-  I.click('.threeDotButton' + `.${name}`);
-  I.click('.deleteButton');
+  I.click('.deleteButton', '.resourceList > div:first-of-type');
   I.click('.confirmButton');
-  I.click('.threeDotButton' + `.${name + '2'}`);
-  I.click('.deleteButton');
+  I.click('.deleteButton', '.resourceList > div:last-of-type');
   I.click('.confirmButton');
   I.dontSee(name);
   I.dontSee(name + '2');

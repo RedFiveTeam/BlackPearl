@@ -1,9 +1,7 @@
 import * as React from 'react';
 import { mount, ReactWrapper } from 'enzyme';
 import { Resource } from './Resource';
-import { StyledDeleteButton } from '../button/DeleteButton';
 import { ResourceModel } from './ResourceModel';
-import { StyledEditButton } from '../button/EditButton';
 import { StyledResourceMenuContainer } from './ResourceMenuContainer';
 import { Provider } from 'mobx-react';
 import { EarthIcon } from '../../icon/EarthIcon';
@@ -73,12 +71,7 @@ describe('Resource', () => {
     expect(subject.find(FolderIcon).exists()).toBeTruthy();
   });
 
-  it('should render a three dot menu', () => {
+  it('should render a the menu container menu', () => {
     expect(subject.find(StyledResourceMenuContainer).exists()).toBeTruthy();
-  });
-
-  it('should hide the delete and edit button by default', () => {
-    expect(subject.find(StyledDeleteButton).exists()).toBeFalsy();
-    expect(subject.find(StyledEditButton).exists()).toBeFalsy();
   });
 });

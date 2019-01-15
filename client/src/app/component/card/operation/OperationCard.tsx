@@ -74,10 +74,6 @@ position: relative;
   margin-top: 0px;
 }
 
-.operationList :last-child {
-  border-radius: 2px 2px 5px 5px;
-}
-
 .addOperationButton {
   background: none;
   border: none; 

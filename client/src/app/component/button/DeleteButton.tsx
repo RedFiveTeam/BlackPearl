@@ -1,8 +1,8 @@
 import * as React from 'react';
-import { inject, observer } from 'mobx-react';
+import { observer } from 'mobx-react';
 import styled from 'styled-components';
-import { DeleteIcon } from '../../icon/DeleteIcon';
 import { StyledButton } from './Button';
+import { DeleteIcon } from '../../icon/DeleteIcon';
 
 interface Props {
   onClick: () => void;
@@ -27,7 +27,7 @@ export class DeleteButton extends React.Component<Props> {
   }
 }
 
-export const StyledDeleteButton = inject('resourceActions')(styled(DeleteButton)`
+export const StyledDeleteButton = (styled(DeleteButton)`
   .deleteButton {
     height: 37px;
     border: none;
