@@ -11,5 +11,12 @@ Scenario('should show the user the number of logins', (I) => {
   I.haveHeader('Authorization', 'Basic Q1JPU1MuSk9SREFOLk1JRERMRS4wMTIzNDU2Nzg5Og==');
   I.amOnPage('/metrics');
   I.waitForText('Total Visits', 3);
+});
+
+Scenario('should have an export button and time dropdown', (I) => {
+  I.haveHeader('Authorization', 'Basic Q1JPU1MuSk9SREFOLk1JRERMRS4wMTIzNDU2Nzg5Og==');
+  I.amOnPage('/metrics');
+
+  I.waitForText('Time Frame:', 10);
   I.seeElement('.exportButton');
 });

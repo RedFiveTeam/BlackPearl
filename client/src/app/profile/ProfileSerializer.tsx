@@ -1,4 +1,4 @@
-import { Serializer } from '../utils/serializer';
+import { Serializer } from '../utils/Serializer';
 import { ProfileModel } from './ProfileModel';
 
 export class ProfileSerializer implements Serializer<ProfileModel> {

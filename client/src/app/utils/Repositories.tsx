@@ -20,14 +20,11 @@ import { StubInformationRepository } from '../component/card/information/reposit
 import { OperationRepository } from '../component/card/operation/repositories/OperationRepository';
 import { WebOperationRepository } from '../component/card/operation/repositories/WebOperationRepository';
 import { StubOperationRepository } from '../component/card/operation/repositories/StubOperationRepository';
-import { UserRepository } from '../component/metrics/user/UserRepository';
 import { WebMetricRepository } from '../component/metrics/metric/WebMetricRepository';
 import { StubMetricRepository } from '../component/metrics/metric/StubMetricRepository';
 import { BlameRepository } from '../component/resource/blame/repositories/BlameRepository';
 import { WebBlameRepository } from '../component/resource/blame/repositories/WebBlameRepository';
 import { StubBlameRepository } from '../component/resource/blame/repositories/StubBlameRepository';
-import { WebUserRepository } from '../component/metrics/user/WebUserRepository';
-import { StubUserRepository } from '../component/metrics/user/StubUserRepository';
 import { MetricRepository } from '../component/metrics/metric/MetricRepository';
 
 export interface Repositories {
@@ -38,7 +35,6 @@ export interface Repositories {
   weatherRepository: WeatherRepository;
   informationRepository: InformationRepository;
   operationRepository: OperationRepository;
-  userRepository: UserRepository;
   metricRepository: MetricRepository;
   blameRepository: BlameRepository;
 }
@@ -53,7 +49,6 @@ export const WebRepositories: Repositories = Object.freeze({
   weatherRepository: new WebWeatherRepository(client),
   informationRepository: new WebInformationRepository(client),
   operationRepository: new WebOperationRepository(client),
-  userRepository: new WebUserRepository(client),
   metricRepository: new WebMetricRepository(client),
   blameRepository: new WebBlameRepository(client)
 });
@@ -66,7 +61,6 @@ export const StubRepositories: Repositories = {
   weatherRepository: new StubWeatherRepository(),
   informationRepository: new StubInformationRepository(),
   operationRepository: new StubOperationRepository(),
-  userRepository: new StubUserRepository(),
   metricRepository: new StubMetricRepository(),
   blameRepository: new StubBlameRepository()
 };

@@ -2,7 +2,6 @@ import * as React from 'react';
 import { inject, observer } from 'mobx-react';
 import styled from 'styled-components';
 import { StyledEditButton } from '../../button/EditButton';
-import { OperationMenuStore } from './stores/OperationMenuStore';
 import { OperationActions } from './actions/OperationActions';
 import { OperationModel } from './OperationModel';
 import { StyledDeleteButton } from '../../button/DeleteButton';
@@ -10,7 +9,6 @@ import { StyledDeleteButton } from '../../button/DeleteButton';
 interface Props {
   className?: string;
   operation: OperationModel;
-  operationMenuStore: OperationMenuStore;
   operationActions?: OperationActions;
 }
 
@@ -34,12 +32,12 @@ export class OperationMenuContainer extends React.Component<Props> {
       >
         {
           <div>
-              <StyledEditButton
-                  onClick={this.editClick}
-              />
-              <StyledDeleteButton
-                  onClick={this.deleteClick}
-              />
+            <StyledEditButton
+              onClick={this.editClick}
+            />
+            <StyledDeleteButton
+              onClick={this.deleteClick}
+            />
           </div>
         }
       </div>

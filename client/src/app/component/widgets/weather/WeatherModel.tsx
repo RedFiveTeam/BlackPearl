@@ -15,21 +15,6 @@ export class WeatherModel {
     this._label = label;
   }
 
-  @computed
-  get id(): number {
-    return this._id;
-  }
-
-  @computed
-  get url(): string {
-    return this._url;
-  }
-
-  @computed
-  get label(): string {
-    return this._label;
-  }
-
   @action.bound
   setId(id: number) {
     this._id = id;
@@ -43,5 +28,20 @@ export class WeatherModel {
   @action.bound
   setLabel(label: string) {
     this._label = label;
+  }
+
+  @computed
+  get id(): number {
+    return this._id;
+  }
+
+  @computed
+  get url(): string {
+    return this._url;
+  }
+
+  @computed
+  get label(): string {
+    return this._label;
   }
 }

@@ -57,8 +57,8 @@ background: #1F2226;
 max-width: 0;
 min-width: 0;
 transition: max-width 0.2s ease,min-width 0.2s ease;
-top: 0px;
-width: 0px;
+top: 0;
+width: 0;
  .bannerTitle {
     font-family: "Avenir Next";
     font-size: 30px;

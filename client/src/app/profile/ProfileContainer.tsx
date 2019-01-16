@@ -34,19 +34,19 @@ export const StyledProfileContainer = inject('profileStore')
   display: flex;
   justify-content: space-between;
   font-size: 14px;
-  color: #FFFFFF;
+  color: #FFF;
   width: 360px;
   font-family: "Avenir Next";
   
   .profileSection {
   position: absolute;
-  right: 0px;
+  right: 0;
   display: flex;
   align-items: center;
   }
   
   #personIcon {
-    margin: 0px 21px 0px 19px;
+    margin: 0 21px 0 19px;
   }
   
   @media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) { /* For Internet Exploder */

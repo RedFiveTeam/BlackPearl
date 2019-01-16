@@ -134,10 +134,9 @@ export const StyledTabContainer = inject('resourceStore', 'profileStore', 'resou
     width: 30%;
     height: 30px;
     background: #576476;
-    color: #FFFFFF;
+    color: #FFF;
     font-size: 16px;
-    border-radius: 6px 6px 0px 0px;
-    margin-right: 2px;
+    border-radius: 6px 6px 0 0;
     line-height: 36px;
     text-align: center;
     margin-right: 5px;
@@ -168,11 +167,11 @@ export const StyledTabContainer = inject('resourceStore', 'profileStore', 'resou
     height: 25px;
     line-height: 25px;
     width: 219px;
-    background: #FFFFFF;
+    background: #FFF;
     border-radius: 20px;
     padding-left: 2px;
     padding-top: 1px;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
   }
   
   .filterSection > input {
@@ -208,9 +207,9 @@ export const StyledTabContainer = inject('resourceStore', 'profileStore', 'resou
     border-top: none;
     border-left: none;
     border-right: none;
-    border-bottom: 1px solid #FFFFFF;
+    border-bottom: 1px solid #FFF;
     background: none;
-    color: #FFFFFF;
+    color: #FFF;
     border-radius: 0 0 0 0;
     font-size: 12px;
     outline: none;

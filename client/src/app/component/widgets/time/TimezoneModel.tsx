@@ -18,6 +18,26 @@ export class TimezoneModel {
     this._name = name;
   }
 
+  @action.bound
+  setZone(zone: string) {
+    this._zone = zone;
+  }
+
+  @action.bound
+  setName(name: string) {
+    this._name = name;
+  }
+
+  @action.bound
+  setId(id: number) {
+    this._id = id;
+  }
+
+  @action.bound
+  setPosition(position: number) {
+    this._position = position;
+  }
+
   @computed
   get id() {
     return this._id;
@@ -36,15 +56,5 @@ export class TimezoneModel {
   @computed
   get name() {
     return this._name;
-  }
-
-  @action.bound
-  setZone(zone: string) {
-    this._zone = zone;
-  }
-
-  @action.bound
-  setName(name: string) {
-    this._name = name;
   }
 }

@@ -73,10 +73,8 @@ export const StyledAcronymContainer = inject('acronymStore', 'acronymActions', '
   width: 95%;
   height: 120px;
   transition: height ease-in 0.5s;
-  //margin-left: 7px;
   border-radius: 4px;
-  //margin-top: 30px;
-  box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.3);
   margin: auto;
   
   .title {
@@ -91,7 +89,7 @@ export const StyledAcronymContainer = inject('acronymStore', 'acronymActions', '
     outline: none;
     border: none;
     background: #292E33;
-    color: #FFFFFF;
+    color: #FFF;
     border-bottom: 1px solid #93A7C3;
     :focus {
       border-bottom: 2px solid #6C9CD5;
@@ -109,7 +107,7 @@ export const StyledAcronymContainer = inject('acronymStore', 'acronymActions', '
   font-size: 13px;
   background: #292E33;
   text-align: left;
-  color: #FFFFFF;
+  color: #FFF;
   margin-left: 10px;
   transition: height ease-in 0.5s;
   } 

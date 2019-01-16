@@ -24,7 +24,8 @@ describe('TabContainer', () => {
     };
 
     profileActions = {
-      updateSort: jest.fn()
+      updateSort: jest.fn(),
+      changeDefaultTab: jest.fn()
     };
 
     subject = shallow(
@@ -44,8 +45,8 @@ describe('TabContainer', () => {
     expect(subject.find('.tab3').text()).toBe('Fusion');
   });
 
-  it('should change the active tab', () => {
-    (subject.instance() as TabContainer).clickTab(2);
+  it('should change the active tab', async () => {
+    await (subject.instance() as TabContainer).clickTab(2);
     expect(resourceStore.setActiveTab).toHaveBeenCalledWith(2);
   });
 

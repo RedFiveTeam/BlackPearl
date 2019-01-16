@@ -41,16 +41,4 @@ public class Resource {
         this.setClicked(json.getClicked());
         return this;
     }
-
-    public static Resource fromJSON(ResourceJSON json) {
-        return new Resource(
-                json.getId(),
-                json.getUrl(),
-                json.getName(),
-                json.getCategoryID(),
-                json.getAccountID(),
-                json.getPosition(),
-                json.getClicked()
-        );
-    }
 }

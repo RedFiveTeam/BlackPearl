@@ -12,16 +12,6 @@ export class TimeModel {
     this._zones = zones;
   }
 
-  @computed
-  get timestamp(): string {
-    return this._timestamp;
-  }
-
-  @computed
-  get zones(): {}[] {
-    return this._zones;
-  }
-
   @action.bound
   setTimestamp(value: string) {
     this._timestamp = value;
@@ -32,4 +22,13 @@ export class TimeModel {
     this._zones = zones;
   }
 
+  @computed
+  get timestamp(): string {
+    return this._timestamp;
+  }
+
+  @computed
+  get zones(): {}[] {
+    return this._zones;
+  }
 }

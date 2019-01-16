@@ -105,8 +105,8 @@ export class AcronymTab extends React.Component<Props, State> {
               return (
                 <StyledAdminAcronymRow
                   acronym={acronym}
-                  onDeleteClick={(a: AcronymModel) => {
-                    this.onDeleteClick(a);
+                  onDeleteClick={async (a: AcronymModel) => {
+                    await this.onDeleteClick(a);
                   }}
                   onSaveClick={async (a: AcronymModel) => {
                     await this.onSaveClick(a);

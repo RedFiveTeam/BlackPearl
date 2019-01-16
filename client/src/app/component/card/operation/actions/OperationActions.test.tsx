@@ -19,7 +19,7 @@ describe('OperationActions', () => {
       pendingEdit: jest.fn(),
       setPendingEdit: jest.fn(),
       setPendingDelete: jest.fn(),
-      clearPendingDelete: jest.fn()
+      clearPendingDelete: jest.fn(),
       performLoading: async (fun: any) => { await fun(); }
     };
 

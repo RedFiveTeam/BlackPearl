@@ -1,5 +1,5 @@
 import { TimeModel } from '../TimeModel';
-import { Serializer } from '../../../../utils/serializer';
+import { Serializer } from '../../../../utils/Serializer';
 
 export class TimeSerializer implements Serializer<TimeModel> {
   serialize(item: TimeModel): {} {

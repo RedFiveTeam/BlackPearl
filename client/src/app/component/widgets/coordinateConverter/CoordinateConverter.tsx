@@ -52,7 +52,7 @@ export class CoordinateConverter extends React.Component<Props> {
 export const StyledCoordinateConverter = inject('metricActions')(styled(CoordinateConverter)`
   text-align: center;
   font-size: 24px;
-  color: #FFFFFF;
+  color: #FFF;
   background: #292E33;
   width: 95%;
   height: 145px;
@@ -71,7 +71,7 @@ export const StyledCoordinateConverter = inject('metricActions')(styled(Coordina
     background: #292E33;
     width: 90%;
     height: 20px;
-    color: #FFFFFF;
+    color: #FFF;
     border-bottom: 1px solid #93A7C3;
     :focus {
       border-bottom: 2px solid #6C9CD5;
@@ -86,7 +86,7 @@ export const StyledCoordinateConverter = inject('metricActions')(styled(Coordina
     background: #292E33;
     width: 90%;
     height: 20px;
-    color: #FFFFFF;
+    color: #FFF;
     margin-top: 15px;
     border-bottom: 1px solid #93A7C3;
     :focus {

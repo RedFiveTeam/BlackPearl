@@ -1,13 +1,13 @@
 package mil.af.dgs1sdt.blackpearl.resource.click;
 
-import mil.af.dgs1sdt.blackpearl.metrics.Metric;
-import mil.af.dgs1sdt.blackpearl.metrics.MetricRepository;
 import mil.af.dgs1sdt.blackpearl.resource.Resource;
 import mil.af.dgs1sdt.blackpearl.resource.ResourceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.validation.Valid;
 import java.time.Instant;

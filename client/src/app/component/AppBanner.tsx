@@ -54,12 +54,12 @@ margin-left: -6px;
 background: #2F343B;
 display: flex;
 position: sticky;
-top: 0px;
+top: 0;
 z-index: 5;
 height: 53px;
 width: 100%;
 float: right;
-box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
 color: #F2F2F2;
 
   

@@ -1,4 +1,4 @@
-import { Serializer } from '../../../../utils/serializer';
+import { Serializer } from '../../../../utils/Serializer';
 import { TimezoneModel } from '../TimezoneModel';
 
 export class TimezoneSerializer implements Serializer<TimezoneModel> {

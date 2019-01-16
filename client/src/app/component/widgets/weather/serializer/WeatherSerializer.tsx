@@ -1,4 +1,4 @@
-import { Serializer } from '../../../../utils/serializer';
+import { Serializer } from '../../../../utils/Serializer';
 import { WeatherModel } from '../WeatherModel';
 
 export class WeatherSerializer implements Serializer<WeatherModel> {

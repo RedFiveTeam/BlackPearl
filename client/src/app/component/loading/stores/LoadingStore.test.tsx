@@ -11,5 +11,4 @@ describe('LoadingNotificationStore', () => {
 
     expect(subject.loading).toBeFalsy();
   });
-
 });

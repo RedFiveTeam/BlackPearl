@@ -1,4 +1,4 @@
-import { Serializer } from '../../../utils/serializer';
+import { Serializer } from '../../../utils/Serializer';
 import { ClickModel } from '../ClickModel';
 
 export class ClickSerializer implements Serializer<ClickModel> {

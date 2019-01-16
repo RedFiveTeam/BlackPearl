@@ -1,5 +1,4 @@
 import { MetricsStore } from '../stores/MetricsStore';
-import { UserRepository } from '../../component/metrics/user/UserRepository';
 import { Repositories } from '../../utils/Repositories';
 import { Stores } from '../../utils/Stores';
 import { action } from 'mobx';
@@ -14,18 +13,16 @@ import {
 
 export class MetricsPageActions {
   private metricsStore: MetricsStore;
-  private readonly userRepository: UserRepository;
   private readonly metricRepository: MetricRepository;
 
   constructor(stores: Partial<Stores>, repositories: Partial<Repositories>) {
     this.metricsStore = stores.metricsStore!;
-    this.userRepository = repositories.userRepository!;
     this.metricRepository = repositories.metricRepository!;
   }
 
   @action.bound
   async initializeStores() {
-    await this.metricsStore.hydrate(this.userRepository, this.metricRepository);
+    await this.metricsStore.hydrate(this.metricRepository);
     await this.buildMetrics(Number.MAX_SAFE_INTEGER);
   }
 

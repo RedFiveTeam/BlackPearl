@@ -16,8 +16,6 @@ interface Props {
 
 @observer
 export class MeasurementConverter extends React.Component<Props> {
-  node: any = this.node;
-
   componentDidMount() {
     document.addEventListener('click', this.handleClick);
   }
@@ -91,7 +89,7 @@ export class MeasurementConverter extends React.Component<Props> {
           <div className="d">
             <button
               className="b"
-              onClick={(e: any) => {
+              onClick={() => {
                 (document.querySelectorAll('.dd')[0] as HTMLElement).style.display = 'block';
               }}
             >
@@ -157,7 +155,7 @@ export class MeasurementConverter extends React.Component<Props> {
           <div className="d">
             <button
               className="b"
-              onClick={(e: any) => {
+              onClick={() => {
                 (document.querySelectorAll('.dd')[1] as HTMLElement).style.display = 'block';
               }}
             >

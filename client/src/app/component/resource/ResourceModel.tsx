@@ -57,36 +57,6 @@ export class ResourceModel {
     this._position = position;
   }
 
-  @computed
-  get id(): number | null {
-    return this._id;
-  }
-
-  @computed
-  get url(): string {
-    return this._url;
-  }
-
-  @computed
-  get name(): string {
-    return this._name;
-  }
-
-  @computed
-  get categoryID(): number | null {
-    return this._categoryID;
-  }
-
-  @computed
-  get accountID(): string {
-    return this._accountID;
-  }
-
-  @computed
-  get position(): number | null {
-    return this._position;
-  }
-
   @action.bound
   setId(value: number | null) {
     this._id = value;
@@ -115,5 +85,35 @@ export class ResourceModel {
   @action.bound
   setPosition(value: number) {
     this._position = value;
+  }
+
+  @computed
+  get id(): number | null {
+    return this._id;
+  }
+
+  @computed
+  get url(): string {
+    return this._url;
+  }
+
+  @computed
+  get name(): string {
+    return this._name;
+  }
+
+  @computed
+  get categoryID(): number | null {
+    return this._categoryID;
+  }
+
+  @computed
+  get accountID(): string {
+    return this._accountID;
+  }
+
+  @computed
+  get position(): number | null {
+    return this._position;
   }
 }

@@ -3,7 +3,6 @@ import { inject, observer } from 'mobx-react';
 import styled from 'styled-components';
 import { StyledOperationMenuContainer } from './OperationMenuContainer';
 import { OperationModel } from './OperationModel';
-import { OperationMenuStore } from './stores/OperationMenuStore';
 import { OperationStore } from './stores/OperationStore';
 import classNames = require('classnames');
 import { LogableActions } from '../../metrics/metric/MetricModel';
@@ -63,7 +62,6 @@ export class Operation extends React.Component<Props, State> {
         </a>
         <StyledOperationMenuContainer
           operation={this.props.operation}
-          operationMenuStore={new OperationMenuStore()}
         />
       </div>
     );

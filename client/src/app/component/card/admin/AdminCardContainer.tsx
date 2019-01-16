@@ -23,9 +23,6 @@ interface Props {
 
 @observer
 export class AdminCardContainer extends React.Component<Props> {
-  constructor(props: any) {
-    super(props);
-  }
 
   async componentDidMount() {
     this.props.adminStore!.setCurrentTab('General Info');

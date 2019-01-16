@@ -121,6 +121,14 @@ export class ResourceStore extends LoadingStore {
     });
   }
 
+  returnResourcesInCategory(categoryID: number) {
+    const resources = (this._filteredResources.length > 0 || this._filter.length > 0) && categoryID > 0 ?
+      this._filteredResources : this._resources;
+    return resources.filter(r => r.categoryID === categoryID).map((obj: ResourceModel) => {
+      return obj;
+    });
+  }
+
   @computed
   get activeTab() {
     return this._activeTab;
@@ -159,14 +167,6 @@ export class ResourceStore extends LoadingStore {
   @computed
   get filter() {
     return this._filter;
-  }
-
-  returnResourcesInCategory(categoryID: number) {
-    const resources = (this._filteredResources.length > 0 || this._filter.length > 0) && categoryID > 0 ?
-      this._filteredResources : this._resources;
-    return resources.filter(r => r.categoryID === categoryID).map((obj: ResourceModel) => {
-      return obj;
-    });
   }
 
   @computed

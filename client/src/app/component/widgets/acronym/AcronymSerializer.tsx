@@ -1,4 +1,4 @@
-import { Serializer } from '../../../utils/serializer';
+import { Serializer } from '../../../utils/Serializer';
 import { AcronymModel } from './AcronymModel';
 
 export class AcronymSerializer implements Serializer<AcronymModel> {

@@ -3,6 +3,34 @@ let homeAssert = require('assert');
 
 Feature('Home Page');
 
+
+Scenario('should allow users to convert coordinates', async (I) => {
+  I.haveHeader('Authorization', 'Basic Q1JPU1MuSk9SREFOLk1JRERMRS4wMTIzNDU2Nzg5Og==');
+  I.amOnPage('/');
+  I.waitForElement('.latLongInput', 10);
+  I.fillField('.latLongInput', '37° 8\'1.97"N 76° 6\'30.23"W');
+  let mgrsValue = await I.grabValueFrom('.mgrsInput');
+  homeAssert.strictEqual(mgrsValue, '18SVG0155110299');
+  I.fillField('.mgrsInput', '18SVG0493917349');
+  let latLongValue = await I.grabValueFrom('.latLongInput');
+  homeAssert.strictEqual(latLongValue, '371152N 0760416W');
+});
+
+Scenario('should display a list of acronyms', (I) => {
+  I.haveHeader('Authorization', 'Basic Q1JPU1MuSk9SREFOLk1JRERMRS4wMTIzNDU2Nzg5Og==');
+  I.amOnPage('/');
+  I.fillField('.acronymSearch', 'AAM');
+  I.waitForText("AAM - air-to-air missile", 10, ".acronym");
+});
+
+Scenario('should see 4 weather links', async (I) => {
+  I.haveHeader('Authorization', 'Basic Q1JPU1MuSk9SREFOLk1JRERMRS4wMTIzNDU2Nzg5Og==');
+  I.amOnPage('/');
+  I.waitForElement('.weatherURL', 10);
+  let weatherCount = await I.grabNumberOfVisibleElements('.weatherURL');
+  homeAssert.strictEqual(weatherCount, 4);
+});
+
 Scenario('should convert measurements', async (I) => {
   I.haveHeader('Authorization', 'Basic Q1JPU1MuSk9SREFOLk1JRERMRS4wMTIzNDU2Nzg5Og==');
   I.amOnPage('/');
@@ -23,55 +51,12 @@ Scenario('should see an ATO day', (I) => {
   I.see("ATO ", ".atoDay");
 });
 
-Scenario('should be able to search resources', (I) => {
-  I.haveHeader('Authorization', 'Basic Q1JPU1MuSk9SREFOLk1JRERMRS4wMTIzNDU2Nzg5Og==');
-  I.amOnPage('/');
-  I.fillField('.filterSection > input', 'Amazon');
-  I.dontSee('YouTube');
-  I.see(' Amazon');
-});
-
 Scenario('should render six clocks', async function (I) {
   I.haveHeader('Authorization', 'Basic Q1JPU1MuSk9SREFOLk1JRERMRS4wMTIzNDU2Nzg5Og==');
   I.amOnPage('/');
   I.waitForElement('.clock', 10);
   const clockCount = await I.grabNumberOfVisibleElements('.clock');
   homeAssert.strictEqual(clockCount, 6);
-});
-
-Scenario('should see a toast when clicking element in general info card', (I) => {
-  I.haveHeader('Authorization', 'Basic Q1JPU1MuSk9SREFOLk1JRERMRS4wMTIzNDU2Nzg5Og==');
-  I.amOnPage('/');
-  I.click('.row:first-of-type > div:first-of-type');
-  I.waitForElement('.customToast', 10);
-});
-
-Scenario('should render three unique cards', (I) => {
-  I.haveHeader('Authorization', 'Basic Q1JPU1MuSk9SREFOLk1JRERMRS4wMTIzNDU2Nzg5Og==');
-  I.amOnPage('/');
-  I.click('.tab:nth-of-type(1) > div', '.tabContainer');
-  I.waitForText("Main", 10);
-  I.see("Main", ".cardTitle");
-  I.see("Situational Awareness", ".cardTitle");
-  I.see("Target Research", ".cardTitle");
-  I.see("Google", ".category1 .resource");
-  I.see("YouTube", ".category2 .resource");
-  I.see("Reddit", ".category3 .resource");
-});
-
-Scenario('should display a list of acronyms', (I) => {
-  I.haveHeader('Authorization', 'Basic Q1JPU1MuSk9SREFOLk1JRERMRS4wMTIzNDU2Nzg5Og==');
-  I.amOnPage('/');
-  I.fillField('.acronymSearch', 'AAM');
-  I.waitForText("AAM - air-to-air missile", 10, ".acronym");
-});
-
-Scenario('should see 4 weather links', async (I) => {
-  I.haveHeader('Authorization', 'Basic Q1JPU1MuSk9SREFOLk1JRERMRS4wMTIzNDU2Nzg5Og==');
-  I.amOnPage('/');
-  I.waitForElement('.weatherURL', 10);
-  let weatherCount = await I.grabNumberOfVisibleElements('.weatherURL');
-  homeAssert.strictEqual(weatherCount, 4);
 });
 
 Scenario('should see a general information card', (I) => {
@@ -86,37 +71,6 @@ Scenario('should see a general information card', (I) => {
   I.see('DSN', '.info');
   I.see('SVOIP', '.info');
   I.see('TSVOIP', '.info');
-});
-
-Scenario('should allow users to convert coordinates', async (I) => {
-  I.haveHeader('Authorization', 'Basic Q1JPU1MuSk9SREFOLk1JRERMRS4wMTIzNDU2Nzg5Og==');
-  I.amOnPage('/');
-  I.waitForElement('.latLongInput', 10);
-  I.fillField('.latLongInput', '37° 8\'1.97"N 76° 6\'30.23"W');
-  let mgrsValue = await I.grabValueFrom('.mgrsInput');
-  homeAssert.strictEqual(mgrsValue, '18SVG0155110299');
-  I.fillField('.mgrsInput', '18SVG0493917349');
-  let latLongValue = await I.grabValueFrom('.latLongInput');
-  homeAssert.strictEqual(latLongValue, '371152N 0760416W');
-});
-
-Scenario('should allow the user to change tabs and see specialty resources', (I) => {
-  I.haveHeader('Authorization', 'Basic Q1JPU1MuSk9SREFOLk1JRERMRS4wMTIzNDU2Nzg5Og==');
-  I.amOnPage('/');
-  I.click('.tab:nth-of-type(1) > div', '.tabContainer');
-  I.see('FMV Amazon');
-  I.see('FMV YouTube');
-  I.see('FMV Reddit');
-
-  I.click('.tab:nth-of-type(2) > div', '.tabContainer');
-  I.see('HA Amazon');
-  I.see('HA YouTube');
-  I.see('HA Reddit');
-
-  I.click('.tab:nth-of-type(3) > div', '.tabContainer');
-  I.see('Fusion Amazon');
-  I.see('Fusion YouTube');
-  I.see('Fusion Reddit');
 });
 
 Scenario('should allow the user to add, edit and delete an operation', async (I) => {
@@ -153,6 +107,53 @@ Scenario('should allow the user to add, edit and delete an operation', async (I)
   I.click('DELETE');
   I.waitForText('Operation Deleted', 10);
   I.dontSee(name);
+});
+
+Scenario('should see a toast when clicking element in general info card', (I) => {
+  I.haveHeader('Authorization', 'Basic Q1JPU1MuSk9SREFOLk1JRERMRS4wMTIzNDU2Nzg5Og==');
+  I.amOnPage('/');
+  I.click('.row:first-of-type > div:first-of-type');
+  I.waitForElement('.customToast', 10);
+});
+
+Scenario('should be able to search resources', (I) => {
+  I.haveHeader('Authorization', 'Basic Q1JPU1MuSk9SREFOLk1JRERMRS4wMTIzNDU2Nzg5Og==');
+  I.amOnPage('/');
+  I.fillField('.filterSection > input', 'Amazon');
+  I.dontSee('YouTube');
+  I.see(' Amazon');
+});
+
+Scenario('should render three unique cards', (I) => {
+  I.haveHeader('Authorization', 'Basic Q1JPU1MuSk9SREFOLk1JRERMRS4wMTIzNDU2Nzg5Og==');
+  I.amOnPage('/');
+  I.click('.tab:nth-of-type(1) > div', '.tabContainer');
+  I.waitForText("Main", 10);
+  I.see("Main", ".cardTitle");
+  I.see("Situational Awareness", ".cardTitle");
+  I.see("Target Research", ".cardTitle");
+  I.see("Google", ".category1 .resource");
+  I.see("YouTube", ".category2 .resource");
+  I.see("Reddit", ".category3 .resource");
+});
+
+Scenario('should allow the user to change tabs and see specialty resources', (I) => {
+  I.haveHeader('Authorization', 'Basic Q1JPU1MuSk9SREFOLk1JRERMRS4wMTIzNDU2Nzg5Og==');
+  I.amOnPage('/');
+  I.click('.tab:nth-of-type(1) > div', '.tabContainer');
+  I.see('FMV Amazon');
+  I.see('FMV YouTube');
+  I.see('FMV Reddit');
+
+  I.click('.tab:nth-of-type(2) > div', '.tabContainer');
+  I.see('HA Amazon');
+  I.see('HA YouTube');
+  I.see('HA Reddit');
+
+  I.click('.tab:nth-of-type(3) > div', '.tabContainer');
+  I.see('Fusion Amazon');
+  I.see('Fusion YouTube');
+  I.see('Fusion Reddit');
 });
 
 Scenario('should allow the user to add a local resource', async (I) => {

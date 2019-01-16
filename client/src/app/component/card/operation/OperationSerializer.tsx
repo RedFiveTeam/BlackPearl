@@ -1,4 +1,4 @@
-import { Serializer } from '../../../utils/serializer';
+import { Serializer } from '../../../utils/Serializer';
 import { OperationModel } from './OperationModel';
 
 export class OperationSerializer implements Serializer<OperationModel> {

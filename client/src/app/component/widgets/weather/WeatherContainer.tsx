@@ -61,8 +61,8 @@ width: 95%;
 height: 141px;
 padding-bottom: 10px;
 background: #292E33;
-color: #FFFFFF;
-box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.3);
+color: #FFF;
+box-shadow: 0 3px 6px rgba(0, 0, 0, 0.3);
 border-radius: 4px;
 display: flex;
 flex-wrap: wrap;
@@ -100,7 +100,7 @@ a {
   font-size: 24px;
   line-height: 40px;
   text-align: center;
-  color: #FFFFFF;
+  color: #FFF;
   background: rgba(141, 141, 141, 0.5);
   border-radius: 4px;
   box-shadow: -1px 3px 3px rgba(0, 0, 0, .4);
@@ -111,5 +111,4 @@ a {
     margin: auto;
   }
 }
-
 `);

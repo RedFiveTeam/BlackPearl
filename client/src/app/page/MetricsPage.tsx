@@ -279,13 +279,13 @@ export const StyledMetricsPage = inject('metricsPageActions', 'metricsStore', 'm
     margin-left: 5px;
     background: none;
     padding-right: 25px;
-    color: #FFFFFF;
+    color: #FFF;
     outline: none;
     width: auto;
   }
   
   .pageTitle {
-    color: #FFFFFF;
+    color: #FFF;
     font-size: 48px;
     margin: 20px 0 20px 74px;
   }
@@ -303,7 +303,7 @@ export const StyledMetricsPage = inject('metricsPageActions', 'metricsStore', 'm
   
   .topTitle {
     font-size: 30px;
-    color: #fff;
+    color: #FFF;
     margin-bottom: 8px;
   }
   
@@ -321,7 +321,7 @@ export const StyledMetricsPage = inject('metricsPageActions', 'metricsStore', 'm
   
   .spacer {
     position: relative;
-    left: 0px;
+    left: 0;
     bottom: 3px;
     height: 22px;
     border-left: 1px solid #686868;
@@ -347,7 +347,7 @@ export const StyledMetricsPage = inject('metricsPageActions', 'metricsStore', 'm
   
   .topItem > div:first-of-type {
     position: relative;
-    left: 0px;
+    left: 0;
     width: 350px;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -357,7 +357,6 @@ export const StyledMetricsPage = inject('metricsPageActions', 'metricsStore', 'm
     position: relative;
     margin-left: 20px;
     bottom: 8px;
-    position: relative;
   }
   
   .number {
@@ -401,7 +400,7 @@ export const StyledMetricsPage = inject('metricsPageActions', 'metricsStore', 'm
   }
   
   td {
-    padding: 0px;
+    padding: 0;
     font-size: 18px;
     white-space: nowrap;
     text-overflow: ellipsis;
