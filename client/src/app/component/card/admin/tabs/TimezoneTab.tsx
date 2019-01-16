@@ -138,6 +138,10 @@ select {
   border-radius: 0;
 }
 
+select option {
+  background-color: grey;
+}
+
 svg {
   position: relative;
   right: 15px;
@@ -153,10 +157,6 @@ svg > path {
 @media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) { /* For Internet Exploder */
   .dropIcon {
     display: none;
-  }
-  
-  select option {
-    background-color: grey;
   }
 }
 `);

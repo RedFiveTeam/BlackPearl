@@ -39,10 +39,11 @@ describe('TabContainer', () => {
   });
 
   it('should render tabs', () => {
-    expect(subject.find('.tab').length).toBe(3);
+    expect(subject.find('.tab').length).toBe(4);
     expect(subject.find('.tab1').text()).toBe('FMV');
     expect(subject.find('.tab2').text()).toBe('High Alt');
     expect(subject.find('.tab3').text()).toBe('Fusion');
+    expect(subject.find('.tab4').text()).toBe('SIGINT');
   });
 
   it('should change the active tab', async () => {

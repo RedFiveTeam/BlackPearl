@@ -11,6 +11,9 @@ export class MeasurementConverterActions {
 
   @action.bound
   convertInputToFeet(inputMeasurement: number) {
+    if (isNaN(inputMeasurement)) {
+      return '';
+    }
     this.measurementConverterStore.setInputConversionNumber(inputMeasurement);
     let conversionType = this.measurementConverterStore.typeOfConversion;
     let convertedValue: number;
@@ -27,13 +30,11 @@ export class MeasurementConverterActions {
       case 'yd':
         convertedValue = inputMeasurement * 3;
         break;
-      case 'ft':
-        convertedValue = inputMeasurement;
-        break;
       case 'km':
         convertedValue = inputMeasurement * 3280.84;
         break;
       default:
+        convertedValue = inputMeasurement * 1;
         break;
     }
     return this.convertFeetToOutput(convertedValue!);
@@ -55,14 +56,12 @@ export class MeasurementConverterActions {
       case 'yd':
         finalConvertedValue = convertedValue / 3;
         break;
-      case 'ft':
-        finalConvertedValue = convertedValue;
-        break;
       case 'km':
         finalConvertedValue = convertedValue * 0.0003048;
         break;
       default:
-        finalConvertedValue = convertedValue;
+        finalConvertedValue = convertedValue * 1;
+        break;
     }
     return finalConvertedValue.toFixed(2);
   }

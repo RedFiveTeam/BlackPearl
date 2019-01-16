@@ -10,7 +10,10 @@ export enum Category {
   HighAlt_TargetResearch = 6,
   Fusion_Main = 7,
   Fusion_SituationalAwareness = 8,
-  Fusion_TargetResearch = 9
+  Fusion_TargetResearch = 9,
+  SIGINT_Main = 10,
+  SIGINT_SituationalAwareness = 11,
+  SIGINT_TargetResearch = 12
 }
 
 export enum CategoryName {
@@ -23,7 +26,10 @@ export enum CategoryName {
   HighAlt_TargetResearch = 'Target Research',
   Fusion_Main = 'Main',
   Fusion_SituationalAwareness = 'Situational Awareness',
-  Fusion_TargetResearch = 'Target Research'
+  Fusion_TargetResearch = 'Target Research',
+  SIGINT_Main = 'Main',
+  SIGINT_SituationalAwareness = 'Situational Awareness',
+  SIGINT_TargetResearch = 'Target Research',
 }
 
 export enum Sort {

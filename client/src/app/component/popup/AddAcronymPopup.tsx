@@ -118,6 +118,7 @@ export const StyledAddAcronymPopup = inject('acronymStore', 'acronymActions')(st
     width: 94px;
     height: 36px;
     outline: none;
+    font-size: 14px;
   }
   
   .group {

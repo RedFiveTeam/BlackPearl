@@ -3,7 +3,7 @@ import { inject, observer } from 'mobx-react';
 import styled from 'styled-components';
 import { StyledButton } from './Button';
 import { OperationActions } from '../card/operation/actions/OperationActions';
-import { AddOperationIcon } from '../../icon/addOperationIcon';
+import { AddResourceIcon } from '../../icon/AddResourceIcon';
 
 interface Props {
   className?: string;
@@ -24,7 +24,7 @@ export class AddOperationButton extends React.Component<Props> {
           }}
         >
           <div className="icon">
-            <AddOperationIcon/>
+            <AddResourceIcon/>
           </div>
         </StyledButton>
       </div>

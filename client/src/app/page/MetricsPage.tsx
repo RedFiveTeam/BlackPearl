@@ -387,6 +387,7 @@ export const StyledMetricsPage = inject('metricsPageActions', 'metricsStore', 'm
     position: absolute;
     right: 33px;
     top: 28px;
+    font-size: 14px;
     background: none;
     border: none;
     color: #76ADED;

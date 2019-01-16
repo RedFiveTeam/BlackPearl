@@ -22,11 +22,13 @@ export class GiffordPage extends React.Component<Props> {
       <div
         className={this.props.className}
       >
+        <br/><br/>
         <div
           className="title"
         >
           Thank you!
         </div>
+        <br/><br/>
         <div
           className="gifford"
         >
@@ -42,6 +44,13 @@ export class GiffordPage extends React.Component<Props> {
           })
         }
         </div>
+        <br/><br/>
+        <div
+          className="groupPicture"
+        >
+          <img src={GroupPicture}/>
+        </div>
+        <br/>
         <div
           className="body"
         >
@@ -49,11 +58,7 @@ export class GiffordPage extends React.Component<Props> {
           Development Team! We have all been having a ton of fun working very hard to help make the mission better
           and would not have been able to do it without you!
         </div>
-        <div
-          className="groupPicture"
-        >
-          <img src={GroupPicture}/>
-        </div>
+        <br/><br/>
       </div>
     );
   }
@@ -62,6 +67,8 @@ export class GiffordPage extends React.Component<Props> {
 export const StyledGiffordPage = inject('metricActions')(styled(GiffordPage)`
 text-align: center;
 font-family: monowidth;
+color: white;
+
 
 .title {
   font-size: 68px;
@@ -70,10 +77,18 @@ font-family: monowidth;
 .gifford {
   font-size: 5px;
   font-family: monospace;
+  background: white;
+  width: 650px;
+  height: 680px;
+  padding-top: 25px;
+  margin: auto;
+  color: black;
 }
 
 .body {
   font-size: 24px;
+  width: 850px;
+  margin: auto;
 }
 
 .groupPicture img{

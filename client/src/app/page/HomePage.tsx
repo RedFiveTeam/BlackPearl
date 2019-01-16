@@ -108,6 +108,7 @@ export class HomePage extends React.Component<Props> {
 
 export const StyledHomePage = inject('resourceStore', 'operationStore', 'metricActions')(styled(HomePage)`
   display: inline-flex;
+  width: 100%;
   
   .customToast {
     width: 520px;

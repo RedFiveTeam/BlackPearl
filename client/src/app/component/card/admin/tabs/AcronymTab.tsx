@@ -182,12 +182,12 @@ table {
         }
     
         th:nth-of-type(1) {
-          width: 14.4%;
+          width: 19.4%;
           padding-left: 3%;
         }
         
         th:nth-of-type(2) {
-          width: 58.5%;
+          width: 53.5%;
         }
     
         th:nth-of-type(3) {
@@ -209,10 +209,10 @@ table {
       width: 94%;
       margin: auto;
         td:nth-of-type(1) {
-    width: 15%;
+    width: 20%;
   }
   td:nth-of-type(2) {
-    width: 75%
+    width: 70%
   }
   td:nth-of-type(3) {
     width: 10%;

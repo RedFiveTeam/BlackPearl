@@ -132,12 +132,12 @@ public class ResourceController {
 
     if (resource.getCategoryID() != 0) {
 
-      String oldName = resource.getName().substring(0, Math.min(resource.getName().length(), 10));
+      String oldName = resource.getName().substring(0, Math.min(resource.getName().length(), 15));
       if (!oldName.equals(resource.getName())) {
         oldName = oldName + "...";
       }
 
-      String newName = json.getName().substring(0, Math.min(json.getName().length(), 10));
+      String newName = json.getName().substring(0, Math.min(json.getName().length(), 15));
       if (!newName.equals(json.getName())) {
         newName = newName + "...";
       }

@@ -30,15 +30,18 @@ export class Card extends React.Component<Props> {
             >
               <div className="cardHeader">
                 {
-                  (this.props.category === 1 || this.props.category === 4 || this.props.category === 7) &&
+                  (this.props.category === 1 || this.props.category === 4 ||
+                    this.props.category === 7 || this.props.category === 10) &&
                   <MainIcon/>
                 }
                 {
-                  (this.props.category === 2 || this.props.category === 5 || this.props.category === 8) &&
+                  (this.props.category === 2 || this.props.category === 5 ||
+                    this.props.category === 8 || this.props.category === 11) &&
                   <SituationalAwarenessIcon/>
                 }
                 {
-                  (this.props.category === 3 || this.props.category === 6 || this.props.category === 9) &&
+                  (this.props.category === 3 || this.props.category === 6 ||
+                    this.props.category === 9 || this.props.category === 12) &&
                   <TargetResearchIcon/>
                 }
                 {

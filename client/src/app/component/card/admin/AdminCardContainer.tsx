@@ -180,6 +180,9 @@ transform: translate(-50%, -50%);
   background: none;
   border: none;
   color: #76ADED;
+  font-size: 14px;
+  cursor: pointer;
+  outline: none;
 }
 
 .saveButton {
@@ -191,5 +194,8 @@ transform: translate(-50%, -50%);
   border: none;
   color: #FFFFFF;
   margin-right: 5%;
+  font-size: 14px;
+  cursor: pointer;
+  outline: none;
 }
 `);

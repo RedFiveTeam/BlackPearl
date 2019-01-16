@@ -16,8 +16,8 @@ interface Props {
 
 @observer
 export class CoordinateConverter extends React.Component<Props> {
-  @observable latLong = this.props.latLong;
-  @observable mgrs = this.props.mgrs;
+  @observable latLong = this.props.latLong ? this.props.latLong : '';
+  @observable mgrs = this.props.mgrs ? this.props.mgrs : '';
 
   componentWillReceiveProps(newProps: Props) {
     this.latLong = newProps.latLong;
@@ -71,13 +71,14 @@ export const StyledCoordinateConverter = inject('metricActions')(styled(Coordina
     background: #292E33;
     width: 90%;
     height: 20px;
-    color: #FFF;
-    border-bottom: 1px solid #93A7C3;
+    color: #FFFFFF;
+    border-bottom: 1px solid rgba(255,255,255,0.2);
+    font-weight: 100;
     :focus {
-      border-bottom: 2px solid #6C9CD5;
+      border-bottom: 1px solid #6C9CD5;
     }
     ::placeholder {
-       color: #93A7C3;
+       color: rgba(255, 255, 255, 0.2);
        font-weight: 100;
     }
   }
@@ -88,12 +89,13 @@ export const StyledCoordinateConverter = inject('metricActions')(styled(Coordina
     height: 20px;
     color: #FFF;
     margin-top: 15px;
-    border-bottom: 1px solid #93A7C3;
+    border-bottom: 1px solid rgba(255,255,255,0.2);
+    font-weight: 100;
     :focus {
-      border-bottom: 2px solid #6C9CD5;
+      border-bottom: 1px solid #6C9CD5;
     }
     ::placeholder {
-       color: #93A7C3;
+       color: rgba(255, 255, 255, 0.2);
        font-weight: 100;
     }
   }
@@ -106,4 +108,5 @@ export const StyledCoordinateConverter = inject('metricActions')(styled(Coordina
     border: none;
     outline: none;
   }
+
 `);

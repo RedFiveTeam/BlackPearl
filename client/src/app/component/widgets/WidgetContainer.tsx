@@ -53,12 +53,12 @@ export class WidgetContainer extends React.Component<Props> {
 }
 
 export const StyledWidgetContainer = styled(WidgetContainer)`
-background: #1F2226;
 max-width: 0;
 min-width: 0;
 transition: max-width 0.2s ease,min-width 0.2s ease;
-top: 0;
-width: 0;
+top: 0px;
+width: 0px;
+
  .bannerTitle {
     font-family: "Avenir Next";
     font-size: 30px;
@@ -68,8 +68,9 @@ width: 0;
   .widgetSection {
     position: fixed;
     width: 354px;
-
     margin-right: 6px;
+    background: #1F2226;
+    height: 100%;
   }
      
  .topBar {

@@ -52,7 +52,7 @@ export const StyledResourceMenuContainer = inject(
   width: 18%;
   align-items: center;
   justify-content: flex-end;
-  right: 20px;
+  right: 10px;
   z-index: 1;
   display: flex;
   opacity: 0;

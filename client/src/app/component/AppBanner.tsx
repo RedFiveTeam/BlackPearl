@@ -38,7 +38,7 @@ export class AppBanner extends React.Component<Props> {
             onClick={this.toggleMenu}
           />
         </div>
-        <StyledATODay className="atoDay"/>
+        <StyledATODay/>
         <ATODayBorderIcon/>
         <StyledTimeContainer/>
         <StyledProfileContainer/>
@@ -48,7 +48,6 @@ export class AppBanner extends React.Component<Props> {
 }
 
 export const StyledAppBanner = inject('profileActions')(styled(AppBanner)`
-
 padding-right: 6px;
 margin-left: -6px;
 background: #2F343B;
@@ -61,28 +60,18 @@ width: 100%;
 float: right;
 box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
 color: #F2F2F2;
+  
+#ATODayBorderIcon {
+  height: 53px;
+  margin-right: 15px;
+}
 
-  
-  .atoDay {
-    height: 53px;
-    font-size: 36px;
-    text-shadow: 0px 3px 6px rgba(0, 0, 0, 0.3);
-    font-family: "Avenir Next";
-    font-size: 36px;
-  }
-  
-  #ATODayBorderIcon {
-    height: 53px;
-    margin-right: 15px;
-  }
 
-  
-  .bannerBurger {
+.bannerBurger {
   cursor: pointer;
   left: 8px;
   transition: opacity 0.5s ease-in-out;
-  }
-
+}
 
 @media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) { /* For Internet Exploder */
   position: fixed;

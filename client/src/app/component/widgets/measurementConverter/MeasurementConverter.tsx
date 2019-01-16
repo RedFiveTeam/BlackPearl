@@ -14,8 +14,16 @@ interface Props {
   measurementConverterStore?: MeasurementConverterStore;
 }
 
+interface State {
+  placeholder: string;
+}
+
 @observer
-export class MeasurementConverter extends React.Component<Props> {
+export class MeasurementConverter extends React.Component<Props, State> {
+  state = {placeholder: 'Kilometers'};
+
+  node: any = this.node;
+
   componentDidMount() {
     document.addEventListener('click', this.handleClick);
   }
@@ -34,9 +42,7 @@ export class MeasurementConverter extends React.Component<Props> {
   };
 
   optionSelect = (e: any) => {
-    if ((document.querySelectorAll('.conversionInput')[0] as HTMLInputElement).value === '') {
-      (document.querySelectorAll('.conversionInput')[0] as HTMLInputElement).placeholder = e.target.innerHTML;
-    }
+    this.setState({placeholder: e.target.innerHTML});
     (document.querySelector('button') as HTMLButtonElement).innerText = e.target.dataset.abbrev.toUpperCase();
     this.props.measurementConverterStore!.setTypeOfConversion(e.target.dataset.abbrev);
     (document.querySelectorAll('.dd')[0] as HTMLElement).style.display = 'none';
@@ -76,7 +82,7 @@ export class MeasurementConverter extends React.Component<Props> {
           <input
             type="number"
             className="conversionInput"
-            placeholder="Kilometers"
+            placeholder={this.state.placeholder}
             onClick={async () =>
               await this.props.metricActions!.logMetric(LogableActions.CLICK_MEASUREMENT, 'Convert Measurement')}
             onChange={
