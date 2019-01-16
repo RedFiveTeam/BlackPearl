@@ -48,8 +48,8 @@ export const StyledResourceMenuContainer = inject(
 )
 (styled(ResourceMenuContainer)`
   position: absolute;
-  height: 37px;
-  width: 150px;
+  height: 100%;
+  width: 18%;
   align-items: center;
   justify-content: flex-end;
   right: 20px;
