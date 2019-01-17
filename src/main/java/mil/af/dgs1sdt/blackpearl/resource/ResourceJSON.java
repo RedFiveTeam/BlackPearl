@@ -27,6 +27,8 @@ public class ResourceJSON {
 
     private Long position;
 
+    private Long clicked;
+
     public ResourceJSON(
       String name,
       String url,

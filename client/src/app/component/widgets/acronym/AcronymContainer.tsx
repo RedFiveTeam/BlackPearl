@@ -6,6 +6,7 @@ import { StyledAcronymRow } from './AcronymRow';
 import { AcronymActions } from './actions/AcronymActions';
 import { MetricActions } from '../../metrics/metric/MetricActions';
 import { LogableActions } from '../../metrics/metric/MetricModel';
+import * as ReactDOM from 'react-dom';
 
 interface Props {
   acronymStore?: AcronymStore;
@@ -33,6 +34,14 @@ export class AcronymContainer extends React.Component<Props> {
             await this.props.metricActions!.logMetric(LogableActions.CLICK_ACRONYM, 'AcronymRow');
           }}
           onChange={async (e) => {
+            let ele = (ReactDOM.findDOMNode(this) as HTMLElement).querySelector('.acronymList') as HTMLElement;
+            if (e.target.value === '') {
+              (ReactDOM.findDOMNode(this) as HTMLElement).style.height = '120px';
+              ele.style.height = '27px';
+            } else {
+              (ReactDOM.findDOMNode(this) as HTMLElement).style.height = '350px';
+              ele.style.height = '261px';
+            }
             await this.props.acronymActions!.setFilteredAcronyms(e.target.value);
           }}
         />
@@ -61,12 +70,12 @@ export const StyledAcronymContainer = inject('acronymStore', 'acronymActions', '
   font-size: 24px;
   color: #FFFFFF;
   background: #292E33;
-  width: 340px;
-  height: 200px;
-  margin-left: 7px;
+  width: 95%;
+  height: 120px;
+  transition: height ease-in 0.5s;
   border-radius: 4px;
-  margin-top: 30px;
   box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.3);
+  margin: auto;
   
   .title {
     height: 42px;
@@ -74,31 +83,32 @@ export const StyledAcronymContainer = inject('acronymStore', 'acronymActions', '
   }
   
   .acronymSearch {
-    width: 329px;
+    width: 90%;
     height: 20px;
     font-size: 18px;
     outline: none;
     border: none;
     background: #292E33;
     color: #FFFFFF;
-    border-bottom: 1px solid #93A7C3;
+    border-bottom: 1px solid rgba(255,255,255,0.2);
     :focus {
-      border-bottom: 2px solid #6C9CD5;
+      border-bottom: 1px solid #6C9CD5;
     }
     ::placeholder {
-      color: #93A7C3;
+      color: rgba(255, 255, 255, 0.2);
       font-weight: 100;
     }
   }
 
   .acronymList {
-  height: 107px;
-  width: 324px;
+  height: 27px;
+  width: 90%;
   overflow: auto;
   font-size: 13px;
   background: #292E33;
   text-align: left;
-  color: #FFFFFF;
+  color: #FFF;
   margin-left: 10px;
+  transition: height ease-in 0.5s;
   } 
 `);

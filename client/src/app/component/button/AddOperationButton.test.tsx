@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { shallow, ShallowWrapper } from 'enzyme';
-import { AddOperationIcon } from '../../icon/addOperationIcon';
 import { StyledButton } from './Button';
 import { AddOperationButton } from './AddOperationButton';
+import { AddResourceIcon } from '../../icon/AddResourceIcon';
 
 describe('AddOperationButton', () => {
   let subject: ShallowWrapper;
@@ -24,6 +24,6 @@ describe('AddOperationButton', () => {
   });
 
   it('should have an add operation icon', () => {
-    expect(subject.find(AddOperationIcon).exists()).toBeTruthy();
+    expect(subject.find(AddResourceIcon).exists()).toBeTruthy();
   });
 });

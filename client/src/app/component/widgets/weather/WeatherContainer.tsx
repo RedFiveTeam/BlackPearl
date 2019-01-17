@@ -29,23 +29,27 @@ export class WeatherContainer extends React.Component<Props> {
         >
           Weather
         </div>
-        {
-          this.props.weatherStore!.weather.map((w, index) => {
-            return (
-              <a
-                target="__blank"
-                key={index}
-                className={'weatherURL weather' + index}
-                onClick={async () => {
-                  await this.props.metricActions!.logMetric(LogableActions.CLICK_WEATHER, w.label);
-                }}
-                href={w.url}
-              >
-                <div key={index} className="weatherLabel">{w.label}</div>
-              </a>
-            );
-          })
-        }
+        <div
+          className="weatherWidgetBody"
+        >
+          {
+            this.props.weatherStore!.weather.map((w, index) => {
+              return (
+                <a
+                  target="__blank"
+                  key={index}
+                  className={'weatherURL weather' + index}
+                  onClick={async () => {
+                    await this.props.metricActions!.logMetric(LogableActions.CLICK_WEATHER, w.label);
+                  }}
+                  href={w.url}
+                >
+                  <div key={index} className="weatherLabel">{w.label}</div>
+                </a>
+              );
+            })
+          }
+        </div>
       </div>
     );
   }
@@ -53,11 +57,12 @@ export class WeatherContainer extends React.Component<Props> {
 
 export const StyledWeatherContainer = inject('weatherStore', 'weatherActions', 'metricActions')
 (styled(WeatherContainer)`
-width: 340px;
+width: 95%;
 height: 141px;
+padding-bottom: 10px;
 background: #292E33;
-color: #FFFFFF;
-box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.3);
+color: #FFF;
+box-shadow: 0 3px 6px rgba(0, 0, 0, 0.3);
 border-radius: 4px;
 display: flex;
 flex-wrap: wrap;
@@ -78,20 +83,32 @@ a {
   padding-top: 8px;
 }
 
+.weatherWidgetBody {
+  width: 95%;
+  display: flex;
+  flex-wrap: wrap;
+}
+
 .weatherURL {
   text-decoration: none;
+  width: 48%;
+  margin: auto;
 }
 
 .weatherLabel {
-  width: 158px;
   height: 40px;
   font-size: 24px;
   line-height: 40px;
   text-align: center;
-  color: #FFFFFF;
+  color: #FFF;
   background: rgba(141, 141, 141, 0.5);
   border-radius: 4px;
   box-shadow: -1px 3px 3px rgba(0, 0, 0, .4);
 }
 
+@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) { /* For Internet Exploder */
+  .weatherWidgetBody {
+    margin: auto;
+  }
+}
 `);

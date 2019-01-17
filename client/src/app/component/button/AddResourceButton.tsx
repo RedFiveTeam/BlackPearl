@@ -30,7 +30,7 @@ export class AddResourceButton extends React.Component<Props> {
             <AddResourceIcon/>
           </div>
           <div className="addResourceTitle">
-          ADD RESOURCE
+            ADD RESOURCE
           </div>
         </StyledButton>
       </div>
@@ -45,12 +45,17 @@ export const StyledAddResourceButton = inject('resourceActions')(styled(AddResou
   .addResourceButton {
     width: 100%;
     height: 76px;
+    line-height: 76px;
     font-size: 14px;
     border: none;
     border-top: 1px solid #8190A5;
     background: #292E33;
     display: flex;
     justify-content: center;
+  }
+  
+  .icon {
+    padding-top: 8px;
   }
   
   .addResourceTitle {

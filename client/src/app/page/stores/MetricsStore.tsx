@@ -1,5 +1,4 @@
 import { action, computed, observable } from 'mobx';
-import { UserRepository } from '../../component/metrics/user/UserRepository';
 import { LogableActions, MetricModel } from '../../component/metrics/metric/MetricModel';
 import { MetricRepository } from '../../component/metrics/metric/MetricRepository';
 import moment = require('moment-timezone');
@@ -10,7 +9,6 @@ export class MetricsStore {
   @observable private _displayData: MetricDisplayModel;
 
   async hydrate(
-    userRepository: UserRepository,
     metricRepository: MetricRepository
   ) {
     this._logins = await metricRepository.findAll();
@@ -31,5 +29,4 @@ export class MetricsStore {
   get displayData() {
     return this._displayData;
   }
-
 }

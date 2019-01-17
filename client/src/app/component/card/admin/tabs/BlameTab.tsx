@@ -91,11 +91,6 @@ export class BlameTab extends React.Component<Props> {
 }
 
 export const StyledBlameTab = inject('adminStore', 'adminActions')(styled(BlameTab)`
-    .scrollView {
-      max-height: 500px;
-      overflow-y: auto;
-    }
-
     .recentChangesTitle {
         text-align: center;
         color: #FFFFFF;

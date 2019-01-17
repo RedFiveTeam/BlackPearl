@@ -13,7 +13,8 @@ export enum LogableActions {
   CLICK_ACRONYM,
   CLICK_WEATHER,
   CLICK_COORD,
-  ADD_FAVORITE
+  ADD_FAVORITE,
+  CLICK_MEASUREMENT
 }
 
 export class MetricModel {

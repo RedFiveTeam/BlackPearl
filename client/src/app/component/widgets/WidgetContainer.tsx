@@ -6,6 +6,7 @@ import { StyledAcronymContainer } from './acronym/AcronymContainer';
 import { StyledCoordinateConverterContainer } from './coordinateConverter/CoordinateConverterContainer';
 import { StyledWeatherContainer } from './weather/WeatherContainer';
 import { StyledHamburgerButton } from '../button/HamburgerButton';
+import { StyledMeasurementConverterContainer } from './measurementConverter/MeasurementConverterContainer';
 
 interface Props {
   className?: string;
@@ -15,8 +16,10 @@ interface Props {
 export class WidgetContainer extends React.Component<Props> {
 
   toggleMenu = () => {
-    let ele = document.querySelector('.widgetSection') as HTMLElement;
-    ele!.style.width = '0px';
+    let ele = document.querySelector('.widgetColumn') as HTMLElement;
+    ele!.style.maxWidth = '0px';
+    ele.style.minWidth = '0px';
+    ele!.style.marginRight = '0px';
     let burger = document.querySelector('.bannerBurger') as HTMLElement;
     burger.style.display = 'block';
     burger.style.opacity = '1';
@@ -25,7 +28,7 @@ export class WidgetContainer extends React.Component<Props> {
 
   render() {
     return (
-      <div>
+      <div className={this.props.className + ' widgetColumn'}>
         <div
           className="widgetSection"
         >
@@ -41,8 +44,8 @@ export class WidgetContainer extends React.Component<Props> {
           </div>
           <StyledAcronymContainer/>
           <StyledCoordinateConverterContainer/>
+          <StyledMeasurementConverterContainer/>
           <StyledWeatherContainer/>
-          <div className="widgetBackground" />
         </div>
       </div>
     );
@@ -50,4 +53,43 @@ export class WidgetContainer extends React.Component<Props> {
 }
 
 export const StyledWidgetContainer = styled(WidgetContainer)`
+max-width: 0;
+min-width: 0;
+transition: max-width 0.2s ease,min-width 0.2s ease;
+top: 0px;
+width: 0px;
+
+ .bannerTitle {
+    font-family: "Avenir Next";
+    font-size: 30px;
+    color: #FBFDFF;
+  }
+  
+  .widgetSection {
+    position: fixed;
+    width: 354px;
+    margin-right: 6px;
+    background: #1F2226;
+    height: 100%;
+  }
+     
+ .topBar {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    white-space: nowrap;
+    height: 53px;
+    align-items: center;
+  }
+  
+    
+  #pearlIcon {
+    margin-left: 14px;
+  }
+  
+  .widgetBurger {
+    cursor: pointer;
+    right: 5px;
+  }
+  
 `;

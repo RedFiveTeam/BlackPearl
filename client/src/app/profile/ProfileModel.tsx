@@ -52,7 +52,7 @@ export class ProfileModel {
   }
 
   @action.bound
-  setcardID(value: string) {
+  setCardID(value: string) {
     this._cardID = value;
   }
 

@@ -17,6 +17,7 @@ describe('ProfileContainer', () => {
     subject = shallow(
       <ProfileContainer
         profileStore={profileStore}
+        className="profileSection"
       />
     );
   });

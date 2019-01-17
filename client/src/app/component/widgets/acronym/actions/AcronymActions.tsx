@@ -54,6 +54,16 @@ export class AcronymActions {
   }
 
   @action.bound
+  async updateAcronym(acronym: AcronymModel) {
+    await this.acronymRepository.updateAcronym(acronym);
+    await this.setAllAcronyms();
+    this.acronymStore.setSearch(acronym.acronym);
+
+    await this.setFilteredAcronyms(this.acronymStore.search);
+    toast.success(acronym.acronym + ' Updated');
+  }
+
+  @action.bound
   createPendingDelete(acronym: AcronymModel) {
     this.acronymStore.setPendingDelete(acronym);
   }

@@ -10,7 +10,10 @@ export enum Category {
   HighAlt_TargetResearch = 6,
   Fusion_Main = 7,
   Fusion_SituationalAwareness = 8,
-  Fusion_TargetResearch = 9
+  Fusion_TargetResearch = 9,
+  SIGINT_Main = 10,
+  SIGINT_SituationalAwareness = 11,
+  SIGINT_TargetResearch = 12
 }
 
 export enum CategoryName {
@@ -23,7 +26,10 @@ export enum CategoryName {
   HighAlt_TargetResearch = 'Target Research',
   Fusion_Main = 'Main',
   Fusion_SituationalAwareness = 'Situational Awareness',
-  Fusion_TargetResearch = 'Target Research'
+  Fusion_TargetResearch = 'Target Research',
+  SIGINT_Main = 'Main',
+  SIGINT_SituationalAwareness = 'Situational Awareness',
+  SIGINT_TargetResearch = 'Target Research',
 }
 
 export enum Sort {
@@ -57,36 +63,6 @@ export class ResourceModel {
     this._position = position;
   }
 
-  @computed
-  get id(): number | null {
-    return this._id;
-  }
-
-  @computed
-  get url(): string {
-    return this._url;
-  }
-
-  @computed
-  get name(): string {
-    return this._name;
-  }
-
-  @computed
-  get categoryID(): number | null {
-    return this._categoryID;
-  }
-
-  @computed
-  get accountID(): string {
-    return this._accountID;
-  }
-
-  @computed
-  get position(): number | null {
-    return this._position;
-  }
-
   @action.bound
   setId(value: number | null) {
     this._id = value;
@@ -115,5 +91,35 @@ export class ResourceModel {
   @action.bound
   setPosition(value: number) {
     this._position = value;
+  }
+
+  @computed
+  get id(): number | null {
+    return this._id;
+  }
+
+  @computed
+  get url(): string {
+    return this._url;
+  }
+
+  @computed
+  get name(): string {
+    return this._name;
+  }
+
+  @computed
+  get categoryID(): number | null {
+    return this._categoryID;
+  }
+
+  @computed
+  get accountID(): string {
+    return this._accountID;
+  }
+
+  @computed
+  get position(): number | null {
+    return this._position;
   }
 }

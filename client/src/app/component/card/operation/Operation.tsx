@@ -3,11 +3,11 @@ import { inject, observer } from 'mobx-react';
 import styled from 'styled-components';
 import { StyledOperationMenuContainer } from './OperationMenuContainer';
 import { OperationModel } from './OperationModel';
-import { OperationMenuStore } from './stores/OperationMenuStore';
 import { OperationStore } from './stores/OperationStore';
 import classNames = require('classnames');
 import { LogableActions } from '../../metrics/metric/MetricModel';
 import { MetricActions } from '../../metrics/metric/MetricActions';
+import * as ReactDOM from 'react-dom';
 
 interface Props {
   operation: OperationModel;
@@ -36,6 +36,14 @@ export class Operation extends React.Component<Props, State> {
       <div
         className={classNames(this.props.className, ' operation')}
         style={{'height': (this.state.descHeight + 'px')}}
+        onMouseEnter={(e) => {
+          let ele = (ReactDOM.findDOMNode(this) as HTMLElement).querySelector('.operationMenu') as HTMLElement;
+          ele.style.opacity = '1';
+        }}
+        onMouseLeave={(e) => {
+          let ele = (ReactDOM.findDOMNode(this) as HTMLElement).querySelector('.operationMenu') as HTMLElement;
+          ele.style.opacity = '0';
+        }}
       >
         <a
           onClick={async () => {
@@ -54,7 +62,6 @@ export class Operation extends React.Component<Props, State> {
         </a>
         <StyledOperationMenuContainer
           operation={this.props.operation}
-          operationMenuStore={new OperationMenuStore()}
         />
       </div>
     );

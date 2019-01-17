@@ -1,4 +1,4 @@
-import { Serializer } from '../../../utils/serializer';
+import { Serializer } from '../../../utils/Serializer';
 import { LogableActions, MetricModel } from './MetricModel';
 
 export class MetricSerializer implements Serializer<MetricModel> {

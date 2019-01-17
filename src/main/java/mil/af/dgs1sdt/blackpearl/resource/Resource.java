@@ -21,13 +21,15 @@ public class Resource {
     private Long categoryID;
     private String accountID;
     private Long position;
+    private Long clicked;
 
-    public Resource(String name, String url, Long categoryID, String accountID, Long position) {
+    public Resource(String name, String url, Long categoryID, String accountID, Long position, Long clicked) {
       this.name = name;
       this.url = url;
       this.categoryID = categoryID;
       this.accountID = accountID;
       this.position = position;
+      this.clicked = clicked;
     }
 
     public Resource update(ResourceJSON json) {
@@ -36,17 +38,7 @@ public class Resource {
         this.setUrl(json.getUrl());
         this.setAccountID(json.getAccountID());
         this.setPosition(json.getPosition());
+        this.setClicked(json.getClicked());
         return this;
-    }
-
-    public static Resource fromJSON(ResourceJSON json) {
-        return new Resource(
-                json.getId(),
-                json.getUrl(),
-                json.getName(),
-                json.getCategoryID(),
-                json.getAccountID(),
-                json.getPosition()
-        );
     }
 }

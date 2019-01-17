@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { inject, observer } from 'mobx-react';
+import { observer } from 'mobx-react';
 import styled from 'styled-components';
 import { StyledButton } from './Button';
 import { EditIcon } from '../../icon/EditIcon';
@@ -26,8 +26,7 @@ export class EditButton extends React.Component<Props> {
   }
 }
 
-export const StyledEditButton = inject('resourceActions')(styled(EditButton)`
-  
+export const StyledEditButton = (styled(EditButton)`
   .editButton {
     height: 62px;
     border: none;

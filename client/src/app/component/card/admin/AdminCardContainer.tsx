@@ -23,9 +23,6 @@ interface Props {
 
 @observer
 export class AdminCardContainer extends React.Component<Props> {
-  constructor(props: any) {
-    super(props);
-  }
 
   async componentDidMount() {
     this.props.adminStore!.setCurrentTab('General Info');
@@ -35,9 +32,10 @@ export class AdminCardContainer extends React.Component<Props> {
   @action.bound
   changeTab(e: any) {
     this.props.adminActions!.resetTab();
-    Array.from(document.getElementsByClassName('selected')).forEach((el) => {
-      el.classList.remove('selected');
-    });
+    let selected = document.getElementsByClassName('selected');
+    for (let i = 0; i < selected.length; i++) {
+      selected.item(i)!.classList.remove('selected');
+    }
     e.target.classList.add('selected');
     this.props.adminStore!.setCurrentTab(e.target.getAttribute('data-tab'));
   }
@@ -61,6 +59,7 @@ export class AdminCardContainer extends React.Component<Props> {
         <div
           className="selectors"
         >
+
           <div data-tab="General Info" className="tabSelector selected" onClick={this.changeTab}>
             <InfoIcon/>General Info
           </div>
@@ -181,6 +180,9 @@ transform: translate(-50%, -50%);
   background: none;
   border: none;
   color: #76ADED;
+  font-size: 14px;
+  cursor: pointer;
+  outline: none;
 }
 
 .saveButton {
@@ -192,5 +194,8 @@ transform: translate(-50%, -50%);
   border: none;
   color: #FFFFFF;
   margin-right: 5%;
+  font-size: 14px;
+  cursor: pointer;
+  outline: none;
 }
 `);

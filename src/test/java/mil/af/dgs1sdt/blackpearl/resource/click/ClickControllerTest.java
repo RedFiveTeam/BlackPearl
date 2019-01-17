@@ -22,6 +22,8 @@ public class ClickControllerTest extends BaseIntegrationTest {
   private Resource resource1;
   private Resource resource2;
   private Resource resource3;
+  private Resource resource4;
+  private Resource resource5;
 
   private Click click1;
   private Click click2;
@@ -31,13 +33,17 @@ public class ClickControllerTest extends BaseIntegrationTest {
 
   @Before
   public void setUp() {
-    resource1 = new Resource("Google", "https://www.google.com", 1L, "GUEST.GUEST.GUEST.0123456789", 0L);
-    resource2 = new Resource("Google", "https://www.google.com", 1L, "GUEST.GUEST.GUEST.0123456789", 0L);
-    resource3 = new Resource("Google", "https://www.google.com", 1L, "GUEST.GUEST.GUEST.0123456789", 0L);
+    resource1 = new Resource("Google", "https://www.google.com", 1L, "GUEST.GUEST.GUEST.0123456789", 0L, Instant.now().getEpochSecond());
+    resource2 = new Resource("Google", "https://www.google.com", 1L, "GUEST.GUEST.GUEST.0123456789", 0L, Instant.now().getEpochSecond());
+    resource3 = new Resource("Google", "https://www.google.com", 1L, "GUEST.GUEST.GUEST.0123456789", 0L, Instant.now().getEpochSecond());
+    resource4 = new Resource("Google", "https://www.google.com", 1L, "GUEST.GUEST.GUEST.0123456789", 0L, Instant.now().getEpochSecond());
+    resource5 = new Resource("Google", "https://www.google.com", 1L, "GUEST.GUEST.GUEST.0123456789", 0L, Instant.now().getEpochSecond());
 
     resourceRepository.save(resource1);
     resourceRepository.save(resource2);
     resourceRepository.save(resource3);
+    resourceRepository.save(resource4);
+    resourceRepository.save(resource5);
 
     Long today = (Instant.now().getEpochSecond() / 86400);
 
@@ -100,7 +106,7 @@ public class ClickControllerTest extends BaseIntegrationTest {
       .port(port)
       .contentType("application/json")
       .when()
-      .get(ClickController.URI + "/" + 5)
+      .get(ClickController.URI + "/" + resource5.getId())
       .then()
       .statusCode(200)
       .body("clicks", equalTo(1));

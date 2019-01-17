@@ -63,7 +63,9 @@ export class ResourceStore extends LoadingStore {
 
   @action.bound
   setClicks(clicks: ClickModel[]) {
-    this.resources.filter((r) => r.categoryID !== 0).map((r) => { r.setPosition(0); });
+    this.resources.filter((r) => r.categoryID !== 0).map((r) => {
+      r.setPosition(0);
+    });
     clicks.forEach((c: ClickModel) => {
       this.resources.filter((r) => r.categoryID !== 0)
         .filter((r) => r.id === c.resourceID)
@@ -106,6 +108,27 @@ export class ResourceStore extends LoadingStore {
     );
   }
 
+  @action.bound
+  updateFavoritePositions(res: ResourceModel[]) {
+    res.map((newResource: ResourceModel) => {
+      this.resources.map((oldResource: ResourceModel) => {
+        if (newResource.id === oldResource.id && oldResource.categoryID === 0) {
+          if (newResource.position !== null && oldResource.position !== null) {
+            oldResource.setPosition(newResource!.position!);
+          }
+        }
+      });
+    });
+  }
+
+  returnResourcesInCategory(categoryID: number) {
+    const resources = (this._filteredResources.length > 0 || this._filter.length > 0) && categoryID > 0 ?
+      this._filteredResources : this._resources;
+    return resources.filter(r => r.categoryID === categoryID).map((obj: ResourceModel) => {
+      return obj;
+    });
+  }
+
   @computed
   get activeTab() {
     return this._activeTab;
@@ -144,14 +167,6 @@ export class ResourceStore extends LoadingStore {
   @computed
   get filter() {
     return this._filter;
-  }
-
-  returnResourcesInCategory(categoryID: number) {
-    const resources = (this._filteredResources.length > 0 || this._filter.length > 0)  && categoryID > 0 ?
-      this._filteredResources : this._resources;
-    return resources.filter(r => r.categoryID === categoryID).map((obj: ResourceModel) => {
-      return obj;
-    });
   }
 
   @computed

@@ -58,12 +58,12 @@ public class OperationController {
   Operation update(@Valid @RequestBody OperationJSON json) {
     final Operation operation = operationRepository.getOne(json.getId());
 
-    String oldName = operation.getTitle().substring(0, Math.min(operation.getTitle().length(), 10));
+    String oldName = operation.getTitle().substring(0, Math.min(operation.getTitle().length(), 15));
     if (!oldName.equals(operation.getTitle())) {
       oldName = oldName + "...";
     }
 
-    String newName = json.getTitle().substring(0, Math.min(json.getTitle().length(), 10));
+    String newName = json.getTitle().substring(0, Math.min(json.getTitle().length(), 15));
     if (!newName.equals(json.getTitle())) {
       newName = newName + "...";
     }

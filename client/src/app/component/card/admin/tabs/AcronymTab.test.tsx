@@ -56,9 +56,9 @@ describe('AcronymTab', () => {
     expect(subject.find('.addAcronymButton').text()).toContain('ADD NEW');
   });
 
-  it('should have an acronym search box ', () => {
+  it('should have an acronym search box and table', () => {
     expect(subject.find('.acronymSearch').exists()).toBeTruthy();
-    expect(subject.find('.acronymList').exists()).toBeTruthy();
+    expect(subject.find('table').exists()).toBeTruthy();
   });
 
   it('should update acronym list on type in search box', () => {

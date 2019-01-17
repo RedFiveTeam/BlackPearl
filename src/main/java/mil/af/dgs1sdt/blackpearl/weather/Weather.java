@@ -30,12 +30,4 @@ public class Weather {
     this.setLabel(json.getLabel());
     return this;
   }
-
-  public static Weather fromJSON(WeatherJSON json) {
-    return new Weather(
-      json.getId(),
-      json.getUrl(),
-      json.getLabel()
-    );
-  }
 }

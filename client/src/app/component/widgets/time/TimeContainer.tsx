@@ -39,7 +39,6 @@ export const StyledTimeContainer = inject('timeStore', 'timeActions')(styled(Tim
   display: block;
   
   .timeBanner {
-      width: 340px;
       height: 53px;
       display: flex;
       justify-content: space-between;

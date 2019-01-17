@@ -10,6 +10,8 @@ import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.time.Instant;
+
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.equalTo;
 
@@ -28,12 +30,12 @@ public class ResourceControllerTest extends BaseIntegrationTest {
 
   @Before
   public void setUp() {
-    resource1 = new Resource("Googerbhjwrle", "https://www.gowqeqweogle.com", 1L, "Guest", 0L);
-    resource2 = new Resource("Yahoo", "https://www.yahoo.com", 2L, "Guest", 1L);
-    resource3 = new Resource("eBay", "https://www.ebay.com", 3L, "Guest", 2L);
-    resource4 = new Resource("notGoogle", "https://www.notgoogle.com", 1L, "Guest", 3L);
-    resource5 = new Resource("Jordan's Google", "https://www.google.com", 1L, "JORDAN", 0L);
-    resource6 = new Resource("Jordan's Facebook", "https://www.facebook.com", 1L, "JORDAN", 1L);
+    resource1 = new Resource("Googerbhjwrle", "https://www.gowqeqweogle.com", 1L, "Guest", 0L, Instant.now().getEpochSecond());
+    resource2 = new Resource("Yahoo", "https://www.yahoo.com", 2L, "Guest", 1L, Instant.now().getEpochSecond());
+    resource3 = new Resource("eBay", "https://www.ebay.com", 3L, "Guest", 2L, Instant.now().getEpochSecond());
+    resource4 = new Resource("notGoogle", "https://www.notgoogle.com", 1L, "Guest", 3L, Instant.now().getEpochSecond());
+    resource5 = new Resource("Jordan's Google", "https://www.google.com", 1L, "JORDAN", 0L, Instant.now().getEpochSecond());
+    resource6 = new Resource("Jordan's Facebook", "https://www.facebook.com", 1L, "JORDAN", 1L, Instant.now().getEpochSecond());
 
     resourceRepository.save(resource1);
     resourceRepository.save(resource2);

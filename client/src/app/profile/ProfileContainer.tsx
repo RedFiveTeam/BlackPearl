@@ -16,13 +16,11 @@ export class ProfileContainer extends React.Component<Props> {
       <div
         className={this.props.className}
       >
-        <div className="profileSection">
-          {
-            this.props.profileStore!.profile &&
-            this.props.profileStore!.profile.name
-          }
-          <PersonIcon/>
-        </div>
+        {
+          this.props.profileStore!.profile &&
+          this.props.profileStore!.profile.name
+        }
+        <PersonIcon/>
       </div>
     );
   }
@@ -32,18 +30,14 @@ export const StyledProfileContainer = inject('profileStore')
 (styled(ProfileContainer)`
   align-items: center;
   display: flex;
-  justify-content: space-between;
   font-size: 14px;
   color: #FFFFFF;
-  width: 360px;
   font-family: "Avenir Next";
+  line-height: 100%;
   
-  .profileSection {
-  position: absolute;
-  right: 0px;
-  display: flex;
-  align-items: center;
-  }
+  position: fixed;
+  right: 0;
+  top: 15px;
   
   #personIcon {
     margin: 0px 21px 0px 19px;

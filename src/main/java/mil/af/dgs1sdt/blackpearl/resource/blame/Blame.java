@@ -27,14 +27,4 @@ public class Blame {
     this.user = user;
     this.time = time;
   }
-
-  public static Blame fromJSON(BlameJSON json) {
-    return new Blame(
-      json.getId(),
-      json.getAction(),
-      json.getName(),
-      json.getUser(),
-      json.getTime()
-    );
-  }
 }

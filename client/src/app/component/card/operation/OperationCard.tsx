@@ -44,7 +44,7 @@ export class OperationCard extends React.Component<Props> {
 
 export const StyledOperationCard = inject('operationStore')(styled(OperationCard)`
 width: 100%;
-height: 380px;
+height: auto;
 display: block;
 position: relative;
 
@@ -61,21 +61,17 @@ position: relative;
 }
 
 .operationList {
-  max-height: 331px;
+  max-height: 900px;
   overflow-y: auto;
   border-radius: 0px 0px 10px 10px;
   background-color: #1F2226;
-  height: 330px;
+  height: 90%;
   border: 6px solid #1F2226;
   box-shadow: -1px 3px 3px rgba(0,0,0,.25);
 }
 
 .operationList :first-child {
   margin-top: 0px;
-}
-
-.operationList :last-child {
-  border-radius: 2px 2px 5px 5px;
 }
 
 .addOperationButton {

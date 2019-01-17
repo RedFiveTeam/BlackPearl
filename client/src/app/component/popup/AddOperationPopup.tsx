@@ -244,6 +244,7 @@ export const StyledAddOperationPopup = inject('operationActions', 'metricActions
      border: none;
      width: 94px;
      height: 36px;
+     font-size: 14px;
      }
      
      .titleError, .urlError {

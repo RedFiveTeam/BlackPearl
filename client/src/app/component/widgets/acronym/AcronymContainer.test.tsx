@@ -1,7 +1,8 @@
 import * as React from 'react';
-import { shallow } from 'enzyme';
-import { AcronymContainer } from './AcronymContainer';
+import { mount, shallow } from 'enzyme';
+import { AcronymContainer, StyledAcronymContainer } from './AcronymContainer';
 import { AcronymModel } from './AcronymModel';
+import { Provider } from 'mobx-react';
 
 describe('AcronymContainer', () => {
   let acronymStore: any;
@@ -50,7 +51,15 @@ describe('AcronymContainer', () => {
   });
 
   it('should update acronym list on type in search box', () => {
-    subject.find('.acronymSearch').simulate('change', {target: { value: 'test' }});
+    subject = mount(
+      <Provider
+        acronymStore={acronymStore}
+        acronymActions={acronymActions}
+        metricActions={metricActions}
+      >
+      <StyledAcronymContainer/>
+      </Provider>);
+    subject.find('.acronymSearch').simulate('change', {target: {value: 'test'}});
     expect(acronymActions.setFilteredAcronyms).toHaveBeenCalled();
   });
 });

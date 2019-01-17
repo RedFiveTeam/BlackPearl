@@ -1,4 +1,4 @@
-import { Serializer } from '../../../utils/serializer';
+import { Serializer } from '../../../utils/Serializer';
 import { ResourceModel } from '../ResourceModel';
 
 export class ResourceSerializer implements Serializer<ResourceModel> {

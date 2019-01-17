@@ -1,3 +1,14 @@
+properties(
+    [
+        buildDiscarder(
+            logRotator(
+                numToKeepStr: '10'
+            )
+        ),
+        disableConcurrentBuilds()
+    ]
+)
+
 node ('') {
     stage ('Checkout') {
         if(env.BRANCH_NAME == 'acceptance') {

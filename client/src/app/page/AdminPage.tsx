@@ -18,6 +18,9 @@ interface Props {
 @observer
 export class AdminPage extends React.Component<Props> {
   async componentDidMount() {
+    let ele = (document.querySelector('.pageTitle') as HTMLElement);
+    ele.style.top = (document.querySelector('.selectors')!.getBoundingClientRect().top - 75).toString() + 'px';
+    ele.style.display = 'block';
     await this.props.metricActions!.logMetric(LogableActions.VISIT, 'Admin');
   }
 
@@ -51,8 +54,9 @@ export const StyledAdminPage = inject('adminStore', 'adminActions', 'metricActio
   color: #FFFFFF;
   font-size: 48px;
   position: absolute;
-  top: 73px;
+  top: 10%;
   left: 92px;
+  display: none;
 }
 
  .customToast {
@@ -72,6 +76,12 @@ export const StyledAdminPage = inject('adminStore', 'adminActions', 'metricActio
     
     .Toastify__toast-body {
       margin-left: 20px;
+    }
+  }
+  
+    @media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) { /* For Internet Exploder */
+      .Toastify__toast-body {
+        padding-top: 13px;
     }
   }
 `);

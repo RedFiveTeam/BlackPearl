@@ -42,6 +42,7 @@ export class GeneralInfoTab extends React.Component<Props> {
                   >
                     <input
                       value={i.content}
+                      maxLength={64}
                       onChange={(e) => this.props.adminStore!.setPendingInformationContent(index, e.target.value)}
                       placeholder={this.getPlaceholder(index)}
                     />

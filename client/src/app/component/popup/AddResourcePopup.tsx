@@ -270,6 +270,7 @@ export const StyledAddResourcePopup = inject('resourceActions', 'resourceStore',
     position: absolute;
     right: 34%;
     bottom: 8%;
+    font-size: 14px;
    }
    
    button:focus {
@@ -287,6 +288,7 @@ export const StyledAddResourcePopup = inject('resourceActions', 'resourceStore',
      border: none;
      width: 94px;
      height: 36px;
+     font-size: 14px;
      }
      
      .titleError, .urlError {

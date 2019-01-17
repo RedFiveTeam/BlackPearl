@@ -8,6 +8,7 @@ import { MainIcon } from '../../icon/MainIcon';
 import { SituationalAwarenessIcon } from '../../icon/SituationalAwarenessIcon';
 import { TargetResearchIcon } from '../../icon/TargetResearchIcon';
 import { FavoriteCategoryIcon } from '../../icon/FavoriteCategoryIcon';
+import { Droppable } from 'react-beautiful-dnd';
 
 interface Props {
   category: Category;
@@ -17,42 +18,55 @@ interface Props {
 
 @observer
 export class Card extends React.Component<Props> {
+
   render() {
     return (
-      <div className={this.props.className + ' category' + this.props.category}>
-        <div className="cardHeader">
-          {
-            (this.props.category === 1 || this.props.category === 4 || this.props.category === 7) &&
-            <MainIcon/>
-          }
-          {
-            (this.props.category === 2 || this.props.category === 5 || this.props.category === 8) &&
-            <SituationalAwarenessIcon/>
-          }
-          {
-            (this.props.category === 3 || this.props.category === 6 || this.props.category === 9) &&
-            <TargetResearchIcon/>
-          }
-          {
-            this.props.category === 0 &&
-            <FavoriteCategoryIcon/>
-          }
-          <span
-            className="cardTitle"
-          >
-            {CategoryName[Category[this.props.category]]}
-          </span>
-        </div>
-        <div className="body">
-          <StyledResourceContainer
-            category={this.props.category}
-            resources={this.props.resources}
-          />
-          <StyledAddResourceButton
-            category={this.props.category}
-          />
-        </div>
-      </div>
+      <Droppable droppableId={'category' + this.props.category}>
+        {
+          (provided) => (
+            <div
+              ref={provided.innerRef}
+              className={this.props.className + ' category' + this.props.category}
+            >
+              <div className="cardHeader">
+                {
+                  (this.props.category === 1 || this.props.category === 4 ||
+                    this.props.category === 7 || this.props.category === 10) &&
+                  <MainIcon/>
+                }
+                {
+                  (this.props.category === 2 || this.props.category === 5 ||
+                    this.props.category === 8 || this.props.category === 11) &&
+                  <SituationalAwarenessIcon/>
+                }
+                {
+                  (this.props.category === 3 || this.props.category === 6 ||
+                    this.props.category === 9 || this.props.category === 12) &&
+                  <TargetResearchIcon/>
+                }
+                {
+                  this.props.category === 0 &&
+                  <FavoriteCategoryIcon/>
+                }
+                <span
+                  className="cardTitle"
+                >
+                  {CategoryName[Category[this.props.category]]}
+                </span>
+              </div>
+              <div className="body">
+                <StyledResourceContainer
+                  category={this.props.category}
+                  resources={this.props.resources}
+                />
+                <StyledAddResourceButton
+                  category={this.props.category}
+                />
+              </div>
+            </div>
+          )
+        }
+      </Droppable>
     );
   }
 }
@@ -78,6 +92,7 @@ export const StyledCard = styled(Card)`
    }
    
   .body {
+    transition: opacity ease-in 0.3s;
     margin-top: 5px;
     border-radius: 4px;
     background: #292E33;

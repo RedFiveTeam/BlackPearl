@@ -23,7 +23,7 @@ public class OperationJSON {
   @NotNull(message = emptyFieldMessage)
   private String address;
 
-  public OperationJSON(String title, String description) {
+  public OperationJSON(String title, String description, String address) {
     this.title = title;
     this.description = description;
     this.address = address;

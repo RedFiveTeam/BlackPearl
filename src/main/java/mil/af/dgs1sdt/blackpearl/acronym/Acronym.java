@@ -24,4 +24,11 @@ public class Acronym {
       this.acronym = acronym;
       this.definition = definition;
     }
+
+    public Acronym update (AcronymJSON json) {
+      this.setId(json.getId());
+      this.setAcronym(json.getAcronym());
+      this.setDefinition(json.getDefinition());
+      return this;
+    }
 }

@@ -71,4 +71,11 @@ public class AcronymController {
     }
     return ResponseEntity.noContent().build();
   }
+
+  @PutMapping
+  public @ResponseBody
+  Acronym updateAcronym(@Valid @RequestBody AcronymJSON json) {
+    final Acronym acronym = acronymRepository.getOne(json.getId());
+    return acronymRepository.save(acronym.update(json));
+  }
 }

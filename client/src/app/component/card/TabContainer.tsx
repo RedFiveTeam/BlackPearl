@@ -21,13 +21,15 @@ interface Props {
 export enum Tab {
   FMV = 1,
   HighAlt = 2,
-  Fusion = 3
+  Fusion = 3,
+  SIGINT = 4
 }
 
 export enum TabName {
   FMV = 'FMV',
   HighAlt = 'High Alt',
-  Fusion = 'Fusion'
+  Fusion = 'Fusion',
+  SIGINT = 'SIGINT'
 }
 
 @observer
@@ -131,13 +133,13 @@ export const StyledTabContainer = inject('resourceStore', 'profileStore', 'resou
   .tab {
     display: inline-block;
     z-index: auto;
-    width: 30%;
+    width: 24%;
+    max-width: 300px;
     height: 30px;
     background: #576476;
-    color: #FFFFFF;
+    color: #FFF;
     font-size: 16px;
-    border-radius: 6px 6px 0px 0px;
-    margin-right: 2px;
+    border-radius: 6px 6px 0 0;
     line-height: 36px;
     text-align: center;
     margin-right: 5px;
@@ -151,7 +153,7 @@ export const StyledTabContainer = inject('resourceStore', 'profileStore', 'resou
   }
   
   .tabSection {
-    width: 40%;
+    width: 100%;
   }
   
   .searchSection {
@@ -168,11 +170,15 @@ export const StyledTabContainer = inject('resourceStore', 'profileStore', 'resou
     height: 25px;
     line-height: 25px;
     width: 219px;
-    background: #FFFFFF;
+    background: #576476;
     border-radius: 20px;
     padding-left: 2px;
     padding-top: 1px;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+  }
+  
+  .filterSection > svg > path {
+    fill: #DDD;
   }
   
   .filterSection > input {
@@ -183,6 +189,10 @@ export const StyledTabContainer = inject('resourceStore', 'profileStore', 'resou
     outline: none;
     background: none;
     border: none;
+    color: #FFFFFF;
+    ::placeholder {
+      color: #AAAAAA;
+    }
   }
   
   .sortSection {
@@ -208,9 +218,9 @@ export const StyledTabContainer = inject('resourceStore', 'profileStore', 'resou
     border-top: none;
     border-left: none;
     border-right: none;
-    border-bottom: 1px solid #FFFFFF;
+    border-bottom: 1px solid #FFF;
     background: none;
-    color: #FFFFFF;
+    color: #FFF;
     border-radius: 0 0 0 0;
     font-size: 12px;
     outline: none;

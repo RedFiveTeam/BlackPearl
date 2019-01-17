@@ -109,6 +109,9 @@ export class ResourceActions {
   @action.bound
   async saveResource() {
     if (this.resourceStore.pendingResource != null) {
+      if (this.resourceStore.pendingResource.categoryID === 0) {
+        this.resourceStore.pendingResource.setPosition(this.resourceStore.resources.length);
+      }
       await this.resourceStore.performLoading(async () => {
         await this.resourceRepository.saveResource(this.resourceStore.pendingResource!);
         this.clearPendingResource();
@@ -170,10 +173,12 @@ export class ResourceActions {
   async filterResources(filter: string) {
     const list = this.resourceStore.resources;
     const opts = {
-      keys: ['name', 'url']
+      keys: ['name']
     };
     let results = fuzzysort.go(filter, list, opts);
-    const filteredResources = results.map((r) => { return r.obj; } );
+    const filteredResources = results.map((r) => {
+      return r.obj;
+    });
     this.resourceStore.setFilter(filter);
     this.resourceStore.setFilteredResources(filteredResources);
     await this.sortResources();

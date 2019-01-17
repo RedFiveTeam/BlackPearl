@@ -30,12 +30,4 @@ public class Information {
     this.setContent(json.getContent());
     return this;
   }
-
-  public static Information fromJSON(InformationJSON json) {
-    return new Information(
-      json.getId(),
-      json.getName(),
-      json.getContent()
-    );
-  }
 }
