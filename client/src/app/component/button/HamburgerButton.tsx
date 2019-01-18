@@ -17,7 +17,7 @@ export class HamburgerButton extends React.Component<Props> {
         className={this.props.className}
       >
         <div
-          className={classNames('hamburgerButton', this.props.className)}
+          className={classNames('hamburgerButton')}
           onClick={this.props.onClick}
         >
           <HamburgerMenuIcon/>

@@ -36,13 +36,17 @@ export class Operation extends React.Component<Props, State> {
       <div
         className={classNames(this.props.className, ' operation')}
         style={{'height': (this.state.descHeight + 'px')}}
-        onMouseEnter={(e) => {
+        onMouseEnter={() => {
           let ele = (ReactDOM.findDOMNode(this) as HTMLElement).querySelector('.operationMenu') as HTMLElement;
-          ele.style.opacity = '1';
+          if (ele) {
+            ele.style.opacity = '1';
+          }
         }}
-        onMouseLeave={(e) => {
+        onMouseLeave={() => {
           let ele = (ReactDOM.findDOMNode(this) as HTMLElement).querySelector('.operationMenu') as HTMLElement;
-          ele.style.opacity = '0';
+          if (ele) {
+            ele.style.opacity = '0';
+          }
         }}
       >
         <a

@@ -34,4 +34,10 @@ export class ProfileActions {
     this.profileStore.profile.setSort(sort);
     await this.profileRepository.updateProfile(this.profileStore.profile);
   }
+
+  @action.bound
+  async toggleWidgetsVisible() {
+    this.profileStore.profile.setWidgetsVisible(this.profileStore.profile.widgetsVisible ? 0 : 1);
+    await this.updateProfile();
+  }
 }

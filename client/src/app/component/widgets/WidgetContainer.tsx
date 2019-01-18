@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { observer } from 'mobx-react';
+import { inject, observer } from 'mobx-react';
 import styled from 'styled-components';
 import { PearlIcon } from '../../icon/PearlIcon';
 import { StyledAcronymContainer } from './acronym/AcronymContainer';
@@ -7,28 +7,43 @@ import { StyledCoordinateConverterContainer } from './coordinateConverter/Coordi
 import { StyledWeatherContainer } from './weather/WeatherContainer';
 import { StyledHamburgerButton } from '../button/HamburgerButton';
 import { StyledMeasurementConverterContainer } from './measurementConverter/MeasurementConverterContainer';
+import { ProfileActions } from '../../profile/ProfileActions';
 
 interface Props {
   className?: string;
+  profileActions?: ProfileActions;
+  visible: number;
 }
 
 @observer
 export class WidgetContainer extends React.Component<Props> {
+  async componentDidMount() {
+    await this.props.profileActions!.setProfile();
+    this.toggleWidgets(this.props.visible);
+  }
 
-  toggleMenu = () => {
+  componentWillReceiveProps(nextProps: Readonly<Props>): void {
+    this.toggleWidgets(nextProps.visible);
+  }
+
+  toggleWidgets(visible: number) {
     let ele = document.querySelector('.widgetColumn') as HTMLElement;
-    ele!.style.maxWidth = '0px';
-    ele.style.minWidth = '0px';
-    ele!.style.marginRight = '0px';
-    let burger = document.querySelector('.bannerBurger') as HTMLElement;
-    burger.style.display = 'block';
-    burger.style.opacity = '1';
-    burger.style.cursor = 'pointer';
-  };
+    if (ele) {
+      if (visible) {
+        ele.style.maxWidth = '354px';
+        ele.style.minWidth = '354px';
+        ele.style.marginRight = '5px';
+      } else {
+        ele.style.maxWidth = '0px';
+        ele.style.minWidth = '0px';
+        ele.style.marginRight = '0px';
+      }
+    }
+  }
 
   render() {
     return (
-      <div className={this.props.className + ' widgetColumn'}>
+      <div className={this.props.className + ' widgetColumn expandedWidgetColumn'}>
         <div
           className="widgetSection"
         >
@@ -39,7 +54,9 @@ export class WidgetContainer extends React.Component<Props> {
             </div>
             <StyledHamburgerButton
               className="widgetBurger"
-              onClick={this.toggleMenu}
+              onClick={async () => {
+                await this.props.profileActions!.toggleWidgetsVisible();
+              }}
             />
           </div>
           <StyledAcronymContainer/>
@@ -52,12 +69,12 @@ export class WidgetContainer extends React.Component<Props> {
   }
 }
 
-export const StyledWidgetContainer = styled(WidgetContainer)`
-max-width: 0;
-min-width: 0;
+export const StyledWidgetContainer = inject('profileStore', 'profileActions')(styled(WidgetContainer)`
 transition: max-width 0.2s ease,min-width 0.2s ease;
 top: 0px;
-width: 0px;
+max-width: 0px;
+min-width: 0px;
+margin-right: 0px;
 
  .bannerTitle {
     font-family: "Avenir Next";
@@ -89,7 +106,7 @@ width: 0px;
   
   .widgetBurger {
     cursor: pointer;
-    right: 5px;
+    right: 15px;
   }
   
-`;
+`);

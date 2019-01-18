@@ -19,7 +19,8 @@ describe('MetricsPage', () => {
 
     metricsPageActions = {
       initializeStores: initSpy,
-      exportLogins: jest.fn()
+      exportLogins: jest.fn(),
+      buildMetrics: jest.fn()
     };
 
     metricActions = {

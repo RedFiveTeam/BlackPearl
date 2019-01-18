@@ -16,7 +16,7 @@ public class AccountControllerTest extends BaseIntegrationTest {
 
   @Before
   public void setUp() {
-    account = new Account("name2", "role2", 2L, 2L, 0L);
+    account = new Account("name2", "role2", 2L, 2L, 0L, 1L);
 
     accountRepository.save(account);
   }

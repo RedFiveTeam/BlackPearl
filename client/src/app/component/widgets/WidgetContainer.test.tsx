@@ -8,9 +8,20 @@ import { PearlIcon } from '../../icon/PearlIcon';
 
 describe('WidgetContainer', () => {
   let subject: ShallowWrapper;
+  let profileActions: any;
 
   beforeEach(() => {
-    subject = shallow(<WidgetContainer/>);
+
+    profileActions = {
+      setProfile: jest.fn()
+    };
+
+    subject = shallow(
+      <WidgetContainer
+        visible={1}
+        profileActions={profileActions}
+      />
+    );
   });
 
   it('should have an acronym container', () => {

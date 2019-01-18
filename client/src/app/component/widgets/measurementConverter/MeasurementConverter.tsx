@@ -36,7 +36,10 @@ export class MeasurementConverter extends React.Component<Props, State> {
     let dd = document.querySelectorAll('.dd');
     for (let i = 0; i < dd.length; i++) {
       if ((dd[i] as HTMLElement).parentNode!.firstChild !== e.target) {
-        (dd[i] as HTMLElement).style.display = 'none';
+        let el = (dd[i] as HTMLElement);
+        if (el) {
+          el.style.display = 'none';
+        }
       }
     }
   };
@@ -45,7 +48,10 @@ export class MeasurementConverter extends React.Component<Props, State> {
     this.setState({placeholder: e.target.innerHTML});
     (document.querySelector('button') as HTMLButtonElement).innerText = e.target.dataset.abbrev.toUpperCase();
     this.props.measurementConverterStore!.setTypeOfConversion(e.target.dataset.abbrev);
-    (document.querySelectorAll('.dd')[0] as HTMLElement).style.display = 'none';
+    let el = (document.querySelectorAll('.dd')[0] as HTMLElement);
+    if (el) {
+      el.style.display = 'none';
+    }
     (e.target as HTMLElement).classList.add('selected');
     let options = document.querySelectorAll('.ddd');
     for (let i = 0; i < options.length; i++) {
@@ -59,7 +65,10 @@ export class MeasurementConverter extends React.Component<Props, State> {
   outputSelect = (e: any) => {
     (document.querySelectorAll('.b')[1] as HTMLButtonElement).innerText = e.target.dataset.abbrev.toUpperCase();
     this.props.measurementConverterStore!.setOutputConversionUnit((e.target as HTMLElement).dataset.abbrev as string);
-    (document.querySelectorAll('.dd')[1] as HTMLElement).style.display = 'none';
+    let el = (document.querySelectorAll('.dd')[1] as HTMLElement);
+    if (el) {
+      el.style.display = 'none';
+    }
     (e.target as HTMLElement).classList.add('selected');
     let options = document.querySelectorAll('.outputOption');
     for (let i = 0; i < options.length; i++) {
@@ -96,7 +105,10 @@ export class MeasurementConverter extends React.Component<Props, State> {
             <button
               className="b"
               onClick={() => {
-                (document.querySelectorAll('.dd')[0] as HTMLElement).style.display = 'block';
+                let el = (document.querySelectorAll('.dd')[0] as HTMLElement);
+                if (el) {
+                  el.style.display = 'block';
+                }
               }}
             >
               KM
@@ -162,7 +174,10 @@ export class MeasurementConverter extends React.Component<Props, State> {
             <button
               className="b"
               onClick={() => {
-                (document.querySelectorAll('.dd')[1] as HTMLElement).style.display = 'block';
+                let el = (document.querySelectorAll('.dd')[1] as HTMLElement);
+                if (el) {
+                  el.style.display = 'block';
+                }
               }}
             >
               MI

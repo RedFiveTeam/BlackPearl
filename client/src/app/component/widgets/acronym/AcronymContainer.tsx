@@ -33,17 +33,21 @@ export class AcronymContainer extends React.Component<Props> {
           onClick={async () => {
             await this.props.metricActions!.logMetric(LogableActions.CLICK_ACRONYM, 'AcronymRow');
           }}
-          onChange={async (e) => {
-            let ele = (ReactDOM.findDOMNode(this) as HTMLElement).querySelector('.acronymList') as HTMLElement;
-            if (e.target.value === '') {
-              (ReactDOM.findDOMNode(this) as HTMLElement).style.height = '120px';
-              ele.style.height = '27px';
-            } else {
-              (ReactDOM.findDOMNode(this) as HTMLElement).style.height = '350px';
-              ele.style.height = '261px';
+          onChange={
+            async (e) => {
+              let ele = (ReactDOM.findDOMNode(this) as HTMLElement).querySelector('.acronymList') as HTMLElement;
+              if (ele) {
+                if (e.target.value === '') {
+                  (ReactDOM.findDOMNode(this) as HTMLElement).style.height = '120px';
+                  ele.style.height = '27px';
+                } else {
+                  (ReactDOM.findDOMNode(this) as HTMLElement).style.height = '350px';
+                  ele.style.height = '261px';
+                }
+                await this.props.acronymActions!.setFilteredAcronyms(e.target.value);
+              }
             }
-            await this.props.acronymActions!.setFilteredAcronyms(e.target.value);
-          }}
+          }
         />
         <div className="acronymList">
           {

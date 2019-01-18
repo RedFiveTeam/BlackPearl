@@ -34,8 +34,6 @@ Scenario('should see 4 weather links', async (I) => {
 Scenario('should convert measurements', async (I) => {
   I.haveHeader('Authorization', 'Basic Q1JPU1MuSk9SREFOLk1JRERMRS4wMTIzNDU2Nzg5Og==');
   I.amOnPage('/');
-  I.click('.bannerBurger');
-  I.waitForText('Measurement Converter', 10);
   I.fillField('.conversionInput', '1');
   let value = await I.grabValueFrom('.conversionOutput');
   homeAssert.strictEqual(value, '0.62');
@@ -190,16 +188,19 @@ Scenario('should allow the user to add, edit and delete a resource', async (I) =
   //create
   I.amOnPage('/');
   I.click('.tab:nth-of-type(1) > div', '.tabContainer');
+  I.waitForText('FMV Amazon', 10);
   I.click('ADD RESOURCE');
   I.fillField('.titleField', name);
   I.fillField('.urlField', 'https://www.testpage.com');
   I.click('SAVE', '.modal');
   I.waitForText('Resource Link Added', 10);
+  I.amOnPage('/');
   I.waitForText(name, 10);
 
   //edit
   I.amOnPage('/');
   I.click('.tab:nth-of-type(1) > div', '.tabContainer');
+  I.waitForText('FMV Amazon', 10);
   I.click('.editButton');
   I.fillField('.pendingEditTitle', name);
   I.fillField('.pendingEditUrl', 'https://www.google.com');
@@ -212,6 +213,7 @@ Scenario('should allow the user to add, edit and delete a resource', async (I) =
   //delete
   I.amOnPage('/');
   I.click('.tab:nth-of-type(1) > div', '.tabContainer');
+  I.waitForText('FMV Amazon', 10);
   I.click('.deleteButton');
   I.see(name);
   I.click('.confirmButton');

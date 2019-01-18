@@ -5,17 +5,28 @@ import { StyledATODay } from './widgets/time/ATODay';
 import { ATODayBorderIcon } from '../icon/ATODayBorderIcon';
 import { StyledTimeContainer } from './widgets/time/TimeContainer';
 import { StyledProfileContainer } from '../profile/ProfileContainer';
+import { ProfileModel } from '../profile/ProfileModel';
 
 describe('AppBanner', () => {
   let subject: ShallowWrapper;
   let profileActions: any;
+  let profileStore: any;
 
   beforeEach(() => {
+    profileStore = {
+      profile: new ProfileModel()
+    };
+
     profileActions = {
       setProfile: jest.fn()
     };
 
-    subject = shallow(<AppBanner profileActions={profileActions}/>);
+    subject = shallow(
+      <AppBanner
+        profileActions={profileActions}
+        profileStore={profileStore}
+      />
+    );
   });
 
   it('should render an ATO date', () => {

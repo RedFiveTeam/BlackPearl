@@ -21,33 +21,42 @@ interface Props {
 export class InformationCard extends React.Component<Props> {
 
   copyToClipboard(e: any) {
-    let text = e.target.querySelector('.info > span:nth-of-type(2)').innerHTML;
-    let selected = null;
-    let el = document.createElement('textarea');
-    el.value = text;
-    el.setAttribute('readonly', '');
-    el.style.position = 'absolute';
-    el.style.left = '-9999px';
-    document.getElementsByClassName('topBar')[0].appendChild(el);
-    if (document.getSelection()!.rangeCount > 0) {
-      selected = document.getSelection()!.getRangeAt(0);
+    let ele = e.target.querySelector('.info > span:nth-of-type(2)');
+    if (ele) {
+      let text = ele.innerHTML;
+      let selected = null;
+      let el = document.createElement('textarea');
+      el.value = text;
+      el.setAttribute('readonly', '');
+      el.style.position = 'absolute';
+      el.style.left = '-9999px';
+      document.getElementsByClassName('topBar')[0].appendChild(el);
+      if (document.getSelection()!.rangeCount > 0) {
+        selected = document.getSelection()!.getRangeAt(0);
+      }
+      el.select();
+      document.execCommand('copy');
+      document.getElementsByClassName('topBar')[0].removeChild(el);
+      if (selected) {
+        document.getSelection()!.removeAllRanges();
+        document.getSelection()!.addRange(selected);
+      }
+      toast.success('Information Copied to Clipboard');
     }
-    el.select();
-    document.execCommand('copy');
-    document.getElementsByClassName('topBar')[0].removeChild(el);
-    if (selected) {
-      document.getSelection()!.removeAllRanges();
-      document.getSelection()!.addRange(selected);
-    }
-    toast.success('Information Copied to Clipboard');
   }
 
   showCopy(e: any) {
-    (e.target.querySelector('svg') as HTMLSpanElement).style.setProperty('display', 'inline-block');
+    let el = (e.target.querySelector('svg') as HTMLSpanElement);
+    if (el) {
+      el.style.setProperty('display', 'inline-block');
+    }
   }
 
   hideCopy(e: any) {
-    (e.target.querySelector('svg') as HTMLSpanElement).style.setProperty('display', 'none');
+    let el = (e.target.querySelector('svg') as HTMLSpanElement);
+    if (el) {
+      el.style.setProperty('display', 'none');
+    }
   }
 
   render() {
@@ -79,7 +88,7 @@ export class InformationCard extends React.Component<Props> {
               <div className="info">
                 <span>Image Server (JWICS):</span>
                 <span>{this.props.imageServerJWICS}</span>
-                </div>
+              </div>
               <CopyIcon/>
             </div>
             <div
@@ -88,7 +97,7 @@ export class InformationCard extends React.Component<Props> {
               <div className="info">
                 <span>Call Out Format:</span>
                 <span>{this.props.callOutFormat}</span>
-                </div>
+              </div>
             </div>
           </div>
           <div className="row">
@@ -113,7 +122,7 @@ export class InformationCard extends React.Component<Props> {
               <div className="info">
                 <span>AUAB:</span>
                 <span>{this.props.auabServer}</span>
-                </div>
+              </div>
               <CopyIcon/>
             </div>
             <div
@@ -125,7 +134,7 @@ export class InformationCard extends React.Component<Props> {
               <div className="info">
                 <span>NAVCENT:</span>
                 <span>{this.props.navcentServer}</span>
-                </div>
+              </div>
               <CopyIcon/>
             </div>
           </div>
@@ -139,7 +148,7 @@ export class InformationCard extends React.Component<Props> {
               <div className="info">
                 <span>DSN:</span>
                 <span>{this.props.dsnNumber}</span>
-                </div>
+              </div>
               <CopyIcon/>
             </div>
             <div
@@ -151,7 +160,7 @@ export class InformationCard extends React.Component<Props> {
               <div className="info">
                 <span>SVOIP:</span>
                 <span>{this.props.svoipNumber}</span>
-                </div>
+              </div>
               <CopyIcon/>
             </div>
             <div
@@ -163,7 +172,7 @@ export class InformationCard extends React.Component<Props> {
               <div className="info">
                 <span>TSVOIP:</span>
                 <span>{this.props.tsvoipNumber}</span>
-                </div>
+              </div>
               <CopyIcon/>
             </div>
           </div>

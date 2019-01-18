@@ -12,7 +12,7 @@ describe('EditResourcePopup', () => {
 
   beforeEach(() => {
     metricActions = {
-      logMetrics: jest.fn()
+      logMetric: jest.fn()
     };
 
     resourceActions = {

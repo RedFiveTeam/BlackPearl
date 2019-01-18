@@ -34,22 +34,24 @@ export class Resource extends React.Component<Props> {
       e.preventDefault();
       let selected = null;
       let el = document.createElement('textarea');
-      el.value = this.props.resource.url;
-      el.setAttribute('readonly', '');
-      el.style.position = 'absolute';
-      el.style.left = '-9999px';
-      document.getElementsByClassName('topBar')[0].appendChild(el);
-      if (document.getSelection()!.rangeCount > 0) {
-        selected = document.getSelection()!.getRangeAt(0);
+      if (el) {
+        el.value = this.props.resource.url;
+        el.setAttribute('readonly', '');
+        el.style.position = 'absolute';
+        el.style.left = '-9999px';
+        document.getElementsByClassName('topBar')[0].appendChild(el);
+        if (document.getSelection()!.rangeCount > 0) {
+          selected = document.getSelection()!.getRangeAt(0);
+        }
+        el.select();
+        document.execCommand('copy');
+        document.getElementsByClassName('topBar')[0].removeChild(el);
+        if (selected) {
+          document.getSelection()!.removeAllRanges();
+          document.getSelection()!.addRange(selected);
+        }
+        toast.success('Local Path Copied to Clipboard');
       }
-      el.select();
-      document.execCommand('copy');
-      document.getElementsByClassName('topBar')[0].removeChild(el);
-      if (selected) {
-        document.getSelection()!.removeAllRanges();
-        document.getSelection()!.addRange(selected);
-      }
-      toast.success('Local Path Copied to Clipboard');
     }
     await this.props.metricActions!.logMetric(LogableActions.CLICK_RESOURCE, this.props.resource!.name);
     await this.props.resourceActions!.updateClicks(this.props.resource!.id!);
@@ -76,13 +78,17 @@ export class Resource extends React.Component<Props> {
     return (
       <div
         className={classNames(this.props.className, 'resource')}
-        onMouseEnter={(e) => {
+        onMouseEnter={() => {
           let ele = (ReactDOM.findDOMNode(this) as HTMLElement).querySelector('.resourceMenu') as HTMLElement;
-          ele.style.opacity = '1';
+          if (ele) {
+            ele.style.opacity = '1';
+          }
         }}
-        onMouseLeave={(e) => {
+        onMouseLeave={() => {
           let ele = (ReactDOM.findDOMNode(this) as HTMLElement).querySelector('.resourceMenu') as HTMLElement;
-          ele.style.opacity = '0';
+          if (ele) {
+            ele.style.opacity = '0';
+          }
         }}
       >
         <a
