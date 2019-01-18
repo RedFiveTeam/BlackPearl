@@ -12,7 +12,7 @@ describe('AcronymContainer', () => {
 
   beforeEach(() => {
     metricActions = {
-      logMetrics: jest.fn()
+      logMetric: jest.fn()
     };
 
     let acronyms = [

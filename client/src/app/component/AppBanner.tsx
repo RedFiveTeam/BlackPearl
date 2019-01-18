@@ -7,10 +7,12 @@ import { StyledTimeContainer } from './widgets/time/TimeContainer';
 import { StyledATODay } from './widgets/time/ATODay';
 import { ATODayBorderIcon } from '../icon/ATODayBorderIcon';
 import { StyledHamburgerButton } from './button/HamburgerButton';
+import { ProfileStore } from '../profile/ProfileStore';
 
 interface Props {
   className?: string;
   profileActions?: ProfileActions;
+  profileStore?: ProfileStore;
 }
 
 @observer
@@ -19,25 +21,31 @@ export class AppBanner extends React.Component<Props> {
     await this.props.profileActions!.setProfile();
   }
 
-  toggleMenu() {
-    let ele = document.querySelector('.widgetColumn') as HTMLElement;
-    ele.style.minWidth = '354px';
-    ele.style.maxWidth = '354px';
-    ele.style.marginRight = '5px';
-    let burger = document.querySelector('.bannerBurger') as HTMLElement;
-    burger.style.opacity = '0';
-    burger.style.cursor = 'default';
+  renderWidgets() {
+    if (!this.props.profileStore!.profile.widgetsVisible) {
+      let ele = document.querySelector('.widgetColumn') as HTMLElement;
+      ele.classList.add('expandedWidgetColumn');
+      return (
+        <div className="button">
+          <StyledHamburgerButton
+            className="bannerBurger"
+            onClick={async () => {
+              await this.props.profileActions!.toggleWidgetsVisible();
+            }}
+          />
+        </div>
+      );
+    }
+    return;
   }
 
   render() {
     return (
       <div className={this.props.className}>
-        <div className="button">
-          <StyledHamburgerButton
-            className="bannerBurger"
-            onClick={this.toggleMenu}
-          />
-        </div>
+        {
+          this.props.profileStore!.profile &&
+          this.renderWidgets()
+        }
         <StyledATODay/>
         <ATODayBorderIcon/>
         <StyledTimeContainer/>
@@ -47,7 +55,7 @@ export class AppBanner extends React.Component<Props> {
   }
 }
 
-export const StyledAppBanner = inject('profileActions')(styled(AppBanner)`
+export const StyledAppBanner = inject('profileActions', 'profileStore')(styled(AppBanner)`
 padding-right: 6px;
 margin-left: -6px;
 background: #2F343B;
@@ -66,10 +74,10 @@ color: #F2F2F2;
   margin-right: 15px;
 }
 
-
 .bannerBurger {
-  cursor: pointer;
+  margin-left: 15px;
   left: 8px;
+  cursor: pointer;
   transition: opacity 0.5s ease-in-out;
 }
 

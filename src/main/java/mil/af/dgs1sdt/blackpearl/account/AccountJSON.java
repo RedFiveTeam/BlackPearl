@@ -27,11 +27,14 @@ public class AccountJSON {
 
   private Long sort;
 
-  public AccountJSON(String cardID, String name, Long role, Long specialty, Long sort) {
+  private Long widgets;
+
+  public AccountJSON(String cardID, String name, Long role, Long specialty, Long sort, Long widgets) {
     this.cardID = cardID;
     this.name = name;
     this.role = role;
     this.specialty = specialty;
     this.sort = sort;
+    this.widgets = widgets;
   }
 }

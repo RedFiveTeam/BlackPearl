@@ -5,17 +5,21 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
+
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 
 @RunWith(MockitoJUnitRunner.class)
 public class AccountServiceTest {
-  @Mock private AccountRepository profileRepository;
+  @Mock
+  private AccountRepository profileRepository;
   private AccountService subject;
 
   @Before
-  public void setUp() { subject = new AccountService(profileRepository); }
+  public void setUp() {
+    subject = new AccountService(profileRepository);
+  }
 
   @Test
   public void getsTheProfileGivenTheCardId() {
@@ -30,6 +34,13 @@ public class AccountServiceTest {
 
     subject.getProfile("LastName.FirstName.MiddleName.123456789123");
 
-    verify(profileRepository).save(new Account("LastName.FirstName.MiddleName.123456789123", "FirstName LastName", 1L, 1L, 0L));
+    verify(profileRepository).save(new Account(
+      "LastName.FirstName.MiddleName.123456789123",
+      "FirstName LastName",
+      1L,
+      1L,
+      0L,
+      1L
+    ));
   }
- }
+}

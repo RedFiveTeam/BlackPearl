@@ -12,6 +12,7 @@ import { StyledAddOperationPopup } from '../component/popup/AddOperationPopup';
 import { StyledInformationContainer } from '../component/card/information/InformationContainer';
 import { StyledOperationContainer } from '../component/card/operation/OperationContainer';
 import { StyledAppBanner } from '../component/AppBanner';
+import { ProfileModel } from '../profile/ProfileModel';
 
 describe('HomePage', () => {
   let subject: ShallowWrapper;
@@ -19,11 +20,22 @@ describe('HomePage', () => {
   let operationStore: OperationStore;
   let metricActions: any;
   let returnResourcesInCategorySpy: jest.Mock;
+  let profileStore: any;
+  let profileActions: any;
 
   beforeEach(() => {
     metricActions = {
       logMetric: jest.fn()
     };
+
+    profileStore = {
+      profile: new ProfileModel()
+    };
+
+    profileActions = {
+      setProfile: jest.fn()
+    };
+
     resourceStore = new ResourceStore();
     operationStore = new OperationStore();
 
@@ -36,6 +48,8 @@ describe('HomePage', () => {
         resourceStore={resourceStore}
         operationStore={operationStore}
         metricActions={metricActions}
+        profileStore={profileStore}
+        profileActions={profileActions}
       />
     );
   });

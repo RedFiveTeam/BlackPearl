@@ -25,13 +25,15 @@ public class Account implements UserDetails {
   private Long role;
   private Long specialty;
   private Long sort;
+  private Long widgets;
 
-  public Account(String cardId, String name, Long role, Long specialty, Long sort) {
+  public Account(String cardId, String name, Long role, Long specialty, Long sort, Long widgets) {
     this.cardID = cardId;
     this.name = name;
     this.role = role;
     this.specialty = specialty;
     this.sort = sort;
+    this.widgets = widgets;
   }
 
   public Account update(AccountJSON json) {
@@ -41,6 +43,7 @@ public class Account implements UserDetails {
     this.setRole(1L);  //What purpose does this serve?
     this.setSpecialty(json.getSpecialty());
     this.setSort(json.getSort());
+    this.setWidgets(json.getWidgets());
     return this;
   }
 

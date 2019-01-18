@@ -11,7 +11,7 @@ describe('RemoveResourcePopup', () => {
 
   beforeEach(() => {
     metricActions = {
-      logMetrics: jest.fn()
+      logMetric: jest.fn()
     };
 
     resourceActions = {

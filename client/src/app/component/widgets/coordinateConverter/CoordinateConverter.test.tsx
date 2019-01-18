@@ -10,7 +10,7 @@ describe('CoordinateConverter', () => {
 
   beforeEach(() => {
     metricActions = {
-      logMetrics: jest.fn()
+      logMetric: jest.fn()
     };
 
     mgrsFunction = jest.fn();

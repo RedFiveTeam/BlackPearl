@@ -18,7 +18,7 @@ describe('ResourceMenuContainer', () => {
 
   beforeEach(() => {
     metricActions = {
-      logMetrics: jest.fn()
+      logMetric: jest.fn()
     };
 
     resource = new ResourceModel();

@@ -20,17 +20,22 @@ import { StyledAppBanner } from '../component/AppBanner';
 import { StyledInformationContainer } from '../component/card/information/InformationContainer';
 import { StyledOperationContainer } from '../component/card/operation/OperationContainer';
 import { StyledWidgetContainer } from '../component/widgets/WidgetContainer';
+import { ProfileStore } from '../profile/ProfileStore';
+import { ProfileActions } from '../profile/ProfileActions';
 
 interface Props {
   resourceStore?: ResourceStore;
   operationStore?: OperationStore;
   metricActions?: MetricActions;
+  profileStore?: ProfileStore;
+  profileActions?: ProfileActions;
   className?: string;
 }
 
 @observer
 export class HomePage extends React.Component<Props> {
   async componentDidMount() {
+    await this.props.profileActions!.setProfile();
     await this.props.metricActions!.logMetric(LogableActions.VISIT, 'Home');
     this.getQ();
   }
@@ -92,7 +97,9 @@ export class HomePage extends React.Component<Props> {
           transition={Slide}
           autoClose={5000}
         />
-        <StyledWidgetContainer/>
+        <StyledWidgetContainer
+          visible={this.props.profileStore!.profile ? this.props.profileStore!.profile.widgetsVisible : 1}
+        />
         <div
           className="mainBody"
         >
@@ -106,7 +113,14 @@ export class HomePage extends React.Component<Props> {
   }
 }
 
-export const StyledHomePage = inject('resourceStore', 'operationStore', 'metricActions')(styled(HomePage)`
+export const StyledHomePage = inject(
+  'resourceStore',
+  'operationStore',
+  'metricActions',
+  'profileStore',
+  'profileActions'
+)
+(styled(HomePage)`
   display: inline-flex;
   width: 100%;
   

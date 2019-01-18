@@ -19,8 +19,10 @@ interface Props {
 export class AdminPage extends React.Component<Props> {
   async componentDidMount() {
     let ele = (document.querySelector('.pageTitle') as HTMLElement);
-    ele.style.top = (document.querySelector('.selectors')!.getBoundingClientRect().top - 75).toString() + 'px';
-    ele.style.display = 'block';
+    if (ele) {
+      ele.style.top = (document.querySelector('.selectors')!.getBoundingClientRect().top - 75).toString() + 'px';
+      ele.style.display = 'block';
+    }
     await this.props.metricActions!.logMetric(LogableActions.VISIT, 'Admin');
   }
 
