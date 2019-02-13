@@ -64,10 +64,10 @@ INSERT INTO operation (title, description, address) VALUES
     ("OP DAYWALKER",	"RUN!",	"https://www.opfour.com"),
     ("OP TORTUGA",	"WHERE'S THE BEER!?!",	"https://www.opfive.com");
 
-INSERT INTO account (cardID, name, role, specialty, sort, widgets) VALUES
-    ("GUEST.GUEST.GUEST.0123456789", "Guest", 1, 1, 1, 1),
-    ("CROSS.JORDAN.MIDDLE.0123456789", "JORDAN CROSS", 1, 1, 1, 1),
-    ("YODA.MASTER.MIDDLE.0123456789", "MASTER YODA", 1, 1, 1, 1);
+INSERT INTO account (cardID, role, specialty, sort, widgets) VALUES
+    ("GUEST.GUEST.GUEST.0123456789", 1, 1, 1, 1),
+    ("CROSS.JORDAN.MIDDLE.0123456789", 1, 1, 1, 1),
+    ("YODA.MASTER.MIDDLE.0123456789", 1, 1, 1, 1);
 
 INSERT INTO acronym (acronym, definition) VALUES
     ("A&P", "analysis and production"),

@@ -18,7 +18,8 @@ describe('AppBanner', () => {
     };
 
     profileActions = {
-      setProfile: jest.fn()
+      setProfile: jest.fn(),
+      generateDisplayName: () => 'Display Name'
     };
 
     subject = shallow(
@@ -43,5 +44,6 @@ describe('AppBanner', () => {
 
   it('should have a profile container', () => {
     expect(subject.find(StyledProfileContainer).exists()).toBeTruthy();
+    expect(subject.find(StyledProfileContainer).prop('displayName')).toBe('Display Name');
   });
 });

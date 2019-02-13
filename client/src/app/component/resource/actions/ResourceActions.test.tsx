@@ -35,7 +35,7 @@ describe('ResourceActions', () => {
     };
 
     profileStore = {
-      profile: new ProfileModel(0, 'GUEST', 'GUEST')
+      profile: new ProfileModel(0, 'GUEST')
     };
 
     resourceRepository = new StubResourceRepository();

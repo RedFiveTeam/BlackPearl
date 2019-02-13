@@ -2,9 +2,7 @@ package mil.af.dgs1sdt.blackpearl.resource;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import mil.af.dgs1sdt.blackpearl.BaseIntegrationTest;
-import mil.af.dgs1sdt.blackpearl.resource.blame.Blame;
 import mil.af.dgs1sdt.blackpearl.resource.blame.BlameController;
-import mil.af.dgs1sdt.blackpearl.resource.blame.BlameRepository;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -18,8 +16,6 @@ import static org.hamcrest.Matchers.equalTo;
 public class ResourceControllerTest extends BaseIntegrationTest {
   @Autowired
   private ResourceRepository resourceRepository;
-  @Autowired
-  private BlameRepository blameRepository;
 
   private Resource resource1;
   private Resource resource2;
@@ -30,12 +26,17 @@ public class ResourceControllerTest extends BaseIntegrationTest {
 
   @Before
   public void setUp() {
-    resource1 = new Resource("Googerbhjwrle", "https://www.gowqeqweogle.com", 1L, "Guest", 0L, Instant.now().getEpochSecond());
+    super.setUp();
+
+    resource1 = new Resource("Googerbhjwrle", "https://www.gowqeqweogle.com", 1L, "Guest", 0L,
+      Instant.now().getEpochSecond());
     resource2 = new Resource("Yahoo", "https://www.yahoo.com", 2L, "Guest", 1L, Instant.now().getEpochSecond());
     resource3 = new Resource("eBay", "https://www.ebay.com", 3L, "Guest", 2L, Instant.now().getEpochSecond());
     resource4 = new Resource("notGoogle", "https://www.notgoogle.com", 1L, "Guest", 3L, Instant.now().getEpochSecond());
-    resource5 = new Resource("Jordan's Google", "https://www.google.com", 1L, "JORDAN", 0L, Instant.now().getEpochSecond());
-    resource6 = new Resource("Jordan's Facebook", "https://www.facebook.com", 1L, "JORDAN", 1L, Instant.now().getEpochSecond());
+    resource5 = new Resource("Jordan's Google", "https://www.google.com", 1L, "JORDAN", 0L,
+      Instant.now().getEpochSecond());
+    resource6 = new Resource("Jordan's Facebook", "https://www.facebook.com", 1L, "JORDAN", 1L,
+      Instant.now().getEpochSecond());
 
     resourceRepository.save(resource1);
     resourceRepository.save(resource2);
@@ -43,8 +44,6 @@ public class ResourceControllerTest extends BaseIntegrationTest {
     resourceRepository.save(resource4);
     resourceRepository.save(resource5);
     resourceRepository.save(resource6);
-
-    // blameRepository.save(new Blame("ADD", "Google", "USER", 1235523523L));
   }
 
   @After
@@ -56,6 +55,9 @@ public class ResourceControllerTest extends BaseIntegrationTest {
   public void getAllResourcesTest() {
     given()
       .port(port)
+      .auth()
+      .preemptive()
+      .basic("jordan", "password")
       .when()
       .get(ResourceController.URI)
       .then()
@@ -73,6 +75,9 @@ public class ResourceControllerTest extends BaseIntegrationTest {
   public void goFunctionTest() {
     given()
       .port(port)
+      .auth()
+      .preemptive()
+      .basic("jordan", "password")
       .when()
       .get(ResourceController.URI + "/go?q=oo")
       .then()
@@ -88,6 +93,9 @@ public class ResourceControllerTest extends BaseIntegrationTest {
 
     given()
       .port(port)
+      .auth()
+      .preemptive()
+      .basic("jordan", "password")
       .contentType("application/json")
       .body(resource)
       .when()
@@ -100,6 +108,9 @@ public class ResourceControllerTest extends BaseIntegrationTest {
 
     given()
       .port(port)
+      .auth()
+      .preemptive()
+      .basic("jordan", "password")
       .when()
       .get(BlameController.URI)
       .then()
@@ -112,6 +123,9 @@ public class ResourceControllerTest extends BaseIntegrationTest {
   public void deleteTest() {
     given()
       .port(port)
+      .auth()
+      .preemptive()
+      .basic("jordan", "password")
       .contentType("application/json")
       .body(resource1.getId())
       .when()
@@ -121,6 +135,9 @@ public class ResourceControllerTest extends BaseIntegrationTest {
 
     given()
       .port(port)
+      .auth()
+      .preemptive()
+      .basic("jordan", "password")
       .when()
       .get(BlameController.URI)
       .then()
@@ -137,6 +154,9 @@ public class ResourceControllerTest extends BaseIntegrationTest {
     final String json = objectMapper.writeValueAsString(resource4);
     given()
       .port(port)
+      .auth()
+      .preemptive()
+      .basic("jordan", "password")
       .contentType("application/json")
       .body(json)
       .when()
@@ -147,6 +167,9 @@ public class ResourceControllerTest extends BaseIntegrationTest {
 
     given()
       .port(port)
+      .auth()
+      .preemptive()
+      .basic("jordan", "password")
       .when()
       .get(BlameController.URI)
       .then()
@@ -168,6 +191,9 @@ public class ResourceControllerTest extends BaseIntegrationTest {
 
     given()
       .port(port)
+      .auth()
+      .preemptive()
+      .basic("jordan", "password")
       .contentType("application/json")
       .body(json)
       .when()

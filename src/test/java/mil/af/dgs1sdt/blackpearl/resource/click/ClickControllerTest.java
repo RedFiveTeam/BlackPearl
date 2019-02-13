@@ -33,6 +33,7 @@ public class ClickControllerTest extends BaseIntegrationTest {
 
   @Before
   public void setUp() {
+    super.setUp();
     resource1 = new Resource("Google", "https://www.google.com", 1L, "GUEST.GUEST.GUEST.0123456789", 0L, Instant.now().getEpochSecond());
     resource2 = new Resource("Google", "https://www.google.com", 1L, "GUEST.GUEST.GUEST.0123456789", 0L, Instant.now().getEpochSecond());
     resource3 = new Resource("Google", "https://www.google.com", 1L, "GUEST.GUEST.GUEST.0123456789", 0L, Instant.now().getEpochSecond());
@@ -67,6 +68,9 @@ public class ClickControllerTest extends BaseIntegrationTest {
   public void getRecentClicksTest() {
     given()
       .port(port)
+      .auth()
+      .preemptive()
+      .basic("jordan", "password")
       .when()
       .get(ClickController.URI)
       .then()
@@ -86,6 +90,9 @@ public class ClickControllerTest extends BaseIntegrationTest {
   public void updateTest() throws JsonProcessingException {
     given()
       .port(port)
+      .auth()
+      .preemptive()
+      .basic("jordan", "password")
       .contentType("application/json")
       .when()
       .get(ClickController.URI + "/" + resource1.getId())
@@ -95,6 +102,9 @@ public class ClickControllerTest extends BaseIntegrationTest {
 
     given()
       .port(port)
+      .auth()
+      .preemptive()
+      .basic("jordan", "password")
       .contentType("application/json")
       .when()
       .get(ClickController.URI + "/" + resource1.getId())
@@ -104,6 +114,9 @@ public class ClickControllerTest extends BaseIntegrationTest {
 
     given()
       .port(port)
+      .auth()
+      .preemptive()
+      .basic("jordan", "password")
       .contentType("application/json")
       .when()
       .get(ClickController.URI + "/" + resource5.getId())

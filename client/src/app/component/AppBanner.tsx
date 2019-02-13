@@ -40,16 +40,24 @@ export class AppBanner extends React.Component<Props> {
   }
 
   render() {
+    let {profileActions, profileStore} = this.props;
+    let {profile} = this.props.profileStore!;
+
     return (
       <div className={this.props.className}>
         {
-          this.props.profileStore!.profile &&
+          profileStore!.profile &&
           this.renderWidgets()
         }
         <StyledATODay/>
         <ATODayBorderIcon/>
         <StyledTimeContainer/>
-        <StyledProfileContainer/>
+        {
+          profile &&
+          <StyledProfileContainer
+            displayName={profileActions!.generateDisplayName(profile)}
+          />
+        }
       </div>
     );
   }

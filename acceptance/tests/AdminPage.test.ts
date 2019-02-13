@@ -4,8 +4,15 @@ const moment = require('moment-timezone');
 
 Feature('Admin Page');
 
+Before((I) => {
+  I.amOnPage('/');
+  I.fillField('.username', 'jordan');
+  I.fillField('password', 'password');
+  I.click('Login');
+  I.waitForText('jordan', 10);
+});
+
 Scenario('should allow admin to change a time zone', async (I) => {
-  I.haveHeader('Authorization', 'Basic Q1JPU1MuSk9SREFOLk1JRERMRS4wMTIzNDU2Nzg5Og==');
   I.amOnPage('/admin');
   I.click('.tabSelector:nth-of-type(2)');
   I.waitForElement('input', 10);
@@ -25,7 +32,6 @@ Scenario('should allow admin to change a time zone', async (I) => {
 });
 
 Scenario('should allow admin to change general information', async (I) => {
-  I.haveHeader('Authorization', 'Basic Q1JPU1MuSk9SREFOLk1JRERMRS4wMTIzNDU2Nzg5Og==');
   I.amOnPage('/admin');
   I.waitForElement('.information', 10);
   I.clearField('.information:first-of-type > .informationContent > input');
@@ -37,7 +43,6 @@ Scenario('should allow admin to change general information', async (I) => {
 });
 
 Scenario('should allow admin to add and delete an acronym', async (I) => {
-  I.haveHeader('Authorization', 'Basic Q1JPU1MuSk9SREFOLk1JRERMRS4wMTIzNDU2Nzg5Og==');
   I.amOnPage('/admin');
   I.click('.tabSelector:nth-of-type(3)');
   I.waitForElement('.addAcronymButton', 10);
@@ -54,7 +59,6 @@ Scenario('should allow admin to add and delete an acronym', async (I) => {
 });
 
 Scenario('should allow admin to change a weather data', async (I) => {
-  I.haveHeader('Authorization', 'Basic Q1JPU1MuSk9SREFOLk1JRERMRS4wMTIzNDU2Nzg5Og==');
   I.amOnPage('/admin');
   I.waitForElement('.tabSelector', 10);
   I.click('.tabSelector:nth-of-type(4)');

@@ -16,7 +16,8 @@ public class AccountControllerTest extends BaseIntegrationTest {
 
   @Before
   public void setUp() {
-    account = new Account("name2", "role2", 2L, 2L, 0L, 1L);
+    super.setUp();
+    account = new Account("name2", 2L, 1L, 0L, 1L);
 
     accountRepository.save(account);
   }
@@ -34,6 +35,9 @@ public class AccountControllerTest extends BaseIntegrationTest {
 
     given()
       .port(port)
+      .auth()
+      .preemptive()
+      .basic("jordan", "password")
       .contentType("application/json")
       .body(json)
       .when()

@@ -21,6 +21,7 @@ public class BlameControllerTest extends BaseIntegrationTest {
 
   @Before
   public void setUp() {
+    super.setUp();
     Long today = Instant.now().getEpochSecond();
     Long day = 86400L;
     blame1 = new Blame("ADD", "Google", "JORDAN CROSS", today - day);
@@ -43,6 +44,9 @@ public class BlameControllerTest extends BaseIntegrationTest {
   public void getAllBlameTest() {
     given()
       .port(port)
+      .auth()
+      .preemptive()
+      .basic("jordan", "password")
       .when()
       .get(BlameController.URI)
       .then()

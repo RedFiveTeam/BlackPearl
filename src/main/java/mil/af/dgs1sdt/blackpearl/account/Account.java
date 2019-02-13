@@ -10,6 +10,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Transient;
 import java.util.Collection;
 
 @AllArgsConstructor
@@ -21,15 +22,22 @@ public class Account implements UserDetails {
   @GeneratedValue
   private Long id;
   private String cardID;
-  private String name;
   private Long role;
   private Long specialty;
   private Long sort;
   private Long widgets;
 
-  public Account(String cardId, String name, Long role, Long specialty, Long sort, Long widgets) {
+  @Transient
+  private String password;
+
+  public Account(
+    String cardId,
+    Long role,
+    Long specialty,
+    Long sort,
+    Long widgets
+  ) {
     this.cardID = cardId;
-    this.name = name;
     this.role = role;
     this.specialty = specialty;
     this.sort = sort;
@@ -39,7 +47,6 @@ public class Account implements UserDetails {
   public Account update(AccountJSON json) {
     this.setId(json.getId());
     this.setCardID(json.getCardID());
-    this.setName(json.getName());
     this.setRole(1L);  //What purpose does this serve?
     this.setSpecialty(json.getSpecialty());
     this.setSort(json.getSort());
@@ -53,7 +60,9 @@ public class Account implements UserDetails {
   }
 
   @Override
-  public String getPassword() { return ""; }
+  public String getPassword() {
+    return this.password;
+  }
 
   @Override
   public boolean isAccountNonExpired() {
@@ -76,5 +85,7 @@ public class Account implements UserDetails {
   }
 
   @Override
-  public String getUsername() { return ""; }
+  public String getUsername() {
+    return "";
+  }
 }

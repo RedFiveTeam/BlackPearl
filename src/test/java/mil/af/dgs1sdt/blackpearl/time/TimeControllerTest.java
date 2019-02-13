@@ -20,6 +20,7 @@ public class TimeControllerTest extends BaseIntegrationTest {
 
   @Before
   public void setUp() {
+    super.setUp();
     tz1 = new Timezone(1, "America/New_York", "LANGLEY");
     tz2 = new Timezone(2, "America/Chicago", "CENTRAL");
 
@@ -37,6 +38,9 @@ public class TimeControllerTest extends BaseIntegrationTest {
     String timestamp =
       given()
         .port(port)
+        .auth()
+        .preemptive()
+        .basic("jordan", "password")
         .when()
         .get(TimeController.URI)
         .then()

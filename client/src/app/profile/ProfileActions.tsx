@@ -3,6 +3,7 @@ import { ProfileRepository } from './ProfileRepository';
 import { Repositories } from '../utils/Repositories';
 import { Stores } from '../utils/Stores';
 import { action } from 'mobx';
+import { ProfileModel } from './ProfileModel';
 
 export class ProfileActions {
   private profileStore: ProfileStore;
@@ -39,5 +40,10 @@ export class ProfileActions {
   async toggleWidgetsVisible() {
     this.profileStore.profile.setWidgetsVisible(this.profileStore.profile.widgetsVisible ? 0 : 1);
     await this.updateProfile();
+  }
+
+  @action.bound
+  generateDisplayName(profile: ProfileModel): string {
+    return profile.cardID;
   }
 }

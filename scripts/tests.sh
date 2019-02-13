@@ -99,14 +99,7 @@ function setup {
 
     BASE_DIR="$(dirname $( cd "$(dirname "$0")" ; pwd -P ))"
 
-    if [ "${BLACKPEARL_CI}" ]; then
-        REACT_APP_HOST=http://localhost:9090
-    else
-        REACT_APP_HOST=https://localhost:9090
-    fi
-
-    echo "BLACKPEARL_CI: ${BLACKPEARL_CI}"
-    echo "REACT_APP_HOST: ${REACT_APP_HOST}"
+    REACT_APP_HOST=http://localhost:9090
 
     mkdir -p ${BASE_DIR}/tmp
 }

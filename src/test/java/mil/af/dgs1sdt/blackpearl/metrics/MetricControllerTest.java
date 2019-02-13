@@ -9,7 +9,6 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.Instant;
-import java.util.Date;
 import java.util.List;
 
 import static io.restassured.RestAssured.given;
@@ -24,7 +23,8 @@ public class MetricControllerTest extends BaseIntegrationTest {
 
   @Before
   public void setUp() {
-    accountRepository.save(new Account("card1", "name1", 1L, 1L, 0L, 1L));
+    super.setUp();
+    accountRepository.save(new Account("card1", 1L, 1L, 0L, 1L));
   }
 
   @After
@@ -45,6 +45,9 @@ public class MetricControllerTest extends BaseIntegrationTest {
 
     given()
       .port(port)
+      .auth()
+      .preemptive()
+      .basic("jordan", "password")
       .contentType("application/json")
       .body(json)
       .when()
@@ -68,6 +71,9 @@ public class MetricControllerTest extends BaseIntegrationTest {
 
     given()
       .port(port)
+      .auth()
+      .preemptive()
+      .basic("jordan", "password")
       .contentType("application/json")
       .when()
       .get(MetricController.URI)

@@ -1,0 +1,43 @@
+spring:
+  datasource:
+    url: ${BLACKPEARL_DB_URL}
+    username: ${BLACKPEARL_DB_USERNAME}
+    driver-class-name: com.mysql.jdbc.Driver
+  flyway:
+    locations: classpath:db/migration
+    baseline-on-migrate: false
+    out-of-order: true
+  jpa:
+    hibernate:
+      dialect: org.hibernate.dialect.MySQL5Dialect
+      hbm2ddl:
+        auto: create-drop
+      use-new-id-generator-mappings: false
+
+  security:
+    oauth2:
+      client:
+        registration:
+          pcf:
+            client-id: ${SSO_CLIENT_ID}
+            client-secret: ${SSO_CLIENT_SECRET}
+            accessTokenUri: ${SSO_SERVICE_URL}/oauth/token
+            userAuthorizationUri: ${SSO_SERVICE_URL}/oauth/authorize
+            tokenName: oauth_token
+            authenticationScheme: query
+            clientAuthenticationScheme: form
+            client-name: PCF User
+            provider: pcf
+            scope: openid
+            redirect-uri: ${SSO_SERVICE_URL}
+            redirect-uri-template: '{baseUrl}/login/oauth2/code/{registrationId}'
+            authorization-grant-type: authorization_code
+        provider:
+          pcf:
+            token-uri: ${SSO_SERVICE_URL}/oauth/token
+            authorization-uri: ${SSO_SERVICE_URL}/oauth/authorize
+            user-info-uri: ${SSO_SERVICE_URL}/userinfo
+            jwk-set-uri: ${SSO_SERVICE_URL}/token_keys
+            userNameAttribute: user_name
+      resource:
+        user-info-uri: ${SSO_SERVICE_URL}/userinfo

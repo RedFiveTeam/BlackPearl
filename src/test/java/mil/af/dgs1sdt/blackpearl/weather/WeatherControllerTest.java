@@ -1,21 +1,28 @@
 package mil.af.dgs1sdt.blackpearl.weather;
 
 import mil.af.dgs1sdt.blackpearl.BaseIntegrationTest;
+import mil.af.dgs1sdt.blackpearl.account.AccountRepository;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.equalTo;
 
 public class WeatherControllerTest extends BaseIntegrationTest {
-  @Autowired WeatherRepository weatherRepository;
+  @Autowired
+  WeatherRepository weatherRepository;
+  @Autowired
+  AccountRepository accountRepository;
+
   private Weather weather;
 
   @Before
   public void setUp() {
-    weather = new Weather("https://weather.com", "USA");
+    super.setUp();
 
+    weather = new Weather("https://weather.com", "USA");
     weatherRepository.save(weather);
   }
 
@@ -28,6 +35,9 @@ public class WeatherControllerTest extends BaseIntegrationTest {
   public void getWeatherTest() {
     given()
       .port(port)
+      .auth()
+      .preemptive()
+      .basic("jordan", "password")
       .when()
       .get(WeatherController.URI)
       .then()
@@ -46,6 +56,9 @@ public class WeatherControllerTest extends BaseIntegrationTest {
     final String json = objectMapper.writeValueAsString(w);
     given()
       .port(port)
+      .auth()
+      .preemptive()
+      .basic("jordan", "password")
       .contentType("application/json")
       .body(json)
       .when()

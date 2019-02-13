@@ -6,7 +6,6 @@ export class ProfileSerializer implements Serializer<ProfileModel> {
     return {
       id: item.id,
       cardID: item.cardID,
-      name: item.name,
       specialty: item.specialty,
       sort: item.sort,
       widgets: item.widgetsVisible
@@ -17,7 +16,6 @@ export class ProfileSerializer implements Serializer<ProfileModel> {
     return new ProfileModel(
       item.id,
       item.cardID,
-      item.name,
       item.specialty,
       item.sort,
       item.widgets

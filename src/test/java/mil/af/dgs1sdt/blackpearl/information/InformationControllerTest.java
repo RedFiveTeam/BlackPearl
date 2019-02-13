@@ -16,6 +16,7 @@ public class InformationControllerTest extends BaseIntegrationTest {
 
   @Before
   public void setUp() {
+    super.setUp();
     information = new Information("Phone Number", "123-555-0123");
     informationRepository.save(information);
   }
@@ -27,6 +28,9 @@ public class InformationControllerTest extends BaseIntegrationTest {
   public void getInformationTest() {
     given()
       .port(port)
+      .auth()
+      .preemptive()
+      .basic("jordan", "password")
       .when()
       .get(InformationController.URI)
       .then()
@@ -45,6 +49,9 @@ public class InformationControllerTest extends BaseIntegrationTest {
 
     given()
       .port(port)
+      .auth()
+      .preemptive()
+      .basic("jordan", "password")
       .contentType("application/json")
       .body(json)
       .when()

@@ -17,9 +17,6 @@ public class AccountJSON {
   @NotNull(message = emptyFieldMessage)
   private String cardID;
 
-  @NotNull(message = emptyFieldMessage)
-  private String name;
-
   private Long role;
 
   @NotNull(message = emptyFieldMessage)
@@ -29,9 +26,8 @@ public class AccountJSON {
 
   private Long widgets;
 
-  public AccountJSON(String cardID, String name, Long role, Long specialty, Long sort, Long widgets) {
+  public AccountJSON(String cardID, Long role, Long specialty, Long sort, Long widgets) {
     this.cardID = cardID;
-    this.name = name;
     this.role = role;
     this.specialty = specialty;
     this.sort = sort;

@@ -3,9 +3,20 @@ let homeAssert = require('assert');
 
 Feature('Home Page');
 
+Before((I) => {
+  I.amOnPage('/');
+  I.fillField('.username', 'jordan');
+  I.fillField('password', 'password');
+  I.click('Login');
+  I.waitForText('jordan', 10);
+});
+
+Scenario('should allow user to log in', (I) => {
+  I.amOnPage('/');
+  I.waitForText('jordan', 10);
+});
 
 Scenario('should allow users to convert coordinates', async (I) => {
-  I.haveHeader('Authorization', 'Basic Q1JPU1MuSk9SREFOLk1JRERMRS4wMTIzNDU2Nzg5Og==');
   I.amOnPage('/');
   I.waitForElement('.latLongInput', 10);
   I.fillField('.latLongInput', '37° 8\'1.97"N 76° 6\'30.23"W');
@@ -17,14 +28,12 @@ Scenario('should allow users to convert coordinates', async (I) => {
 });
 
 Scenario('should display a list of acronyms', (I) => {
-  I.haveHeader('Authorization', 'Basic Q1JPU1MuSk9SREFOLk1JRERMRS4wMTIzNDU2Nzg5Og==');
   I.amOnPage('/');
   I.fillField('.acronymSearch', 'AAM');
   I.waitForText("AAM - air-to-air missile", 10, ".acronym");
 });
 
 Scenario('should see 4 weather links', async (I) => {
-  I.haveHeader('Authorization', 'Basic Q1JPU1MuSk9SREFOLk1JRERMRS4wMTIzNDU2Nzg5Og==');
   I.amOnPage('/');
   I.waitForElement('.weatherURL', 10);
   let weatherCount = await I.grabNumberOfVisibleElements('.weatherURL');
@@ -32,7 +41,6 @@ Scenario('should see 4 weather links', async (I) => {
 });
 
 Scenario('should convert measurements', async (I) => {
-  I.haveHeader('Authorization', 'Basic Q1JPU1MuSk9SREFOLk1JRERMRS4wMTIzNDU2Nzg5Og==');
   I.amOnPage('/');
   I.fillField('.conversionInput', '1');
   let value = await I.grabValueFrom('.conversionOutput');
@@ -44,13 +52,11 @@ Scenario('should convert measurements', async (I) => {
 });
 
 Scenario('should see an ATO day', (I) => {
-  I.haveHeader('Authorization', 'Basic Q1JPU1MuSk9SREFOLk1JRERMRS4wMTIzNDU2Nzg5Og==');
   I.amOnPage('/');
   I.see("ATO ", ".atoDay");
 });
 
 Scenario('should render six clocks', async function (I) {
-  I.haveHeader('Authorization', 'Basic Q1JPU1MuSk9SREFOLk1JRERMRS4wMTIzNDU2Nzg5Og==');
   I.amOnPage('/');
   I.waitForElement('.clock', 10);
   const clockCount = await I.grabNumberOfVisibleElements('.clock');
@@ -58,7 +64,6 @@ Scenario('should render six clocks', async function (I) {
 });
 
 Scenario('should see a general information card', (I) => {
-  I.haveHeader('Authorization', 'Basic Q1JPU1MuSk9SREFOLk1JRERMRS4wMTIzNDU2Nzg5Og==');
   I.amOnPage('/');
   I.waitForElement('.info', 10);
   I.see('Image Server', '.info');
@@ -72,7 +77,6 @@ Scenario('should see a general information card', (I) => {
 });
 
 Scenario('should allow the user to add, edit and delete an operation', async (I) => {
-  I.haveHeader('Authorization', 'Basic Q1JPU1MuSk9SREFOLk1JRERMRS4wMTIzNDU2Nzg5Og==');
   let name = 't' + Date.now().toString().substr(8);
 
   //create
@@ -108,14 +112,12 @@ Scenario('should allow the user to add, edit and delete an operation', async (I)
 });
 
 Scenario('should see a toast when clicking element in general info card', (I) => {
-  I.haveHeader('Authorization', 'Basic Q1JPU1MuSk9SREFOLk1JRERMRS4wMTIzNDU2Nzg5Og==');
   I.amOnPage('/');
   I.click('.row:first-of-type > div:first-of-type');
   I.waitForElement('.customToast', 10);
 });
 
 Scenario('should be able to search resources', (I) => {
-  I.haveHeader('Authorization', 'Basic Q1JPU1MuSk9SREFOLk1JRERMRS4wMTIzNDU2Nzg5Og==');
   I.amOnPage('/');
   I.fillField('.filterSection > input', 'Amazon');
   I.dontSee('YouTube');
@@ -123,7 +125,6 @@ Scenario('should be able to search resources', (I) => {
 });
 
 Scenario('should render three unique cards', (I) => {
-  I.haveHeader('Authorization', 'Basic Q1JPU1MuSk9SREFOLk1JRERMRS4wMTIzNDU2Nzg5Og==');
   I.amOnPage('/');
   I.click('.tab:nth-of-type(1) > div', '.tabContainer');
   I.waitForText("Main", 10);
@@ -136,7 +137,6 @@ Scenario('should render three unique cards', (I) => {
 });
 
 Scenario('should allow the user to change tabs and see specialty resources', (I) => {
-  I.haveHeader('Authorization', 'Basic Q1JPU1MuSk9SREFOLk1JRERMRS4wMTIzNDU2Nzg5Og==');
   I.amOnPage('/');
   I.click('.tab:nth-of-type(1) > div', '.tabContainer');
   I.see('FMV Amazon');
@@ -155,7 +155,6 @@ Scenario('should allow the user to change tabs and see specialty resources', (I)
 });
 
 Scenario('should allow the user to add a local resource', async (I) => {
-  I.haveHeader('Authorization', 'Basic Q1JPU1MuSk9SREFOLk1JRERMRS4wMTIzNDU2Nzg5Og==');
   let name = 't' + Date.now().toString().substr(8);
   //create
   I.amOnPage('/');
@@ -182,48 +181,47 @@ Scenario('should allow the user to add a local resource', async (I) => {
 });
 
 Scenario('should allow the user to add, edit and delete a resource', async (I) => {
-  I.haveHeader('Authorization', 'Basic Q1JPU1MuSk9SREFOLk1JRERMRS4wMTIzNDU2Nzg5Og==');
-  let name = 't' + Date.now().toString().substr(8);
-
+  let createTitle = 'create' + Date.now();
   //create
   I.amOnPage('/');
+
   I.click('.tab:nth-of-type(1) > div', '.tabContainer');
   I.waitForText('FMV Amazon', 10);
   I.click('ADD RESOURCE');
-  I.fillField('.titleField', name);
+  I.fillField('.titleField', createTitle);
   I.fillField('.urlField', 'https://www.testpage.com');
   I.click('SAVE', '.modal');
   I.waitForText('Resource Link Added', 10);
   I.amOnPage('/');
-  I.waitForText(name, 10);
+  I.waitForText(createTitle, 10);
 
   //edit
+  let editTitle = 'edit' + Date.now();
   I.amOnPage('/');
   I.click('.tab:nth-of-type(1) > div', '.tabContainer');
   I.waitForText('FMV Amazon', 10);
   I.click('.editButton');
-  I.fillField('.pendingEditTitle', name);
-  I.fillField('.pendingEditUrl', 'https://www.google.com');
+  I.fillField('.pendingEditTitle', editTitle);
+  I.fillField('.pendingEditUrl', `https://www.${editTitle}.com`);
   I.click('SAVE');
   I.waitForText('Resource Edit Complete', 10);
-  I.waitForText(name, 10);
-  const href = await I.grabAttributeFrom('.category1 > .body > .resourceList > div:nth-of-type(5) > div > a', 'href');
-  homeAssert.strictEqual('https://www.google.com', href);
+  I.waitForText(editTitle, 10);
+  const href = await I.grabAttributeFrom('.category1 > .body > .resourceList > div:nth-of-type(1) > div > a', 'href');
+  homeAssert.strictEqual(href, `https://www.${editTitle}.com`);
 
   //delete
   I.amOnPage('/');
   I.click('.tab:nth-of-type(1) > div', '.tabContainer');
   I.waitForText('FMV Amazon', 10);
   I.click('.deleteButton');
-  I.see(name);
+  I.see(editTitle);
   I.click('.confirmButton');
   I.waitForText('Resource Link Deleted', 10);
-  I.dontSee(name);
+  I.dontSee(editTitle);
 });
 
 Scenario('should validate user resource input', async (I) => {
   //empty
-  I.haveHeader('Authorization', 'Basic Q1JPU1MuSk9SREFOLk1JRERMRS4wMTIzNDU2Nzg5Og==');
   I.amOnPage('/');
   I.click('ADD RESOURCE');
   I.click('SAVE', '.modal');
@@ -247,7 +245,6 @@ Scenario('should validate user resource input', async (I) => {
 });
 
 Scenario('should order by most clicked', async (I) => {
-  I.haveHeader('Authorization', 'Basic Q1JPU1MuSk9SREFOLk1JRERMRS4wMTIzNDU2Nzg5Og==');
   let name = 't' + Date.now().toString().substr(8);
 
   //create

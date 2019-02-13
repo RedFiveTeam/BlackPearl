@@ -1,11 +1,12 @@
 package mil.af.dgs1sdt.blackpearl.account;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.security.Principal;
 
 @Controller
 @RequestMapping(AccountController.URI)
@@ -19,10 +20,8 @@ public class AccountController {
 
   @GetMapping
   public @ResponseBody
-  Account getProfile() {
-    Account account = accountRepository.findOneByCardID(SecurityContextHolder.getContext().getAuthentication().getName());
-    Account guest = accountRepository.findOneByCardID("GUEST.GUEST.GUEST.0123456789");
-    return account != null ? account : guest;
+  Account getProfile(@AuthenticationPrincipal Principal principal) {
+    return accountService.fetchAccountByCardId(principal.getName());
   }
 
   @PutMapping(path = "/{id}")

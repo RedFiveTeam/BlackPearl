@@ -10,7 +10,7 @@ describe('ProfileContainer', () => {
   beforeEach(() => {
     profileStore = {
       profile: {
-        name: 'Test User'
+        cardID: 'FIRST.MIDDLE.LAST.0123456789'
       }
     };
 
@@ -18,12 +18,13 @@ describe('ProfileContainer', () => {
       <ProfileContainer
         profileStore={profileStore}
         className="profileSection"
+        displayName="first last"
       />
     );
   });
 
   it('should contain a profile name', () => {
-    expect(subject.find('.profileSection').at(0).prop('children')).toContain('Test User');
+    expect(subject.find('.username').text()).toBe('first last');
     expect(subject.find(PersonIcon).exists()).toBeTruthy();
   });
 });

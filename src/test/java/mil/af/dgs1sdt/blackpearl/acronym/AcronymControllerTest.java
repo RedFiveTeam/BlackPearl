@@ -21,6 +21,7 @@ public class AcronymControllerTest extends BaseIntegrationTest {
 
   @Before
   public void setUp() {
+    super.setUp();
     acronym1 = new Acronym("AAA", "Aron Alen Arnolnd");
     acronym2 = new Acronym("BBB", "Baron Balen Barnold");
     acronym3 = new Acronym("JJJ", "Jim Jewlwam Jailor");
@@ -43,6 +44,9 @@ public class AcronymControllerTest extends BaseIntegrationTest {
   public void getAllAcronymsTest() {
     given()
       .port(port)
+      .auth()
+      .preemptive()
+      .basic("jordan", "password")
       .when()
       .get(AcronymController.URI)
       .then()
@@ -63,6 +67,9 @@ public class AcronymControllerTest extends BaseIntegrationTest {
 
     given()
       .port(port)
+      .auth()
+      .preemptive()
+      .basic("jordan", "password")
       .contentType("application/json")
       .body(acronym)
       .when()
@@ -77,6 +84,9 @@ public class AcronymControllerTest extends BaseIntegrationTest {
   public void deleteAcronymTest() {
     given()
       .port(port)
+      .auth()
+      .preemptive()
+      .basic("jordan", "password")
       .contentType("application/json")
       .body(acronym1.getId())
       .when()

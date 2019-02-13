@@ -1,6 +1,7 @@
 import { ProfileActions } from './ProfileActions';
 import { StubProfileRepository } from './StubProfileRepository';
 import { ProfileRepository } from './ProfileRepository';
+import { ProfileModel } from './ProfileModel';
 
 describe('ProfileActions', () => {
   let subject: ProfileActions;
@@ -17,8 +18,13 @@ describe('ProfileActions', () => {
     subject = new ProfileActions({profileStore} as any, {profileRepository} as any);
   });
 
-  it('should get the current account', async () => {
+  it('should get the current fetchAccountByCardId', async () => {
     await subject.setProfile();
     expect(profileStore.setProfile).toHaveBeenCalled();
+  });
+
+  it('should generate a display name', () => {
+    let profile = new ProfileModel(1, 'LAST.FIRST.MIDDLE.0123456789');
+    expect(subject.generateDisplayName(profile)).toBe('LAST.FIRST.MIDDLE.0123456789');
   });
 });

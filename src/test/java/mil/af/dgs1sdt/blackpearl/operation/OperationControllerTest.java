@@ -11,7 +11,8 @@ import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.equalTo;
 
 public class OperationControllerTest extends BaseIntegrationTest {
-  @Autowired private OperationRepository operationRepository;
+  @Autowired
+  private OperationRepository operationRepository;
   private Operation op1;
   private Operation op2;
   private Operation op3;
@@ -20,6 +21,7 @@ public class OperationControllerTest extends BaseIntegrationTest {
 
   @Before
   public void setUp() {
+    super.setUp();
     op1 = new Operation("OP ONE", "This is Operation One", "https://www.opone.com");
     op2 = new Operation("OP TWO", "This is Operation Two", "https://www.optwo.com");
     op3 = new Operation("OP THREE", "This is Operation Three", "https://www.opthree.com");
@@ -34,12 +36,17 @@ public class OperationControllerTest extends BaseIntegrationTest {
   }
 
   @After
-  public void tearDown() { super.tearDown(); }
+  public void tearDown() {
+    super.tearDown();
+  }
 
   @Test
   public void getAllOperationsTest() {
     given()
       .port(port)
+      .auth()
+      .preemptive()
+      .basic("jordan", "password")
       .when()
       .get(OperationController.URI)
       .then()
@@ -62,6 +69,9 @@ public class OperationControllerTest extends BaseIntegrationTest {
 
     given()
       .port(port)
+      .auth()
+      .preemptive()
+      .basic("jordan", "password")
       .contentType("application/json")
       .body(op)
       .when()
@@ -82,6 +92,9 @@ public class OperationControllerTest extends BaseIntegrationTest {
     final String json = objectMapper.writeValueAsString(op5);
     given()
       .port(port)
+      .auth()
+      .preemptive()
+      .basic("jordan", "password")
       .contentType("application/json")
       .body(json)
       .when()
@@ -97,6 +110,9 @@ public class OperationControllerTest extends BaseIntegrationTest {
   public void deleteTest() {
     given()
       .port(port)
+      .auth()
+      .preemptive()
+      .basic("jordan", "password")
       .contentType("application/json")
       .body(op1.getId())
       .when()

@@ -18,8 +18,9 @@ public class UserControllerTest extends BaseIntegrationTest {
 
   @Before
   public void setUp() {
-    account1 = new Account("name1", "role1", 1L, 1L, 0L, 1L);
-    account2 = new Account("name2", "role2", 2L, 1L, 0L, 1L);
+    super.setUp();
+    account1 = new Account("name1", 1L, 1L, 0L, 1L);
+    account2 = new Account("name2", 1L, 1L, 0L, 1L);
 
     accountRepository.save(account1);
     accountRepository.save(account2);
@@ -34,10 +35,13 @@ public class UserControllerTest extends BaseIntegrationTest {
   public void getAllUsersTest() {
     given()
       .port(port)
+      .auth()
+      .preemptive()
+      .basic("jordan", "password")
       .when()
       .get(UserController.URI)
       .then()
       .statusCode(200)
-      .body("users.size()", equalTo(2));
+      .body("users.size()", equalTo(3));
   }
 }

@@ -1,46 +1,33 @@
 package mil.af.dgs1sdt.blackpearl.account;
 
+import mil.af.dgs1sdt.blackpearl.BaseIntegrationTest;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
-
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import org.springframework.beans.factory.annotation.Autowired;
 
 
-@RunWith(MockitoJUnitRunner.class)
-public class AccountServiceTest {
-  @Mock
-  private AccountRepository profileRepository;
+public class AccountServiceTest extends BaseIntegrationTest {
+  @Autowired
+  private AccountRepository accountRepository;
+
   private AccountService subject;
 
   @Before
   public void setUp() {
-    subject = new AccountService(profileRepository);
+    accountRepository.save(new Account("LastName.FirstName.MiddleName.123456789123", 1L, 1L, 1L, 1L));
+    subject = new AccountService(accountRepository);
   }
 
   @Test
-  public void getsTheProfileGivenTheCardId() {
-    subject.getProfile("LastName.FirstName.MiddleName.123456789123");
-    verify(profileRepository).findOneByCardID("LastName.FirstName.MiddleName.123456789123");
+  public void fetchesExistingAccount() {
+    Account account = subject.fetchAccountByCardId("LastName.FirstName.MiddleName.123456789123");
+    assert (account != null);
   }
 
   @Test
-  public void createsAProfileIfOneDoesNotExist() {
-    when(subject.getProfile("LastName.FirstName.MiddleName.123456789123"))
-      .thenReturn(null);
+  public void createsAccountWhenNonExistent() {
+    subject.fetchAccountByCardId("New User");
 
-    subject.getProfile("LastName.FirstName.MiddleName.123456789123");
-
-    verify(profileRepository).save(new Account(
-      "LastName.FirstName.MiddleName.123456789123",
-      "FirstName LastName",
-      1L,
-      1L,
-      0L,
-      1L
-    ));
+    assert (accountRepository.findOneByCardID("New User").getCardID() == "New User");
   }
 }

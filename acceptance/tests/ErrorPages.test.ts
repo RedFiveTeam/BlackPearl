@@ -2,8 +2,15 @@
 
 Feature('Error Page');
 
+Before((I) => {
+  I.amOnPage('/');
+  I.fillField('.username', 'jordan');
+  I.fillField('password', 'password');
+  I.click('Login');
+  I.waitForText('jordan', 10);
+});
+
 Scenario('should show a 404 page', async (I) => {
-  I.haveHeader('Authorization', 'Basic Q1JPU1MuSk9SREFOLk1JRERMRS4wMTIzNDU2Nzg5Og==');
   I.amOnPage('/ehbrewhjrbewewrfr');
   I.see("Lost at Sea?");
 });
