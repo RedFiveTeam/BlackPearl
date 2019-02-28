@@ -7,3 +7,4 @@ applications:
   path: target/blackpearl-0.0.1-SNAPSHOT.jar
   services:
     - blackpearl-db
+    - blackpearl-sso
