@@ -7,7 +7,7 @@ Before((I) => {
   I.fillField('.username', 'jordan');
   I.fillField('password', 'password');
   I.click('Login');
-  I.waitForText('jordan', 10);
+  I.waitForText('Jordan', 10);
 });
 
 Scenario('should show a 404 page', async (I) => {

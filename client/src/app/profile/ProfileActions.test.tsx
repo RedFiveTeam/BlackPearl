@@ -27,4 +27,9 @@ describe('ProfileActions', () => {
     let profile = new ProfileModel(1, 'LAST.FIRST.MIDDLE.0123456789');
     expect(subject.generateDisplayName(profile)).toBe('LAST.FIRST.MIDDLE.0123456789');
   });
+
+  it('should generate a display name from a JWICS login', () => {
+    let profile = new ProfileModel(1, 'first.last@af.ic.gov');
+    expect(subject.generateDisplayName(profile)).toBe('first last');
+  });
 });

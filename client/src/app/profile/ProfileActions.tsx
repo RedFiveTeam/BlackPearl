@@ -44,6 +44,12 @@ export class ProfileActions {
 
   @action.bound
   generateDisplayName(profile: ProfileModel): string {
-    return profile.cardID;
+    let username = profile.cardID;
+    if (username.includes('@af.ic.gov')) {
+      let firstName = username.substring(0, username.indexOf('.'));
+      let lastName = username.substring(username.indexOf('.') + 1, username.indexOf('@'));
+      username = `${firstName} ${lastName}`;
+    }
+    return username;
   }
 }

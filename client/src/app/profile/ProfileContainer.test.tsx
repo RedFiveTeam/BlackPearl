@@ -5,26 +5,29 @@ import { PersonIcon } from '../icon/PersonIcon';
 
 describe('ProfileContainer', () => {
   let subject: ShallowWrapper;
-  let profileStore: any;
 
   beforeEach(() => {
-    profileStore = {
-      profile: {
-        cardID: 'FIRST.MIDDLE.LAST.0123456789'
-      }
-    };
-
     subject = shallow(
       <ProfileContainer
-        profileStore={profileStore}
         className="profileSection"
         displayName="first last"
       />
     );
   });
 
-  it('should contain a profile name', () => {
-    expect(subject.find('.username').text()).toBe('first last');
-    expect(subject.find(PersonIcon).exists()).toBeTruthy();
+  it('should contain a title case profile name', () => {
+    expect(
+      subject
+        .find('.username')
+        .text()
+    ).toBe('First Last');
+  });
+
+  it('should have a user icon', () => {
+    expect(
+      subject
+        .find(PersonIcon)
+        .exists()
+    ).toBeTruthy();
   });
 });
