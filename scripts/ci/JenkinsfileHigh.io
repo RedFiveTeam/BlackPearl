@@ -15,10 +15,10 @@ node ('') {
     }
 
     stage ('Deploy') {
-        withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: '67a37428-4424-4d73-9af4-03c4f53e4610', passwordVariable: 'PCFPass', usernameVariable: 'PCFUser']]) {
+        withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'paas-tc-dev-BLACK_PEARL_service', passwordVariable: 'PCFPass', usernameVariable: 'PCFUser']]) {
             withEnv(["CF_HOME=${pwd()}"]) {
                 sh "cf login -a api.system.dev.east.paas.nga.ic.gov -u $PCFUser -p $PCFPass -o Black_Pearl -s 'The_Black_Pearl_dev'"
-                sh "cf push -f ../../manifest-high.yml -n blackpearl"
+                sh "cf push -f ./manifest-high.yml -n blackpearl"
             }
         }
     }
