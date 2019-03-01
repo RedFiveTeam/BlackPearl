@@ -13,6 +13,152 @@ Before((I) => {
 });
 
 /* tslint:disable:no-any */
+
+Scenario('should provide a resource features set', async (I) => {
+  I.amOnPage('/');
+
+  checkCards(I);
+  await addResource(I);
+  await editResource(I);
+  await deleteResource(I);
+  await sortResource(I);
+  await searchResource(I);
+});
+
+Scenario('should provide functioning widgets', async (I) => {
+  I.amOnPage('/');
+
+  await coordinateConverter(I);
+  await measurementConverter(I);
+  await acronymSearch(I);
+});
+
+Scenario('should provide static information in the app banner', async (I) => {
+  I.amOnPage('/');
+  I.see("ATO ", ".atoDay");
+
+  const clockCount = await I.grabNumberOfVisibleElements('.clock');
+  homeAssert.strictEqual(
+    clockCount,
+    6,
+    'Banner should have 6 clocks'
+  );
+});
+
+Scenario('ops and general info journey', async (I) => {
+  I.amOnPage('/');
+
+  checkForToast(I);
+  checkGeneralInfo(I);
+
+  addOperation(I);
+  await editOperation(I);
+  deleteOperation(I);
+});
+
+async function acronymSearch(I) {
+  I.fillField('.acronymSearch', 'AAM');
+  I.waitForText("AAM - air-to-air missile", 10, ".acronym");
+
+  I.waitForElement('.weatherURL', 10);
+  let weatherCount = await I.grabNumberOfVisibleElements('.weatherURL');
+  homeAssert.strictEqual(
+    weatherCount,
+    4,
+    'Widget should have 4 weather URLs'
+  );
+}
+
+async function measurementConverter(I) {
+  I.fillField('.conversionInput', '1');
+  let value = await I.grabValueFrom('.conversionOutput');
+  homeAssert.strictEqual(
+    value,
+    '0.62',
+    'Widget should convert KM to miles by default'
+  );
+
+  I.click('KM');
+  I.click('.ddd:first-of-type');
+  value = await I.grabValueFrom('.conversionOutput');
+  homeAssert.strictEqual(
+    value,
+    '1.15',
+    'Widget should select NM and convert to miles'
+  );
+}
+
+async function coordinateConverter(I) {
+  I.waitForElement('.latLongInput', 10);
+  I.fillField('.latLongInput', '37° 8\'1.97"N 76° 6\'30.23"W');
+  let mgrsValue = await I.grabValueFrom('.mgrsInput');
+  homeAssert.strictEqual(
+    mgrsValue,
+    '18SVG0155110299',
+    'Widget should convert LatLong to MGRS'
+  );
+
+  I.fillField('.mgrsInput', '18SVG0493917349');
+  let latLongValue = await I.grabValueFrom('.latLongInput');
+  homeAssert.strictEqual(
+    latLongValue,
+    '371152N 0760416W',
+    'Widget should convert MGRS to LatLong'
+  );
+}
+
+function addOperation(I) {
+  let name = 't' + Date.now().toString().substr(8);
+
+  I.amOnPage('/');
+  I.click('.addOperationButton');
+  I.fillField('.titleField', name);
+  I.fillField('.descriptionField', 'This is my Op');
+  I.fillField('.addressField', 'https://www.google.com');
+  I.click('SAVE', '.modal');
+  I.waitForText('Operation Added', 10);
+  I.waitForText(name, 10);
+}
+
+async function editOperation(I) {
+  I.amOnPage('/');
+  I.click('.editButton', '.operation:last-of-type');
+  I.fillField('.pendingEditTitle', 'New Operation');
+  I.fillField('.pendingEditDescription', 'This is my newly revised Op');
+  I.fillField('.pendingEditAddress', 'https://www.mynewop.com');
+  I.click('SAVE');
+  I.waitForText('Operation Edit Complete', 10);
+  I.waitForText('New Operation', 10);
+  I.waitForText('This is my newly revised Op', 10);
+  const href = await I.grabAttributeFrom('.operation:last-of-type > a', 'href');
+  homeAssert.strictEqual('https://www.mynewop.com', href);
+}
+
+function deleteOperation(I) {
+  I.amOnPage('/');
+  I.click('.deleteButton', '.operation:last-of-type');
+  I.see('New Operation');
+  I.click('DELETE');
+  I.waitForText('Operation Deleted', 10);
+  I.dontSee('New Operation');
+}
+
+function checkForToast(I) {
+  I.click('.row:first-of-type > div:first-of-type');
+  I.waitForElement('.customToast', 10);
+}
+
+function checkGeneralInfo(I) {
+  I.see('Image Server', '.info');
+  I.see('Call Out Format', '.info');
+  I.see('Image Server (JWICS)', '.info');
+  I.see('AUAB', '.info');
+  I.see('NAVCENT', '.info');
+  I.see('DSN', '.info');
+  I.see('SVOIP', '.info');
+  I.see('TSVOIP', '.info');
+}
+
 function checkCards(I) {
 
   I.see("Main", ".cardTitle");
@@ -32,7 +178,7 @@ function checkCards(I) {
   I.see('Fusion Amazon');
   I.see('Fusion YouTube');
   I.see('Fusion Reddit');
-};
+}
 
 async function addResource(I) {
 
@@ -41,9 +187,7 @@ async function addResource(I) {
   I.click('SAVE', '.modal');
   I.waitForText('Please enter a title', 10);
   I.waitForText('Please enter an address', 10);
-  I.click('CANCEL', '.modal');
 
-  I.click('.addResourceButton:first-of-type');
   let superLongTitle = 'This string is waaaaaaay too long to possibly be a title. what am i even doing????? Whyyyyyyyy';
   I.fillField('.titleField', superLongTitle);
   let correctedTitle = await I.grabValueFrom('.titleField');
@@ -53,7 +197,7 @@ async function addResource(I) {
     'Resource modal should shorten long titles'
   );
 
-  const createValidTitle = 'create' + Date.now();
+  const createValidTitle = 'new' + Date.now();
   I.fillField('.titleField', createValidTitle);
   correctedTitle = await I.grabValueFrom('.titleField');
   homeAssert.strictEqual(
@@ -61,9 +205,9 @@ async function addResource(I) {
     createValidTitle,
     'Resource modal should keep valid titles'
   );
-  I.fillField('.urlField', 'sometrash.com');
+  I.fillField('.urlField', 'trash.com');
   I.click('SAVE', '.modal');
-  I.waitForText('Please enter a valid address (https://www...)');
+  I.waitForText('Please enter a valid address (https://www...)', 10);
 
   I.fillField('.urlField', `https://www.${createValidTitle}.com`);
   I.click('SAVE', '.modal');
@@ -135,9 +279,6 @@ async function searchResource(I) {
     beforeSearchTitle,
     'Resource should filter correct resources'
   );
-
-  I.clearField('.filterSection > input');
-  I.amOnPage('/');
 }
 
 async function deleteResource(I) {
@@ -151,25 +292,23 @@ async function deleteResource(I) {
 }
 
 async function sortResource(I) {
-  const firstLocalResourceTitle = 'create local 1 ' + Date.now();
+  const firstLocalResourceTitle = 'local1 ' + Date.now();
   I.click('.addResourceButton:first-of-type');
   I.fillField('.titleField', firstLocalResourceTitle);
-  I.fillField('.urlField', 'Y:/TestFile.txt');
+  I.fillField('.urlField', 'Y:/TstFle.txt');
   I.click('SAVE', '.modal');
 
-  const secondLocalResourceTitle = 'create local 2 ' + Date.now();
+  const secondLocalResourceTitle = 'local2 ' + Date.now();
   I.click('.addResourceButton:first-of-type');
   I.fillField('.titleField', secondLocalResourceTitle);
-  I.fillField('.urlField', 'Y:/TestFile.txt');
+  I.fillField('.urlField', 'Y:/TstFle.txt');
   I.click('SAVE', '.modal');
 
   I.click(locate('.resourceLink').withAttr({title: secondLocalResourceTitle}));
   I.click(locate('.resourceLink').withAttr({title: secondLocalResourceTitle}));
   I.click(locate('.resourceLink').withAttr({title: secondLocalResourceTitle}));
+  I.selectOption('.sortSelector', 'Alphabetical');
   I.selectOption('.sortSelector', 'Most Clicked');
-  I.refreshPage();
-  I.wait(2);
-  I.waitForText('ATO', 10);
 
   const firstRankTitle = await I.grabAttributeFrom(
     locate('.resourceLink'),
@@ -182,129 +321,3 @@ async function sortResource(I) {
   );
 
 }
-
-Scenario('should provide a resource features set', async (I) => {
-  I.amOnPage('/');
-
-  checkCards(I);
-  await addResource(I);
-  await editResource(I);
-  await deleteResource(I);
-  await sortResource(I);
-  await searchResource(I);
-});
-
-Scenario('should provide functioning widgets', async (I) => {
-  I.amOnPage('/');
-  I.waitForElement('.latLongInput', 10);
-  I.fillField('.latLongInput', '37° 8\'1.97"N 76° 6\'30.23"W');
-  let mgrsValue = await I.grabValueFrom('.mgrsInput');
-  homeAssert.strictEqual(
-    mgrsValue,
-    '18SVG0155110299',
-    'Widget should convert LatLong to MGRS'
-  );
-
-  I.fillField('.mgrsInput', '18SVG0493917349');
-  let latLongValue = await I.grabValueFrom('.latLongInput');
-  homeAssert.strictEqual(
-    latLongValue,
-    '371152N 0760416W',
-    'Widget should convert MGRS to LatLong'
-  );
-
-  //should convert measurements
-  I.fillField('.conversionInput', '1');
-  let value = await I.grabValueFrom('.conversionOutput');
-  homeAssert.strictEqual(
-    value,
-    '0.62',
-    'Widget should convert KM to miles by default'
-  );
-
-  I.click('KM');
-  I.click('.ddd:first-of-type'); // TODO fix selector for NM instead of numbered input
-  value = await I.grabValueFrom('.conversionOutput');
-  homeAssert.strictEqual(
-    value,
-    '1.15',
-    'Widget should select NM and convert to miles'
-  );
-
-  I.fillField('.acronymSearch', 'AAM');
-  I.waitForText("AAM - air-to-air missile", 10, ".acronym");
-
-  I.waitForElement('.weatherURL', 10);
-  let weatherCount = await I.grabNumberOfVisibleElements('.weatherURL');
-  homeAssert.strictEqual(
-    weatherCount,
-    4,
-    'Widget should have 4 weather URLs'
-  );
-});
-
-Scenario('should provide static information in the app banner', async (I) => {
-  I.amOnPage('/');
-  I.see("ATO ", ".atoDay");
-
-  const clockCount = await I.grabNumberOfVisibleElements('.clock');
-  homeAssert.strictEqual(
-    clockCount,
-    6,
-    'Banner should have 6 clocks'
-  );
-});
-
-Scenario('should see a toast when clicking element in general info card', (I) => {
-  I.amOnPage('/');
-  I.click('.row:first-of-type > div:first-of-type');
-  I.waitForElement('.customToast', 10);
-});
-
-Scenario('should see a general information card', (I) => {
-  I.amOnPage('/');
-  I.waitForElement('.info', 10);
-  I.see('Image Server', '.info');
-  I.see('Call Out Format', '.info');
-  I.see('Image Server (JWICS)', '.info');
-  I.see('AUAB', '.info');
-  I.see('NAVCENT', '.info');
-  I.see('DSN', '.info');
-  I.see('SVOIP', '.info');
-  I.see('TSVOIP', '.info');
-});
-
-Scenario('should allow the user to add, edit and delete an operation', async (I) => {
-  let name = 't' + Date.now().toString().substr(8);
-
-  //create
-  I.amOnPage('/');
-  I.click('.addOperationButton');
-  I.fillField('.titleField', name);
-  I.fillField('.descriptionField', 'This is my Op');
-  I.fillField('.addressField', 'https://www.google.com');
-  I.click('SAVE', '.modal');
-  I.waitForText('Operation Added', 10);
-  I.waitForText(name, 10);
-
-  //edit
-  I.amOnPage('/');
-  I.click('.editButton', '.operation:last-of-type');
-  I.fillField('.pendingEditTitle', name);
-  I.fillField('.pendingEditDescription', 'This is my newly revised Op');
-  I.fillField('.pendingEditAddress', 'https://www.mynewop.com');
-  I.click('SAVE');
-  I.waitForText('Operation Edit Complete', 10);
-  I.waitForText(name, 10);
-  I.waitForText('This is my newly revised Op', 10);
-  const href = await I.grabAttributeFrom('.operation:last-of-type > a', 'href');
-  homeAssert.strictEqual('https://www.mynewop.com', href);
-
-  //delete
-  I.amOnPage('/');
-  I.click('.deleteButton', '.operation:last-of-type');
-  I.see(name);
-  I.click('DELETE');
-  I.waitForText('Operation Deleted', 10);
-  I.dontSee(name);
-});
