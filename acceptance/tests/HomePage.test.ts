@@ -11,44 +11,54 @@ Before((I) => {
   I.waitForText('Jordan', 10);
 });
 
-Scenario('should allow user to log in', (I) => {
-  I.amOnPage('/');
-  I.waitForText('Jordan', 10);
-});
+Scenario('should provide functioning widgets', async (I) => {
 
-Scenario('should allow users to convert coordinates', async (I) => {
   I.amOnPage('/');
   I.waitForElement('.latLongInput', 10);
   I.fillField('.latLongInput', '37° 8\'1.97"N 76° 6\'30.23"W');
   let mgrsValue = await I.grabValueFrom('.mgrsInput');
-  homeAssert.strictEqual(mgrsValue, '18SVG0155110299');
+  homeAssert.strictEqual(
+    mgrsValue,
+    '18SVG0155110299',
+    'Widget should convert LatLong to MGRS'
+  );
+
   I.fillField('.mgrsInput', '18SVG0493917349');
   let latLongValue = await I.grabValueFrom('.latLongInput');
-  homeAssert.strictEqual(latLongValue, '371152N 0760416W');
-});
+  homeAssert.strictEqual(
+    latLongValue,
+    '371152N 0760416W',
+    'Widget should convert MGRS to LatLong'
+  );
 
-Scenario('should display a list of acronyms', (I) => {
-  I.amOnPage('/');
-  I.fillField('.acronymSearch', 'AAM');
-  I.waitForText("AAM - air-to-air missile", 10, ".acronym");
-});
-
-Scenario('should see 4 weather links', async (I) => {
-  I.amOnPage('/');
-  I.waitForElement('.weatherURL', 10);
-  let weatherCount = await I.grabNumberOfVisibleElements('.weatherURL');
-  homeAssert.strictEqual(weatherCount, 4);
-});
-
-Scenario('should convert measurements', async (I) => {
-  I.amOnPage('/');
+  //should convert measurements
   I.fillField('.conversionInput', '1');
   let value = await I.grabValueFrom('.conversionOutput');
-  homeAssert.strictEqual(value, '0.62');
+  homeAssert.strictEqual(
+    value,
+    '0.62',
+    'Widget should convert KM to miles by default'
+  );
+
   I.click('KM');
-  I.click('.ddd:first-of-type');
+  I.click('.ddd:first-of-type'); // TODO fix selector for NM instead of numbered input
   value = await I.grabValueFrom('.conversionOutput');
-  homeAssert.strictEqual(value, '1.15');
+  homeAssert.strictEqual(
+    value,
+    '1.15',
+    'Widget should select NM and convert to miles'
+  );
+
+  I.fillField('.acronymSearch', 'AAM');
+  I.waitForText("AAM - air-to-air missile", 10, ".acronym");
+
+  I.waitForElement('.weatherURL', 10);
+  let weatherCount = await I.grabNumberOfVisibleElements('.weatherURL');
+  homeAssert.strictEqual(
+    weatherCount,
+    4,
+    'Widget should have 4 weather URLs'
+  );
 });
 
 Scenario('should see an ATO day', (I) => {
