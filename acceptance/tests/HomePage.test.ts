@@ -12,7 +12,6 @@ Before((I) => {
 });
 
 Scenario('should provide functioning widgets', async (I) => {
-
   I.amOnPage('/');
   I.waitForElement('.latLongInput', 10);
   I.fillField('.latLongInput', '37° 8\'1.97"N 76° 6\'30.23"W');
@@ -61,16 +60,16 @@ Scenario('should provide functioning widgets', async (I) => {
   );
 });
 
-Scenario('should see an ATO day', (I) => {
+Scenario('should provide static information in the app banner', async (I) => {
   I.amOnPage('/');
   I.see("ATO ", ".atoDay");
-});
 
-Scenario('should render six clocks', async function (I) {
-  I.amOnPage('/');
-  I.waitForElement('.clock', 10);
   const clockCount = await I.grabNumberOfVisibleElements('.clock');
-  homeAssert.strictEqual(clockCount, 6);
+  homeAssert.strictEqual(
+    clockCount,
+    6,
+    'Banner should have 6 clocks'
+  );
 });
 
 Scenario('should see a general information card', (I) => {
