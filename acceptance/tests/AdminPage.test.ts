@@ -12,8 +12,17 @@ Before((I) => {
   I.waitForText('Jordan', 10);
 });
 
-Scenario('should allow admin to change a time zone', async (I) => {
+Scenario('should allow and admin to change information', async (I) => {
   I.amOnPage('/admin');
+
+  changeGeneralInfo(I);
+  await changeTimeZone(I);
+  await changeWeatherData(I);
+  changeAcronym(I);
+  await checkForChanges(I);
+});
+
+async function changeTimeZone(I) {
   I.click('.tabSelector:nth-of-type(2)');
   I.waitForElement('input', 10);
 
@@ -22,28 +31,30 @@ Scenario('should allow admin to change a time zone', async (I) => {
   I.selectOption('.timezoneRow:first-of-type > select', 'America/Tortola');
   I.click('SAVE');
   I.waitForElement('.customToast');
-  I.amOnPage('/');
-  I.waitForText('accTest', 10);
+}
 
-  const expectedTime = moment.tz(moment(), 'America/Tortola').format('HHmm').substr(0,3);
-  const timeValue = await I.grabTextFrom(locate('.time').first());
-  const actualTime = timeValue[0].substr(0,3);
-  adminAssert.strictEqual(actualTime, expectedTime);
-});
-
-Scenario('should allow admin to change general information', async (I) => {
-  I.amOnPage('/admin');
+function changeGeneralInfo(I) {
   I.waitForElement('.information', 10);
   I.clearField('.information:first-of-type > .informationContent > input');
   I.fillField('.information:first-of-type > .informationContent > input', 'www.com');
   I.click('SAVE');
   I.waitForElement('.customToast');
-  I.amOnPage('/');
-  I.waitForText('www.com', 10);
-});
 
-Scenario('should allow admin to add and delete an acronym', async (I) => {
-  I.amOnPage('/admin');
+}
+
+async function changeWeatherData(I) {
+  I.waitForElement('.tabSelector', 10);
+  I.click('.tabSelector:nth-of-type(4)');
+  I.waitForElement('.weatherURL', 10);
+  I.clearField('.weatherRow:first-of-type > input:nth-of-type(2)');
+  I.fillField('.weatherRow:first-of-type > input:nth-of-type(2)', 'http://superweather.com');
+  I.clearField('.weatherRow:first-of-type > input:first-of-type');
+  I.fillField('.weatherRow:first-of-type > input:first-of-type', 'SUP');
+  I.click('SAVE');
+  I.waitForElement('.customToast');
+}
+
+function changeAcronym(I) {
   I.click('.tabSelector:nth-of-type(3)');
   I.waitForElement('.addAcronymButton', 10);
   I.click('.addAcronymButton');
@@ -56,21 +67,23 @@ Scenario('should allow admin to add and delete an acronym', async (I) => {
   I.see('WAT', '#scrollBody > tr:first-of-type > .acronymColumn');
   I.click('DELETE');
   I.dontSee('WAT', '#scrollBody > tr:first-of-type > .acronymColumn');
-});
+}
 
-Scenario('should allow admin to change a weather data', async (I) => {
-  I.amOnPage('/admin');
-  I.waitForElement('.tabSelector', 10);
-  I.click('.tabSelector:nth-of-type(4)');
-  I.waitForElement('.weatherURL', 10);
-  I.clearField('.weatherRow:first-of-type > input:nth-of-type(2)');
-  I.fillField('.weatherRow:first-of-type > input:nth-of-type(2)', 'http://superweather.com');
-  I.clearField('.weatherRow:first-of-type > input:first-of-type');
-  I.fillField('.weatherRow:first-of-type > input:first-of-type', 'SUP');
-  I.click('SAVE');
-  I.waitForElement('.customToast');
+async function checkForChanges(I) {
   I.amOnPage('/');
+  // time zone
+  I.waitForText('accTest', 10);
+
+  const expectedTime = moment.tz(moment(), 'America/Tortola').format('HHmm').substr(0,3);
+  const timeValue = await I.grabTextFrom(locate('.time').first());
+  const actualTime = timeValue[0].substr(0,3);
+  adminAssert.strictEqual(actualTime, expectedTime);
+
+  // gen info
+  I.waitForText('www.com', 10);
+
+  //weather
   I.waitForText('SUP', 10);
   const url = await I.grabAttributeFrom('.weatherURL:first-of-type', 'href');
   adminAssert.strictEqual(url, 'http://superweather.com');
-});
+}
