@@ -23,13 +23,11 @@ describe('ProfileActions', () => {
     expect(profileStore.setProfile).toHaveBeenCalled();
   });
 
-  it('should generate a display name', () => {
-    let profile = new ProfileModel(1, 'LAST.FIRST.MIDDLE.0123456789');
-    expect(subject.generateDisplayName(profile)).toBe('LAST.FIRST.MIDDLE.0123456789');
-  });
+  it('should generate a display name from a JWICS and SIPR login', () => {
+    let JWICSProfile = new ProfileModel(1, 'first.last@af.ic.gov');
+    let SIPRProfile = new ProfileModel(1, 'first.m.last.mil@mail.smil.mil');
 
-  it('should generate a display name from a JWICS login', () => {
-    let profile = new ProfileModel(1, 'first.last@af.ic.gov');
-    expect(subject.generateDisplayName(profile)).toBe('first last');
+    expect(subject.generateDisplayName(JWICSProfile)).toBe('first last');
+    expect(subject.generateDisplayName(SIPRProfile)).toBe('first last');
   });
 });
