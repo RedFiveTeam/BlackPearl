@@ -3,6 +3,7 @@ package mil.af.dgs1sdt.blackpearl.account;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -26,6 +27,7 @@ public class Account implements UserDetails {
   private Long specialty;
   private Long sort;
   private Long widgets;
+  private String classification;
 
   @Transient
   private String password;
@@ -35,13 +37,15 @@ public class Account implements UserDetails {
     Long role,
     Long specialty,
     Long sort,
-    Long widgets
+    Long widgets,
+    String classification
   ) {
     this.cardID = cardId;
     this.role = role;
     this.specialty = specialty;
     this.sort = sort;
     this.widgets = widgets;
+    this.classification = classification;
   }
 
   public Account update(AccountJSON json) {
@@ -51,6 +55,7 @@ public class Account implements UserDetails {
     this.setSpecialty(json.getSpecialty());
     this.setSort(json.getSort());
     this.setWidgets(json.getWidgets());
+    this.setClassification(classification);
     return this;
   }
 
