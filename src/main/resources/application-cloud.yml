@@ -13,7 +13,6 @@ spring:
       hbm2ddl:
         auto: create-drop
       use-new-id-generator-mappings: false
-
   security:
     oauth2:
       client:
@@ -41,3 +40,4 @@ spring:
             userNameAttribute: user_name
       resource:
         user-info-uri: ${SSO_SERVICE_URL}/userinfo
+classified: ${CLASSIFIED}

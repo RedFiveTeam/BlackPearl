@@ -1,6 +1,7 @@
 package mil.af.dgs1sdt.blackpearl.account;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -12,7 +13,6 @@ import java.security.Principal;
 @RequestMapping(AccountController.URI)
 public class AccountController {
   public static final String URI = "/api/account";
-
   @Autowired
   AccountRepository accountRepository;
   @Autowired

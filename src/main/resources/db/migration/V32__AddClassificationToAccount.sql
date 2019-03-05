@@ -1,0 +1,1 @@
+alter table account add column classification varchar(64);

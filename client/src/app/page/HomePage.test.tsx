@@ -29,7 +29,7 @@ describe('HomePage', () => {
     };
 
     profileStore = {
-      profile: new ProfileModel()
+      profile: new ProfileModel(0, 'GUEST', 1, 1, 1, 'unclassified')
     };
 
     profileActions = {

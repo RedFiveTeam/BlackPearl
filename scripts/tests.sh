@@ -32,6 +32,7 @@ function acceptanceTests {
     if [[ "${2}" == "./tests/"*".test.ts" ]]; then
         SPECIFIC_TESTS=${2}
     fi
+        ./setup_db.sh
 
     pushd ${BASE_DIR}/scripts/seed_db
         ./seed_db.sh
