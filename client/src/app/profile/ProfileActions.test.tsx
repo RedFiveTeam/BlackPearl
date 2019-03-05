@@ -24,8 +24,8 @@ describe('ProfileActions', () => {
   });
 
   it('should generate a display name from a JWICS and SIPR login', () => {
-    let JWICSProfile = new ProfileModel(1, 'first.last@af.ic.gov');
-    let SIPRProfile = new ProfileModel(1, 'first.m.last.mil@mail.smil.mil');
+    let JWICSProfile = new ProfileModel(1, 'first.last@af.ic.gov', 1, 1, 1, '');
+    let SIPRProfile = new ProfileModel(1, 'first.m.last.mil@mail.smil.mil', 1, 1, 1, '');
 
     expect(subject.generateDisplayName(JWICSProfile)).toBe('first last');
     expect(subject.generateDisplayName(SIPRProfile)).toBe('first last');

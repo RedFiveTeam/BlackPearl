@@ -31,11 +31,12 @@ describe('ResourceActions', () => {
       setClicks: jest.fn(),
       sortResourcesByPositionDesc: jest.fn(),
       setFilteredResources: jest.fn(),
-      setFilter: jest.fn()
+      setFilter: jest.fn(),
+      sortResourcesByIdDesc: jest.fn()
     };
 
     profileStore = {
-      profile: new ProfileModel(0, 'GUEST')
+      profile: new ProfileModel(0, 'GUEST', 1, 1, 1, 'unclassified')
     };
 
     resourceRepository = new StubResourceRepository();
@@ -63,8 +64,6 @@ describe('ResourceActions', () => {
   it('should store every resource in store', async () => {
     await subject.setAllResources();
     expect(resourceStore.setResources).toHaveBeenCalled();
-    expect(resourceStore.setClicks).toHaveBeenCalled();
-    expect(resourceStore.sortResourcesByPositionDesc).toHaveBeenCalled();
   });
 
   it('should clear pending resource', () => {

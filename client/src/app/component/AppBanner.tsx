@@ -69,7 +69,7 @@ margin-left: -6px;
 background: #2F343B;
 display: flex;
 position: sticky;
-top: 0;
+top: 26px;
 z-index: 5;
 height: 53px;
 width: 100%;

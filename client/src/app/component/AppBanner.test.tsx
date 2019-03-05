@@ -14,7 +14,7 @@ describe('AppBanner', () => {
 
   beforeEach(() => {
     profileStore = {
-      profile: new ProfileModel()
+      profile: new ProfileModel(1, 'test', 1, 1, 1, 'unclassified')
     };
 
     profileActions = {
