@@ -27,6 +27,8 @@ function main {
 function acceptanceTests {
     showBanner "Acceptance Tests"
 
+    echo ${BLACKPEARL_DB_URL}
+
     SPECIFIC_TESTS=""
 
     if [[ "${2}" == "./tests/"*".test.ts" ]]; then
