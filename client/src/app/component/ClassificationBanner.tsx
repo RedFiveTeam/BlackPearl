@@ -14,6 +14,7 @@ export class ClassificationBanner extends React.Component<Props> {
     switch (this.props.classification) {
       default: {
         css = {
+          color: 'white',
           background: 'green'
         };
         return css;
@@ -21,6 +22,7 @@ export class ClassificationBanner extends React.Component<Props> {
       }
       case 'DYNAMIC CLASSIFICATION UP TO SECRET//NOFORN': {
         css = {
+          color: 'white',
           background: 'red'
         };
         return css;
@@ -28,6 +30,7 @@ export class ClassificationBanner extends React.Component<Props> {
       }
       case 'DYNAMIC CLASSIFICATION UP TO TOP SECRET//SI/TK//NOFORN': {
         css = {
+          color: 'black',
           background: 'yellow'
         };
         return css;

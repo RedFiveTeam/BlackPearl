@@ -1,4 +1,4 @@
-export BLACKPEARL_DB_URL=jdbc:mysql://localhost:3600/blackpearldev?useSSL=false
+export BLACKPEARL_DB_URL=jdbc:mysql://localhost:3306/blackpearldev?useSSL=false
 export BLACKPEARL_DB_USERNAME=blackpearl
 export CLASSIFICATION=UNCLASSIFIED
 export SSO_SERVICE_URL=https://ssotest.login.system.dev.east.paas.geointservices.io
