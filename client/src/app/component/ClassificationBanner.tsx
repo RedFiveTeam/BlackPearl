@@ -26,9 +26,9 @@ export class ClassificationBanner extends React.Component<Props> {
         return css;
         break;
       }
-      case 'DYNAMIC CLASSIFICATION UP TO TOP SECRET//SI/TK/NOFORN': {
+      case 'DYNAMIC CLASSIFICATION UP TO TOP SECRET//SI/TK//NOFORN': {
         css = {
-          background: 'green'
+          background: 'yellow'
         };
         return css;
         break;
