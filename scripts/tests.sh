@@ -33,10 +33,6 @@ function acceptanceTests {
         SPECIFIC_TESTS=${2}
     fi
 
-    pushd ${BASE_DIR}/scripts
-        ./setup_db.sh
-    popd
-
     pushd ${BASE_DIR}/scripts/seed_db
         ./seed_db.sh
     popd
