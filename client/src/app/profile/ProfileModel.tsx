@@ -6,19 +6,22 @@ export class ProfileModel {
   @observable private _specialty: number = 1;
   @observable private _sort: number = 0;
   @observable private _widgetsVisible: number = 1;
+  @observable private _classification: string;
 
   constructor(
     id: number | null = null,
     cardID: string = '',
     specialty: number = 1,
     sort: number = 0,
-    widgetsVisible: number = 1
+    widgetsVisible: number = 1,
+    classification: string
   ) {
     this._id = id;
     this._cardID = cardID;
     this._specialty = specialty;
     this._sort = sort;
     this._widgetsVisible = widgetsVisible;
+    this._classification = classification;
   }
 
   @computed
@@ -46,6 +49,11 @@ export class ProfileModel {
     return this._widgetsVisible;
   }
 
+  @computed
+  get classification(): string {
+    return this._classification;
+  }
+
   @action.bound
   setCardID(value: string) {
     this._cardID = value;
@@ -64,5 +72,10 @@ export class ProfileModel {
   @action.bound
   setWidgetsVisible(value: number) {
     this._widgetsVisible = value;
+  }
+
+  @action.bound
+  setClassification(value: string) {
+    this._classification = value;
   }
 }

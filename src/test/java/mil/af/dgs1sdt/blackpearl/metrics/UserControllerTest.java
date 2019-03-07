@@ -19,8 +19,8 @@ public class UserControllerTest extends BaseIntegrationTest {
   @Before
   public void setUp() {
     super.setUp();
-    account1 = new Account("name1", 1L, 1L, 0L, 1L);
-    account2 = new Account("name2", 1L, 1L, 0L, 1L);
+    account1 = new Account("name1", 1L, 1L, 0L, 1L, "UNCLASSIFIED");
+    account2 = new Account("name2", 1L, 1L, 0L, 1L, "UNCLASSIFIED");
 
     accountRepository.save(account1);
     accountRepository.save(account2);

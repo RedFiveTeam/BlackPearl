@@ -31,7 +31,7 @@ describe('ResourceMenuContainer', () => {
       createPendingDelete: jest.fn()
     };
 
-    profileStore.setProfile(new ProfileModel(0, 'Guest'));
+    profileStore.setProfile(new ProfileModel(0, 'GUEST', 1, 1, 1, 'unclassified'));
 
     subject = shallow(
       <ResourceMenuContainer
