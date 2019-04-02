@@ -23,6 +23,8 @@ import { StyledWidgetContainer } from '../component/widgets/WidgetContainer';
 import { ProfileStore } from '../profile/ProfileStore';
 import { ProfileActions } from '../profile/ProfileActions';
 import { StyledClassificationBanner } from '../component/ClassificationBanner';
+import { StyledLoginPopup } from '../component/popup/LoginPopup';
+import { StyledFindLoginPopup } from '../component/popup/FindLoginPopup';
 
 interface Props {
   resourceStore?: ResourceStore;
@@ -62,6 +64,14 @@ export class HomePage extends React.Component<Props> {
       <div
         className={this.props.className}
       >
+        {
+          this.props.profileStore!.hasOldProfile &&
+          <StyledFindLoginPopup/>
+        }
+        {
+          !this.props.profileStore!.hasProfile &&
+          <StyledLoginPopup/>
+        }
         {
           this.props.operationStore!.hasPendingDelete &&
           <StyledDeleteOperationPopup/>

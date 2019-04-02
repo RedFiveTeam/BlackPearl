@@ -18,4 +18,24 @@ export class WebProfileRepository implements ProfileRepository {
     const body = JSON.stringify(this.profileSerializer.serialize(profile));
     await this.client.putJSON('/api/account/' + profile.id, body);
   }
+
+  async getAllProfiles(): Promise<ProfileModel[]> {
+    const json = await this.client.getJSON('/api/account/all');
+    return json.map((obj: any) => {
+      return this.profileSerializer.deserialize(obj);
+    });
+  }
+
+  async login(altId: string): Promise<ProfileModel> {
+    let profile = new ProfileModel(null, altId, altId, 1, 0, 1, 'none');
+    const body = JSON.stringify(this.profileSerializer.serialize(profile));
+    const json = await this.client.postJSON('/api/account', body);
+    return this.profileSerializer.deserialize(json);
+  }
+
+  async link(profile: ProfileModel): Promise<ProfileModel> {
+    const body = JSON.stringify(this.profileSerializer.serialize(profile));
+    const json = await this.client.postJSON('/api/account/link', body);
+    return this.profileSerializer.deserialize(json);
+  }
 }

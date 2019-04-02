@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class AccountService {
-  @Value("${CLASSIFIED}") private String classification;
+  @Value("${CLASSIFICATION}") private String classification;
 
   private AccountRepository accountRepository;
 
@@ -16,7 +16,7 @@ public class AccountService {
   public Account fetchAccountByCardId(String cardId) {
     Account account = accountRepository.findOneByCardID(cardId);
     if (account == null) {
-      account = accountRepository.save(new Account(cardId, 1L, 1L, 0L, 1L, classification));
+      account = accountRepository.save(new Account(cardId, "Test", 1L, 1L, 0L, 1L, classification));
     }
     account.setPassword("password");
     account.setClassification(classification);
