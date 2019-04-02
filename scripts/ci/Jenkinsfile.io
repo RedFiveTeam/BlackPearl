@@ -21,6 +21,9 @@ node ('legacy') {
     stage ('Test & Build') {
         sh """
         docker pull dgs1sdt/blackpearl:cfs3linux
+        docker stop BlackPearl || true && docker rm BlackPearl || true
+        docker run --name BlackPearl -v `pwd`:/app -itd dgs1sdt/blackpearl:cfs3linux
+        """
         if(env.BRANCH_NAME == 'acceptance') {
             stage ('Test & Build') {
                 sh """
@@ -28,10 +31,10 @@ node ('legacy') {
 
                 docker stop BlackPearl || true && docker rm BlackPearl || true
 
-        docker run --name BlackPearl -v `pwd`:/app -itd dgs1sdt/blackpearl:cfs3linux
+                docker run --name BlackPearl -v `pwd`:/app -itd dgs1sdt/blackpearl:cfs3linux
 
-            docker exec BlackPearl /bin/bash -c "/app/scripts/tests.sh"
-            """
+                docker exec BlackPearl /bin/bash -c "/app/scripts/tests.sh"
+                """
             }
         }
     }
