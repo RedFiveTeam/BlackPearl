@@ -18,6 +18,9 @@ node ('legacy') {
         }
     }
 
+    stage ('Test & Build') {
+        sh """
+        docker pull dgs1sdt/blackpearl:cfs3linux
     if(env.BRANCH_NAME == 'acceptance') {
         stage ('Test & Build') {
             sh """
@@ -25,7 +28,7 @@ node ('legacy') {
 
             docker stop BlackPearl || true && docker rm BlackPearl || true
 
-            docker run --name BlackPearl -v `pwd`:/app -itd dgs1sdt/blackpearl
+        docker run --name BlackPearl -v `pwd`:/app -itd dgs1sdt/blackpearl:cfs3linux
 
             docker exec BlackPearl /bin/bash -c "/app/scripts/tests.sh"
             """
@@ -64,7 +67,7 @@ node ('legacy') {
             withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: '67a37428-4424-4d73-9af4-03c4f53e4610', passwordVariable: 'PCFPass', usernameVariable: 'PCFUser']]) {
                 withEnv(["CF_HOME=${pwd()}"]) {
                     sh "cf login -a api.system.dev.east.paas.geointservices.io -u $PCFUser -p $PCFPass -o DGS1SDT -s 'Black_Pearl_Development'"
-                    sh "cf push"
+                    sh "cf push -s cflinuxfs3"
                 }
             }
         }
