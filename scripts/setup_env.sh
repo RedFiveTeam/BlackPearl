@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 export BLACKPEARL_DB_URL=jdbc:mysql://localhost:3306/blackpearldev?useSSL=false
 export BLACKPEARL_DB_USERNAME=blackpearl
 export CLASSIFICATION=UNCLASSIFIED

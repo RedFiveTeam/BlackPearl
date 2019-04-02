@@ -63,7 +63,7 @@ node ('legacy') {
         stage ('Deploy Acceptance') {
             withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: '67a37428-4424-4d73-9af4-03c4f53e4610', passwordVariable: 'PCFPass', usernameVariable: 'PCFUser']]) {
                 withEnv(["CF_HOME=${pwd()}"]) {
-                    sh "cf login -a api.system.dev.east.paas.geointservices.io -u $PCFUser -p $PCFPass -o USAF_Narwhal -s 'Black Pearl Development'"
+                    sh "cf login -a api.system.dev.east.paas.geointservices.io -u $PCFUser -p $PCFPass -o DGS1SDT -s 'Black_Pearl_Development'"
                     sh "cf push"
                 }
             }
@@ -72,7 +72,7 @@ node ('legacy') {
         stage ('Deploy Staging') {
             withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: '67a37428-4424-4d73-9af4-03c4f53e4610', passwordVariable: 'PCFPass', usernameVariable: 'PCFUser']]) {
                 withEnv(["CF_HOME=${pwd()}"]) {
-                    sh "cf login -a api.system.dev.east.paas.geointservices.io -u $PCFUser -p $PCFPass -o USAF_Narwhal -s 'Black Pearl Staging'"
+                    sh "cf login -a api.system.dev.east.paas.geointservices.io -u $PCFUser -p $PCFPass -o DGS1SDT -s 'Black_Pearl_Staging'"
                     sh "cf push -n blackpearl-staging"
                 }
             }
