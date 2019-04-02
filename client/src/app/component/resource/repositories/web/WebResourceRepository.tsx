@@ -16,6 +16,7 @@ export class WebResourceRepository implements ResourceRepository {
     const json = await this.client.getJSON('/api/resources');
     return json.map((obj: any) => {
       return this.resourceSerializer.deserialize(obj);
+      // use this
     });
   }
 

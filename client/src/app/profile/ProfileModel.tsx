@@ -2,7 +2,8 @@ import { action, computed, observable } from 'mobx';
 
 export class ProfileModel {
   @observable private _id: number | null = null;
-  @observable private _cardID: string = '';
+  @observable private _cardID: string = 'Guest';
+  @observable private _altID: string = '';
   @observable private _specialty: number = 1;
   @observable private _sort: number = 0;
   @observable private _widgetsVisible: number = 1;
@@ -10,11 +11,13 @@ export class ProfileModel {
   constructor(
     id: number | null = null,
     cardID: string = '',
+    altID: string = '',
     specialty: number = 1,
     sort: number = 0,
     widgetsVisible: number = 1
   ) {
     this._id = id;
+    this._altID = altID;
     this._cardID = cardID;
     this._specialty = specialty;
     this._sort = sort;
@@ -29,6 +32,11 @@ export class ProfileModel {
   @computed
   get cardID(): string {
     return this._cardID;
+  }
+
+  @computed
+  get altID(): string {
+    return this._altID;
   }
 
   @computed
@@ -49,6 +57,11 @@ export class ProfileModel {
   @action.bound
   setCardID(value: string) {
     this._cardID = value;
+  }
+
+  @action.bound
+  setAltID(value: string) {
+    this._altID = value;
   }
 
   @action.bound

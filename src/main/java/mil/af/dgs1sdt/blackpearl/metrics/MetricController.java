@@ -21,7 +21,7 @@ public class MetricController {
   @PostMapping
   public @ResponseBody
   Metric create(@Valid @RequestBody MetricJSON metricJSON) {
-    Long userID = accountRepository.findOneByCardID(metricJSON.getCardID()).getId();
+    Long userID = 0000L;
     Metric metric = new Metric(userID, metricJSON.getCardID(), metricJSON.getTime(), metricJSON.getAction(), metricJSON.getContext());
     return this.metricRepository.save(metric);
   }
