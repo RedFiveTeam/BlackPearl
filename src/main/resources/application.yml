@@ -14,7 +14,8 @@ spring:
         auto: create-drop
       use-new-id-generator-mappings: false
   security:
-    user:
-      name: jordan
-      password: pearl
+    ignored: /**
+#    user:
+#      name: jordan
+#      password: pearl
 CLASSIFIED: UNCLASSIFIED

@@ -12,10 +12,16 @@ export class ResourceStore extends LoadingStore {
   @observable private _activeTab: number = 1;
   @observable private _clicks: {} = {};
   @observable private _filter: string = '';
+  @observable private _unfilteredResources: ResourceModel[] = [];
 
   @action.bound
   setActiveTab(tab: number) {
     this._activeTab = tab;
+  }
+
+  @action.bound
+  setUnfilteredResources(resources: ResourceModel[]) {
+    this._unfilteredResources = resources;
   }
 
   @action.bound
@@ -26,17 +32,14 @@ export class ResourceStore extends LoadingStore {
     }
   }
 
-  @action.bound
   setFilteredResources(resources: ResourceModel[]) {
     this._filteredResources = resources;
   }
 
-  @action.bound
   setPendingResource(resource: ResourceModel | null) {
     this._pendingResource = resource;
   }
 
-  @action.bound
   setPendingResourceCategory(categoryID: number) {
     this._pendingResource!.setCategoryId(categoryID);
   }
@@ -46,12 +49,10 @@ export class ResourceStore extends LoadingStore {
     this._pendingResource!.setAccountId(accountID);
   }
 
-  @action.bound
   setPendingDelete(resource: ResourceModel | null) {
     this._pendingDelete = resource;
   }
 
-  @action.bound
   setPendingEdit(resource: ResourceModel | null) {
     this._pendingEdit = resource;
   }
@@ -127,6 +128,11 @@ export class ResourceStore extends LoadingStore {
     return resources.filter(r => r.categoryID === categoryID).map((obj: ResourceModel) => {
       return obj;
     });
+  }
+
+  @computed
+  get unfilteredResources() {
+    return this._unfilteredResources;
   }
 
   @computed

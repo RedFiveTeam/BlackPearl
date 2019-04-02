@@ -4,7 +4,6 @@ import mil.af.dgs1sdt.blackpearl.resource.blame.Blame;
 import mil.af.dgs1sdt.blackpearl.resource.blame.BlameRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -33,7 +32,7 @@ public class AcronymController {
   Acronym create(@Valid @RequestBody AcronymJSON acronymJSON) {
     Acronym acronym = new Acronym(acronymJSON.getAcronym(), acronymJSON.getDefinition());
 
-    String user = SecurityContextHolder.getContext().getAuthentication().getName();
+    String user = "More people";
     if (user.equals("anonymousUser")) {
       user = "GUEST.GUEST.GUEST.0123456789";
     }
@@ -56,7 +55,7 @@ public class AcronymController {
     if (acronym != null) {
       acronymRepository.deleteById(id);
 
-      String user = SecurityContextHolder.getContext().getAuthentication().getName();
+      String user = "even more people";
       if (user.equals("anonymousUser")) {
         user = "GUEST.GUEST.GUEST.0123456789";
       }

@@ -17,15 +17,16 @@ public class AccountJSON {
 
   @NotNull(message = emptyFieldMessage)
   private String cardID;
+  private String altID;
   private Long role;
-  @NotNull(message = emptyFieldMessage)
   private Long specialty;
   private Long sort;
   private Long widgets;
   private String classification;
 
-  public AccountJSON(String cardID, Long role, Long specialty, Long sort, Long widgets, String classification) {
+  public AccountJSON(String cardID, String altID, Long role, Long specialty, Long sort, Long widgets, String classification) {
     this.cardID = cardID;
+    this.altID = altID;
     this.role = role;
     this.specialty = specialty;
     this.sort = sort;

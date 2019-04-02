@@ -14,6 +14,7 @@ import { OperationActions } from '../component/card/operation/actions/OperationA
 import { MetricsPageActions } from '../page/actions/MetricsPageActions';
 import { MetricActions } from '../component/metrics/metric/MetricActions';
 import { MeasurementConverterActions } from '../component/widgets/measurementConverter/MeasurementConverterActions';
+import { LoginActions } from '../component/login/LoginActions';
 
 const adminActions = new AdminActions(stores, WebRepositories);
 const acronymActions = new AcronymActions(stores, WebRepositories);
@@ -27,6 +28,7 @@ const operationActions = new OperationActions(stores, WebRepositories);
 const metricsPageActions = new MetricsPageActions(stores, WebRepositories);
 const metricActions = new MetricActions(stores, WebRepositories);
 const measurementConverterActions = new MeasurementConverterActions(stores);
+const loginActions = new LoginActions(stores, WebRepositories);
 
 export const actions = {
   acronymActions,
@@ -40,5 +42,6 @@ export const actions = {
   operationActions,
   metricsPageActions,
   metricActions,
-  measurementConverterActions
+  measurementConverterActions,
+  loginActions
 };

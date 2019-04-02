@@ -3,20 +3,20 @@
 let homeAssert = require('assert');
 
 Feature('Home Page');
-
-Before((I) => {
-  I.amOnPage('/');
-  I.fillField('.username', 'jordan');
-  I.fillField('password', 'password');
-  I.click('Login');
-  I.waitForText('Jordan', 10);
-});
-
 /* tslint:disable:no-any */
 
-Scenario('should provide a resource features set', async (I) => {
+Scenario('link old account journey', (I) => {
   I.amOnPage('/');
+  I.click('.clickHere');
+  I.fillField('#findUsername', 'jordan');
+  I.click('.listRow');
+  I.fillField('#setUsername', 'jordan');
+  I.click('Submit');
+  I.waitForText('Jordan', 5);
+});
 
+Scenario('should provide a resource features set', async (I) => {
+  await login(I);
   checkCards(I);
   await addResource(I);
   await editResource(I);
@@ -26,15 +26,14 @@ Scenario('should provide a resource features set', async (I) => {
 });
 
 Scenario('should provide functioning widgets', async (I) => {
-  I.amOnPage('/');
-
+  await login(I);
   await coordinateConverter(I);
   await measurementConverter(I);
   await acronymSearch(I);
 });
 
 Scenario('should provide static information in the app banner', async (I) => {
-  I.amOnPage('/');
+  await login(I);
   I.see("ATO ", ".atoDay");
 
   const clockCount = await I.grabNumberOfVisibleElements('.clock');
@@ -46,7 +45,7 @@ Scenario('should provide static information in the app banner', async (I) => {
 });
 
 Scenario('ops and general info journey', async (I) => {
-  I.amOnPage('/');
+  await login(I);
 
   checkForToast(I);
   checkGeneralInfo(I);
@@ -55,6 +54,13 @@ Scenario('ops and general info journey', async (I) => {
   await editOperation(I);
   deleteOperation(I);
 });
+
+async function login(I) {
+  I.amOnPage('/');
+  I.fillField('.username', 'jordan');
+  I.click('LOGIN');
+  I.waitForText('Jordan', 5);
+}
 
 async function acronymSearch(I) {
   I.fillField('.acronymSearch', 'AAM');

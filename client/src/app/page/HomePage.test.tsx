@@ -29,7 +29,7 @@ describe('HomePage', () => {
     };
 
     profileStore = {
-      profile: new ProfileModel(0, 'GUEST', 1, 1, 1, 'unclassified')
+      profile: new ProfileModel(null, 'cardID', 'AltId', 1, 0, 1, 'none')
     };
 
     profileActions = {

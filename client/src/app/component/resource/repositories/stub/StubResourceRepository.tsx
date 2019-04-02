@@ -7,8 +7,8 @@ export class StubResourceRepository implements ResourceRepository {
   findAll(): Promise<ResourceModel[]> {
     return Promise.resolve([
       new ResourceModel(1, 'https://www.google.com', 'Google', 1, 'GUEST'),
-      new ResourceModel(2, 'https://www.yahoo.com', 'Yahoo', 1, 'GUEST'),
-      new ResourceModel(3, 'https://www.ebay.com', 'eBay', 2, 'GUEST')
+      new ResourceModel(2, 'https://www.yahoo.com', 'Yahoo', 1, 'FIRST.LAST'),
+      new ResourceModel(3, 'https://www.ebay.com', 'eBay', 2, 'user1')
     ]);
   }
 
