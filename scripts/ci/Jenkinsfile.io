@@ -21,22 +21,13 @@ node ('legacy') {
     stage ('Test & Build') {
         sh """
         docker pull dgs1sdt/blackpearl:cfs3linux
+
         docker stop BlackPearl || true && docker rm BlackPearl || true
+
         docker run --name BlackPearl -v `pwd`:/app -itd dgs1sdt/blackpearl:cfs3linux
+
+        docker exec BlackPearl /bin/bash -c "/app/scripts/tests.sh"
         """
-        if(env.BRANCH_NAME == 'acceptance') {
-            stage ('Test & Build') {
-                sh """
-                docker pull dgs1sdt/blackpearl
-
-                docker stop BlackPearl || true && docker rm BlackPearl || true
-
-                docker run --name BlackPearl -v `pwd`:/app -itd dgs1sdt/blackpearl:cfs3linux
-
-                docker exec BlackPearl /bin/bash -c "/app/scripts/tests.sh"
-                """
-            }
-        }
     }
 
     stage ('SonarQube') {
