@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class AccountService {
-  @Value("${CLASSIFICATION}") private String classification;
+  @Value("${CLASSIFIED}") private String classification;
 
   private AccountRepository accountRepository;
 

@@ -15,7 +15,7 @@ import java.util.List;
 @Controller
 @RequestMapping(AccountController.URI)
 public class AccountController {
-  @Value("${CLASSIFICATION}")
+  @Value("${CLASSIFIED}")
   private String classification;
 
   public static final String URI = "/api/account";
