@@ -15,7 +15,7 @@ describe('MetricActions', () => {
 
     profileStore = {
       setProfile: jest.fn(),
-      profile: new ProfileModel()
+      profile: new ProfileModel(null, 'cardID', 'AltId', 1, 0, 1, 'none')
     };
 
     profileRepository = {

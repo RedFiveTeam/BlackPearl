@@ -22,6 +22,9 @@ import { StyledOperationContainer } from '../component/card/operation/OperationC
 import { StyledWidgetContainer } from '../component/widgets/WidgetContainer';
 import { ProfileStore } from '../profile/ProfileStore';
 import { ProfileActions } from '../profile/ProfileActions';
+import { StyledClassificationBanner } from '../component/ClassificationBanner';
+import { StyledLoginPopup } from '../component/popup/LoginPopup';
+import { StyledFindLoginPopup } from '../component/popup/FindLoginPopup';
 
 interface Props {
   resourceStore?: ResourceStore;
@@ -62,6 +65,14 @@ export class HomePage extends React.Component<Props> {
         className={this.props.className}
       >
         {
+          this.props.profileStore!.hasOldProfile &&
+          <StyledFindLoginPopup/>
+        }
+        {
+          !this.props.profileStore!.hasProfile &&
+          <StyledLoginPopup/>
+        }
+        {
           this.props.operationStore!.hasPendingDelete &&
           <StyledDeleteOperationPopup/>
         }
@@ -97,16 +108,28 @@ export class HomePage extends React.Component<Props> {
           transition={Slide}
           autoClose={5000}
         />
-        <StyledWidgetContainer
-          visible={this.props.profileStore!.profile ? this.props.profileStore!.profile.widgetsVisible : 1}
-        />
-        <div
-          className="mainBody"
-        >
-          <StyledAppBanner/>
-          <StyledCardContainer/>
-          <StyledInformationContainer/>
-          <StyledOperationContainer/>
+        <div className="topDiv">
+          <div className="banner">
+            <StyledClassificationBanner
+              classification={
+                this.props.profileStore!.profile ? this.props.profileStore!.profile.classification : ''
+              }
+            />
+          </div>
+
+          <div className="page">
+            <StyledWidgetContainer
+              visible={this.props.profileStore!.profile ? this.props.profileStore!.profile.widgetsVisible : 1}
+            />
+            <div
+              className="mainBody"
+            >
+              <StyledAppBanner/>
+              <StyledCardContainer/>
+              <StyledInformationContainer/>
+              <StyledOperationContainer/>
+            </div>
+          </div>
         </div>
       </div>
     );
@@ -123,6 +146,16 @@ export const StyledHomePage = inject(
 (styled(HomePage)`
   display: inline-flex;
   width: 100%;
+  
+  
+  .page {
+    display: flex;
+    margin-top: 26px;
+  }
+  
+  .topDiv {
+    display: block;
+  }
   
   .customToast {
     width: 520px;

@@ -3,6 +3,7 @@ applications:
 - name: blackpearl
   buildpack: https://github.com/cloudfoundry/java-buildpack.git
   memory: 1GB
+  stack: cflinuxfs3
   instances: 1
   path: target/blackpearl-0.0.1-SNAPSHOT.jar
   services:

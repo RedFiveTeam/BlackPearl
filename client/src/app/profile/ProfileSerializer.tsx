@@ -9,7 +9,8 @@ export class ProfileSerializer implements Serializer<ProfileModel> {
       altID: item.altID,
       specialty: item.specialty,
       sort: item.sort,
-      widgets: item.widgetsVisible
+      widgets: item.widgetsVisible,
+      classification: item.classification
     };
   }
 
@@ -20,7 +21,8 @@ export class ProfileSerializer implements Serializer<ProfileModel> {
       item.altID,
       item.specialty,
       item.sort,
-      item.widgets
+      item.widgets,
+      item.classification
     );
   }
 }

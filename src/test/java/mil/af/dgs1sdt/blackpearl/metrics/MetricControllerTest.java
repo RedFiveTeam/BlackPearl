@@ -24,7 +24,7 @@ public class MetricControllerTest extends BaseIntegrationTest {
   @Before
   public void setUp() {
     super.setUp();
-    accountRepository.save(new Account("card1", 1L, 1L, 0L, 1L));
+    accountRepository.save(new Account("card1", "Test", 1L, 1L, 0L, 1L, "UNCLASSIFIED"));
   }
 
   @After
