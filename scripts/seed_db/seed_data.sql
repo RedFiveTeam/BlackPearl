@@ -64,10 +64,22 @@ INSERT INTO operation (title, description, address) VALUES
     ("OP DAYWALKER",	"RUN!",	"https://www.opfour.com"),
     ("OP TORTUGA",	"WHERE'S THE BEER!?!",	"https://www.opfive.com");
 
-INSERT INTO account (cardID, role, specialty, sort, widgets) VALUES
-    ("GUEST.GUEST.GUEST.0123456789", 1, 1, 1, 1),
-    ("CROSS.JORDAN.MIDDLE.0123456789", 1, 1, 1, 1),
-    ("YODA.MASTER.MIDDLE.0123456789", 1, 1, 1, 1);
+INSERT INTO account (cardID, role, specialty, sort, widgets, classification, altID) VALUES
+    ("GUEST.GUEST.GUEST.0123456789", 1, 1, 1, 1, '', 'Guest'),
+    ("CROSS.JORDAN.MIDDLE.0123456789", 1, 1, 1, 1, '', null),
+    ("Matt Armstrong", 1, 1, 1, 1, '', null),
+    ("I hate Matt", 1, 1, 1, 1, '', null),
+    ("Matt = Bad", 1, 1, 1, 1, '', null),
+    ("Matt is bad", 1, 1, 1, 1, '', null),
+    ("There is no good matt", 1, 1, 1, 1, '', null),
+    ("If Matt were good he would not be matt", 1, 1, 1, 1, '', null),
+    ("More", 1, 1, 1, 1, '', null),
+    ("Matt", 1, 1, 1, 1, '', null),
+    ("Tyler Good", 1, 1, 1, 1, '', null),
+    ("Big Papi", 1, 1, 1, 1, '', null),
+    ("OFWG", 1, 1, 1, 1, '', null),
+    ("Long Leg Daddy", 1, 1, 1, 1, '', null),
+    ("YODA.MASTER.MIDDLE.0123456789", 1, 1, 1, 1, '', null);
 
 INSERT INTO acronym (acronym, definition) VALUES
     ("A&P", "analysis and production"),

@@ -4,7 +4,6 @@ import mil.af.dgs1sdt.blackpearl.resource.blame.Blame;
 import mil.af.dgs1sdt.blackpearl.resource.blame.BlameRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -37,7 +36,7 @@ public class OperationController {
       operationJSON.getAddress()
     );
 
-    String user = SecurityContextHolder.getContext().getAuthentication().getName();
+    String user = "Test User";
     if (user.equals("anonymousUser")) {
       user = "GUEST.GUEST.GUEST.0123456789";
     }
@@ -74,7 +73,7 @@ public class OperationController {
       blameName = json.getTitle();
     }
 
-    String user = SecurityContextHolder.getContext().getAuthentication().getName();
+    String user = "Another TEst User";
     if (user.equals("anonymousUser")) {
       user = "GUEST.GUEST.GUEST.0123456789";
     }
@@ -95,7 +94,7 @@ public class OperationController {
     Long id = Long.valueOf(operationId);
     Operation op = operationRepository.getOne(id);
 
-    String user = SecurityContextHolder.getContext().getAuthentication().getName();
+    String user = "More Test Users";
     if (user.equals("anonymousUser")) {
       user = "GUEST.GUEST.GUEST.0123456789";
     }
