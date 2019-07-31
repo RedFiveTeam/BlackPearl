@@ -18,6 +18,8 @@ describe('HomePage', () => {
   let subject: ShallowWrapper;
   let resourceStore: ResourceStore;
   let operationStore: OperationStore;
+  let classificationStore: any;
+  let classificationActions: any;
   let metricActions: any;
   let returnResourcesInCategorySpy: jest.Mock;
   let profileStore: any;
@@ -36,6 +38,14 @@ describe('HomePage', () => {
       setProfile: jest.fn()
     };
 
+    classificationStore = {
+      hydrate: jest.fn()
+    };
+
+    classificationActions = {
+      initializeStore: jest.fn()
+    };
+
     resourceStore = new ResourceStore();
     operationStore = new OperationStore();
 
@@ -50,6 +60,8 @@ describe('HomePage', () => {
         metricActions={metricActions}
         profileStore={profileStore}
         profileActions={profileActions}
+        classificationStore={classificationStore}
+        classificationActions={classificationActions}
       />
     );
   });

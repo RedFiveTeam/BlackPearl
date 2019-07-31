@@ -26,6 +26,9 @@ import { BlameRepository } from '../component/resource/blame/repositories/BlameR
 import { WebBlameRepository } from '../component/resource/blame/repositories/WebBlameRepository';
 import { StubBlameRepository } from '../component/resource/blame/repositories/StubBlameRepository';
 import { MetricRepository } from '../component/metrics/metric/MetricRepository';
+import { ClassificationRepository } from '../component/classification/repositories/ClassificationRepository';
+import { WebClassificationRepository } from '../component/classification/repositories/WebClassificationRepository';
+import { StubClassificationRepository } from '../component/classification/repositories/StubClassificationRepository';
 
 export interface Repositories {
   acronymRepository: AcronymRepository;
@@ -37,6 +40,7 @@ export interface Repositories {
   operationRepository: OperationRepository;
   metricRepository: MetricRepository;
   blameRepository: BlameRepository;
+  classificationRepository: ClassificationRepository;
 }
 
 const client = new HTTPClient();
@@ -50,7 +54,8 @@ export const WebRepositories: Repositories = Object.freeze({
   informationRepository: new WebInformationRepository(client),
   operationRepository: new WebOperationRepository(client),
   metricRepository: new WebMetricRepository(client),
-  blameRepository: new WebBlameRepository(client)
+  blameRepository: new WebBlameRepository(client),
+  classificationRepository: new WebClassificationRepository(client)
 });
 
 export const StubRepositories: Repositories = {
@@ -62,5 +67,6 @@ export const StubRepositories: Repositories = {
   informationRepository: new StubInformationRepository(),
   operationRepository: new StubOperationRepository(),
   metricRepository: new StubMetricRepository(),
-  blameRepository: new StubBlameRepository()
+  blameRepository: new StubBlameRepository(),
+  classificationRepository: new StubClassificationRepository()
 };

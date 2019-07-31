@@ -1,7 +1,6 @@
 package mil.af.dgs1sdt.blackpearl.account;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -15,8 +14,6 @@ import java.util.List;
 @Controller
 @RequestMapping(AccountController.URI)
 public class AccountController {
-  @Value("${CLASSIFIED}")
-  private String classification;
 
   public static final String URI = "/api/account";
   @Autowired
@@ -36,7 +33,6 @@ public class AccountController {
       }
     }
     Account account = accountRepository.findOneByCardID("GUEST.GUEST.GUEST.0123456789");
-    account.setClassification(classification);
     account.setAltID("Guest");
     return account;
   }
@@ -66,7 +62,7 @@ public class AccountController {
       res.addCookie(new Cookie("account", Base64.getUrlEncoder().encodeToString(json.getAltID().getBytes())));
       return account;
     } else {
-      account = new Account(json.getCardID(), json.getAltID(), 1L, 1L, 1L, 1L, classification);
+      account = new Account(json.getCardID(), json.getAltID(), 1L, 1L, 1L, 1L);
       return accountRepository.save(account);
     }
   }

@@ -23,7 +23,6 @@ public class Account {
   private Long specialty;
   private Long sort;
   private Long widgets;
-  private String classification;
 
   @Transient
   private String password;
@@ -34,8 +33,7 @@ public class Account {
     Long role,
     Long specialty,
     Long sort,
-    Long widgets,
-    String classification
+    Long widgets
   ) {
     this.cardID = cardId;
     this.altID = altID;
@@ -43,7 +41,6 @@ public class Account {
     this.specialty = specialty;
     this.sort = sort;
     this.widgets = widgets;
-    this.classification = classification;
   }
 
   public Account update(AccountJSON json) {
@@ -54,7 +51,6 @@ public class Account {
     this.setSpecialty(json.getSpecialty());
     this.setSort(json.getSort());
     this.setWidgets(json.getWidgets());
-    this.setClassification(classification);
     return this;
   }
 

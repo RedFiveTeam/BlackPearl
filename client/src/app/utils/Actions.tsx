@@ -15,6 +15,7 @@ import { MetricsPageActions } from '../page/actions/MetricsPageActions';
 import { MetricActions } from '../component/metrics/metric/MetricActions';
 import { MeasurementConverterActions } from '../component/widgets/measurementConverter/MeasurementConverterActions';
 import { LoginActions } from '../component/login/LoginActions';
+import { ClassificationActions } from '../component/classification/ClassificationActions';
 
 const adminActions = new AdminActions(stores, WebRepositories);
 const acronymActions = new AcronymActions(stores, WebRepositories);
@@ -29,6 +30,7 @@ const metricsPageActions = new MetricsPageActions(stores, WebRepositories);
 const metricActions = new MetricActions(stores, WebRepositories);
 const measurementConverterActions = new MeasurementConverterActions(stores);
 const loginActions = new LoginActions(stores, WebRepositories);
+const classificationActions = new ClassificationActions(WebRepositories, stores);
 
 export const actions = {
   acronymActions,
@@ -43,5 +45,6 @@ export const actions = {
   metricsPageActions,
   metricActions,
   measurementConverterActions,
-  loginActions
+  loginActions,
+  classificationActions
 };

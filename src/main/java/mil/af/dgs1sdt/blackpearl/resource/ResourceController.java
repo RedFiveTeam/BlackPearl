@@ -48,29 +48,6 @@ public class ResourceController {
     return resourceRepository.getAllResourcesByCategoryIDAndAccountID(accountID);
   }
 
-//  @RequestMapping(path = "/go")
-//  public @ResponseBody
-//  RedirectView goFunction(@RequestParam("q") String query) {
-//    String user = SecurityContextHolder.getContext().getAuthentication().getName();
-//    if (user.equals("anonymousUser")) {
-//      user = "GUEST.GUEST.GUEST.0123456789";
-//    }
-//
-//    Account account = accountRepository.findOneByCardID(user);
-//    Long max = account != null ? account.getSpecialty() * 3 : 3L;
-//
-//    List<Resource> resources = resourceRepository.findAllForGo(query, user, max - 2, max);
-//    int search = 0;
-//    if (resources.size() > 1) {
-//      search = 1;
-//    }
-//    String url = "/?search=" + search + "&specialty=" + (max / 3) + "&q=" + query;
-//    if (resources.size() == 1) {
-//      url = resources.get(0).getUrl();
-//    }
-//    return new RedirectView(url);
-//  }
-
   @PostMapping
   public @ResponseBody
   Resource create(@Valid @RequestBody ResourceJSON resourceJSON) {
