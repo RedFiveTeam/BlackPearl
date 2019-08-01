@@ -27,6 +27,7 @@ import { StyledLoginPopup } from '../component/popup/LoginPopup';
 import { StyledFindLoginPopup } from '../component/popup/FindLoginPopup';
 import { ClassificationStore } from '../component/classification/ClassificationStore';
 import { ClassificationActions } from '../component/classification/ClassificationActions';
+import { StyledConfirmLogoutPopup } from '../component/popup/ConfirmLogoutPopup';
 
 interface Props {
   resourceStore?: ResourceStore;
@@ -82,6 +83,10 @@ export class HomePage extends React.Component<Props> {
       <div
         className={this.props.className}
       >
+        {
+          this.props.profileStore!.displayLogoutModal &&
+          <StyledConfirmLogoutPopup/>
+        }
         {
           this.props.profileStore!.hasOldProfile &&
           <StyledFindLoginPopup/>

@@ -19,6 +19,7 @@ export class LoginActions {
     for (let i = 0; i < profiles.length; i++) {
       if (this.isExactMatch(profiles[i], altID)) {
         this.profileStore.setProfile(profiles[i]);
+        await this.profileRepository.login(profiles[i]);
         return;
       } else {
         let strippedAltID = altID.replace('.mil', '').replace('.ctr', '');
@@ -47,7 +48,6 @@ export class LoginActions {
     return (splitCardID[1] + '.' + splitCardID[2].charAt(0) + '.' + splitCardID[0]).toLowerCase();
   }
 
-  @action.bound
   async loginAsGuest() {
     await this.login('Guest');
     this.profileStore!.setHasProfile(true);
@@ -72,5 +72,10 @@ export class LoginActions {
     this.profileStore!.setHasOldProfile(false);
     this.profileStore!.setHasProfile(true);
     await this.profileRepository.updateProfile(this.profileStore!.selectedProfile);
+  }
+
+  validateLogin(userName: string) {
+    let pattern = new RegExp(/.+[.].+[.].+/);
+    return pattern.test(userName);
   }
 }

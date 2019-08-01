@@ -54,6 +54,11 @@ export class LoginPopup extends React.Component<Props> {
     let valid: boolean = true;
     this.setState({userNameTest: '', userNameCSS: {}});
 
+    if (!this.props.loginActions!.validateLogin(this.props.profileStore!.username)) {
+      valid = false;
+      this.setState({userNameText: 'Please Enter Your SIPR Email'});
+      this.setState({userNameCSS: {'borderBottom': 'solid 2px #A40000'}});
+    }
     if (!this.props.profileStore!.username || this.props.profileStore!.username === '') {
       valid = false;
       this.setState({userNameText: 'Please Enter a Username'});
@@ -274,9 +279,9 @@ export const StyledLoginPopup = inject('loginActions', 'profileStore', 'profileA
   }
   
   .submitButton {
+    background: linear-gradient(to bottom,#207cca 11%,#207cca 11%,#207cca 27%,#207cca 44%,#1e5799 100%);
     font-weight: 500;
     font-size: 14px;
-    background: #5386F2;
     color: #FFF;
     width: 180px;
     border-radius: 2px;

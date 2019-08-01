@@ -13,6 +13,7 @@ import { StyledInformationContainer } from '../component/card/information/Inform
 import { StyledOperationContainer } from '../component/card/operation/OperationContainer';
 import { StyledAppBanner } from '../component/AppBanner';
 import { ProfileModel } from '../profile/ProfileModel';
+import { StyledConfirmLogoutPopup } from '../component/popup/ConfirmLogoutPopup';
 
 describe('HomePage', () => {
   let subject: ShallowWrapper;
@@ -32,12 +33,15 @@ describe('HomePage', () => {
 
     profileStore = {
       profile: new ProfileModel(null, 'cardID', 'AltId', 1, 0, 1),
-      hasProfile: true
+      hasProfile: true,
+      displayLogoutModal: jest.fn(),
+      setDisplayLogoutModal: jest.fn()
     };
 
     profileActions = {
       setProfile: jest.fn(),
-      checkForPreviousProfile: jest.fn()
+      checkForPreviousProfile: jest.fn(),
+      checkForCookie: jest.fn()
     };
 
     classificationStore = {
@@ -107,5 +111,10 @@ describe('HomePage', () => {
 
   it('should have a header', () => {
     expect(subject.find(StyledAppBanner).exists()).toBeTruthy();
+  });
+
+  it('should display the confirm logout popup', () => {
+    profileStore.setDisplayLogoutModal(true);
+    expect(subject.find(StyledConfirmLogoutPopup).exists()).toBeTruthy();
   });
 });

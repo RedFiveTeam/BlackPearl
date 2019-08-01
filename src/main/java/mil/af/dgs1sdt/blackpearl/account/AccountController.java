@@ -53,7 +53,7 @@ public class AccountController {
 
   @PostMapping
   public @ResponseBody
-  Account login(@Valid @RequestBody AccountJSON json, HttpServletResponse res) {
+    Account login(@Valid @RequestBody AccountJSON json, HttpServletResponse res) {
     Account account = accountRepository.findAccountById(json.getId());
     if (json.getAltID().equals("Guest")) {
       account = accountRepository.findOneByCardID("GUEST.GUEST.GUEST.0123456789");

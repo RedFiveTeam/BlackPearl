@@ -15,6 +15,11 @@ export class ProfileActions {
   }
 
   @action.bound
+  deleteCookie() {
+    document.cookie = 'account=; Path=/api; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+  }
+
+  @action.bound
   async setProfile() {
     let profile = await this.profileRepository.getProfile();
     this.profileStore.setProfile(profile);

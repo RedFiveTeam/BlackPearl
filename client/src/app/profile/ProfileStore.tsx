@@ -11,6 +11,7 @@ export class ProfileStore {
   @observable private _selectedProfile: ProfileModel;
   @observable private _filteredProfileList: ProfileModel[];
   @observable private _isLinkInfoValid: boolean;
+  @observable private _displayLogoutModal: boolean = false;
 
   @action.bound
   setSearchValue(value: string) {
@@ -41,6 +42,11 @@ export class ProfileStore {
   @action.bound
   setFilteredProfileList(value: ProfileModel[]) {
     this._filteredProfileList = value;
+  }
+
+  @action.bound
+  setDisplayLogoutModal(value: boolean) {
+    this._displayLogoutModal = value;
   }
 
   setSelectedProfile(value: ProfileModel) {
@@ -98,6 +104,11 @@ export class ProfileStore {
   get isLinkInfoValid() {
     this.ValidateLinkInfo();
     return this._isLinkInfoValid;
+  }
+
+  @computed
+  get displayLogoutModal() {
+    return this._displayLogoutModal;
   }
 
   private ValidateLinkInfo() {

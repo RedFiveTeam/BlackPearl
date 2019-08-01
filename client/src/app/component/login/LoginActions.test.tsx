@@ -74,4 +74,10 @@ describe('LoginActions', () => {
     subject.login('you.are.garbage.mil');
     expect(loginSpy).toHaveBeenCalledWith(objectContaining({altID: 'you.are.garbage.mil'}));
   });
+
+  it('should validate the user login info', () => {
+    expect(subject.validateLogin('tyler.b.cronin.mil')).toBeTruthy();
+    expect(subject.validateLogin('tyler.b')).toBeFalsy();
+    expect(subject.validateLogin('tyler')).toBeFalsy();
+  });
 });
