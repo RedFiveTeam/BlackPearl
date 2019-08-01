@@ -15,9 +15,9 @@ describe('AccountList', () => {
     profileStore = new ProfileStore();
 
     accountList = [
-      new ProfileModel(1, '', '', 1, 0, 1, ''),
-      new ProfileModel(1, '', '', 1, 0, 1, ''),
-      new ProfileModel(1, '', '', 1, 0, 1, '')
+      new ProfileModel(1, '', '', 1, 0, 1),
+      new ProfileModel(1, '', '', 1, 0, 1),
+      new ProfileModel(1, '', '', 1, 0, 1)
     ];
 
     subject = mount(

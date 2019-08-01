@@ -54,11 +54,6 @@ public class Account {
     return this;
   }
 
-//  @Override
-//  public Collection<? extends GrantedAuthority> getAuthorities() {
-//    return AuthorityUtils.createAuthorityList(role.toString());
-//  }
-
   public String getPassword() {
     return this.password;
   }

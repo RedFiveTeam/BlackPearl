@@ -58,18 +58,6 @@ describe('LoginPopup', () => {
     expect(resourceActions.setAllResources).toHaveBeenCalled();
   });
 
-  it('should have a link for people who already had accounts', () => {
-    let setHasOldProfileSpy = jest.fn();
-    let setHasProfileSpy = jest.fn();
-    profileStore.setHasOldProfile = setHasOldProfileSpy;
-    profileStore.setHasProfile = setHasProfileSpy;
-
-    expect(subject.find('.oldProfileText').exists()).toBeTruthy();
-    subject.find('.oldProfileText').simulate('click');
-    expect(profileStore.setHasOldProfile).toHaveBeenCalledWith(true);
-    expect(profileStore.setHasProfile).toHaveBeenCalledWith(true);
-  });
-
   it('should have a button that logs you in as a guest', () => {
     expect(subject.find('.guestButton').simulate('click'));
     expect(loginActions.loginAsGuest).toHaveBeenCalled();

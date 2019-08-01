@@ -16,18 +16,10 @@ describe('ProfileContainer', () => {
   });
 
   it('should contain a title case profile name', () => {
-    expect(
-      subject
-        .find('.username')
-        .text()
-    ).toBe('First Last');
+    expect(subject.find('.username').text()).toBe('first last');
   });
 
   it('should have a user icon', () => {
-    expect(
-      subject
-        .find(PersonIcon)
-        .exists()
-    ).toBeTruthy();
+    expect(subject.find(PersonIcon).exists()).toBeTruthy();
   });
 });

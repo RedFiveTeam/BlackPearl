@@ -27,7 +27,7 @@ export class ResourceActions {
   @action.bound
   async setAllResources() {
     this.resourceStore!.setUnfilteredResources(await this.resourceRepository.findAll());
-    this.resourceStore.setResources(await this.resourceRepository.findAllByAccount(this.profileStore.profile.altID));
+    this.resourceStore.setResources(await this.resourceRepository.findAllByAccount(this.profileStore.profile.cardID));
     if (this.resourceStore.filter !== '') {
       await this.filterResources(this.resourceStore.filter);
     }

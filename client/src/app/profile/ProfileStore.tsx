@@ -4,7 +4,7 @@ import { action, computed, observable } from 'mobx';
 export class ProfileStore {
   @observable private _username: string;
   @observable private _profile: ProfileModel;
-  @observable private _hasProfile: boolean = false;
+  @observable private _hasProfile: boolean;
   @observable private _hasOldProfile: boolean = false;
   @observable private _profiles: ProfileModel[] = [];
   @observable private _searchValue: string;

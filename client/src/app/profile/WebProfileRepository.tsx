@@ -26,8 +26,7 @@ export class WebProfileRepository implements ProfileRepository {
     });
   }
 
-  async login(altId: string): Promise<ProfileModel> {
-    let profile = new ProfileModel(null, altId, altId, 1, 0, 1, 'none');
+  async login(profile: ProfileModel): Promise<ProfileModel> {
     const body = JSON.stringify(this.profileSerializer.serialize(profile));
     const json = await this.client.postJSON('/api/account', body);
     return this.profileSerializer.deserialize(json);

@@ -1,11 +1,13 @@
 import * as React from 'react';
 import { inject, observer } from 'mobx-react';
 import styled from 'styled-components';
-import { StyledPopupModal } from './PopupModal';
 import { ProfileStore } from '../../profile/ProfileStore';
 import { ProfileActions } from '../../profile/ProfileActions';
 import { ResourceActions } from '../resource/actions/ResourceActions';
 import { LoginActions } from '../login/LoginActions';
+
+const login = require('../../icon/LoginBackground.png');
+const pearl = require('../../icon/PearlIcon.png');
 
 interface Props {
   className?: string;
@@ -25,19 +27,28 @@ export class LoginPopup extends React.Component<Props> {
     this.userNameInput = React.createRef();
   }
 
+  componentDidMount() {
+    this.focusInput();
+    document.addEventListener('keydown', this.handleEnter);
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener('keydown', this.handleEnter);
+  }
+
   async componentWillMount() {
     await this.props.profileActions!.getAllProfiles();
-    this.focusInput();
-    document.addEventListener('keydown', async event => {
-      if (event.keyCode === 13) {
-        await this.submitClick();
-      }
-    });
   }
 
   focusInput() {
     this.userNameInput.current!.focus();
   }
+
+  handleEnter = async (e: any) => {
+    if (e.keyCode === 13) {
+      await this.submitClick();
+    }
+  };
 
   submitClick = async () => {
     let valid: boolean = true;
@@ -63,111 +74,153 @@ export class LoginPopup extends React.Component<Props> {
   render() {
     return (
       <div
-        className={this.props.className}
+        className={this.props.className + ' loginPopup'}
       >
-        <StyledPopupModal
-          title="User Login"
+        <div
+          className={'backBackground'}
+        >
+          <img
+            className={'background'}
+            src={login}
+          />
+        </div>
+        <div
+          className={'loginContent'}
         >
           <div
-            className={'group'}
+            className={'title'}
           >
-            <input
-              id="userName"
-              onChange={(e: any) => {
-                this.props.profileStore!.setUsername(e.target.value);
-              }}
-              autoComplete={'off'}
-              required={true}
-              style={this.state.userNameCSS}
-              ref={this.userNameInput}
-            />
-            <span className="highlight"/>
-            <span className="bar"/>
-            <label htmlFor="#userName">UserName</label>
+            <img src={pearl}/>
+            <span>The Black Pearl</span>
           </div>
-          {
-            this.state.userNameText !== '' &&
-            <span className={'usernameError'}>{this.state.userNameText}</span>
-          }
-          <button
-            className={'guestButton'}
-            onClick={
-              this.loginAsGuest
+          <div className={'userNameInfo'}>
+            <div
+              className={'group'}
+            >
+              <input
+                id="userName"
+                onChange={(e: any) => {
+                  this.props.profileStore!.setUsername(e.target.value);
+                }}
+                autoComplete={'off'}
+                required={true}
+                style={this.state.userNameCSS}
+                ref={this.userNameInput}
+              />
+              <span className={'emailSuffix'}>@mail.smil.mil</span>
+              <span className="highlight"/>
+              <span className="bar"/>
+              <label htmlFor="#userName">Username (SIPR Email)</label>
+            </div>
+            {
+              this.state.userNameText !== '' &&
+              <span className={'usernameError'}>{this.state.userNameText}</span>
             }
-          >
-            CONTINUE AS GUEST
-          </button>
-          <button
-            className={'submitButton'}
-            onClick={this.submitClick}
-          >
-            LOGIN
-          </button>
-          <div
-            className={'oldProfileText'}
-            onClick={() => {
-              this.props.profileStore!.setHasOldProfile(true);
-              this.props.profileStore!.setHasProfile(true);
-            }}
-          >
-            Previously logged in with a SIPR token? <br/>
-            <a className={'clickHere'}>Click Here </a>
-            to link to your old account
+            <div className={'helpMessage'}>
+              Please enter the prefix of your SIPR Email to log into The Black Pearl.
+            </div>
           </div>
-        </StyledPopupModal>
+          <div className={'loginButtons'}>
+            <button
+              className={'guestButton'}
+              onClick={
+                this.loginAsGuest
+              }
+            >
+              CONTINUE AS GUEST
+            </button>
+            <button
+              className={'submitButton'}
+              onClick={this.submitClick}
+            >
+              LOGIN
+            </button>
+          </div>
+        </div>
       </div>
     );
   }
 }
 
 export const StyledLoginPopup = inject('loginActions', 'profileStore', 'profileActions', 'resourceActions')
-(styled(LoginPopup)`
-  
+(styled(LoginPopup)`  
 
-  .oldProfileText {
+  z-index: 50;
+   
+  .background {
     position: absolute;
-    text-align: center;
-    color: #ffffff;
-    font-size: 18px;
+    height: 100%;
     width: 100%;
-    top: 200px;
+    opacity: .4;
+  }
+  
+  .backBackground {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    background: black;
+  }
+  
+  .loginContent {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    height: 495px;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    justify-content: space-between;
+  }
+  
+  .loginButtons {
+    display: flex;
+    justify-content: center;
+  }
+  
+  .title {
+    display: flex;
+    justify-content: center;
+    position: relative;
+    text-align: center;
+    width: auto;
+    font-weight: 600;
+    font-size: 48px;
+    color: #FBFDFF;
+    text-shadow: 0px 0px 6px rgba(0, 0, 0, 0.3);
+    align-items: flex-end;
+    
+    span {
+      line-height: 53px;
+      margin-left: 20px;
+    }
+  }
+  
+  .helpMessage {
+    text-align: center;
+    width: 356px;
+    font-size: 14px;
+    color: #FFF;
+    display: flex;
+    margin: auto;
+    padding-top: 20px;
   }
   
   .group {
+    display: inline-block;
     margin: auto;
     position: relative;
-    width: 280px;
-    top: 48px;
   }
   
-  .clickHere {
-    color: #4377CF;
-  }
-  
-  a {
-  color: #FFF;
-    cursor: pointer;
-  }
-  
-  .autocomplete {
-    width: 131px;
-    height: auto;
-    background-color: #1A2128;
-    position: absolute;
-    left: 87px;
-    color: #FFF;
-  }
-  
-    input {
+  input {
     padding-bottom: 5px;
     padding-left: 0;
     padding-right: 0;
-    display: block;
+    display: inline-block;
     width: 280px;
     border: none;
     border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-    background: #292E33;
-    color: #FFFFFF;
+    background: rgba(0, 0, 0, 0.0);
+    color: #FFF;
     font-size: 24px;
   }
   
@@ -176,13 +229,12 @@ export const StyledLoginPopup = inject('loginActions', 'profileStore', 'profileA
   }
   
   label {
-    color: #999;
-    font-size: 14px;
+    color: #93A7C3;
     position: absolute;
     pointer-events: none;
     left: 5px;
     top: 5px;
-    opacity: 0.2;
+    font-size: 18px;
     transition: 0.2s ease all;
     -moz-transition: 0.2s ease all;
     -webkit-transition: 0.2s ease all;
@@ -190,9 +242,46 @@ export const StyledLoginPopup = inject('loginActions', 'profileStore', 'profileA
   
   input:focus ~ label, input:valid ~label {
     top: -20px;
-    font-size: 14px;
-    color: #93A7C3;
+    font-size: 18px;
+    color: #5386F2;
     opacity: 1;
+  }
+  
+  .emailSuffix {
+    color: #FFF;
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 25px;
+    margin-left: 16px;
+  }
+  
+  .guestButton {
+    font-weight: 500;
+    width: 180px;
+    font-size: 14px;
+    color: #FFF;
+    border: 1px solid #5386F2;
+    box-shadow: 0 2px 2px rgba(0, 0, 0, 0.24), 0 0 2px rgba(0, 0, 0, 0.12);
+    background: none;
+    padding: 10px;
+    border-radius: 2px;
+    margin-right: 16px;
+    cursor: pointer;
+      
+      :hover {
+        background: #5386F2;
+      }
+  }
+  
+  .submitButton {
+    font-weight: 500;
+    font-size: 14px;
+    background: #5386F2;
+    color: #FFF;
+    width: 180px;
+    border-radius: 2px;
+    border: none;
+    cursor: pointer;
   }
   
   .bar {
@@ -204,10 +293,10 @@ export const StyledLoginPopup = inject('loginActions', 'profileStore', 'profileA
   .bar:before, .bar:after {
     content: '';
     height: 2px;
-    width: 0px;
-    bottom: 0px;
+    width: 0;
+    bottom: 0;
     position: absolute;
-    background: #93A7C3;
+    background: #5386F2;
     transition:0.2s ease all; 
     -moz-transition:0.2s ease all; 
     -webkit-transition:0.2s ease all;
@@ -234,41 +323,12 @@ export const StyledLoginPopup = inject('loginActions', 'profileStore', 'profileA
     pointer-events:none;
     opacity:0.5;
   }
-  
-  .guestButton {
-    cursor: pointer;
-    position: absolute;
-    bottom: 6%;
-    right: 36%;
-    background: transparent;
-    border-color: #5386F2;
-    border-radius: 2px;
-    width: 136px;
-    height: 36px;
-    font-size: 11px;
-    color: #ffffff;
-    letter-spacing: 0.2px;
-    line-height: 14px;
-    justify-content: center;
-  }
-  
-   .submitButton {
-     position: absolute;
-     cursor: pointer;
-     border-radius: 2px;
-     right: 6%;
-     bottom: 6%;
-     color: #FFFFFF;
-     background-image: linear-gradient(to bottom, #679CF6 11%,#679CF6 11%,#679CF6 27%,#679CF6 44%,#4072EE 100%);
-     border: none; 
-     width: 136px;
-     height: 36px;
-     font-size: 14px;
-   }
-   
-   .usernameError {
+
+  .usernameError {
     color: red;
     position: relative;
-    top: 50px;
-   }
+    display: flex;
+    top: 6px;
+    left: 50px;
+  }
 `);

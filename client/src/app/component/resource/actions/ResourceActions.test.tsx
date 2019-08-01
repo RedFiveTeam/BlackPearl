@@ -13,34 +13,14 @@ describe('ResourceActions', () => {
   let profileStore: any;
 
   beforeEach(() => {
-
     resourceStore = new ResourceStore();
-    // pendingResource: new ResourceModel(1, 'http://www.test.com', 'TestResource', 1, 'Guest', 0)
-
-    // resourceStore = {
-    //   pendingResource: new ResourceModel(1, 'http://www.test.com', 'TestResource', 1, 'Guest', 0),
-    //   resources: [
-    //     new ResourceModel(1, 'http://www.test.com', 'TestResource', 1, 'Guest', 0),
-    //     new ResourceModel(2, 'https://www.google.com', 'Google', 1, 'FIRST.LAST'),
-    //     new ResourceModel(3, 'https://www.yahoo.com', 'Yahoo', 1),
-    //     new ResourceModel(4, 'https://www.ebay.com', 'eBay', 2)
-    //   ],
-    //   performLoading: async (fun: any) => {
-    //     await fun();
-    //   },
-    // };
 
     profileStore = {
-      profile: new ProfileModel(null, 'cardID', 'AltId', 1, 0, 1, 'none')
+      profile: new ProfileModel(null, 'cardID', 'AltId', 1, 0, 1)
     };
 
     resourceRepository = new StubResourceRepository();
-
-    // resourceRepository.delete = jest.fn();
     resourceRepository.updateResource = jest.fn();
-    // resourceRepository.saveResource = jest.fn();
-    // resourceRepository.updateGivenResources = jest.fn();
-    // resourceRepository.updateClicks = jest.fn();
 
     testResources = [
       new ResourceModel(1, 'http://www.test.com', 'TestResource', 1, 'Guest', 0),
@@ -197,10 +177,4 @@ describe('ResourceActions', () => {
     await subject.filterResources('eBay');
     expect(setFilteredResourcesSpy).toHaveBeenCalled();
   });
-
-  // it('should update the resources to the new profile', async () => {
-  //   await subject.setAllResources();
-  //   subject.linkOldResources(new ProfileModel(1, 'FIRST.LAST', '', 1, 0, 1, 'UNCLASS'), 'Changed Name');
-  //   expect(resourceRepository.updateResource).toHaveBeenCalled();
-  // });
 });

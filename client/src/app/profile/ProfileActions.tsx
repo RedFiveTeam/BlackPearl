@@ -61,4 +61,20 @@ export class ProfileActions {
     });
     this.profileStore!.setFilteredProfileList(filteredProfiles);
   }
+
+  @action.bound
+  checkForPreviousProfile() {
+    let profileStore = this.profileStore;
+    if (profileStore.profile.altID !== 'Guest') {
+      profileStore!.setHasProfile(true);
+    } else {
+      profileStore!.setHasProfile(false);
+    }
+  }
+
+  @action.bound
+  checkForCookie() {
+    this.profileStore.setHasProfile(true);
+    return document.cookie.length > 0;
+  }
 }

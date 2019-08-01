@@ -23,8 +23,8 @@ public class AccountController {
 
   @GetMapping
   public @ResponseBody
-  Account getProfile(@CookieValue("account") String altID) {
-    if (altID.length() > 0) {
+  Account getProfile(@CookieValue(value="account", required=false) String altID) {
+    if (altID != null) {
       byte[] bytes = Base64.getUrlDecoder().decode(altID);
       altID = new String(bytes);
       Account account = accountRepository.findAccountByAltID(altID);
@@ -54,15 +54,20 @@ public class AccountController {
   @PostMapping
   public @ResponseBody
   Account login(@Valid @RequestBody AccountJSON json, HttpServletResponse res) {
-    Account account = accountRepository.findAccountByAltID(json.getAltID());
-    if (json.getAltID().equals("GUEST")) {
+    Account account = accountRepository.findAccountById(json.getId());
+    if (json.getAltID().equals("Guest")) {
       account = accountRepository.findOneByCardID("GUEST.GUEST.GUEST.0123456789");
       return account;
     } else if (account != null) {
+      if (json.getAltID().length() > 0 && account.getAltID() == null) {
+        account = account.update(json);
+        accountRepository.save(account);
+      }
       res.addCookie(new Cookie("account", Base64.getUrlEncoder().encodeToString(json.getAltID().getBytes())));
       return account;
     } else {
       account = new Account(json.getCardID(), json.getAltID(), 1L, 1L, 1L, 1L);
+      res.addCookie(new Cookie("account", Base64.getUrlEncoder().encodeToString(json.getAltID().getBytes())));
       return accountRepository.save(account);
     }
   }

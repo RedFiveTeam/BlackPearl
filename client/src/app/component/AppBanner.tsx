@@ -17,10 +17,6 @@ interface Props {
 
 @observer
 export class AppBanner extends React.Component<Props> {
-  async componentWillMount() {
-    await this.props.profileActions!.setProfile();
-  }
-
   renderWidgets() {
     if (!this.props.profileStore!.profile.widgetsVisible) {
       let ele = document.querySelector('.widgetColumn') as HTMLElement;
@@ -55,7 +51,7 @@ export class AppBanner extends React.Component<Props> {
         {
           profile &&
           <StyledProfileContainer
-            displayName={profileActions!.generateDisplayName(profile)}
+              displayName={profileActions!.generateDisplayName(profile)}
           />
         }
       </div>

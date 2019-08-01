@@ -14,7 +14,7 @@ describe('AppBanner', () => {
 
   beforeEach(() => {
     profileStore = {
-      profile: new ProfileModel(null, 'cardID', 'AltId', 1, 0, 1, 'none')
+      profile: new ProfileModel(null, 'cardID', 'AltId', 1, 0, 1)
     };
 
     profileActions = {

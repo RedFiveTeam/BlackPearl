@@ -6,6 +6,7 @@ import { StubProfileRepository } from '../../profile/StubProfileRepository';
 import { ProfileModel } from '../../profile/ProfileModel';
 import { StubResourceRepository } from '../resource/repositories/stub/StubResourceRepository';
 import { ResourceRepository } from '../resource/repositories/ResourceRepository';
+import objectContaining = jasmine.objectContaining;
 
 describe('LoginActions', () => {
   let subject: LoginActions;
@@ -22,20 +23,13 @@ describe('LoginActions', () => {
 
     profileStore.setProfiles(
       [
-        new ProfileModel(null, 'user1', 'user1', 1, 0, 1, 'class'),
-        new ProfileModel(null, 'user2', 'user2', 1, 0, 1, 'class'),
-        new ProfileModel(null, 'new1', 'new1', 1, 0, 1, 'class'),
-        new ProfileModel(null, 'new2', 'new2', 1, 0, 1, 'class')
+        new ProfileModel(null, 'LASTONE.FIRSTONE.MIDDLE.1', 'user1', 1, 0, 1),
+        new ProfileModel(null, 'LASTTWO.FIRSTTWO.MIDDLE.2', 'user2', 1, 0, 1),
+        new ProfileModel(null, 'LASTTHREE.FIRSTTHREE.MIDDLE.3', 'firstthree.m.lastthree', 1, 0, 1),
+        new ProfileModel(null, 'LASTFOUR.FIRSTFOUR.MIDDLE.4', 'new2', 1, 0, 1)
       ]);
 
     subject = new LoginActions({profileStore, resourceStore} as any, {profileRepository, resourceRepository} as any);
-  });
-
-  it('should log user in', async () => {
-    let setProfileSpy = jest.fn();
-    profileStore.setProfile = setProfileSpy;
-    await subject.login('AltId');
-    expect(setProfileSpy).toHaveBeenCalled();
   });
 
   it('should login as guest', async () => {
@@ -51,12 +45,6 @@ describe('LoginActions', () => {
     expect(subject.updateProfileWithExistingResources()).toBeTruthy();
   });
 
-  it('should update the old resources to the new account', async () => {
-    resourceStore.setUnfilteredResources(await resourceRepository.findAll());
-    subject.linkOldResources(profileStore.profiles[0], 'RdyPlayer1');
-    expect(resourceStore.unfilteredResources[2].accountID).toBe('RdyPlayer1');
-  });
-
   it('should edit the profile', async () => {
     let updateProfileSpy = jest.fn();
     profileRepository.updateProfile = updateProfileSpy;
@@ -64,5 +52,26 @@ describe('LoginActions', () => {
     profileStore.setUsername('user1');
     await subject.editProfile();
     expect(updateProfileSpy).toHaveBeenCalledWith(profileStore.selectedProfile);
+  });
+
+  it('should check for a match between altIDs when logging in', () => {
+    let setProfileSpy = jest.fn();
+    profileStore.setProfile = setProfileSpy;
+    subject.login('firstthree.m.lastthree.mil');
+    expect(setProfileSpy).toHaveBeenCalledWith(profileStore.profiles[2]);
+  });
+
+  it('should check for matches between the altID and cardID when logging in', () => {
+    let loginSpy = jest.fn();
+    profileRepository.login = loginSpy;
+    subject.login('firstfour.m.lastfour.mil');
+    expect(loginSpy).toHaveBeenCalledWith(profileStore.profiles[3]);
+  });
+
+  it('should log you in as a new user if no matches are found', () => {
+    let loginSpy = jest.fn();
+    profileRepository.login = loginSpy;
+    subject.login('you.are.garbage.mil');
+    expect(loginSpy).toHaveBeenCalledWith(objectContaining({altID: 'you.are.garbage.mil'}));
   });
 });

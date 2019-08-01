@@ -47,7 +47,7 @@ export class FindLoginPopup extends React.Component<Props> {
   loginButtonClick = async () => {
     this.validateInputs();
     if (await this.props.loginActions!.updateProfileWithExistingResources()) {
-      await this.props.resourceActions!.setAllResources();
+    await this.props.resourceActions!.setAllResources();
     }
   };
 

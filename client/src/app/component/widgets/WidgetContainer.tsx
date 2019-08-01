@@ -18,7 +18,7 @@ interface Props {
 @observer
 export class WidgetContainer extends React.Component<Props> {
   async componentDidMount() {
-    await this.props.profileActions!.setProfile();
+    // await this.props.profileActions!.setProfile();
     this.toggleWidgets(this.props.visible);
   }
 

@@ -14,10 +14,10 @@ describe('ProfileActions', () => {
     profileRepository = new StubProfileRepository();
     profileStore.setProfiles(
       [
-        new ProfileModel(null, 'user1', 'user1', 1, 0, 1, 'class'),
-        new ProfileModel(null, 'user2', 'user2', 1, 0, 1, 'class'),
-        new ProfileModel(null, 'new1', 'new1', 1, 0, 1, 'class'),
-        new ProfileModel(null, 'new2', 'new2', 1, 0, 1, 'class')
+        new ProfileModel(null, 'user1', 'user1', 1, 0, 1),
+        new ProfileModel(null, 'user2', 'user2', 1, 0, 1),
+        new ProfileModel(null, 'new1', 'new1', 1, 0, 1),
+        new ProfileModel(null, 'new2', 'new2', 1, 0, 1)
       ]);
     subject = new ProfileActions({profileStore} as any, {profileRepository} as any);
   });
@@ -31,7 +31,7 @@ describe('ProfileActions', () => {
 
   it('should generate a display name from your altID', () => {
     expect(subject.generateDisplayName(
-      new ProfileModel(null, 'new2', 'New Alt ID', 1, 0, 1, 'class'))
+      new ProfileModel(null, 'new2', 'New Alt ID', 1, 0, 1))
     ).toBe('New Alt ID');
   });
 
@@ -39,5 +39,21 @@ describe('ProfileActions', () => {
     profileStore.setSearchValue('user');
     subject.filterProfiles();
     expect(profileStore.filteredProfileList.length).toBe(2);
+  });
+
+  it('should check if the profile has been stored', () => {
+    profileStore.setProfile(profileStore.profiles[0]);
+    subject.checkForPreviousProfile();
+    expect(profileStore.hasProfile).toBeTruthy();
+
+    profileStore.setProfile(new ProfileModel(null, '', 'Guest', 1, 0, 1));
+    subject.checkForPreviousProfile();
+    expect(profileStore.hasProfile).toBeFalsy();
+  });
+
+  it('should check for a cookie', () => {
+    document.cookie = 'account=SDFSEWIWFKSDf=';
+    subject.checkForCookie();
+    expect(profileStore.hasProfile).toBeTruthy();
   });
 });

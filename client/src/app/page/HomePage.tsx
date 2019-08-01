@@ -42,7 +42,9 @@ interface Props {
 @observer
 export class HomePage extends React.Component<Props> {
   async componentDidMount() {
+    this.props.profileActions!.checkForCookie();
     await this.props.profileActions!.setProfile();
+    this.props.profileActions!.checkForPreviousProfile();
     await this.props.metricActions!.logMetric(LogableActions.VISIT, 'Home');
     await this.props.classificationActions!.initializeStore();
     this.getQ();
@@ -62,6 +64,17 @@ export class HomePage extends React.Component<Props> {
         new ResourceModel(null, '', decodeURIComponent(query), (specialty * 3) - 2)
       );
     }
+  }
+
+  displayBody() {
+    return (
+      <div>
+        <StyledAppBanner/>
+        <StyledCardContainer/>
+        <StyledInformationContainer/>
+        <StyledOperationContainer/>
+      </div>
+    );
   }
 
   render() {
@@ -127,10 +140,10 @@ export class HomePage extends React.Component<Props> {
             <div
               className="mainBody"
             >
-              <StyledAppBanner/>
-              <StyledCardContainer/>
-              <StyledInformationContainer/>
-              <StyledOperationContainer/>
+              {
+                this.props.profileStore!.hasProfile &&
+                this.displayBody()
+              }
             </div>
           </div>
         </div>

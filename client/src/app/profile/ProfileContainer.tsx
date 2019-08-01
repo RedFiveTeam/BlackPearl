@@ -16,10 +16,7 @@ export class ProfileContainer extends React.Component<Props> {
     return (
       <div className={classNames(this.props.className, 'profile-info')}>
         <div className={classNames(this.props.className, 'username')}>
-          {this.props.displayName.toLowerCase()
-            .split(' ')
-            .map((s) => s.charAt(0).toUpperCase() + s.substring(1))
-            .join(' ')}
+          {this.props.displayName.toLowerCase()}
         </div>
         <PersonIcon/>
       </div>
