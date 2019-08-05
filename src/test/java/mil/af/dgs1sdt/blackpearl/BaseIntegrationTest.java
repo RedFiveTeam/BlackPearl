@@ -64,7 +64,7 @@ public abstract class BaseIntegrationTest {
     jordan = accountRepository.findOneByCardID("jordan");
 
     if (jordan == null) {
-      jordan = accountRepository.save(new Account("jordan", 1L, 1L, 1L, 1L, "UNCLASSIFIED"));
+      jordan = accountRepository.save(new Account("jordan", "Test", 1L, 1L, 1L, 1L));
     }
   }
 }

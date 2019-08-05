@@ -1,6 +1,5 @@
 package mil.af.dgs1sdt.blackpearl.resource;
 
-import mil.af.dgs1sdt.blackpearl.account.Account;
 import mil.af.dgs1sdt.blackpearl.account.AccountRepository;
 import mil.af.dgs1sdt.blackpearl.resource.blame.Blame;
 import mil.af.dgs1sdt.blackpearl.resource.blame.BlameRepository;
@@ -9,10 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.view.RedirectView;
 
 import javax.validation.Valid;
 import java.time.Instant;
@@ -49,29 +46,6 @@ public class ResourceController {
   public @ResponseBody
   Iterable<Resource> getAllResourcesAccount(@PathVariable String accountID) {
     return resourceRepository.getAllResourcesByCategoryIDAndAccountID(accountID);
-  }
-
-  @RequestMapping(path = "/go")
-  public @ResponseBody
-  RedirectView goFunction(@RequestParam("q") String query) {
-    String user = SecurityContextHolder.getContext().getAuthentication().getName();
-    if (user.equals("anonymousUser")) {
-      user = "GUEST.GUEST.GUEST.0123456789";
-    }
-
-    Account account = accountRepository.findOneByCardID(user);
-    Long max = account != null ? account.getSpecialty() * 3 : 3L;
-
-    List<Resource> resources = resourceRepository.findAllForGo(query, user, max - 2, max);
-    int search = 0;
-    if (resources.size() > 1) {
-      search = 1;
-    }
-    String url = "/?search=" + search + "&specialty=" + (max / 3) + "&q=" + query;
-    if (resources.size() == 1) {
-      url = resources.get(0).getUrl();
-    }
-    return new RedirectView(url);
   }
 
   @PostMapping
@@ -112,7 +86,7 @@ public class ResourceController {
         Blame blame = new Blame(
           "DELETE",
           resource.getName(),
-          SecurityContextHolder.getContext().getAuthentication().getName(),
+          "TEST",
           Instant.now().getEpochSecond()
         );
 

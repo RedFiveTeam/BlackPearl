@@ -21,6 +21,12 @@ export class ProfileActions {
   }
 
   @action.bound
+  async getAllProfiles() {
+    let profiles = await this.profileRepository.getAllProfiles();
+    this.profileStore!.setProfiles(profiles);
+  }
+
+  @action.bound
   async updateProfile() {
     await this.profileRepository.updateProfile(this.profileStore.profile);
   }
@@ -44,17 +50,15 @@ export class ProfileActions {
 
   @action.bound
   generateDisplayName(profile: ProfileModel): string {
-    let username = profile.cardID;
-    let firstName = username.substring(0, username.indexOf('.'));
-    if (username.includes('.mil')) {
-      let lastName = username.substring(firstName.length + 3, username.indexOf('@') - 4);
-      username = `${firstName} ${lastName}`;
-      return username;
-    } else if (username.includes('@')) {
-      let lastName = username.substring(username.indexOf('.') + 1, username.indexOf('@'));
-      username = `${firstName} ${lastName}`;
-      return username;
-    }
+    let username = profile.altID;
     return username;
+  }
+
+  @action.bound
+  filterProfiles() {
+    let filteredProfiles = this.profileStore!.profiles.filter((p: ProfileModel) => {
+      return p.cardID.toLowerCase().includes(this.profileStore!.searchValue.toLowerCase());
+    });
+    this.profileStore!.setFilteredProfileList(filteredProfiles);
   }
 }

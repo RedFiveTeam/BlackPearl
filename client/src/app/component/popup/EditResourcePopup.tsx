@@ -82,7 +82,7 @@ export class EditResourcePopup extends React.Component<Props, State> {
     if (survivedEverything) {
       this.props.resourceStore!.pendingEdit!.setUrl(this.state.url);
       this.props.resourceStore!.pendingEdit!.setName(this.state.title);
-      this.props.resourceStore!.pendingEdit!.setAccountId(this.props.profileStore!.profile.cardID);
+      this.props.resourceStore!.pendingEdit!.setAccountId(this.props.profileStore!.profile.altID);
       await this.props.resourceActions!.updateResource();
       await this.props.metricActions!.logMetric(LogableActions.EDIT_RESOURCE, this.state.title);
     }

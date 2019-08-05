@@ -22,7 +22,11 @@ import { StyledOperationContainer } from '../component/card/operation/OperationC
 import { StyledWidgetContainer } from '../component/widgets/WidgetContainer';
 import { ProfileStore } from '../profile/ProfileStore';
 import { ProfileActions } from '../profile/ProfileActions';
-import { StyledClassificationBanner } from '../component/ClassificationBanner';
+import { StyledClassificationBanner } from '../component/classification/ClassificationBanner';
+import { StyledLoginPopup } from '../component/popup/LoginPopup';
+import { StyledFindLoginPopup } from '../component/popup/FindLoginPopup';
+import { ClassificationStore } from '../component/classification/ClassificationStore';
+import { ClassificationActions } from '../component/classification/ClassificationActions';
 
 interface Props {
   resourceStore?: ResourceStore;
@@ -30,6 +34,8 @@ interface Props {
   metricActions?: MetricActions;
   profileStore?: ProfileStore;
   profileActions?: ProfileActions;
+  classificationActions?: ClassificationActions;
+  classificationStore?: ClassificationStore;
   className?: string;
 }
 
@@ -38,6 +44,7 @@ export class HomePage extends React.Component<Props> {
   async componentDidMount() {
     await this.props.profileActions!.setProfile();
     await this.props.metricActions!.logMetric(LogableActions.VISIT, 'Home');
+    await this.props.classificationActions!.initializeStore();
     this.getQ();
   }
 
@@ -62,6 +69,14 @@ export class HomePage extends React.Component<Props> {
       <div
         className={this.props.className}
       >
+        {
+          this.props.profileStore!.hasOldProfile &&
+          <StyledFindLoginPopup/>
+        }
+        {
+          !this.props.profileStore!.hasProfile &&
+          <StyledLoginPopup/>
+        }
         {
           this.props.operationStore!.hasPendingDelete &&
           <StyledDeleteOperationPopup/>
@@ -101,9 +116,7 @@ export class HomePage extends React.Component<Props> {
         <div className="topDiv">
           <div className="banner">
             <StyledClassificationBanner
-              classification={
-                this.props.profileStore!.profile ? this.props.profileStore!.profile.classification : ''
-              }
+              classification={this.props.classificationStore!.classification}
             />
           </div>
 
@@ -131,7 +144,9 @@ export const StyledHomePage = inject(
   'operationStore',
   'metricActions',
   'profileStore',
-  'profileActions'
+  'profileActions',
+  'classificationStore',
+  'classificationActions'
 )
 (styled(HomePage)`
   display: inline-flex;

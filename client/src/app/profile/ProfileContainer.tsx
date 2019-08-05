@@ -3,7 +3,6 @@ import { observer } from 'mobx-react';
 import styled from 'styled-components';
 import { PersonIcon } from '../icon/PersonIcon';
 import classNames = require('classnames');
-import titleCase = require('title-case');
 
 interface Props {
   displayName: string;
@@ -17,7 +16,10 @@ export class ProfileContainer extends React.Component<Props> {
     return (
       <div className={classNames(this.props.className, 'profile-info')}>
         <div className={classNames(this.props.className, 'username')}>
-          {titleCase(this.props.displayName)}
+          {this.props.displayName.toLowerCase()
+            .split(' ')
+            .map((s) => s.charAt(0).toUpperCase() + s.substring(1))
+            .join(' ')}
         </div>
         <PersonIcon/>
       </div>

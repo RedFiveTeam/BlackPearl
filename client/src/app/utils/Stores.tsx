@@ -10,6 +10,7 @@ import { InformationStore } from '../component/card/information/InformationStore
 import { OperationStore } from '../component/card/operation/stores/OperationStore';
 import { MetricsStore } from '../page/stores/MetricsStore';
 import { MeasurementConverterStore } from '../component/widgets/measurementConverter/MeasurementConverterStore';
+import { ClassificationStore } from '../component/classification/ClassificationStore';
 
 const adminStore = new AdminStore();
 const acronymStore = new AcronymStore();
@@ -23,6 +24,7 @@ const informationStore = new InformationStore();
 const operationStore = new OperationStore();
 const metricsStore = new MetricsStore();
 const measurementConverterStore = new MeasurementConverterStore();
+const classificationStore = new ClassificationStore();
 
 export interface Stores {
   adminStore: AdminStore;
@@ -37,6 +39,7 @@ export interface Stores {
   operationStore: OperationStore;
   metricsStore: MetricsStore;
   measurementConverterStore: MeasurementConverterStore;
+  classificationStore: ClassificationStore;
 }
 
 export const stores = {
@@ -51,5 +54,6 @@ export const stores = {
   informationStore,
   operationStore,
   metricsStore,
-  measurementConverterStore
+  measurementConverterStore,
+  classificationStore
 };

@@ -4,17 +4,8 @@ const moment = require('moment-timezone');
 
 Feature('Admin Page');
 
-Before((I) => {
-  I.amOnPage('/');
-  I.fillField('.username', 'jordan');
-  I.fillField('password', 'password');
-  I.click('Login');
-  I.waitForText('Jordan', 10);
-});
-
 Scenario('should allow and admin to change information', async (I) => {
   I.amOnPage('/admin');
-
   changeGeneralInfo(I);
   await changeTimeZone(I);
   await changeWeatherData(I);
@@ -25,7 +16,6 @@ Scenario('should allow and admin to change information', async (I) => {
 async function changeTimeZone(I) {
   I.click('.tabSelector:nth-of-type(2)');
   I.waitForElement('input', 10);
-
   I.clearField('.timezoneRow:first-of-type > input');
   I.fillField('.timezoneRow:first-of-type > input', 'accTest');
   I.selectOption('.timezoneRow:first-of-type > select', 'America/Tortola');
@@ -39,7 +29,6 @@ function changeGeneralInfo(I) {
   I.fillField('.information:first-of-type > .informationContent > input', 'www.com');
   I.click('SAVE');
   I.waitForElement('.customToast');
-
 }
 
 async function changeWeatherData(I) {

@@ -18,6 +18,8 @@ describe('HomePage', () => {
   let subject: ShallowWrapper;
   let resourceStore: ResourceStore;
   let operationStore: OperationStore;
+  let classificationStore: any;
+  let classificationActions: any;
   let metricActions: any;
   let returnResourcesInCategorySpy: jest.Mock;
   let profileStore: any;
@@ -29,11 +31,19 @@ describe('HomePage', () => {
     };
 
     profileStore = {
-      profile: new ProfileModel(0, 'GUEST', 1, 1, 1, 'unclassified')
+      profile: new ProfileModel(null, 'cardID', 'AltId', 1, 0, 1, 'none')
     };
 
     profileActions = {
       setProfile: jest.fn()
+    };
+
+    classificationStore = {
+      hydrate: jest.fn()
+    };
+
+    classificationActions = {
+      initializeStore: jest.fn()
     };
 
     resourceStore = new ResourceStore();
@@ -50,6 +60,8 @@ describe('HomePage', () => {
         metricActions={metricActions}
         profileStore={profileStore}
         profileActions={profileActions}
+        classificationStore={classificationStore}
+        classificationActions={classificationActions}
       />
     );
   });

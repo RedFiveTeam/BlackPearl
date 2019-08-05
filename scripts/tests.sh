@@ -39,7 +39,7 @@ function acceptanceTests {
         ./seed_db.sh
     popd
 
-    java -jar ${BASE_DIR}/target/blackpearl-[0-9\.]*-SNAPSHOT.jar --server.port=9090 &> ${BASE_DIR}/tmp/acceptance.log &
+    java -DCLASSIFIED=UNCLASSIFIED -jar ${BASE_DIR}/target/blackpearl-[0-9\.]*-SNAPSHOT.jar --server.port=9090 &> ${BASE_DIR}/tmp/acceptance.log &
     echo $! > ${BASE_DIR}/tmp/blackPearl.pid
 
     testConnection ${REACT_APP_HOST} $(cat ${BASE_DIR}/tmp/blackPearl.pid)
@@ -61,11 +61,8 @@ function acceptanceTests {
 
 function unitTests {
     showBanner "Unit Tests"
-
     pushd ${BASE_DIR}
-        result=$(mvn test | grep -E "\[INFO\]|\[ERROR\]|Expected")
-        echo "${result}"
-        if [[ $(echo ${result} | grep "\[ERROR\]" | wc -l) -gt 0 ]]; then
+        if [[ $(mvn -DCLASSIFIED=UNCLASSIFIED test | grep "\[ERROR\]" | wc -l) -gt 0 ]]; then
             exit 1
         fi
     popd
@@ -121,6 +118,7 @@ function testConnection {
 
         if [[ "$COUNTER" -gt 40 ]]
         then
+            cat ${BASE_DIR}/tmp/acceptance.log
             echo "Could not connect to ${1} (PID: ${2}) after 40 seconds. Exiting..."
             exit 1
         fi
