@@ -60,7 +60,8 @@ function changeAcronym(I) {
 
 async function checkForChanges(I) {
   I.amOnPage('/');
-  I.fillField('#userName', 'jordan.m.cross.mil');
+  I.waitForText('Please enter the prefix of your SIPR Email to log into The Black Pearl.', 10);
+  I.fillField('.userNameInfo > .group > input', 'jordan.m.cross.mil');
   I.click('LOGIN');
   I.waitForText('jordan.m.cross.mil', 5);
   // time zone
