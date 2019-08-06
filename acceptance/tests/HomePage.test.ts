@@ -47,10 +47,6 @@ Scenario('ops and general info journey', async (I) => {
 
 async function login(I) {
   I.amOnPage('/');
-  I.waitForText('Please enter the prefix of your SIPR Email to log into The Black Pearl.', 10);
-  I.fillField('.userNameInfo > .group > input', 'jordan.m.cross.mil');
-  I.click('LOGIN');
-  I.waitForText('jordan.m.cross.mil', 5);
 }
 
 async function acronymSearch(I) {

@@ -2,10 +2,15 @@
   "tests": "./tests/**/*.test.ts",
   "timeout": 10000,
   "output": "./output",
+  "plugins": {
+    "screenshotOnFail": {
+      "enabled": false
+    }
+  },
   "helpers": {
     "Nightmare": {
-      "url": "http://localhost:9090",
-      "show": false,
+      "url": "https://localhost:9090",
+      "show": true,
       "openDevTools": true,
       "restart": true,
       "keepCookies": true,

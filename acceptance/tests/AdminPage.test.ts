@@ -60,11 +60,6 @@ function changeAcronym(I) {
 
 async function checkForChanges(I) {
   I.amOnPage('/');
-  I.waitForText('Please enter the prefix of your SIPR Email to log into The Black Pearl.', 10);
-  I.fillField('.userNameInfo > .group > input', 'jordan.m.cross.mil');
-  I.click('LOGIN');
-  I.waitForText('jordan.m.cross.mil', 5);
-  // time zone
   I.waitForText('accTest', 10);
 
   const expectedTime = moment.tz(moment(), 'America/Tortola').format('HHmm').substr(0,3);

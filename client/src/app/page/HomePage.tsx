@@ -28,6 +28,7 @@ import { StyledFindLoginPopup } from '../component/popup/FindLoginPopup';
 import { ClassificationStore } from '../component/classification/ClassificationStore';
 import { ClassificationActions } from '../component/classification/ClassificationActions';
 import { StyledConfirmLogoutPopup } from '../component/popup/ConfirmLogoutPopup';
+import { LoginActions } from '../component/login/LoginActions';
 
 interface Props {
   resourceStore?: ResourceStore;
@@ -35,6 +36,7 @@ interface Props {
   metricActions?: MetricActions;
   profileStore?: ProfileStore;
   profileActions?: ProfileActions;
+  loginActions?: LoginActions;
   classificationActions?: ClassificationActions;
   classificationStore?: ClassificationStore;
   className?: string;
@@ -42,6 +44,12 @@ interface Props {
 
 @observer
 export class HomePage extends React.Component<Props> {
+  async componentWillMount() {
+    if (navigator.userAgent.toLowerCase().indexOf('electron') !== -1) {
+      await this.props.loginActions!.createNewProfile('Acceptance.Testing.Test');
+    }
+  }
+
   async componentDidMount() {
     this.props.profileActions!.checkForCookie();
     await this.props.profileActions!.setProfile();
@@ -164,7 +172,8 @@ export const StyledHomePage = inject(
   'profileStore',
   'profileActions',
   'classificationStore',
-  'classificationActions'
+  'classificationActions',
+  'loginActions'
 )
 (styled(HomePage)`
   display: inline-flex;
