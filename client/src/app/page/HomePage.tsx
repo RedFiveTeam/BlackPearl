@@ -28,6 +28,7 @@ import { StyledFindLoginPopup } from '../component/popup/FindLoginPopup';
 import { ClassificationStore } from '../component/classification/ClassificationStore';
 import { ClassificationActions } from '../component/classification/ClassificationActions';
 import { StyledConfirmLogoutPopup } from '../component/popup/ConfirmLogoutPopup';
+import { StyledLinkProfilePopup } from '../component/popup/LinkProfilePopup';
 import { LoginActions } from '../component/login/LoginActions';
 
 interface Props {
@@ -92,6 +93,10 @@ export class HomePage extends React.Component<Props> {
         className={this.props.className}
       >
         {
+          (this.props.profileStore!.loginMatches.length > 0) &&
+          <StyledLinkProfilePopup/>
+        }
+        {
           this.props.profileStore!.displayLogoutModal &&
           <StyledConfirmLogoutPopup/>
         }
@@ -154,7 +159,7 @@ export class HomePage extends React.Component<Props> {
               className="mainBody"
             >
               {
-                this.props.profileStore!.hasProfile &&
+                this.props.profileStore!.hasProfile && this.props.profileStore!.loginMatches.length === 0 &&
                 this.displayBody()
               }
             </div>

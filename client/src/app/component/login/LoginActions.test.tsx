@@ -34,9 +34,9 @@ describe('LoginActions', () => {
 
   it('should login as guest', async () => {
     let setProfileSpy = jest.fn();
-    subject.login = setProfileSpy;
+    profileStore.setProfile = setProfileSpy;
     await subject.loginAsGuest();
-    expect(setProfileSpy).toHaveBeenCalledWith('Guest');
+    expect(setProfileSpy).toHaveBeenCalled();
   });
 
   it('should link new username with existing resources', () => {
@@ -54,24 +54,24 @@ describe('LoginActions', () => {
     expect(updateProfileSpy).toHaveBeenCalledWith(profileStore.selectedProfile);
   });
 
-  it('should check for a match between altIDs when logging in', () => {
+  it('should check for a match between altIDs when logging in', async () => {
     let setProfileSpy = jest.fn();
     profileStore.setProfile = setProfileSpy;
-    subject.login('firstthree.m.lastthree.mil');
+    await subject.login('firstthree.m.lastthree.mil');
     expect(setProfileSpy).toHaveBeenCalledWith(profileStore.profiles[2]);
   });
 
-  it('should check for matches between the altID and cardID when logging in', () => {
+  it('should check for matches between the altID and cardID when logging in', async () => {
     let loginSpy = jest.fn();
     profileRepository.login = loginSpy;
-    subject.login('firstfour.m.lastfour.mil');
+    await subject.login('firstfour.m.lastfour.mil');
     expect(loginSpy).toHaveBeenCalledWith(profileStore.profiles[3]);
   });
 
-  it('should log you in as a new user if no matches are found', () => {
+  it('should log you in as a new user if no matches are found', async() => {
     let loginSpy = jest.fn();
     profileRepository.login = loginSpy;
-    subject.login('you.are.garbage.mil');
+    await subject.login('you.are.garbage.mil');
     expect(loginSpy).toHaveBeenCalledWith(objectContaining({altID: 'you.are.garbage.mil'}));
   });
 
@@ -79,5 +79,15 @@ describe('LoginActions', () => {
     expect(subject.validateLogin('tyler.b.cronin.mil')).toBeTruthy();
     expect(subject.validateLogin('tyler.b')).toBeFalsy();
     expect(subject.validateLogin('tyler')).toBeFalsy();
+  });
+
+  it('should set potentialMatches to true if matches found', async () => {
+    profileStore.setProfiles(
+      [
+        new ProfileModel(null, 'LASTT.FIRSTT.M', '', 1, 0, 1)
+      ]
+    );
+    await subject.login('first.m.last');
+    expect(profileStore.loginMatches.length).toBe(1);
   });
 });

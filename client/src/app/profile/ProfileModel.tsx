@@ -54,6 +54,12 @@ export class ProfileModel {
     return this._widgetsVisible;
   }
 
+  @computed
+  get formattedCardID(): string {
+    let splitCardID = this.cardID.split('.');
+    return (splitCardID[1] + '.' + splitCardID[2].charAt(0) + '.' + splitCardID[0]).toLowerCase();
+  }
+
   @action.bound
   setCardID(value: string) {
     this._cardID = value;

@@ -18,7 +18,7 @@ export class ProfileContainer extends React.Component<Props> {
     return (
       <div className={classNames(this.props.className, 'profile-info')}>
         <div className={classNames(this.props.className, 'username')}>
-          {this.props.displayName.toLowerCase()}
+          {this.props.displayName === 'Guest' ? 'Guest' : this.props.displayName.toLowerCase()}
         </div>
         <PersonIcon/>
         <span

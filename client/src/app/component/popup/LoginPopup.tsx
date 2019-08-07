@@ -151,6 +151,7 @@ export const StyledLoginPopup = inject('loginActions', 'profileStore', 'profileA
 (styled(LoginPopup)`  
 
   z-index: 50;
+  height:100%;
    
   .background {
     position: absolute;
@@ -161,6 +162,7 @@ export const StyledLoginPopup = inject('loginActions', 'profileStore', 'profileA
   
   .backBackground {
     position: absolute;
+    top: 0;
     height: 100%;
     width: 100%;
     background: black;

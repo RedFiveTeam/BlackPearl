@@ -75,7 +75,7 @@ export const StyledConfirmLogoutPopup = inject('profileStore', 'profileActions')
     position: relative;
     bottom: 30px;
     color: #fff;
-    margin-left: 150px;
+    margin-left: 95px;
     border: 1px solid #5386F2;
     box-shadow: 0 2px 2px rgba(0, 0, 0, 0.24), 0 0 2px rgba(0, 0, 0, 0.12);
     
@@ -89,7 +89,7 @@ export const StyledConfirmLogoutPopup = inject('profileStore', 'profileActions')
     cursor: pointer;
     align-self: flex-end;
     margin-top: 75px;  
-    margin-right: 30px;
+    margin-right: 85px;
     color: #fff;
     font-weight: 500;
     height: 30px;

@@ -10,7 +10,7 @@
   "helpers": {
     "Nightmare": {
       "url": "https://localhost:9090",
-      "show": true,
+      "show": false,
       "openDevTools": true,
       "restart": true,
       "keepCookies": true,

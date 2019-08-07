@@ -25,6 +25,7 @@ describe('HomePage', () => {
   let returnResourcesInCategorySpy: jest.Mock;
   let profileStore: any;
   let profileActions: any;
+  let loginActions: any;
 
   beforeEach(() => {
     metricActions = {
@@ -35,7 +36,8 @@ describe('HomePage', () => {
       profile: new ProfileModel(null, 'cardID', 'AltId', 1, 0, 1),
       hasProfile: true,
       displayLogoutModal: jest.fn(),
-      setDisplayLogoutModal: jest.fn()
+      setDisplayLogoutModal: jest.fn(),
+      loginMatches: []
     };
 
     profileActions = {
@@ -50,6 +52,10 @@ describe('HomePage', () => {
 
     classificationActions = {
       initializeStore: jest.fn()
+    };
+
+    loginActions = {
+      createNewProfile: jest.fn()
     };
 
     resourceStore = new ResourceStore();
@@ -68,6 +74,7 @@ describe('HomePage', () => {
         profileActions={profileActions}
         classificationStore={classificationStore}
         classificationActions={classificationActions}
+        loginActions={loginActions}
       />
     );
   });

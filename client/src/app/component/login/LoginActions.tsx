@@ -4,6 +4,7 @@ import { Repositories } from '../../utils/Repositories';
 import { ProfileStore } from '../../profile/ProfileStore';
 import { action } from 'mobx';
 import { ProfileModel } from '../../profile/ProfileModel';
+import Fuse = require('fuse.js');
 
 export class LoginActions {
   private profileStore: ProfileStore;
@@ -14,8 +15,15 @@ export class LoginActions {
     this.profileRepository = repositories.profileRepository!;
   }
 
+  async loginAndLinkProfile(profile: ProfileModel) {
+    profile.setAltID(this.profileStore.username);
+    this.profileStore.setProfile(await this.profileRepository.login(profile));
+    this.profileStore.setLoginMatches([]);
+  }
+
   async login(altID: string) {
     let profiles = this.profileStore!.profiles;
+    let formattedCardIDs = [];
     for (let i = 0; i < profiles.length; i++) {
       if (this.isExactMatch(profiles[i], altID)) {
         this.profileStore.setProfile(profiles[i]);
@@ -24,6 +32,7 @@ export class LoginActions {
       } else {
         let strippedAltID = altID.replace('.mil', '').replace('.ctr', '');
         let cardID = this.formatCardID(profiles[i].cardID);
+        formattedCardIDs.push({profileID: profiles[i].id, formattedCardID: cardID});
         if (strippedAltID === cardID) {
           this.profileStore.profiles[i].setAltID(altID);
           this.profileStore.setProfile(await this.profileRepository.login(profiles[i]));
@@ -31,12 +40,34 @@ export class LoginActions {
         }
       }
     }
-    await this.createNewProfile(altID);
+    await this.findProfileMatches(altID);
+  }
+
+  async findProfileMatches(altID: string) {
+    let options = {
+      shouldSort: true,
+      threshold: .2,
+      location: 0,
+      distance: 100,
+      maxPatternLength: 32,
+      minMatchCharLength: 1,
+      keys: [
+        'formattedCardID'
+      ]
+    };
+    const fuse = new Fuse(this.profileStore.profiles, options);
+    let matches = fuse.search(altID);
+    if (matches.length > 0) {
+      this.profileStore.setLoginMatches(matches);
+    } else {
+      await this.createNewProfile(altID);
+    }
   }
 
   async createNewProfile(altID: string) {
     let newProfile = new ProfileModel(null, altID, altID);
     this.profileStore.setProfile(await this.profileRepository.login(newProfile));
+    this.profileStore.setLoginMatches([]);
   }
 
   isExactMatch(profile: ProfileModel, altID: string) {
@@ -49,7 +80,7 @@ export class LoginActions {
   }
 
   async loginAsGuest() {
-    await this.login('Guest');
+    this.profileStore.setProfile(await this.profileRepository.login(this.profileStore.guestProfile));
     this.profileStore!.setHasProfile(true);
   }
 

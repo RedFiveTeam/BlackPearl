@@ -12,6 +12,7 @@ export class ProfileStore {
   @observable private _filteredProfileList: ProfileModel[];
   @observable private _isLinkInfoValid: boolean;
   @observable private _displayLogoutModal: boolean = false;
+  @observable private _loginMatches: ProfileModel[] = [];
 
   @action.bound
   setSearchValue(value: string) {
@@ -53,6 +54,11 @@ export class ProfileStore {
     this._selectedProfile = value;
   }
 
+  @action.bound
+  setLoginMatches(value: ProfileModel[]) {
+    this._loginMatches = value;
+  }
+
   @computed
   get searchValue() {
     return this._searchValue;
@@ -86,6 +92,13 @@ export class ProfileStore {
   }
 
   @computed
+  get guestProfile(): ProfileModel {
+    return this._profiles.filter((p: ProfileModel) => {
+      return (p.altID === 'Guest');
+    })[0];
+  }
+
+  @computed
   get selectedProfile(): ProfileModel {
     return this._selectedProfile;
   }
@@ -109,6 +122,11 @@ export class ProfileStore {
   @computed
   get displayLogoutModal() {
     return this._displayLogoutModal;
+  }
+
+  @computed
+  get loginMatches() {
+    return this._loginMatches;
   }
 
   private ValidateLinkInfo() {
