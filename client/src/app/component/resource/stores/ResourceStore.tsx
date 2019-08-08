@@ -9,6 +9,7 @@ export class ResourceStore extends LoadingStore {
   @observable private _pendingResource: ResourceModel | null = null;
   @observable private _pendingDelete: ResourceModel | null = null;
   @observable private _pendingEdit: ResourceModel | null = null;
+  @observable private _goPopupVisible: boolean = false;
   @observable private _activeTab: number = 1;
   @observable private _clicks: {} = {};
   @observable private _filter: string = '';
@@ -38,6 +39,11 @@ export class ResourceStore extends LoadingStore {
 
   setPendingResource(resource: ResourceModel | null) {
     this._pendingResource = resource;
+  }
+
+  @action.bound
+  toggleGoPopup() {
+    this._goPopupVisible = !this._goPopupVisible;
   }
 
   setPendingResourceCategory(categoryID: number) {
@@ -153,6 +159,10 @@ export class ResourceStore extends LoadingStore {
   @computed
   get hasPendingEdit() {
     return this._pendingEdit !== null;
+  }
+
+  get goPopupVisible() {
+    return this._goPopupVisible;
   }
 
   @computed

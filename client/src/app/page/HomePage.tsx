@@ -30,6 +30,7 @@ import { ClassificationActions } from '../component/classification/Classificatio
 import { StyledConfirmLogoutPopup } from '../component/popup/ConfirmLogoutPopup';
 import { StyledLinkProfilePopup } from '../component/popup/LinkProfilePopup';
 import { LoginActions } from '../component/login/LoginActions';
+import { StyledSetupGoPopup } from '../component/popup/SetupGoPopup';
 
 interface Props {
   resourceStore?: ResourceStore;
@@ -64,14 +65,12 @@ export class HomePage extends React.Component<Props> {
     let getParams = window.location.search;
     let query = getParams.substr(getParams.indexOf('q=') + 2, 64);
     let search = getParams.substr(getParams.indexOf('search=') + 7, 1);
-    let specialty: number;
-    specialty = parseInt(getParams.substr(getParams.indexOf('specialty=') + 10, 1), 10);
 
     if (search === '1') {
       this.props.resourceStore!.setFilter(query);
     } else if (search === '0') {
       this.props.resourceStore!.setPendingResource(
-        new ResourceModel(null, '', decodeURIComponent(query), (specialty * 3) - 2)
+        new ResourceModel(null, '', decodeURIComponent(query), 0)
       );
     }
   }
@@ -135,6 +134,10 @@ export class HomePage extends React.Component<Props> {
         {
           this.props.resourceStore!.hasPendingDelete &&
           <StyledRemoveResourcePopup/>
+        }
+        {
+          this.props.resourceStore!.goPopupVisible &&
+            <StyledSetupGoPopup/>
         }
         <ToastContainer
           toastClassName="customToast"

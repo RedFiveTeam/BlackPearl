@@ -60,6 +60,7 @@ function changeAcronym(I) {
 
 async function checkForChanges(I) {
   I.amOnPage('/');
+  // time zone
   I.waitForText('accTest', 10);
 
   const expectedTime = moment.tz(moment(), 'America/Tortola').format('HHmm').substr(0,3);
