@@ -15,6 +15,11 @@ export class ProfileActions {
   }
 
   @action.bound
+  deleteCookie() {
+    document.cookie = 'account=; Path=/api; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+  }
+
+  @action.bound
   async setProfile() {
     let profile = await this.profileRepository.getProfile();
     this.profileStore.setProfile(profile);
@@ -60,5 +65,21 @@ export class ProfileActions {
       return p.cardID.toLowerCase().includes(this.profileStore!.searchValue.toLowerCase());
     });
     this.profileStore!.setFilteredProfileList(filteredProfiles);
+  }
+
+  @action.bound
+  checkForPreviousProfile() {
+    let profileStore = this.profileStore;
+    if (profileStore.profile.altID !== 'Guest') {
+      profileStore!.setHasProfile(true);
+    } else {
+      profileStore!.setHasProfile(false);
+    }
+  }
+
+  @action.bound
+  checkForCookie() {
+    this.profileStore.setHasProfile(true);
+    return document.cookie.length > 0;
   }
 }

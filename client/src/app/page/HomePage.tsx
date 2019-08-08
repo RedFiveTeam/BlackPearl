@@ -22,9 +22,15 @@ import { StyledOperationContainer } from '../component/card/operation/OperationC
 import { StyledWidgetContainer } from '../component/widgets/WidgetContainer';
 import { ProfileStore } from '../profile/ProfileStore';
 import { ProfileActions } from '../profile/ProfileActions';
-import { StyledClassificationBanner } from '../component/ClassificationBanner';
+import { StyledClassificationBanner } from '../component/classification/ClassificationBanner';
 import { StyledLoginPopup } from '../component/popup/LoginPopup';
 import { StyledFindLoginPopup } from '../component/popup/FindLoginPopup';
+import { ClassificationStore } from '../component/classification/ClassificationStore';
+import { ClassificationActions } from '../component/classification/ClassificationActions';
+import { StyledConfirmLogoutPopup } from '../component/popup/ConfirmLogoutPopup';
+import { StyledLinkProfilePopup } from '../component/popup/LinkProfilePopup';
+import { LoginActions } from '../component/login/LoginActions';
+import { StyledSetupGoPopup } from '../component/popup/SetupGoPopup';
 
 interface Props {
   resourceStore?: ResourceStore;
@@ -32,14 +38,26 @@ interface Props {
   metricActions?: MetricActions;
   profileStore?: ProfileStore;
   profileActions?: ProfileActions;
+  loginActions?: LoginActions;
+  classificationActions?: ClassificationActions;
+  classificationStore?: ClassificationStore;
   className?: string;
 }
 
 @observer
 export class HomePage extends React.Component<Props> {
+  async componentWillMount() {
+    if (navigator.userAgent.toLowerCase().indexOf('electron') !== -1) {
+      await this.props.loginActions!.createNewProfile('Acceptance.Testing.Test');
+    }
+  }
+
   async componentDidMount() {
+    this.props.profileActions!.checkForCookie();
     await this.props.profileActions!.setProfile();
+    this.props.profileActions!.checkForPreviousProfile();
     await this.props.metricActions!.logMetric(LogableActions.VISIT, 'Home');
+    await this.props.classificationActions!.initializeStore();
     this.getQ();
   }
 
@@ -47,16 +65,25 @@ export class HomePage extends React.Component<Props> {
     let getParams = window.location.search;
     let query = getParams.substr(getParams.indexOf('q=') + 2, 64);
     let search = getParams.substr(getParams.indexOf('search=') + 7, 1);
-    let specialty: number;
-    specialty = parseInt(getParams.substr(getParams.indexOf('specialty=') + 10, 1), 10);
 
     if (search === '1') {
       this.props.resourceStore!.setFilter(query);
     } else if (search === '0') {
       this.props.resourceStore!.setPendingResource(
-        new ResourceModel(null, '', decodeURIComponent(query), (specialty * 3) - 2)
+        new ResourceModel(null, '', decodeURIComponent(query), 0)
       );
     }
+  }
+
+  displayBody() {
+    return (
+      <div>
+        <StyledAppBanner/>
+        <StyledCardContainer/>
+        <StyledInformationContainer/>
+        <StyledOperationContainer/>
+      </div>
+    );
   }
 
   render() {
@@ -64,6 +91,14 @@ export class HomePage extends React.Component<Props> {
       <div
         className={this.props.className}
       >
+        {
+          (this.props.profileStore!.loginMatches.length > 0) &&
+          <StyledLinkProfilePopup/>
+        }
+        {
+          this.props.profileStore!.displayLogoutModal &&
+          <StyledConfirmLogoutPopup/>
+        }
         {
           this.props.profileStore!.hasOldProfile &&
           <StyledFindLoginPopup/>
@@ -100,6 +135,10 @@ export class HomePage extends React.Component<Props> {
           this.props.resourceStore!.hasPendingDelete &&
           <StyledRemoveResourcePopup/>
         }
+        {
+          this.props.resourceStore!.goPopupVisible &&
+            <StyledSetupGoPopup/>
+        }
         <ToastContainer
           toastClassName="customToast"
           position="top-center"
@@ -111,9 +150,7 @@ export class HomePage extends React.Component<Props> {
         <div className="topDiv">
           <div className="banner">
             <StyledClassificationBanner
-              classification={
-                this.props.profileStore!.profile ? this.props.profileStore!.profile.classification : ''
-              }
+              classification={this.props.classificationStore!.classification}
             />
           </div>
 
@@ -124,10 +161,10 @@ export class HomePage extends React.Component<Props> {
             <div
               className="mainBody"
             >
-              <StyledAppBanner/>
-              <StyledCardContainer/>
-              <StyledInformationContainer/>
-              <StyledOperationContainer/>
+              {
+                this.props.profileStore!.hasProfile && this.props.profileStore!.loginMatches.length === 0 &&
+                this.displayBody()
+              }
             </div>
           </div>
         </div>
@@ -141,7 +178,10 @@ export const StyledHomePage = inject(
   'operationStore',
   'metricActions',
   'profileStore',
-  'profileActions'
+  'profileActions',
+  'classificationStore',
+  'classificationActions',
+  'loginActions'
 )
 (styled(HomePage)`
   display: inline-flex;

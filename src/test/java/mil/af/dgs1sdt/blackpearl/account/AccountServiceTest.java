@@ -15,7 +15,7 @@ public class AccountServiceTest extends BaseIntegrationTest {
   @Before
   public void setUp() {
     accountRepository.save(new Account(
-      "LastName.FirstName.MiddleName.123456789123", "Test", 1L, 1L, 1L, 1L, "UNCLASSIFIED"));
+      "LastName.FirstName.MiddleName.123456789123", "Test", 1L, 1L, 1L, 1L));
     subject = new AccountService(accountRepository);
   }
 

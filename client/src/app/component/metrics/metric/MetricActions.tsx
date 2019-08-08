@@ -20,8 +20,10 @@ export class MetricActions {
 
   @action.bound
   async logMetric(actionEnum: number, context: string) {
-    let profile = await this.profileRepository.getProfile();
-    this.profileStore.setProfile(profile);
+    if (!this.profileStore!.profile) {
+      let profile = await this.profileRepository.getProfile();
+      this.profileStore.setProfile(profile);
+    }
     const metric = new MetricModel(
       null,
       this.profileStore.profile.id!,

@@ -10,7 +10,6 @@ export class ProfileSerializer implements Serializer<ProfileModel> {
       specialty: item.specialty,
       sort: item.sort,
       widgets: item.widgetsVisible,
-      classification: item.classification
     };
   }
 
@@ -22,7 +21,6 @@ export class ProfileSerializer implements Serializer<ProfileModel> {
       item.specialty,
       item.sort,
       item.widgets,
-      item.classification
     );
   }
 }

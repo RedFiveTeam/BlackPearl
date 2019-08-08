@@ -25,7 +25,7 @@ describe('FindLoginPopup', () => {
 
     profileRepository = new StubProfileRepository();
 
-    profile = new ProfileModel(1, 'test', 'test', 1, 1, 1, '');
+    profile = new ProfileModel(1, 'test', 'test', 1, 1, 1);
 
     profileStore = new ProfileStore();
     profileStore.setProfile(profile);

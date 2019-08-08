@@ -7,7 +7,7 @@ export interface ProfileRepository {
 
   getAllProfiles(): Promise<ProfileModel[]>;
 
-  login(altID: string): Promise<ProfileModel>;
+  login(profile: ProfileModel): Promise<ProfileModel>;
 
   link(profile: ProfileModel): Promise<ProfileModel>;
 }

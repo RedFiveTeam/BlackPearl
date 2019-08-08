@@ -80,10 +80,6 @@ describe('CardContainer', () => {
     expect(resourceActions.setAllResources).toHaveBeenCalled();
   });
 
-  it('should set the profile', () => {
-    expect(profileActions.setProfile).toHaveBeenCalled();
-  });
-
   it('should have a body for the contents to go into', () => {
     expect(subject.find('.cardBody').exists()).toBeTruthy();
   });

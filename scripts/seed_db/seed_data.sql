@@ -64,22 +64,27 @@ INSERT INTO operation (title, description, address) VALUES
     ("OP DAYWALKER",	"RUN!",	"https://www.opfour.com"),
     ("OP TORTUGA",	"WHERE'S THE BEER!?!",	"https://www.opfive.com");
 
-INSERT INTO account (cardID, role, specialty, sort, widgets, classification, altID) VALUES
-    ("GUEST.GUEST.GUEST.0123456789", 1, 1, 1, 1, '', 'Guest'),
-    ("CROSS.JORDAN.MIDDLE.0123456789", 1, 1, 1, 1, '', null),
-    ("Matt Armstrong", 1, 1, 1, 1, '', null),
-    ("I hate Matt", 1, 1, 1, 1, '', null),
-    ("Matt = Bad", 1, 1, 1, 1, '', null),
-    ("Matt is bad", 1, 1, 1, 1, '', null),
-    ("There is no good matt", 1, 1, 1, 1, '', null),
-    ("If Matt were good he would not be matt", 1, 1, 1, 1, '', null),
-    ("More", 1, 1, 1, 1, '', null),
-    ("Matt", 1, 1, 1, 1, '', null),
-    ("Tyler Good", 1, 1, 1, 1, '', null),
-    ("Big Papi", 1, 1, 1, 1, '', null),
-    ("OFWG", 1, 1, 1, 1, '', null),
-    ("Long Leg Daddy", 1, 1, 1, 1, '', null),
-    ("YODA.MASTER.MIDDLE.0123456789", 1, 1, 1, 1, '', null);
+INSERT INTO account (cardID, role, specialty, sort, widgets, altID) VALUES
+    ("GUEST.GUEST.GUEST.0123456789", 1, 1, 1, 1, 'Guest'),
+    ("CROSS.JORDAN.MIDDLE.0123456789", 1, 1, 1, 1, null),
+    ("ARMSTRONG.MATT.STEVEN", 1, 1, 1, 1, null),
+    ("ARMSTRONG.MATT.JOJO", 1, 1, 1, 1, null),
+    ("ARMSTRONG.MATT.BEVEN", 1, 1, 1, 1, null),
+    ("ARMSTRONG.MATT.DEVEN", 1, 1, 1, 1, null),
+    ("ARMSTRONG.MATT.STWEVEN", 1, 1, 1, 1, null),
+    ("ARMSTRONG.MATT.STEPHEN", 1, 1, 1, 1, null),
+    ("CRONIN.TYLER.BRYCE", 1, 1, 1, 1, null),
+    ("MCFARLAND.DREW.JOEL", 1, 1, 1, 1, null),
+    ("BASS.KENNY.MYESHA", 1, 1, 1, 1, null),
+    ("BARCELONA.DESTINI.DREW", 1, 1, 1, 1, null),
+    ("KENDRICK.NATHAN.JACE", 1, 1, 1, 1, null),
+    ("RIMER.JASON.MORAZ", 1, 1, 1, 1, null),
+    ("WILSON.DYLAN.RYAN", 1, 1, 1, 1, null),
+    ("SIMON.KYLE.ANTHONY", 1, 1, 1, 1, null),
+    ("HOAG.JACY.LEE", 1, 1, 1, 1, null),
+    ("BIG.MAN.LARGE", 1, 1, 1, 1, null),
+    ("SUCH.BIG.MAN", 1, 1, 1, 1, null),
+    ("YODA.MASTER.MIDDLE.0123456789", 1, 1, 1, 1, null);
 
 INSERT INTO acronym (acronym, definition) VALUES
     ("A&P", "analysis and production"),

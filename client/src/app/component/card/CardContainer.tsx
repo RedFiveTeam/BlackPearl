@@ -23,7 +23,6 @@ interface Props {
 export class CardContainer extends React.Component<Props> {
 
   async componentDidMount() {
-    await this.props.profileActions!.setProfile();
     await this.props.resourceActions!.setAllResources();
   }
 

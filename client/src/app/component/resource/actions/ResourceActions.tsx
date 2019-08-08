@@ -27,7 +27,7 @@ export class ResourceActions {
   @action.bound
   async setAllResources() {
     this.resourceStore!.setUnfilteredResources(await this.resourceRepository.findAll());
-    this.resourceStore.setResources(await this.resourceRepository.findAllByAccount(this.profileStore.profile.altID));
+    this.resourceStore.setResources(await this.resourceRepository.findAllByAccount(this.profileStore.profile.cardID));
     if (this.resourceStore.filter !== '') {
       await this.filterResources(this.resourceStore.filter);
     }
@@ -94,7 +94,7 @@ export class ResourceActions {
 
   @action.bound
   setPendingResourceAccountID() {
-    this.resourceStore.setPendingResourceAccountID(this.profileStore.profile.altID);
+    this.resourceStore.setPendingResourceAccountID(this.profileStore.profile.cardID);
   }
 
   @action.bound
@@ -137,7 +137,7 @@ export class ResourceActions {
     resource.setName(title);
     resource.setUrl(url);
     resource.setCategoryId(this.resourceStore!.pendingResource!.categoryID!);
-    resource.setAccountId(this.profileStore!.profile.altID);
+    resource.setAccountId(this.profileStore!.profile.cardID);
 
     this.resourceStore.setPendingResource(resource);
   }

@@ -1,7 +1,6 @@
 package mil.af.dgs1sdt.blackpearl.account;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -15,8 +14,6 @@ import java.util.List;
 @Controller
 @RequestMapping(AccountController.URI)
 public class AccountController {
-  @Value("${CLASSIFIED}")
-  private String classification;
 
   public static final String URI = "/api/account";
   @Autowired
@@ -26,8 +23,8 @@ public class AccountController {
 
   @GetMapping
   public @ResponseBody
-  Account getProfile(@CookieValue("account") String altID) {
-    if (altID.length() > 0) {
+  Account getProfile(@CookieValue(value="account", required=false) String altID) {
+    if (altID != null) {
       byte[] bytes = Base64.getUrlDecoder().decode(altID);
       altID = new String(bytes);
       Account account = accountRepository.findAccountByAltID(altID);
@@ -36,7 +33,6 @@ public class AccountController {
       }
     }
     Account account = accountRepository.findOneByCardID("GUEST.GUEST.GUEST.0123456789");
-    account.setClassification(classification);
     account.setAltID("Guest");
     return account;
   }
@@ -57,16 +53,21 @@ public class AccountController {
 
   @PostMapping
   public @ResponseBody
-  Account login(@Valid @RequestBody AccountJSON json, HttpServletResponse res) {
-    Account account = accountRepository.findAccountByAltID(json.getAltID());
-    if (json.getAltID().equals("GUEST")) {
+    Account login(@Valid @RequestBody AccountJSON json, HttpServletResponse res) {
+    Account account = accountRepository.findAccountById(json.getId());
+    if (json.getAltID().equals("Guest")) {
       account = accountRepository.findOneByCardID("GUEST.GUEST.GUEST.0123456789");
       return account;
     } else if (account != null) {
+      if (json.getAltID().length() > 0 && account.getAltID() == null) {
+        account = account.update(json);
+        accountRepository.save(account);
+      }
       res.addCookie(new Cookie("account", Base64.getUrlEncoder().encodeToString(json.getAltID().getBytes())));
       return account;
     } else {
-      account = new Account(json.getCardID(), json.getAltID(), 1L, 1L, 1L, 1L, classification);
+      account = new Account(json.getCardID(), json.getAltID(), 1L, 1L, 1L, 1L);
+      res.addCookie(new Cookie("account", Base64.getUrlEncoder().encodeToString(json.getAltID().getBytes())));
       return accountRepository.save(account);
     }
   }

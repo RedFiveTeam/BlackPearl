@@ -13,15 +13,19 @@ import { StyledInformationContainer } from '../component/card/information/Inform
 import { StyledOperationContainer } from '../component/card/operation/OperationContainer';
 import { StyledAppBanner } from '../component/AppBanner';
 import { ProfileModel } from '../profile/ProfileModel';
+import { StyledConfirmLogoutPopup } from '../component/popup/ConfirmLogoutPopup';
 
 describe('HomePage', () => {
   let subject: ShallowWrapper;
   let resourceStore: ResourceStore;
   let operationStore: OperationStore;
+  let classificationStore: any;
+  let classificationActions: any;
   let metricActions: any;
   let returnResourcesInCategorySpy: jest.Mock;
   let profileStore: any;
   let profileActions: any;
+  let loginActions: any;
 
   beforeEach(() => {
     metricActions = {
@@ -29,11 +33,29 @@ describe('HomePage', () => {
     };
 
     profileStore = {
-      profile: new ProfileModel(null, 'cardID', 'AltId', 1, 0, 1, 'none')
+      profile: new ProfileModel(null, 'cardID', 'AltId', 1, 0, 1),
+      hasProfile: true,
+      displayLogoutModal: jest.fn(),
+      setDisplayLogoutModal: jest.fn(),
+      loginMatches: []
     };
 
     profileActions = {
-      setProfile: jest.fn()
+      setProfile: jest.fn(),
+      checkForPreviousProfile: jest.fn(),
+      checkForCookie: jest.fn()
+    };
+
+    classificationStore = {
+      hydrate: jest.fn()
+    };
+
+    classificationActions = {
+      initializeStore: jest.fn()
+    };
+
+    loginActions = {
+      createNewProfile: jest.fn()
     };
 
     resourceStore = new ResourceStore();
@@ -50,6 +72,9 @@ describe('HomePage', () => {
         metricActions={metricActions}
         profileStore={profileStore}
         profileActions={profileActions}
+        classificationStore={classificationStore}
+        classificationActions={classificationActions}
+        loginActions={loginActions}
       />
     );
   });
@@ -93,5 +118,10 @@ describe('HomePage', () => {
 
   it('should have a header', () => {
     expect(subject.find(StyledAppBanner).exists()).toBeTruthy();
+  });
+
+  it('should display the confirm logout popup', () => {
+    profileStore.setDisplayLogoutModal(true);
+    expect(subject.find(StyledConfirmLogoutPopup).exists()).toBeTruthy();
   });
 });

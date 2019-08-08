@@ -4,39 +4,92 @@ import { Repositories } from '../../utils/Repositories';
 import { ProfileStore } from '../../profile/ProfileStore';
 import { action } from 'mobx';
 import { ProfileModel } from '../../profile/ProfileModel';
-import { ResourceModel } from '../resource/ResourceModel';
-import { ResourceStore } from '../resource/stores/ResourceStore';
-import { ResourceRepository } from '../resource/repositories/ResourceRepository';
+import Fuse = require('fuse.js');
 
 export class LoginActions {
   private profileStore: ProfileStore;
-  private resourceStore: ResourceStore;
   private profileRepository: ProfileRepository;
-  private resourceRepository: ResourceRepository;
 
   constructor(stores: Partial<Stores>, repositories: Partial<Repositories>) {
     this.profileStore = stores.profileStore!;
-    this.resourceStore = stores.resourceStore!;
     this.profileRepository = repositories.profileRepository!;
-    this.resourceRepository = repositories.resourceRepository!;
+  }
+
+  async loginAndLinkProfile(profile: ProfileModel) {
+    profile.setAltID(this.profileStore.username);
+    this.profileStore.setProfile(await this.profileRepository.login(profile));
+    this.profileStore.setLoginMatches([]);
   }
 
   async login(altID: string) {
-    this.profileStore.setProfile(await this.profileRepository.login(altID));
+    let profiles = this.profileStore!.profiles;
+    let formattedCardIDs = [];
+    for (let i = 0; i < profiles.length; i++) {
+      if (this.isExactMatch(profiles[i], altID)) {
+        this.profileStore.setProfile(profiles[i]);
+        await this.profileRepository.login(profiles[i]);
+        return;
+      } else {
+        let strippedAltID = altID.replace('.mil', '').replace('.ctr', '');
+        let cardID = this.formatCardID(profiles[i].cardID);
+        formattedCardIDs.push({profileID: profiles[i].id, formattedCardID: cardID});
+        if (strippedAltID === cardID) {
+          this.profileStore.profiles[i].setAltID(altID);
+          this.profileStore.setProfile(await this.profileRepository.login(profiles[i]));
+          return;
+        }
+      }
+    }
+    await this.findProfileMatches(altID);
   }
 
-  @action.bound
+  async findProfileMatches(altID: string) {
+    let options = {
+      shouldSort: true,
+      threshold: .2,
+      location: 0,
+      distance: 100,
+      maxPatternLength: 32,
+      minMatchCharLength: 1,
+      keys: [
+        'formattedCardID'
+      ]
+    };
+    const fuse = new Fuse(this.profileStore.profiles, options);
+    let matches = fuse.search(altID);
+    if (matches.length > 0) {
+      this.profileStore.setLoginMatches(matches);
+    } else {
+      await this.createNewProfile(altID);
+    }
+  }
+
+  async createNewProfile(altID: string) {
+    let newProfile = new ProfileModel(null, altID, altID);
+    this.profileStore.setProfile(await this.profileRepository.login(newProfile));
+    this.profileStore.setLoginMatches([]);
+  }
+
+  isExactMatch(profile: ProfileModel, altID: string) {
+    return profile.altID === altID.replace('.mil', '').replace('.ctr', '');
+  }
+
+  formatCardID(cardID: string): string {
+    if (this.validateLogin(cardID)) {
+      let splitCardID = cardID.split('.');
+      return (splitCardID[1] + '.' + splitCardID[2].charAt(0) + '.' + splitCardID[0]).toLowerCase();
+    }
+    return cardID;
+  }
+
   async loginAsGuest() {
-    await this.login('Guest');
+    this.profileStore.setProfile(await this.profileRepository.login(this.profileStore.guestProfile));
     this.profileStore!.setHasProfile(true);
   }
 
   @action.bound
   async updateProfileWithExistingResources() {
     if (this.profileStore!.isLinkInfoValid) {
-      this.linkOldResources(
-        this.profileStore!.selectedProfile,
-        this.profileStore!.username);
       await this.editProfile();
       await this.login(this.profileStore.username);
       return true;
@@ -45,23 +98,18 @@ export class LoginActions {
     }
   }
 
-  linkOldResources(oldProfile: ProfileModel, altID: string) {
-    this.resourceStore.unfilteredResources.map(async (r: ResourceModel) => {
-      if (r.accountID === oldProfile.cardID) {
-        r.setAccountId(altID);
-        await this.resourceRepository.updateResource(r);
-      }
-    });
-  }
-
   async editProfile() {
     let profile = this.profileStore!.selectedProfile;
     let altID = this.profileStore!.username;
-
     profile.setAltID(altID);
-    profile.setCardID(altID);
+
     this.profileStore!.setHasOldProfile(false);
     this.profileStore!.setHasProfile(true);
     await this.profileRepository.updateProfile(this.profileStore!.selectedProfile);
+  }
+
+  validateLogin(userName: string) {
+    let pattern = new RegExp(/.+[.].+[.].+/);
+    return pattern.test(userName);
   }
 }

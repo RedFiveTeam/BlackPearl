@@ -105,7 +105,9 @@ export class TabContainer extends React.Component<Props> {
             <DropdownIcon/>
           </div>
           <div className="filterSection">
-            <SearchIcon/>
+            <a onClick={this.props.resourceStore!.toggleGoPopup}>
+              <SearchIcon/>
+            </a>
             <input
               onChange={async (e) => {
                 if (e.target.value === '') {
@@ -177,7 +179,7 @@ export const StyledTabContainer = inject('resourceStore', 'profileStore', 'resou
     box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
   }
   
-  .filterSection > svg > path {
+  .filterSection > a > svg > path {
     fill: #DDD;
   }
   

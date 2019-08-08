@@ -5,16 +5,6 @@ let homeAssert = require('assert');
 Feature('Home Page');
 /* tslint:disable:no-any */
 
-Scenario('link old account journey', (I) => {
-  I.amOnPage('/');
-  I.click('.clickHere');
-  I.fillField('#findUsername', 'jordan');
-  I.click('.listRow');
-  I.fillField('#setUsername', 'jordan');
-  I.click('Submit');
-  I.waitForText('Jordan', 5);
-});
-
 Scenario('should provide a resource features set', async (I) => {
   await login(I);
   checkCards(I);
@@ -57,9 +47,6 @@ Scenario('ops and general info journey', async (I) => {
 
 async function login(I) {
   I.amOnPage('/');
-  I.fillField('.username', 'jordan');
-  I.click('LOGIN');
-  I.waitForText('Jordan', 5);
 }
 
 async function acronymSearch(I) {

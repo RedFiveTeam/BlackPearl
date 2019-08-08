@@ -4,13 +4,15 @@ import { action, computed, observable } from 'mobx';
 export class ProfileStore {
   @observable private _username: string;
   @observable private _profile: ProfileModel;
-  @observable private _hasProfile: boolean = false;
+  @observable private _hasProfile: boolean;
   @observable private _hasOldProfile: boolean = false;
   @observable private _profiles: ProfileModel[] = [];
   @observable private _searchValue: string;
   @observable private _selectedProfile: ProfileModel;
   @observable private _filteredProfileList: ProfileModel[];
   @observable private _isLinkInfoValid: boolean;
+  @observable private _displayLogoutModal: boolean = false;
+  @observable private _loginMatches: ProfileModel[] = [];
 
   @action.bound
   setSearchValue(value: string) {
@@ -43,8 +45,18 @@ export class ProfileStore {
     this._filteredProfileList = value;
   }
 
+  @action.bound
+  setDisplayLogoutModal(value: boolean) {
+    this._displayLogoutModal = value;
+  }
+
   setSelectedProfile(value: ProfileModel) {
     this._selectedProfile = value;
+  }
+
+  @action.bound
+  setLoginMatches(value: ProfileModel[]) {
+    this._loginMatches = value;
   }
 
   @computed
@@ -80,6 +92,13 @@ export class ProfileStore {
   }
 
   @computed
+  get guestProfile(): ProfileModel {
+    return this._profiles.filter((p: ProfileModel) => {
+      return (p.altID === 'Guest');
+    })[0];
+  }
+
+  @computed
   get selectedProfile(): ProfileModel {
     return this._selectedProfile;
   }
@@ -98,6 +117,16 @@ export class ProfileStore {
   get isLinkInfoValid() {
     this.ValidateLinkInfo();
     return this._isLinkInfoValid;
+  }
+
+  @computed
+  get displayLogoutModal() {
+    return this._displayLogoutModal;
+  }
+
+  @computed
+  get loginMatches() {
+    return this._loginMatches;
   }
 
   private ValidateLinkInfo() {

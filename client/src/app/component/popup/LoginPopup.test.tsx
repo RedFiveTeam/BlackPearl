@@ -3,6 +3,8 @@ import { StyledLoginPopup } from './LoginPopup';
 import * as React from 'react';
 import { ProfileStore } from '../../profile/ProfileStore';
 import { Provider } from 'mobx-react';
+import { LoginActions } from '../login/LoginActions';
+import { StubProfileRepository } from '../../profile/StubProfileRepository';
 
 describe('LoginPopup', () => {
   let subject: ReactWrapper;
@@ -10,6 +12,7 @@ describe('LoginPopup', () => {
   let profileActions: any;
   let resourceActions: any;
   let loginActions: any;
+  let profileRepository: StubProfileRepository;
 
   beforeEach(() => {
     loginActions = {
@@ -29,9 +32,14 @@ describe('LoginPopup', () => {
       setAllResources: jest.fn()
     };
 
+    profileRepository = new StubProfileRepository();
+
+    loginActions = new LoginActions({profileStore} as any, {profileRepository} as any);
+
     subject = mount(
       <Provider
         loginActions={loginActions}
+        resourceActions={resourceActions}
       >
         <StyledLoginPopup
           profileStore={profileStore}
@@ -53,25 +61,18 @@ describe('LoginPopup', () => {
     await subject.find('.submitButton').simulate('click');
     expect(resourceActions.setAllResources).not.toHaveBeenCalled();
 
-    expect(subject.find('#userName').simulate('change', {target: {value: 'test'}}));
+    let loginSpy = jest.fn();
+    loginActions.login = loginSpy;
+
+    expect(subject.find('#userName').simulate('change', {target: {value: 'test.test.test'}}));
     await subject.find('.submitButton').simulate('click');
-    expect(resourceActions.setAllResources).toHaveBeenCalled();
-  });
-
-  it('should have a link for people who already had accounts', () => {
-    let setHasOldProfileSpy = jest.fn();
-    let setHasProfileSpy = jest.fn();
-    profileStore.setHasOldProfile = setHasOldProfileSpy;
-    profileStore.setHasProfile = setHasProfileSpy;
-
-    expect(subject.find('.oldProfileText').exists()).toBeTruthy();
-    subject.find('.oldProfileText').simulate('click');
-    expect(profileStore.setHasOldProfile).toHaveBeenCalledWith(true);
-    expect(profileStore.setHasProfile).toHaveBeenCalledWith(true);
+    expect(loginSpy).toHaveBeenCalled();
   });
 
   it('should have a button that logs you in as a guest', () => {
+    let loginAsGuestSpy = jest.fn();
+    loginActions.loginAsGuest = loginAsGuestSpy;
     expect(subject.find('.guestButton').simulate('click'));
-    expect(loginActions.loginAsGuest).toHaveBeenCalled();
+    expect(loginAsGuestSpy).toHaveBeenCalled();
   });
 });
