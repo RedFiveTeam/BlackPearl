@@ -75,8 +75,11 @@ export class LoginActions {
   }
 
   formatCardID(cardID: string): string {
-    let splitCardID = cardID.split('.');
-    return (splitCardID[1] + '.' + splitCardID[2].charAt(0) + '.' + splitCardID[0]).toLowerCase();
+    if (this.validateLogin(cardID)) {
+      let splitCardID = cardID.split('.');
+      return (splitCardID[1] + '.' + splitCardID[2].charAt(0) + '.' + splitCardID[0]).toLowerCase();
+    }
+    return cardID;
   }
 
   async loginAsGuest() {
