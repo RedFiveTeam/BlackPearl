@@ -13,6 +13,12 @@ export class ProfileStore {
   @observable private _isLinkInfoValid: boolean;
   @observable private _displayLogoutModal: boolean = false;
   @observable private _loginMatches: ProfileModel[] = [];
+  @observable private _approximateMatch: boolean = false;
+
+  @action.bound
+  setApproximateMatch(value: boolean) {
+    this._approximateMatch = value;
+  }
 
   @action.bound
   setSearchValue(value: string) {
@@ -57,6 +63,11 @@ export class ProfileStore {
   @action.bound
   setLoginMatches(value: ProfileModel[]) {
     this._loginMatches = value;
+  }
+
+  @computed
+  get approximateMatch() {
+    return this._approximateMatch;
   }
 
   @computed

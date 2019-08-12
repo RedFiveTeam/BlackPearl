@@ -41,39 +41,57 @@ export class LinkProfilePopup extends React.Component<Props> {
           </div>
           <div className={'suppliedInfo'}>
             <div>{this.props.profileStore!.username + '@mail.smil.mil'}</div>
-            <span>It looks like you previously logged in to The Black Pearl using your SIPR Token!</span>
+            {this.props.profileStore!.approximateMatch ?
+              <span>
+                This account name doesn’t exist. Did you mean to log in as one of the users below?
+              </span>
+              :
+              <span>
+                It looks like you previously logged in to The Black Pearl using your SIPR Token!
+              </span>
+            }
           </div>
           <div className={'matchedInfo'}>
-            <span>Select your name from below to keep your favorites</span>
-            <div>
-            {
-              this.props.profileStore!.loginMatches.map((p: ProfileModel, idx) => {
-                return (
-                <div
-                  key={idx}
-                  onClick={
-                    async() => {
-                      await this.props.loginActions!.loginAndLinkProfile(p);
-                    }
-                  }
-                >
-                  <div
-                    className={'nameRow'}
-                  >
-                    <span>{p.cardID}</span>
-                    <span>SELECT<img src={arrow}/></span>
-                  </div>
-                </div>
-                );
-              })
+            {this.props.profileStore!.approximateMatch ?
+              <span>
+                Select your email from below
+              </span>
+              :
+              <span>
+                Select your name from below to keep your favorites
+              </span>
             }
+            <div>
+              {
+                this.props.profileStore!.loginMatches.map((p: ProfileModel, idx) => {
+                  return (
+                    <div
+                      key={idx}
+                      onClick={
+                        async () => {
+                          await this.props.loginActions!.loginAndLinkProfile(p);
+                        }
+                      }
+                    >
+                      <div
+                        className={'nameRow'}
+                      >
+                        <span className={'nameList'}>{this.props.profileStore!.approximateMatch ?
+                          <span>{p.cardID}.mil@mail.smil.mil</span> : <span>{p.cardID} </span>}
+                        </span>
+                        <span className={'selectButton'}>SELECT<img src={arrow}/></span>
+                      </div>
+                    </div>
+                  );
+                })
+              }
             </div>
           </div>
           <div className={'or'}>OR</div>
           <div>
             <button
               onClick={
-                async() => {
+                async () => {
                   await this.props.loginActions!.createNewProfile(this.props.profileStore!.username);
                 }
               }
@@ -168,12 +186,12 @@ export const StyledLinkProfilePopup = inject('profileStore', 'loginActions')(sty
           border-bottom: 1px solid #51575c;
           background: none !important;
           
-          span:first-of-type {
+          .nameList {
             font-size: 18px;
             color: #fff;
           }
       
-          span:last-of-type {
+          .selectButton {
             display: flex;
             font-size: 14px;
             font-weight: 600;

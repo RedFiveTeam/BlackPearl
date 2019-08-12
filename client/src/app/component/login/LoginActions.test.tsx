@@ -23,7 +23,7 @@ describe('LoginActions', () => {
 
     profileStore.setProfiles(
       [
-        new ProfileModel(null, 'LASTONE.FIRSTONE.MIDDLE.1', 'user1', 1, 0, 1),
+        new ProfileModel(null, 'LASTONE.FIRSTONE.MIDDLE.1', 'first.m.last.mil', 1, 0, 1),
         new ProfileModel(null, 'LASTTWO.FIRSTTWO.MIDDLE.2', 'user2', 1, 0, 1),
         new ProfileModel(null, 'LASTTHREE.FIRSTTHREE.MIDDLE.3', 'firstthree.m.lastthree', 1, 0, 1),
         new ProfileModel(null, 'LASTFOUR.FIRSTFOUR.MIDDLE.4', 'new2', 1, 0, 1)
@@ -89,5 +89,10 @@ describe('LoginActions', () => {
     );
     await subject.login('first.m.last');
     expect(profileStore.loginMatches.length).toBe(1);
+  });
+
+  it('should check for an approximate match against the alt id', async () => {
+    await subject.findApproximateMatch('frst.m.last.mil');
+    expect(profileStore.approximateMatch).toBeTruthy();
   });
 });

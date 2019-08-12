@@ -22,8 +22,8 @@ export class LoginActions {
   }
 
   async login(altID: string) {
+    this.profileStore!.setApproximateMatch(false);
     let profiles = this.profileStore!.profiles;
-    let formattedCardIDs = [];
     for (let i = 0; i < profiles.length; i++) {
       if (this.isExactMatch(profiles[i], altID)) {
         this.profileStore.setProfile(profiles[i]);
@@ -32,7 +32,6 @@ export class LoginActions {
       } else {
         let strippedAltID = altID.replace('.mil', '').replace('.ctr', '');
         let cardID = this.formatCardID(profiles[i].cardID);
-        formattedCardIDs.push({profileID: profiles[i].id, formattedCardID: cardID});
         if (strippedAltID === cardID) {
           this.profileStore.profiles[i].setAltID(altID);
           this.profileStore.setProfile(await this.profileRepository.login(profiles[i]));
@@ -40,7 +39,35 @@ export class LoginActions {
         }
       }
     }
-    await this.findProfileMatches(altID);
+    await this.findApproximateMatch(altID);
+    if (!this.profileStore!.approximateMatch) {
+      await this.findProfileMatches(altID);
+    }
+  }
+
+  async findApproximateMatch(altID: string) {
+    let options = {
+      shouldSort: true,
+      threshold: .2,
+      location: 0,
+      distance: 100,
+      maxPatternLength: 32,
+      minMatchCharLength: 1,
+      keys: [
+        'altID'
+      ]
+    };
+
+    const fuse = new Fuse(this.profileStore.profiles, options);
+    let matches = fuse.search(altID);
+    if (matches.length > 0) {
+      this.profileStore.setLoginMatches(matches);
+      this.profileStore.setApproximateMatch(true);
+    }
+  }
+
+  isExactMatch(profile: ProfileModel, altID: string) {
+    return profile.altID === altID.replace('.mil', '').replace('.ctr', '');
   }
 
   async findProfileMatches(altID: string) {
@@ -68,10 +95,6 @@ export class LoginActions {
     let newProfile = new ProfileModel(null, altID, altID);
     this.profileStore.setProfile(await this.profileRepository.login(newProfile));
     this.profileStore.setLoginMatches([]);
-  }
-
-  isExactMatch(profile: ProfileModel, altID: string) {
-    return profile.altID === altID.replace('.mil', '').replace('.ctr', '');
   }
 
   formatCardID(cardID: string): string {
