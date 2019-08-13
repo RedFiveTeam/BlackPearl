@@ -89,6 +89,15 @@ export class MetricsPage extends React.Component<Props> {
     return 0;
   }
 
+  getUsername(username: string) {
+    let split = username.split('.');
+    if (split[1].length < 2) {
+      return split[0] + ' ' + split[2];
+    } else {
+      return split[1] + ' ' + split[0];
+    }
+  }
+
   render() {
     return (
       <div className={this.props.className}>
@@ -221,7 +230,7 @@ export class MetricsPage extends React.Component<Props> {
                     <tr
                       key={index}
                     >
-                      <td>{l.cardID.split('.')[1] + ' ' + l.cardID.split('.')[0]}</td>
+                      <td>{this.getUsername(l.cardID)}</td>
                       <td>{l.action}</td>
                       <td>{l.context}</td>
                       <td>{moment.unix(l.time).format('MMMM D, YYYY HHmm')}L</td>
