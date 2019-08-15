@@ -22,18 +22,6 @@ Scenario('should provide functioning widgets', async (I) => {
   await acronymSearch(I);
 });
 
-Scenario('should provide static information in the app banner', async (I) => {
-  await login(I);
-  I.see("ATO ", ".atoDay");
-
-  const clockCount = await I.grabNumberOfVisibleElements('.clock');
-  homeAssert.strictEqual(
-    clockCount,
-    6,
-    'Banner should have 6 clocks'
-  );
-});
-
 Scenario('ops and general info journey', async (I) => {
   await login(I);
 

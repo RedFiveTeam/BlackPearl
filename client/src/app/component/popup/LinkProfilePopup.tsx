@@ -77,7 +77,7 @@ export class LinkProfilePopup extends React.Component<Props> {
                         className={'nameRow'}
                       >
                         <span className={'nameList'}>{this.props.profileStore!.approximateMatch ?
-                          <span>{p.cardID}.mil@mail.smil.mil</span> : <span>{p.cardID} </span>}
+                          <span>{p.altID}@mail.smil.mil</span> : <span>{p.cardID} </span>}
                         </span>
                         <span className={'selectButton'}>SELECT<img src={arrow}/></span>
                       </div>

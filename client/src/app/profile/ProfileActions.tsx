@@ -76,10 +76,4 @@ export class ProfileActions {
       profileStore!.setHasProfile(false);
     }
   }
-
-  @action.bound
-  checkForCookie() {
-    this.profileStore.setHasProfile(true);
-    return document.cookie.length > 0;
-  }
 }

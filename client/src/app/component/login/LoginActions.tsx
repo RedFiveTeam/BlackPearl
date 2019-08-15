@@ -67,7 +67,7 @@ export class LoginActions {
   }
 
   isExactMatch(profile: ProfileModel, altID: string) {
-    return profile.altID === altID.replace('.mil', '').replace('.ctr', '');
+    return profile.altID === altID;
   }
 
   async findProfileMatches(altID: string) {

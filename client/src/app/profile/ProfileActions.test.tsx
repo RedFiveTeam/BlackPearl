@@ -50,10 +50,4 @@ describe('ProfileActions', () => {
     subject.checkForPreviousProfile();
     expect(profileStore.hasProfile).toBeFalsy();
   });
-
-  it('should check for a cookie', () => {
-    document.cookie = 'account=SDFSEWIWFKSDf=';
-    subject.checkForCookie();
-    expect(profileStore.hasProfile).toBeTruthy();
-  });
 });

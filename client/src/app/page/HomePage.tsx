@@ -48,12 +48,12 @@ interface Props {
 export class HomePage extends React.Component<Props> {
   async componentWillMount() {
     if (navigator.userAgent.toLowerCase().indexOf('electron') !== -1) {
+      this.props.profileStore!.setHasProfile(true);
       await this.props.loginActions!.createNewProfile('Acceptance.Testing.Test');
     }
   }
 
   async componentDidMount() {
-    this.props.profileActions!.checkForCookie();
     await this.props.profileActions!.setProfile();
     this.props.profileActions!.checkForPreviousProfile();
     await this.props.metricActions!.logMetric(LogableActions.VISIT, 'Home');
