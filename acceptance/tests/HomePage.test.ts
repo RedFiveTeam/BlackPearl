@@ -144,21 +144,12 @@ function checkCards(I) {
 
   I.see("Main", ".cardTitle");
   I.click('.tab:nth-of-type(1) > div', '.tabContainer');
-  I.see('FMV Amazon');
-  I.see('FMV YouTube');
-  I.see('FMV Reddit');
   I.see("Situational Awareness", ".cardTitle");
 
   I.click('.tab:nth-of-type(2) > div', '.tabContainer');
-  I.see('HA Amazon');
-  I.see('HA YouTube');
-  I.see('HA Reddit');
   I.see("Target Research", ".cardTitle");
 
   I.click('.tab:nth-of-type(3) > div', '.tabContainer');
-  I.see('Fusion Amazon');
-  I.see('Fusion YouTube');
-  I.see('Fusion Reddit');
 }
 
 async function addResource(I) {

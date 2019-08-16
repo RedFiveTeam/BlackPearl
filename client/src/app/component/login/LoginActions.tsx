@@ -30,7 +30,7 @@ export class LoginActions {
         await this.profileRepository.login(profiles[i]);
         return;
       } else {
-        let strippedAltID = altID.replace('.mil', '').replace('.ctr', '');
+        let strippedAltID = altID.replace('.mil', '').replace('.ctr', '').replace(/[\d+]+/, '');
         let cardID = this.formatCardID(profiles[i].cardID);
         if (strippedAltID === cardID) {
           this.profileStore.profiles[i].setAltID(altID);

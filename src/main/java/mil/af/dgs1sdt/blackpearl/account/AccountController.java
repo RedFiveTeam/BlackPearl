@@ -63,11 +63,15 @@ public class AccountController {
         account = account.update(json);
         accountRepository.save(account);
       }
-      res.addCookie(new Cookie("account", Base64.getUrlEncoder().encodeToString(json.getAltID().getBytes())));
+      Cookie cookie = new Cookie("account", Base64.getUrlEncoder().encodeToString(json.getAltID().getBytes()));
+      cookie.setMaxAge(31536000);
+      res.addCookie(cookie);
       return account;
     } else {
       account = new Account(json.getCardID(), json.getAltID(), 1L, 1L, 1L, 1L);
-      res.addCookie(new Cookie("account", Base64.getUrlEncoder().encodeToString(json.getAltID().getBytes())));
+      Cookie cookie = new Cookie("account", Base64.getUrlEncoder().encodeToString(json.getAltID().getBytes()));
+      cookie.setMaxAge(31536000);
+      res.addCookie(cookie);
       return accountRepository.save(account);
     }
   }

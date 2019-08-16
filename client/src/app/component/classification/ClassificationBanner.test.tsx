@@ -7,7 +7,11 @@ describe('ClassificationBanner', () => {
 
   beforeEach(() => {
     subject = shallow
-    (<ClassificationBanner/>);
+    (
+      <ClassificationBanner
+        classification={'UNCLASSIFIED'}
+      />
+    );
   });
 
   it('should render a green background for UNCLASSIFIED', () => {

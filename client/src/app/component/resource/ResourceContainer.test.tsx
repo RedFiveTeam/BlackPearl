@@ -26,7 +26,9 @@ describe('ResourceContainer', () => {
     }
   };
 
-  profileStore = {};
+  profileStore = {
+    profile: jest.fn()
+  };
 
   resourceActions = {
     setAllResources: jest.fn(),

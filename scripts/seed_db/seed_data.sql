@@ -3,6 +3,8 @@ INSERT INTO resource (url, name, categoryID, accountID, position) VALUES
     ("https://www.yahoo.com", "Yahoo", 1, null, 0),
     ("https://www.ebay.com", "eBay", 1, null, 0),
     ("https://www.amazon.com", "FMV Amazon", 1, null, 0),
+    ("https://www.amazon.com", "FMV Amazon", 2, null, 0),
+    ("https://www.amazon.com", "FMV Amazon", 3, null, 0),
     ("https://www.youtube.com", "FMV YouTube", 2, null, 0),
     ("https://www.reddit.com", "FMV Reddit", 3, null, 0),
     ("https://www.amazon.com", "HA Amazon", 4, null, 0),

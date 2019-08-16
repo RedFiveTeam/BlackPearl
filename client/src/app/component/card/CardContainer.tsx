@@ -130,7 +130,13 @@ export class CardContainer extends React.Component<Props> {
 
   render() {
     return (
-      <div className={classNames('cardContainer', this.props.className)}>
+      <div
+        className={classNames('cardContainer', this.props.className)}
+        style={
+          this.props.profileStore!.profile && this.props.profileStore!.profile.widgetsVisible !== 1 ?
+            {width: '99.1vw'} : {width: 'calc(99.1vw - 354px'}
+        }
+      >
         <StyledTabContainer profileActions={this.props.profileActions}/>
         <DragDropContext onDragEnd={this.onDragEnd} onDragStart={this.onDragStart}>
           <div
@@ -171,6 +177,7 @@ export const StyledCardContainer = inject('resourceActions', 'profileActions', '
   position: relative;
   flex-wrap: wrap;
   margin-top: 30px;
+  top: 5px;
   width: 100%;
   
   .cardBody {
@@ -183,7 +190,7 @@ export const StyledCardContainer = inject('resourceActions', 'profileActions', '
     position: relative;
     box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.3);
     border-radius: 0 4px 4px 4px;
-    width: 100%;
+    flex: 1;
   }
   
   .tabContainer {

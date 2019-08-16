@@ -15,6 +15,14 @@ export class ClassificationBanner extends React.Component<Props> {
       default: {
         css = {
           color: 'white',
+          backgroundColor: 'rgba(0,0,0,0)'
+        };
+        return css;
+        break;
+      }
+      case 'UNCLASSIFIED': {
+        css = {
+          color: 'white',
           background: 'green'
         };
         return css;

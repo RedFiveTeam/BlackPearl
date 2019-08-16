@@ -26,7 +26,7 @@ export class Card extends React.Component<Props> {
           (provided) => (
             <div
               ref={provided.innerRef}
-              className={this.props.className + ' category' + this.props.category}
+              className={this.props.className + ' category' + this.props.category + ' card'}
             >
               <div className="cardHeader">
                 {
@@ -75,7 +75,10 @@ export const StyledCard = styled(Card)`
    width: 25%;
    padding-left: 8px;
    height: 100%;
-   max-height: 702px;
+   max-height: 760px;
+   display: flex;
+   flex-direction: column;
+   flex: 1;
    
    .cardHeader {
     margin-top: 6px;

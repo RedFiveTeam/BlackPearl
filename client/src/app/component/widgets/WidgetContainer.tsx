@@ -18,7 +18,6 @@ interface Props {
 @observer
 export class WidgetContainer extends React.Component<Props> {
   async componentDidMount() {
-    // await this.props.profileActions!.setProfile();
     this.toggleWidgets(this.props.visible);
   }
 
@@ -28,6 +27,15 @@ export class WidgetContainer extends React.Component<Props> {
 
   toggleWidgets(visible: number) {
     let ele = document.querySelector('.widgetColumn') as HTMLElement;
+    let cardContainer = document.querySelector('.cardContainer');
+    if (cardContainer !== null) {
+      if (visible) {
+        (cardContainer as HTMLElement).style.width = 'calc(99.1vw - 354px)';
+      } else {
+        (cardContainer as HTMLElement).style.width = '99.1vw';
+      }
+    }
+
     if (ele) {
       if (visible) {
         ele.style.maxWidth = '354px';

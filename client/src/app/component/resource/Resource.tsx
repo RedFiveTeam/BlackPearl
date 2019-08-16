@@ -144,6 +144,7 @@ export const StyledResource = inject('resourceStore', 'resourceActions', 'metric
   }
   
   .title {
+    max-width: 16vw;
     padding-left: 7px;
     text-overflow: ellipsis;
     overflow: hidden;
