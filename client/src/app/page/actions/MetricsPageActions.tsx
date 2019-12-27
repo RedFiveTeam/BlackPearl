@@ -23,25 +23,28 @@ export class MetricsPageActions {
   @action.bound
   async initializeStores() {
     await this.metricsStore.hydrate(this.metricRepository);
-    await this.buildMetrics(Number.MAX_SAFE_INTEGER);
   }
 
   @action.bound
-  exportLogins(timeframe: number) {
+  async exportLogins() {
     const a = document.createElement('a');
     const array = ['time,cardID,action,context\r\n'];
+    const actions = await this.metricRepository.findAll();
     const file = new Blob(
-      array.concat(this.metricsStore.logins.slice().reverse()
-        .filter((m: MetricModel) => {
-          return (moment().unix() - moment.unix(m.time).unix()) < timeframe;
-        })
-        .map((l: MetricModel) => {
-        return moment.unix(l.time).format('MMMM Do YYYY H:mm') + 'L' +
-          ',' + l.cardID +
-          ',' + l.action +
-          ',' + l.context +
-          '\r\n';
-      })),
+      array.concat(
+        actions
+          .slice()
+          .reverse()
+          .map(
+            (l: MetricModel) => {
+              return moment.unix(l.time).format('MMMM Do YYYY H:mm') + 'L' +
+                ',' + l.cardID +
+                ',' + l.action +
+                ',' + l.context +
+                '\r\n';
+            }
+          )
+      ),
       {type: 'text/plain'}
     );
 
@@ -54,22 +57,19 @@ export class MetricsPageActions {
   }
 
   @action.bound
-  async buildMetrics(timeframe: number) {
+  async buildDisplayableMetrics() {
     let users: DisplayUserModel[] = [];
     let resources: DisplayInformationModel[] = [];
     let actions: DisplayInformationModel[] = [];
 
-    this.metricsStore.logins
-      .filter((m: MetricModel) => {
-        return (moment().unix() - moment.unix(m.time).unix()) < timeframe;
-      })
+    this.metricsStore.latestActions
       .map((m: MetricModel) => {
         if (m.action != null && m.cardID != null && m.context != null) {
           if (m.action.toString() === 'VISIT' && m.context.toString() === 'Home') {
-             let user: DisplayUserModel | null = users.filter((u: DisplayUserModel) => {
+            let user: DisplayUserModel | null = users.filter((u: DisplayUserModel) => {
               return u.cardID === m.cardID;
             })[0];
-             if (user) {
+            if (user) {
               user.setActions(user.actions + 1);
               user.setLogins(user.logins + 1);
             } else {

@@ -3,13 +3,11 @@ import { inject, observer } from 'mobx-react';
 import styled from 'styled-components';
 import { MetricsStore } from './stores/MetricsStore';
 import { MetricsPageActions } from './actions/MetricsPageActions';
-import { LogableActions } from '../component/metrics/metric/MetricModel';
+import { LogableActions, MetricModel } from '../component/metrics/metric/MetricModel';
 import { MetricActions } from '../component/metrics/metric/MetricActions';
 import * as moment from 'moment';
-import { DisplayInformationModel, DisplayUserModel } from '../component/metrics/metric/MetricDisplayModel';
-import { DropdownIcon } from '../icon/DropdownIcon';
-import { ClockIcon } from '../icon/ClockIcon';
-import { observable } from 'mobx';
+import Metric from './Metric';
+import classNames = require('classnames');
 
 interface Props {
   metricsPageActions?: MetricsPageActions;
@@ -20,73 +18,10 @@ interface Props {
 
 @observer
 export class MetricsPage extends React.Component<Props> {
-
-  @observable
-  selectValue: number = 9007199254740991;
-  selectText: string = 'All Time';
-
   async componentDidMount() {
     await this.props.metricsPageActions!.initializeStores();
+    await this.props.metricsPageActions!.buildDisplayableMetrics();
     await this.props.metricActions!.logMetric(LogableActions.VISIT, 'Metrics');
-    await this.props.metricsPageActions!.buildMetrics(9007199254740991);
-  }
-
-  async sortSelected(e: any) {
-    this.selectValue = e.target.value;
-    this.selectText = (document.querySelector('option:checked') as HTMLElement).innerHTML;
-    await this.props.metricsPageActions!.buildMetrics(this.selectValue);
-  }
-
-  getResourcesClicked() {
-    if (this.props.metricsStore!.displayData.resources.length > 0) {
-      let clickArray = this.props.metricsStore!.displayData.resources.map((r: DisplayInformationModel) => {
-        return r.clicks;
-      });
-
-      if (clickArray.length > 0) {
-        return clickArray.reduce((count, curr) => {
-          return count + curr;
-        });
-      }
-    }
-
-    return 0;
-  }
-
-  getTotalVisits() {
-    if (this.props.metricsStore!.displayData.users.length > 0) {
-      let countArray = this.props.metricsStore!.displayData.users.map((u: DisplayUserModel) => {
-        return u.logins;
-      });
-
-      if (countArray.length > 0) {
-        return countArray.reduce((count, curr) => {
-          return count + curr;
-        });
-      }
-    }
-    return 0;
-  }
-
-  getWidgetsUsed() {
-    if (this.props.metricsStore!.displayData.actions.length > 0) {
-      let clickArray = this.props.metricsStore!.displayData.actions.filter((a: DisplayInformationModel) => {
-        return (
-          a.name === 'Find Acronym'
-          || a.name === 'Convert Coordinates'
-          || a.name === 'Click Weather'
-        );
-      }).map((a: DisplayInformationModel) => {
-        return a.clicks;
-      });
-
-      if (clickArray.length > 0) {
-        return clickArray.reduce((count, curr) => {
-          return count + curr;
-        });
-      }
-    }
-    return 0;
   }
 
   getUsername(username: string) {
@@ -104,74 +39,34 @@ export class MetricsPage extends React.Component<Props> {
         <div className="pageTitle">Metrics</div>
         <div className="pageBody">
           <button
-            onClick={(e) => {
-              this.props.metricsPageActions!.exportLogins(this.selectValue);
+            onClick={async (e) => {
+              await this.props.metricsPageActions!.exportLogins();
             }}
             className="exportButton"
           >
-            EXPORT {this.selectText.toUpperCase()} AS .CSV
+            Export All Actions As .CSV
           </button>
-          <div className="sortSection">
-            <div className="clock">
-              <ClockIcon/>
-            </div>
-            Time Frame:
-            <select
-              defaultValue="All Time"
-              className="sortSelector"
-              onChange={async (e) => {
-                await this.sortSelected(e);
-              }}
-            >
-              <option value={9007199254740991}>All Time</option>
-              <option value={60 * 60 * 24}>Last 24 Hours</option>
-              <option value={60 * 60 * 24 * 3}>Last 72 Hours</option>
-              <option value={60 * 60 * 24 * 7}>Last 7 Days</option>
-              <option value={60 * 60 * 24 * 30}>Last 30 Days</option>
-            </select>
-            <DropdownIcon/>
-          </div>
           <div className="counters">
-            <div
-              className="usersCounter counter"
-            >
-              <div className="number">
-                {this.props.metricsStore!.displayData ? this.props.metricsStore!.displayData.users.length : 0}
-              </div>
-              <div className="title">Total User Accounts</div>
-            </div>
-            <div
-              className="visitCounter counter"
-            >
-              <div className="number">
-                {
-                  this.props.metricsStore!.displayData ? this.getTotalVisits() : 0
-                }
-              </div>
-              <div className="title">Total Visits</div>
-            </div>
-            <div
-              className="resourceCounter counter"
-            >
-              <div className="number">
-                {
-                  this.props.metricsStore!.displayData &&
-                  this.getResourcesClicked()
-                }
-              </div>
-              <div className="title">Resources Clicked</div>
-            </div>
-            <div
-              className="widgetCounter counter"
-            >
-              <div className="number">
-                {
-                  this.props.metricsStore!.displayData &&
-                  this.getWidgetsUsed()
-                }
-              </div>
-              <div className="title">Widgets Used</div>
-            </div>
+            <Metric
+              className={'usersCounter'}
+              title={'Total User Accounts'}
+              value={this.props.metricsStore!.userCount}
+            />
+            <Metric
+              className={'visitCounter'}
+              title={'Total  Visits'}
+              value={this.props.metricsStore!.visitCount}
+            />
+            <Metric
+              className={'resourceCounter'}
+              title={'Resources Clicked'}
+              value={this.props.metricsStore!.resourceClickCount}
+            />
+            <Metric
+              className={'widgetCounter'}
+              title={'Widgets Used'}
+              value={this.props.metricsStore!.widgetUseCount}
+            />
           </div>
           <div className="topRow">
             <div
@@ -179,18 +74,7 @@ export class MetricsPage extends React.Component<Props> {
             >
               <div className="topTitle">Top Resources</div>
               <div className="topList">
-                {
-                  this.props.metricsStore!.displayData && this.props.metricsStore!.displayData.resources.length > 0 ?
-                    this.props.metricsStore!.displayData.resources.slice().sort((a, b) => {
-                      return b.clicks - a.clicks;
-                    }).slice(0, 5).map((r, index) => {
-                      return <div className="topItem" key={index}>
-                        <div>{(index + 1) + '. ' + r.name}</div>
-                        <div className="spacer"/>
-                        <div>{r.clicks} Clicks</div>
-                      </div>;
-                    }) : 'No Data Available'
-                }
+                {this.renderTopResources()}
               </div>
             </div>
             <div
@@ -198,18 +82,7 @@ export class MetricsPage extends React.Component<Props> {
             >
               <div className="topTitle">Top Actions</div>
               <div className="topList">
-                {
-                  this.props.metricsStore!.displayData && this.props.metricsStore!.displayData.actions.length > 0 ?
-                    this.props.metricsStore!.displayData.actions.slice().sort((a, b) => {
-                      return b.clicks - a.clicks;
-                    }).slice(0, 5).map((a, index) => {
-                      return <div className="topItem" key={index}>
-                        <div>{(index + 1) + '. ' + a.name}</div>
-                        <div className="spacer"/>
-                        <div>{a.clicks} Clicks</div>
-                      </div>;
-                    }) : 'No Data Available'
-                }
+                {this.renderTopActions()}
               </div>
             </div>
           </div>
@@ -225,18 +98,20 @@ export class MetricsPage extends React.Component<Props> {
                 <td>Time</td>
               </tr>
               {
-                this.props.metricsStore!.logins.slice().reverse().slice(0, 50).map((l, index) => {
-                  return (
-                    <tr
-                      key={index}
-                    >
-                      <td>{this.getUsername(l.cardID)}</td>
-                      <td>{l.action}</td>
-                      <td>{l.context}</td>
-                      <td>{moment.unix(l.time).format('MMMM D, YYYY HHmm')}L</td>
-                    </tr>
-                  );
-                })
+                this.props.metricsStore!.latestActions.map(
+                  (action: MetricModel, index: number) => {
+                    return (
+                      <tr
+                        key={index}
+                        className={'metric-row'}
+                      >
+                        <td>{this.getUsername(action.cardID)}</td>
+                        <td>{action.action}</td>
+                        <td>{action.context}</td>
+                        <td>{moment.unix(action.time).format('MMMM D, YYYY HHmm')}L</td>
+                      </tr>
+                    );
+                  })
               }
               </tbody>
             </table>
@@ -244,6 +119,38 @@ export class MetricsPage extends React.Component<Props> {
         </div>
       </div>
     );
+  }
+
+  private renderTopResources() {
+    return this.props.metricsStore!.topResources.map((resource: any, index: number) => {
+      return (
+        <div className={classNames('top-resource', 'topItem')} key={index}>
+          <div className={'top-resource--name'}>
+            {(index + 1) + '. ' + resource.name}
+          </div>
+          <div className={'spacer'}/>
+          <div className={'top-resource--clicks'}>
+            {resource.clicks} Clicks
+          </div>
+        </div>
+      );
+    });
+  }
+
+  private renderTopActions() {
+    return this.props.metricsStore!.topActions.map((action: any, index: number) => {
+      return (
+        <div className={classNames('top-action', 'topItem')} key={index}>
+          <div className={'top-action--name'}>
+            {(index + 1) + '. ' + action.name}
+          </div>
+          <div className="spacer"/>
+          <div className={'top-action--clicks'}>
+            {action.clicks} Clicks
+          </div>
+        </div>
+      );
+    });
   }
 }
 
@@ -367,16 +274,7 @@ export const StyledMetricsPage = inject('metricsPageActions', 'metricsStore', 'm
     margin-left: 20px;
     bottom: 8px;
   }
-  
-  .number {
-    font-size: 64px;
-    color: #fff;
-  }
-  
-  .counter {
-    display: inline-block;
-    text-align: center;
-  }
+ 
   
   .counters {
     display: flex;

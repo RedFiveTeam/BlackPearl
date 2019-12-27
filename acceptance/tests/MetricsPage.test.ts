@@ -5,6 +5,5 @@ Scenario('should show the user metrics information', (I) => {
   I.amOnPage('/metrics');
   I.waitForText('Total User Accounts', 10);
   I.waitForText('Total Visits', 3);
-  I.waitForText('Time Frame:', 10);
   I.seeElement('.exportButton');
 });

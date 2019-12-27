@@ -20,4 +20,32 @@ export class WebMetricRepository implements MetricRepository {
       return this.metricSerializer.deserialize(obj);
     });
   }
+
+  async fetchVisitCount(): Promise<number> {
+    return await this.client.getJSON('/api/metrics/visits');
+  }
+
+  async fetchUserCount(): Promise<number> {
+    return await this.client.getJSON('/api/metrics/users');
+  }
+
+  async fetchResourceClickCount(): Promise<number> {
+    return await this.client.getJSON('/api/metrics/resource-clicks');
+  }
+
+  async fetchWidgetUseCount(): Promise<number> {
+    return await this.client.getJSON('/api/metrics/widget-uses');
+  }
+
+  async fetchTopResources(): Promise<any[]> {
+    return await this.client.getJSON('/api/metrics/top-resources');
+  }
+
+  async fetchTopActions(): Promise<any[]> {
+    return await this.client.getJSON('/api/metrics/top-actions');
+  }
+
+  async fetchLatestActions(): Promise<MetricModel[]> {
+    return await this.client.getJSON('/api/metrics/latest-actions');
+  }
 }

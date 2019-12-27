@@ -35,7 +35,7 @@ node ('legacy') {
             // update env var JOB_NAME to replace all non word chars to underscores
             def jobname = JOB_NAME.replaceAll(/[^a-zA-Z0-9\_]/, "_")
             def jobshortname = JOB_NAME.replaceAll(/^.*\//, "")
-            withCredentials([[$class: 'StringBinding', credentialsId: 'sonarQube', variable: 'SONAR_LOGIN']]) {
+            withCredentials([[$class: 'StringBinding', credentialsId: 'd5ddf49e-60e6-4816-b668-406eddd250af', variable: 'SONAR_LOGIN']]) {
                 sh "JOB_NAME=${jobname} && JOB_SHORT_NAME=${jobshortname} && set && ${scannerHome}/bin/sonar-scanner -Dsonar.host.url=${sonarHost} -Dsonar.login=${SONAR_LOGIN} -Dsonar.projectName=BlackPearl -Dsonar.projectKey=narwhal:BlackPearl"
             }
         }
