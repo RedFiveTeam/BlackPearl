@@ -24,15 +24,6 @@ export class MetricsPage extends React.Component<Props> {
     await this.props.metricActions!.logMetric(LogableActions.VISIT, 'Metrics');
   }
 
-  getUsername(username: string) {
-    let split = username.split('.');
-    if (split[1].length < 2) {
-      return split[0] + ' ' + split[2];
-    } else {
-      return split[1] + ' ' + split[0];
-    }
-  }
-
   render() {
     return (
       <div className={this.props.className}>
@@ -105,7 +96,7 @@ export class MetricsPage extends React.Component<Props> {
                         key={index}
                         className={'metric-row'}
                       >
-                        <td>{this.getUsername(action.cardID)}</td>
+                        <td>{action.cardID}</td>
                         <td>{action.action}</td>
                         <td>{action.context}</td>
                         <td>{moment.unix(action.time).format('MMMM D, YYYY HHmm')}L</td>
