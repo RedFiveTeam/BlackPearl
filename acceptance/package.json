@@ -3,7 +3,7 @@
     "@types/moment-timezone": "^0.5.9",
     "@types/node": "^10.12.0",
     "codeceptjs": "^1.4.5",
-    "moment-timezone": "^0.5.21",
+    "moment-timezone": "^0.5.35",
     "nightmare": "^3.0.1",
     "node": "^10.12.0"
   }
